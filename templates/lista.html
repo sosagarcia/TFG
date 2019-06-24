@@ -1,0 +1,48 @@
+{% extends "layout1.html" %} {% block conten %}
+<div class="d-flex justify-content-center">
+  <div class="row">
+    <div class="">
+      {% with messages = get_flashed_messages() %} {% if messages %} {% for
+      message in messages %}
+      <div class="alert alert-dismissible alert-success fade show" role="alert">
+        <strong> {{ message }} </strong>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endfor %} {% endif %} {% endwith %}
+
+      <table class="table table-bordered table-striped bg-white table-sm">
+        <thead>
+          <tr>
+            <td>Nombre</td>
+            <td>Teléfono</td>
+            <td>Email</td>
+            <td>Acciones</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for contact in contactos %}
+          <tr>
+            <td>{{contact.1}}</td>
+            <td>{{contact.2}}</td>
+            <td>{{contact.3}}</td>
+            <td>
+              <a href="/edit/{{contact.0}}" class="btn btn-secondary">Editar</a>
+              <a href="/delete/{{contact.0}}" class="btn-borrar btn btn-danger"
+                >Borrar</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

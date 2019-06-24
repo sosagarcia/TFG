@@ -1,0 +1,63 @@
+{% extends "layout1.html" %} {% block conten %} {% with messages =
+get_flashed_messages() %} {% if messages %} {% for message in messages %}
+<p>{{ message }}</p>
+{% endfor %} {% endif %} {% endwith %}
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Mensaje -->
+    <div class="fadeIn first">
+      {% for mensaje in mensaje %}
+      <div class="card text-white bg-{{ mensaje.tipo }} mb-3 ">
+        <div class="card-header">{{ mensaje.titulo }}</div>
+        <div class="card-body">
+          <h4 class="card-title">{{ mensaje.author }}</h4>
+          <p class="card-text">{{ mensaje.mensaje }}</p>
+        </div>
+
+        {% endfor %}
+      </div>
+
+      <!-- Login Form -->
+      <form action="/add_contact" method="POST">
+        <input
+          type="text"
+          id="login"
+          class="fadeIn second"
+          name="fullname"
+          placeholder="Nombre completo"
+        />
+        <input
+          type="text"
+          id="login"
+          class="fadeIn second"
+          name="phone"
+          placeholder="Nº de teléfono"
+        />
+        <input
+          type="text"
+          id="login"
+          class="fadeIn second"
+          name="email"
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          id="password"
+          class="fadeIn third"
+          name="pass"
+          placeholder="Contraseña"
+        />
+        <input
+          type="password"
+          id="password"
+          class="fadeIn third"
+          name="repass"
+          placeholder="Confirmar Contraseña"
+        />
+        <input type="submit" class="fadeIn fourth" value="Guardar" />
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

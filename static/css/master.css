@@ -1,0 +1,63 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: url(../img/Fondo.jpeg) no-repeat center top fixed;
+  background-size: cover;
+  font-family: sans-serif;
+  height: 100vh;
+}
+
+.boton {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  text-decoration: none;
+  padding: 10px;
+  font-weight: 600;
+  font-size: 20px;
+  color: #ffffff;
+  background-color: #1883ba;
+  border-radius: 6px;
+  border: 2px solid #0016b0;
+}
+
+.boton:hover {
+  cursor: pointer;
+  color: #18ba20;
+  background-color: #ffffff;
+}
+
+.boton1 {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  text-decoration: none;
+  padding: 10px;
+  font-weight: 600;
+  font-size: 20px;
+  color: #ffffff;
+  background-color: #1883ba;
+  border-radius: 6px;
+  border: 2px solid #00b009;
+}
+
+.boton1:hover {
+  cursor: pointer;
+  color: #18ba3b;
+  background-color: #ffffff;
+}
+
+/*lista*/
+
+.alert {
+  opacity: 0.8;
+}
+
+.alert:hover {
+  opacity: 1;
+}
+
+.margenes {
+  margin-top: 100px;
+  margin-left: 4px;
+}
