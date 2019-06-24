@@ -3,3 +3,7 @@
 
  Crear entorno virtual (https://www.youtube.com/watch?v=-XIsKyNWILo)
  instalar phpmyAdmin (https://maslinux.es/guia-facil-para-instalar-phpmyadmin-en-ubuntu/)
+
+ Configurar BBDD (Base de datos : flaskcontacts : tabla contacts)
+
+ sudo apt-get install python3.6-dev libmysqlclient-dev para poder instalar pip3 flask-mysqldb 

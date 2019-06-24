@@ -11,7 +11,7 @@ app = Flask(__name__)
 # MYSQL connection
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'renato'
-app.config['MYSQL_PASSWORD'] = 'renato12'
+app.config['MYSQL_PASSWORD'] = 'Jota.1584'
 app.config['MYSQL_DB'] = 'flaskcontacts'
 mysql = MySQL(app)
 
@@ -146,8 +146,8 @@ def add_contact():
 
 
 if __name__ == '__main__':
-    #app.run(port=5000, debug=True)
-    app.run()
+    app.run(port=5000, debug=True)
+    # app.run()
 
 # https://bootswatch.com/
 # https://uigradients.com
@@ -158,3 +158,6 @@ if __name__ == '__main__':
 # Camera : https://projects.raspberrypi.org/en/projects/getting-started-with-picamera/5
 # Configuracion apache2 para el py : /etc/apache2/sites-available/TFT.conf (cambiar ip correspondiente)
 # mysql en rapi https://www.youtube.com/watch?v=axceWuN0en0 / https://stackoverflow.com/questions/45628814/how-do-you-install-mysql-for-flask
+
+# mysql en rapi https://www.youtube.com/watch?v=axceWuN0en0 /
+# https://stackoverflow.com/questions/45628814/how-do-you-install-mysql-for-flask
