@@ -6,4 +6,6 @@
 
  Configurar BBDD (Base de datos : flaskcontacts : tabla contacts)
 
- sudo apt-get install python3.6-dev libmysqlclient-dev para poder instalar pip3 flask-mysqldb 
+ sudo apt-get install python3.6-dev libmysqlclient-dev para poder instalar pip3 flask-mysqldb
+ instalar php sudo apt-get install php7  
+ https://www.redeszone.net/2017/08/26/instalar-php-7-0-php-7-1-ubuntu/

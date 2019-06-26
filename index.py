@@ -56,6 +56,11 @@ def login():
         return render_template("index.html", mensaje=inicio)
 
 
+@app.route('/calendar')
+def calendar():
+    return render_template('calendar.html')
+
+
 @app.route('/logout')
 def logout():
     return render_template('index.html', mensaje=adios)
@@ -159,5 +164,4 @@ if __name__ == '__main__':
 # Configuracion apache2 para el py : /etc/apache2/sites-available/TFT.conf (cambiar ip correspondiente)
 # mysql en rapi https://www.youtube.com/watch?v=axceWuN0en0 / https://stackoverflow.com/questions/45628814/how-do-you-install-mysql-for-flask
 
-# mysql en rapi https://www.youtube.com/watch?v=axceWuN0en0 /
 # https://stackoverflow.com/questions/45628814/how-do-you-install-mysql-for-flask

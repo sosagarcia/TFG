@@ -1,8 +1,12 @@
 .margenes {
-    margin-top: 4%;
-    margin-left: 4px;
+  margin-top: 4%;
+  margin-left: 4px;
 }
 
 .colorPrueba {
-    background: grey;
+  background: grey;
+}
+
+.colorPrueba1 {
+  background: blue;
 }

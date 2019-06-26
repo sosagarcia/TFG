@@ -1,0 +1,57 @@
+{% extends "layout.html" %} {% block head %}
+<link href="../static/css/calendar/core.css" rel="stylesheet" />
+<link href="../static/css/calendar/daygrid.css" rel="stylesheet" />
+<link href="../static/css/calendar/timegrid.css" rel="stylesheet" />
+<link href="../static/css/calendar/list.css" rel="stylesheet" />
+
+{% endblock %} {% block body %}
+<div class="container">
+  <div id="calendar"></div>
+</div>
+{% endblock %} {% block script %}
+
+<script src="../static/js/calendar/vendorRrule.js"></script>
+<script src="../static/js/calendar/core.js"></script>
+<script src="../static/js/calendar/interaction.js"></script>
+<script src="../static/js/calendar/daygrid.js"></script>
+<script src="../static/js/calendar/timegrid.js"></script>
+<script src="../static/js/calendar/list.js"></script>
+<script src="../static/js/calendar/rrule.js"></script>
+<script src="../static/js/calendar/es.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var calendarEl = document.getElementById("calendar");
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      locale: "es",
+      plugins: ["interaction", "dayGrid", "timeGrid", "list", "rrule"],
+      header: {
+        left: "prev,next today",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
+      },
+      //defaultDate: "2019-06-12",
+      editable: true,
+      events: "../php/eventos.php",
+      /*events: [
+        {
+          title: "rrule event",
+          rrule: {
+            dtstart: "2019-06-09T13:00:00",
+            // until: '2019-06-01',
+            freq: "weekly"
+          },
+          duration: "02:00"
+        }
+      ],*/
+      eventClick: function(arg) {
+        if (confirm("delete event?")) {
+          arg.event.remove();
+        }
+      }
+    });
+
+    calendar.render();
+  });
+</script>
+{% endblock %}
