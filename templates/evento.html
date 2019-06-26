@@ -1,0 +1,41 @@
+{% extends "layout.html" %} {% block body %}
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+
+      <!-- Login Form -->
+      <form action="/add_event" method="POST">
+        <input
+          type="text"
+          id="login"
+          class="fadeIn second"
+          name="title"
+          placeholder="titulo"
+        />
+        <input
+          type="text"
+          id="login"
+          class="fadeIn second"
+          name="color"
+          placeholder="color"
+        />
+        <input
+          type="datetime"
+          id="login"
+          class="fadeIn second"
+          name="start"
+          placeholder="start"
+        />
+        <input
+          type="datetime"
+          id="password"
+          class="fadeIn third"
+          name="end"
+          placeholder="end"
+        />
+
+        <input type="submit" class="fadeIn fourth" value="Guardar" />
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

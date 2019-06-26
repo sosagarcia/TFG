@@ -1,7 +1,8 @@
 
-from flask import Flask, render_template, request, url_for, redirect, flash, session
+from flask import Flask, render_template, request, url_for, redirect, flash, session, Response
 from flask_mysqldb import MySQL, MySQLdb
 import bcrypt
+import json
 from static.py.mensajes import *
 
 
@@ -58,7 +59,44 @@ def login():
 
 @app.route('/calendar')
 def calendar():
+
     return render_template('calendar.html')
+
+
+@app.route('/data')
+def data():
+    callist = list()
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM eventos')
+    data = cur.fetchall()
+    print(data)
+    for row in data:
+        callist.append({'start': row.start, 'title': row.title})
+    # print(cl)
+    print(Response(json.dumps(callist),  mimetype='application/json'))
+    return Response(json.dumps(callist),  mimetype='application/json')
+
+    # return "hola"
+
+
+@app.route('/evento')
+def evento():
+    return render_template('evento.html')
+
+
+@app.route('/add_event', methods=['POST'])
+def add_event():
+    if request.method == 'POST':
+        title = request.form['title']
+        color = request.form['color']
+        start = request.form['start']
+        end = request.form['end']
+        cur = mysql.connection.cursor()
+        cur = mysql.connection.cursor()
+        cur.execute(
+            'INSERT INTO eventos (title, color, start, end) VALUES(%s, %s, %s, %s)', (title, color, start, end))
+        mysql.connection.commit()
+        return redirect(url_for('calendar'))
 
 
 @app.route('/logout')
@@ -165,3 +203,5 @@ if __name__ == '__main__':
 # mysql en rapi https://www.youtube.com/watch?v=axceWuN0en0 / https://stackoverflow.com/questions/45628814/how-do-you-install-mysql-for-flask
 
 # https://stackoverflow.com/questions/45628814/how-do-you-install-mysql-for-flask
+
+# https://fullcalendar.io/docs/event-source
