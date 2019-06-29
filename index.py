@@ -1,12 +1,32 @@
 
+import datetime as dt
 from flask import Flask, render_template, request, url_for, redirect, flash, session, Response
 from flask_mysqldb import MySQL, MySQLdb
 import bcrypt
-import json
+from flask import jsonify, json
 from static.py.mensajes import *
 
 
+from flask.json import JSONEncoder
+from datetime import date
+
+
+class CustomJSONEncoder(JSONEncoder):
+
+    def default(self, obj):
+        try:
+            if isinstance(obj, date):
+                return obj.isoformat()
+            iterable = iter(obj)
+        except TypeError:
+            pass
+        else:
+            return list(iterable)
+        return JSONEncoder.default(self, obj)
+
+
 app = Flask(__name__)
+app.json_encoder = CustomJSONEncoder
 
 
 # MYSQL connection
@@ -65,14 +85,21 @@ def calendar():
 
 @app.route('/data')
 def data():
+
+    now = dt.datetime.now()
+    print(jsonify({'now': now}))
     callist = list()
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM eventos')
     data = cur.fetchall()
+    print("data es")
     print(data)
+    print("fin data")
     for row in data:
-        callist.append({'start': row.start, 'title': row.title})
-    # print(cl)
+        callist.append({'start': row[3], 'title': row[1]})
+    print("call list")
+    print(callist)
+    print("fin list")
     print(Response(json.dumps(callist),  mimetype='application/json'))
     return Response(json.dumps(callist),  mimetype='application/json')
 

@@ -1,5 +1,18 @@
 # Diccionario de mensajes
 
+calendario = [
+    {
+        'title': "All Day Event",
+        'start': "2019-06-01"
+    },
+    {
+        'groupId': 999,
+        'title': "Repeating Event",
+        'start': "2019-06-09T16:00:00"
+    }
+]
+
+
 inicio = [
     {
         'author': 'Bienvenido',
