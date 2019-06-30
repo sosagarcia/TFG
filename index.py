@@ -1,13 +1,12 @@
 
+from datetime import date
+from flask.json import JSONEncoder
 import datetime as dt
 from flask import Flask, render_template, request, url_for, redirect, flash, session, Response
 from flask_mysqldb import MySQL, MySQLdb
 import bcrypt
 from flask import jsonify, json
 from static.py.mensajes import *
-
-
-from flask.json import JSONEncoder
 from datetime import date
 
 
@@ -103,7 +102,12 @@ def data():
     print(Response(json.dumps(callist),  mimetype='application/json'))
     return Response(json.dumps(callist),  mimetype='application/json')
 
-    # return "hola"
+
+# @app.route('/today')
+# def today():
+#    hoy = date.today()
+#
+#   return Response(json.dumps(hoy),  mimetype='application/json')
 
 
 @app.route('/evento')
