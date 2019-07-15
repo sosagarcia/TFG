@@ -30,8 +30,8 @@ app.json_encoder = CustomJSONEncoder
 
 # MYSQL connection
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'renato'
-app.config['MYSQL_PASSWORD'] = 'Jota.1584'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'admin'
 app.config['MYSQL_DB'] = 'flaskcontacts'
 mysql = MySQL(app)
 
@@ -95,7 +95,7 @@ def data():
     print(data)
     print("fin data")
     for row in data:
-        callist.append({'start': row[3], 'title': row[1]})
+        callist.append({'start': row[3], 'end': row[4], 'title': row[1]})
     print("call list")
     print(callist)
     print("fin list")
@@ -122,6 +122,7 @@ def add_event():
         color = request.form['color']
         start = request.form['start']
         end = request.form['end']
+        print(title)
         cur = mysql.connection.cursor()
         cur = mysql.connection.cursor()
         cur.execute(
