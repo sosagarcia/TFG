@@ -2,21 +2,21 @@
 
 
 {% block body %}
-<div class="wrapper fadeInDown">
-  <div id="formContent">
+<div class="modal-body">
 
-    <!-- Login Form -->
-    <form action="/add_event" method="POST">
-      <input type="text" id="login" class="fadeIn second" name="title" placeholder="titulo" />
-      <input type="text" id="login" class="fadeIn second" name="color" placeholder="color" />
-      <input type="datetime-local" name="start">
-      <input type="datetime-local" name="end">
 
-      <input type="submit" class="fadeIn fourth" value="Guardar" />
+  <!-- Login Form -->
+  <form action="/add_event" method="POST">
+    <input type="text" id="login" class="form-control" name="title" placeholder="titulo" />
+    <input type="color" id="login" class="form-control" name="color" placeholder="color" />
+    <input type="datetime-local" class="form-control" name="start">
+    <input type="datetime-local" class="form-control" name="end">
 
-  </div>
+    <input type="submit" class="fadeIn fourth" value="Guardar" />
+
 </div>
-</div>
+
+
 
 
 {% endblock %}

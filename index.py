@@ -95,7 +95,8 @@ def data():
     print(data)
     print("fin data")
     for row in data:
-        callist.append({'start': row[3], 'end': row[4], 'title': row[1]})
+        callist.append(
+            {'title': row[1], 'color': row[2], 'start': row[3], 'end': row[4]})
     print("call list")
     print(callist)
     print("fin list")
@@ -237,3 +238,4 @@ if __name__ == '__main__':
 # https://stackoverflow.com/questions/45628814/how-do-you-install-mysql-for-flask
 
 # https://fullcalendar.io/docs/event-source
+# Full calendar add events https://www.youtube.com/watch?v=OePNkDd3Yb8
