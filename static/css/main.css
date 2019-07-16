@@ -1,3 +1,12 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: url(../img/Fondo1.jpeg) no-repeat center top fixed;
+  background-size: cover;
+  font-family: sans-serif;
+  height: 100vh;
+}
+
 .margenes {
   margin-top: 4%;
   margin-left: 4px;
