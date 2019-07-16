@@ -7,7 +7,6 @@ from flask_mysqldb import MySQL, MySQLdb
 import bcrypt
 from flask import jsonify, json
 from static.py.mensajes import *
-from datetime import date
 
 
 class CustomJSONEncoder(JSONEncoder):
@@ -58,7 +57,7 @@ def login():
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM contacts WHERE email = %s", (email,))
         user = cur.fetchone()
-        print(user)
+
         cur.close()
 
         if user is None:
@@ -79,28 +78,23 @@ def login():
 @app.route('/calendar')
 def calendar():
 
-    return render_template('calendar.html')
+    return render_template('calendar.html', mensaje=cal)
 
 
 @app.route('/data')
 def data():
 
     now = dt.datetime.now()
-    print(jsonify({'now': now}))
+
     callist = list()
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM eventos')
     data = cur.fetchall()
-    print("data es")
-    print(data)
-    print("fin data")
+
     for row in data:
         callist.append(
             {'title': row[1], 'color': row[2], 'start': row[3], 'end': row[4]})
-    print("call list")
-    print(callist)
-    print("fin list")
-    print(Response(json.dumps(callist),  mimetype='application/json'))
+
     return Response(json.dumps(callist),  mimetype='application/json')
 
 
@@ -113,7 +107,7 @@ def data():
 
 @app.route('/evento')
 def evento():
-    return render_template('evento.html')
+    return render_template('evento.html', mensaje=cal)
 
 
 @app.route('/add_event', methods=['POST'])
@@ -123,7 +117,11 @@ def add_event():
         color = request.form['color']
         start = request.form['start']
         end = request.form['end']
-        print(title)
+
+        if len(title and start and end) == 0:
+            return render_template('calendar.html', mensaje=vacioE)
+        if (end < start):
+            return render_template('calendar.html', mensaje=menor)
         cur = mysql.connection.cursor()
         cur = mysql.connection.cursor()
         cur.execute(

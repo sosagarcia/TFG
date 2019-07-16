@@ -82,3 +82,30 @@ vacio = [
         'tipo': 'danger'
     }
 ]
+
+vacioE = [
+    {
+        'author': 'Todos los campos son obligatorios',
+        'titulo': 'Error al registrar evento',
+        'mensaje': 'Se deben de rellenar todos los campos para poder registrar un evento',
+        'tipo': 'danger'
+    }
+]
+
+menor = [
+    {
+        'author': 'Fechas incorrectas',
+        'titulo': 'Error al registrar evento',
+        'mensaje': 'La fecha de fin debe de ser posterior a la fecha de inicio',
+        'tipo': 'danger'
+    }
+]
+
+cal = [
+    {
+        'author': 'Registro de evento',
+        'titulo': 'Formulario',
+        'mensaje': 'Rellene todos los campos para añadir un evento',
+        'tipo': 'primary'
+    }
+]

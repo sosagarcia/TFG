@@ -3,9 +3,48 @@
 <link href="../static/css/calendar/daygrid.css" rel="stylesheet" />
 <link href="../static/css/calendar/timegrid.css" rel="stylesheet" />
 <link href="../static/css/calendar/list.css" rel="stylesheet" />
+<link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}" />
 
 {% endblock %} {% block body %}
-<div id="calendar"></div>
+<div class="">
+  <div class="row">
+    <div class="col" id="calendar"></div>
+    <div class="col">
+      <div class="wrapper fadeInDown">
+        <div id="formContent">
+          <!-- Mensaje -->
+          <div class="fadeIn first">
+            {% for mensaje in mensaje %}
+            <div class="card text-white bg-{{ mensaje.tipo }} mb-3 ">
+              <div class="card-header">{{ mensaje.titulo }}</div>
+              <div class="card-body">
+                <h4 class="card-title">{{ mensaje.author }}</h4>
+                <p class="card-text">{{ mensaje.mensaje }}</p>
+              </div>
+
+              {% endfor %}
+            </div>
+
+            <!-- Login Form -->
+            <form action="/add_event" method="POST">
+              <input type="text" id="login" class="fadeIn second" name="title" placeholder="Nombre del evento" />
+              <select name="color">
+                <option value="#ff0000">Rojo</option>
+                <option value="#00ff00">Verde</option>
+                <option value="#ffff00">Amarillo</option>
+                <option value="#81d6fe">Azul</option>
+              </select>
+              <input type="datetime-local" id="login" class="fadeIn second" name="start" placeholder="Email" />
+              <input type="datetime-local" id="login" class="fadeIn third" name="end" placeholder="Contraseña" />
+              <input type="submit" class="fadeIn fourth" value="Guardar" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 {% endblock %} {% block script %}
 
@@ -18,9 +57,10 @@
 <script src="../static/js/calendar/rrule.js"></script>
 <script src="../static/js/calendar/es.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", function () {
     var calendarEl = document.getElementById("calendar");
     var calendar = new FullCalendar.Calendar(calendarEl, {
+      locale: 'es',
       plugins: ["dayGrid", "timeGrid", "list", "interaction"],
       header: {
         left: "prev,next today",
