@@ -130,6 +130,10 @@ def add_event():
             return render_template('calendar.html', mensaje=vacioE)
         if (end < start):
             return render_template('calendar.html', mensaje=menor)
+        #Comprobar si start o end está entre el start o el end de algún otro evento 
+        
+
+        
         cur = mysql.connection.cursor()
         cur = mysql.connection.cursor()
         cur.execute(
