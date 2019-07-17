@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}" />
 
 {% endblock %} {% block body %}
-<div class="">
+<div>
   <div class="row">
     <div class="col" id="calendar"></div>
     <div class="col">
@@ -35,8 +35,20 @@
                 <option value="#ffff00">Amarillo</option>
                 <option value="#81d6fe">Azul</option>
               </select>
-              <input type="datetime-local" id="login" class="fadeIn second" name="start" placeholder="Email" />
-              <input type="datetime-local" id="login" class="fadeIn third" name="end" placeholder="Contraseña" />
+              <input
+                type="datetime-local"
+                id="login"
+                class="fadeIn second"
+                name="start"
+                placeholder="Email"
+              />
+              <input
+                type="datetime-local"
+                id="login"
+                class="fadeIn third"
+                name="end"
+                placeholder="Contraseña"
+              />
               <input type="submit" class="fadeIn fourth" value="Guardar" />
             </form>
           </div>
@@ -45,7 +57,6 @@
     </div>
   </div>
 </div>
-
 
 {% endblock %} {% block script %}
 
@@ -58,10 +69,10 @@
 <script src="../static/js/calendar/rrule.js"></script>
 <script src="../static/js/calendar/es.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function() {
     var calendarEl = document.getElementById("calendar");
     var calendar = new FullCalendar.Calendar(calendarEl, {
-      locale: 'es',
+      locale: "es",
 
       plugins: ["dayGrid", "timeGrid", "list", "interaction"],
       header: {
@@ -74,9 +85,7 @@
       navLinks: true, // can click day/week names to navigate views
       editable: true,
       eventLimit: true, // allow "more" link when too many events
-      events: { url: "data" },
-
-
+      events: { url: "data" }
     });
     calendar.render();
   });

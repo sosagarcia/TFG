@@ -1,5 +1,5 @@
 
-from datetime import date
+from datetime import date, datetime
 from flask.json import JSONEncoder
 import datetime as dt
 from flask import Flask, render_template, request, url_for, redirect, flash, session, Response
@@ -7,7 +7,7 @@ from flask_mysqldb import MySQL, MySQLdb
 import bcrypt
 from flask import jsonify, json
 from static.py.mensajes import *
-from static.py.users import *
+
 
 
 class CustomJSONEncoder(JSONEncoder):
@@ -30,13 +30,46 @@ app.json_encoder = CustomJSONEncoder
 
 # MYSQL connection
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'admin'
+app.config['MYSQL_USER'] = 'renato'
+app.config['MYSQL_PASSWORD'] = 'Jota.1584'
 app.config['MYSQL_DB'] = 'flaskcontacts'
 mysql = MySQL(app)
 
 # Settings
 app.secret_key = 'mysecretkey'
+
+
+# Funciones
+def conn(texto):
+    cur = mysql.connection.cursor()
+    cur.execute(texto)
+    data = cur.fetchall()
+    return data
+
+def users(data):
+    result = "<select name= 'title'> "
+    for i in data:
+        result += '<option value="%s"selected>%s</option>' % (i, i)
+    result += '</select>'
+    return (result)
+
+def usuarios():
+
+    
+    data = conn ('SELECT fullname FROM contacts')
+    data = [i for sub in data for i in sub]
+    return data
+
+def entre(fecha):
+    fecha = datetime.strptime(fecha,'%Y-%m-%dT%H:%M')
+    print (type (fecha))
+    data = conn ('SELECT start, end FROM eventos')
+    data = [i for sub in data for i in sub]
+    max = len(data)
+    for i in range(0,max,2):
+        if (data[i] < fecha < data[i+1]):
+            return 1
+    return 0    
 
 
 @app.route('/')
@@ -85,9 +118,7 @@ def calendar():
 @app.route('/data')
 def data():
     callist = list()
-    cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM eventos')
-    data = cur.fetchall()
+    data = conn ('SELECT * FROM eventos')
 
     for row in data:
         callist.append(
@@ -95,15 +126,6 @@ def data():
 
     return Response(json.dumps(callist),  mimetype='application/json')
 
-
-@app.route('/usuarios')
-def usuarios():
-
-    cur = mysql.connection.cursor()
-    cur.execute('SELECT fullname FROM contacts')
-    data = cur.fetchall()
-    data = [i for sub in data for i in sub]
-    return data
 
 
 # @app.route('/today')
@@ -125,22 +147,26 @@ def add_event():
         color = request.form['color']
         start = request.form['start']
         end = request.form['end']
-
+        listado = users(usuarios())
         if len(title and start and end) == 0:
-            return render_template('calendar.html', mensaje=vacioE)
+            return render_template('calendar.html', mensaje=vacioE, lista=listado)
         if (end < start):
-            return render_template('calendar.html', mensaje=menor)
-        #Comprobar si start o end está entre el start o el end de algún otro evento 
-        
-
-        
-        cur = mysql.connection.cursor()
+            return render_template('calendar.html', mensaje=menor, lista=listado)
+        #Comprobar si start o end está entre el start o el end de algún otro evento
+        if (entre (start) or entre (end)):
+            return render_template('calendar.html', mensaje=fechae, lista=listado)
+    
         cur = mysql.connection.cursor()
         cur.execute(
             'INSERT INTO eventos (title, color, start, end) VALUES(%s, %s, %s, %s)', (title, color, start, end))
         mysql.connection.commit()
-        return redirect(url_for('calendar'))
+        return render_template('calendar.html', mensaje=event, lista=listado)
 
+
+@app.route('/test')
+def test():
+    
+    print(entre())
 
 @app.route('/logout')
 def logout():
@@ -197,9 +223,8 @@ def estadisticas():
 
 @app.route('/lista')
 def lista():
-    cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM contacts')
-    data = cur.fetchall()
+    
+    data = conn('SELECT * FROM contacts')
     return render_template('lista.html', contactos=data, title='Lista')
 
 
@@ -229,6 +254,8 @@ def add_contact():
                 mysql.connection.commit()
                 flash('El contacto ha sido agregado correctamente ')
                 return redirect(url_for('lista'))
+
+
 
 
 if __name__ == '__main__':
