@@ -7,6 +7,7 @@ from flask_mysqldb import MySQL, MySQLdb
 import bcrypt
 from flask import jsonify, json
 from static.py.mensajes import *
+from static.py.users import *
 
 
 class CustomJSONEncoder(JSONEncoder):
@@ -77,15 +78,12 @@ def login():
 
 @app.route('/calendar')
 def calendar():
-
-    return render_template('calendar.html', mensaje=cal)
+    listado = users(usuarios())
+    return render_template('calendar.html', mensaje=cal, lista=listado)
 
 
 @app.route('/data')
 def data():
-
-    now = dt.datetime.now()
-
     callist = list()
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM eventos')
@@ -96,6 +94,16 @@ def data():
             {'title': row[1], 'color': row[2], 'start': row[3], 'end': row[4]})
 
     return Response(json.dumps(callist),  mimetype='application/json')
+
+
+@app.route('/usuarios')
+def usuarios():
+
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT fullname FROM contacts')
+    data = cur.fetchall()
+    data = [i for sub in data for i in sub]
+    return data
 
 
 # @app.route('/today')

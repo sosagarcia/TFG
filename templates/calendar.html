@@ -28,6 +28,7 @@
             <!-- Login Form -->
             <form action="/add_event" method="POST">
               <input type="text" id="login" class="fadeIn second" name="title" placeholder="Nombre del evento" />
+              {{ lista | safe }}
               <select name="color">
                 <option value="#ff0000">Rojo</option>
                 <option value="#00ff00">Verde</option>
@@ -61,6 +62,7 @@
     var calendarEl = document.getElementById("calendar");
     var calendar = new FullCalendar.Calendar(calendarEl, {
       locale: 'es',
+
       plugins: ["dayGrid", "timeGrid", "list", "interaction"],
       header: {
         left: "prev,next today",
@@ -72,7 +74,9 @@
       navLinks: true, // can click day/week names to navigate views
       editable: true,
       eventLimit: true, // allow "more" link when too many events
-      events: { url: "data" }
+      events: { url: "data" },
+
+
     });
     calendar.render();
   });
