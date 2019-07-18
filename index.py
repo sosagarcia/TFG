@@ -54,6 +54,7 @@ def users(data):
     return (result)
 
 def usuarios():
+    
 
     
     data = conn ('SELECT fullname FROM contacts')
