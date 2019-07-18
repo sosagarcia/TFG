@@ -21,6 +21,10 @@
     />
     <link
       rel="stylesheet"
+      href="{{url_for('static', filename='css/login.css')}}"
+    />
+    <link
+      rel="stylesheet"
       href="{{url_for('static', filename='css/main.css')}}"
     />
 
@@ -30,7 +34,9 @@
   </head>
 
   <header>
-    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+    <nav
+      class="navbar navbar-expand-md navbar-dark bg-primary {% if primer %} fadeInDown {% endif %}"
+    >
       <div
         class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2"
       >
@@ -73,7 +79,9 @@
   </header>
 
   <body>
-    {% block body %} {% endblock %}
+    <div class="mt-4 ml-4 mr-4">
+      {% block body %} {% endblock %}
+    </div>
   </body>
 
   <!-- Optional JavaScript -->

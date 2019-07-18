@@ -3,12 +3,11 @@
 <link href="../static/css/calendar/daygrid.css" rel="stylesheet" />
 <link href="../static/css/calendar/timegrid.css" rel="stylesheet" />
 <link href="../static/css/calendar/list.css" rel="stylesheet" />
-<link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}" />
 
 {% endblock %} {% block body %}
 <div>
   <div class="row">
-    <div class="col" id="calendar"></div>
+    <div class="col ml-4 fadeIn first" id="calendar"></div>
     <div class="col">
       <div class="wrapper fadeInDown">
         <div id="formContent">
@@ -57,6 +56,54 @@
   </div>
 </div>
 
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-primary"
+  data-toggle="modal"
+  data-target="#exampleModal"
+>
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Evento</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cerrar
+        </button>
+        <button type="button" class="btn btn-danger">
+          Borrar Evento
+        </button>
+        <button type="button" class="btn btn-success">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %} {% block script %}
 
 <script src="../static/js/calendar/vendorRrule.js"></script>
@@ -84,7 +131,18 @@
       navLinks: true, // can click day/week names to navigate views
       editable: true,
       eventLimit: true, // allow "more" link when too many events
-      events: { url: "data" }
+      events: { url: "data" },
+
+      eventClick: function(info, jsEvent) {
+        $("#exampleModal").modal();
+
+        //lert("Event: " + info.event.title);
+        //alert("Coordinates: " + info.jsEvent.pageX + "," + info.jsEvent.pageY);
+        //alert("View: " + info.view.type);
+
+        // change the border color just for fun
+        //info.el.style.borderColor = "red";
+      }
     });
     calendar.render();
   });

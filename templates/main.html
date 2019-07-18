@@ -1,9 +1,18 @@
 {% extends "layout.html" %} {% block body %}
 
-<div class="row ustify-content-center justify-content-md-start">
+<div class="row ustify-content-center justify-content-md-start  ">
   <!-- Izquierda -->
-  <div class=" col-xs-6 col-md-2 ">
-    <div class="card text-white bg-danger mb-2">
+  <div class="col-auto col-md-2 ">
+    {% if primer %}
+    <div class="card text-white bg-success mb-2 fadeInDown ">
+      <div class="card-header">¡Exito!</div>
+      <div class="card-body">
+        <h4 class="card-title">Se ha iniciado sesión correctamente</h4>
+        <p class="card-text">Bienvenido/a {{ session["name"] }} .</p>
+      </div>
+    </div>
+    {% endif %}
+    <div class="card text-white bg-danger mb-2 ">
       <div class="card-header">¡Peligro!</div>
       <div class="card-body">
         <h4 class="card-title">Danger card title</h4>
@@ -13,15 +22,6 @@
         </p>
       </div>
     </div>
-    {% if session['name'] %}
-    <div class="card text-white bg-success mb-2">
-      <div class="card-header">¡Exito!</div>
-      <div class="card-body">
-        <h4 class="card-title">Se ha iniciado sesión correctamente</h4>
-        <p class="card-text">Bienvenido/a {{ session["name"] }} .</p>
-      </div>
-    </div>
-    {% endif %}
     <div class="card text-white bg-dark mb-2">
       <div class="card-header">Header</div>
       <div class="card-body">
@@ -56,9 +56,9 @@
   </div>
 
   <!-- Centro -->
-  <div class="col-xs-6 col-md-7 colorPrueba">centtro</div>
+  <div class="col-xs-6 col-md-7 colorPrueba fadeIn first">centtro</div>
   <!-- Derecha -->
-  <div class="col-xs-6 col-md-2  ">
+  <div class="col-auto col-md-2 fadeIn second">
     <img src="..." class="card-img-top" alt="..." />
     <div class="card-body">
       <h5 class="card-title">Card title</h5>

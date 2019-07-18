@@ -6,6 +6,7 @@ verify_ssl = true
 [dev-packages]
 pylint = "*"
 autopep8 = "*"
+flake8 = "*"
 
 [packages]
 bcrypt = "==3.1.7"
@@ -14,4 +15,3 @@ flak-mysqldb = "*"
 
 [requires]
 python_version = "3.6"
-

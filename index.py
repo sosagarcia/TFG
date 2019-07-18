@@ -54,7 +54,7 @@ def users(data):
     return (result)
 
 def usuarios():
-    
+
 
     
     data = conn ('SELECT fullname FROM contacts')
@@ -102,7 +102,7 @@ def login():
             if bcrypt.checkpw(password, user[4].encode('utf-8')):
                 session['name'] = user[1]
                 session['email'] = user[3]
-                return render_template("main.html")
+                return render_template("main.html", primer=1 )
             else:
                 return render_template("index.html", mensaje=contra)
 
@@ -172,7 +172,7 @@ def test():
 @app.route('/logout')
 def logout():
     return render_template('index.html', mensaje=adios)
-    session['name'] = ""
+    session['name'] = none
 
 
 @app.route('/registro')
@@ -276,4 +276,4 @@ if __name__ == '__main__':
 # https://stackoverflow.com/questions/45628814/how-do-you-install-mysql-for-flask
 
 # https://fullcalendar.io/docs/event-source
-# Full calendar add events https://www.youtube.com/watch?v=OePNkDd3Yb8
+# Full calendar edit events https://www.youtube.com/watch?v=k9b0GjdqAnA&list=PLSuKjujFoGJ3xqSJHnZUR-INEO71t1znq&index=4
