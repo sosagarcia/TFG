@@ -74,6 +74,7 @@ usua = [
         'tipo': 'danger'
     }
 ]
+
 vacio = [
     {
         'author': 'Todos los campos son obligatorios',
