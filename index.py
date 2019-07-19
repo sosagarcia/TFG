@@ -30,8 +30,8 @@ app.json_encoder = CustomJSONEncoder
 
 # MYSQL connection
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'renato'
-app.config['MYSQL_PASSWORD'] = 'Jota.1584'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'admin'
 app.config['MYSQL_DB'] = 'flaskcontacts'
 mysql = MySQL(app)
 
@@ -276,4 +276,4 @@ if __name__ == '__main__':
 # https://stackoverflow.com/questions/45628814/how-do-you-install-mysql-for-flask
 
 # https://fullcalendar.io/docs/event-source
-# Full calendar edit events https://www.youtube.com/watch?v=k9b0GjdqAnA&list=PLSuKjujFoGJ3xqSJHnZUR-INEO71t1znq&index=4
+# Full calendar edit events https://www.youtube.com/watch?v=ByyXkD25RfM&list=PLSuKjujFoGJ3xqSJHnZUR-INEO71t1znq&index=8

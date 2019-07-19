@@ -33,20 +33,8 @@
                 <option value="#ffff00">Amarillo</option>
                 <option value="#81d6fe">Azul</option>
               </select>
-              <input
-                type="datetime-local"
-                id="login"
-                class="fadeIn second"
-                name="start"
-                placeholder="Email"
-              />
-              <input
-                type="datetime-local"
-                id="login"
-                class="fadeIn third"
-                name="end"
-                placeholder="Contraseña"
-              />
+              <input type="datetime-local" id="login" class="fadeIn second" name="start" placeholder="Email" />
+              <input type="datetime-local" id="login" class="fadeIn third" name="end" placeholder="Contraseña" />
               <input type="submit" class="fadeIn fourth" value="Guardar" />
             </form>
           </div>
@@ -57,39 +45,25 @@
 </div>
 
 <!-- Button trigger modal -->
-<button
-  type="button"
-  class="btn btn-primary"
-  data-toggle="modal"
-  data-target="#exampleModal"
->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
   Launch demo modal
 </button>
 
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="exampleModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Editar Evento</h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
+        <h5 class="modal-title" id="tituloEvento">Editar Evento</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+        <div id="inicioEvento"></div>
+        <div id="finEvento"></div>
+        <div id="inicioEvento"></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -115,7 +89,7 @@
 <script src="../static/js/calendar/rrule.js"></script>
 <script src="../static/js/calendar/es.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", function () {
     var calendarEl = document.getElementById("calendar");
     var calendar = new FullCalendar.Calendar(calendarEl, {
       locale: "es",
@@ -132,10 +106,12 @@
       editable: true,
       eventLimit: true, // allow "more" link when too many events
       events: { url: "data" },
+      eventClick: function (info, jsEvent, view) {
 
-      eventClick: function(info, jsEvent) {
+        $("#tituloEvento").html(info.event.title);
+        $("#inicioEvento").html(info.event.start);
+        $("#finEvento").html(info.event.end);
         $("#exampleModal").modal();
-
         //lert("Event: " + info.event.title);
         //alert("Coordinates: " + info.jsEvent.pageX + "," + info.jsEvent.pageY);
         //alert("View: " + info.view.type);
