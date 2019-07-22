@@ -158,7 +158,7 @@ def add_event():
             return render_template('calendar.html', mensaje=vacioE, lista=listado)
         if (end < start):
             return render_template('calendar.html', mensaje=menor, lista=listado)
-        # Comprobar si start o end está entre el start o el end de algún otro evento
+        # Comprobar si start o end está entre el start o el end de algun otro evento
         if (entre(start) or entre(end)):
             return render_template('calendar.html', mensaje=fechae, lista=listado)
 
