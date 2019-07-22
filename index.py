@@ -9,7 +9,6 @@ from flask import jsonify, json
 from static.py.mensajes import *
 
 
-
 class CustomJSONEncoder(JSONEncoder):
 
     def default(self, obj):
@@ -46,31 +45,35 @@ def conn(texto):
     data = cur.fetchall()
     return data
 
+
 def users(data):
     result = "<select name= 'title'> "
-    for i in data:
-        result += '<option value="%s"selected>%s</option>' % (i, i)
+    max = len(data)
+    for i in range(0, max, 2):
+        result += '<option value="%s"selected>%s</option>' % (
+            data[i + 1], data[i])
     result += '</select>'
     return (result)
 
+
 def usuarios():
 
-
-    
-    data = conn ('SELECT fullname FROM contacts')
+    data = conn('SELECT fullname, id FROM contacts')
     data = [i for sub in data for i in sub]
+    
     return data
 
+
 def entre(fecha):
-    fecha = datetime.strptime(fecha,'%Y-%m-%dT%H:%M')
-    print (type (fecha))
-    data = conn ('SELECT start, end FROM eventos')
+    fecha = datetime.strptime(fecha, '%Y-%m-%dT%H:%M')
+    
+    data = conn('SELECT start, end FROM eventos')
     data = [i for sub in data for i in sub]
     max = len(data)
-    for i in range(0,max,2):
+    for i in range(0, max, 2):
         if (data[i] < fecha < data[i+1]):
             return 1
-    return 0    
+    return 0
 
 
 @app.route('/')
@@ -102,7 +105,7 @@ def login():
             if bcrypt.checkpw(password, user[4].encode('utf-8')):
                 session['name'] = user[1]
                 session['email'] = user[3]
-                return render_template("main.html", primer=1 )
+                return render_template("main.html", primer=1)
             else:
                 return render_template("index.html", mensaje=contra)
 
@@ -119,14 +122,13 @@ def calendar():
 @app.route('/data')
 def data():
     callist = list()
-    data = conn ('SELECT * FROM eventos')
+    data = conn('SELECT * FROM eventos')
 
     for row in data:
         callist.append(
             {'title': row[1], 'color': row[2], 'start': row[3], 'end': row[4]})
 
     return Response(json.dumps(callist),  mimetype='application/json')
-
 
 
 # @app.route('/today')
@@ -144,30 +146,34 @@ def evento():
 @app.route('/add_event', methods=['POST'])
 def add_event():
     if request.method == 'POST':
-        title = request.form['title']
+        idUser = request.form['title']
         color = request.form['color']
         start = request.form['start']
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT fullname FROM contacts WHERE id = %s", (idUser,))
+        title = cur.fetchone()
         end = request.form['end']
         listado = users(usuarios())
         if len(title and start and end) == 0:
             return render_template('calendar.html', mensaje=vacioE, lista=listado)
         if (end < start):
             return render_template('calendar.html', mensaje=menor, lista=listado)
-        #Comprobar si start o end está entre el start o el end de algún otro evento
-        if (entre (start) or entre (end)):
+        # Comprobar si start o end está entre el start o el end de algún otro evento
+        if (entre(start) or entre(end)):
             return render_template('calendar.html', mensaje=fechae, lista=listado)
-    
+
         cur = mysql.connection.cursor()
         cur.execute(
-            'INSERT INTO eventos (title, color, start, end) VALUES(%s, %s, %s, %s)', (title, color, start, end))
+            'INSERT INTO eventos (title, color, start, end, idUser) VALUES(%s, %s, %s, %s, %s)', (title, color, start, end, idUser))
         mysql.connection.commit()
         return render_template('calendar.html', mensaje=event, lista=listado)
 
 
 @app.route('/test')
 def test():
-    
+
     print(entre())
+
 
 @app.route('/logout')
 def logout():
@@ -224,7 +230,7 @@ def estadisticas():
 
 @app.route('/lista')
 def lista():
-    
+
     data = conn('SELECT * FROM contacts')
     return render_template('lista.html', contactos=data, title='Lista')
 
@@ -257,8 +263,6 @@ def add_contact():
                 return redirect(url_for('lista'))
 
 
-
-
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
     # app.run()
@@ -276,4 +280,4 @@ if __name__ == '__main__':
 # https://stackoverflow.com/questions/45628814/how-do-you-install-mysql-for-flask
 
 # https://fullcalendar.io/docs/event-source
-# Full calendar edit events https://www.youtube.com/watch?v=ByyXkD25RfM&list=PLSuKjujFoGJ3xqSJHnZUR-INEO71t1znq&index=8
+# Full calendar edit events https://www.youtube.com/watch?v=8OOddEiM55A&list=PLSuKjujFoGJ3xqSJHnZUR-INEO71t1znq&index=11

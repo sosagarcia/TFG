@@ -61,10 +61,15 @@
         </button>
       </div>
       <div class="modal-body">
-        <div id="inicioEvento"></div>
-        <div id="finEvento"></div>
-        <div id="inicioEvento"></div>
+
+        Usuario : {{ lista | safe }} <br />
+        Inicio: <input type="text" id="txtFechaI" name="txtFechaI"><br>
+        Fin: <input type="text" id="txtFechaF" name="txtFechaF"><br />
+        Color: <input type="color" id="txtColor" value="#ff0000" name="txtColor"><br />
+
+
       </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Cerrar
@@ -77,6 +82,9 @@
     </div>
   </div>
 </div>
+
+
+
 
 {% endblock %} {% block script %}
 
@@ -105,7 +113,9 @@
       navLinks: true, // can click day/week names to navigate views
       editable: true,
       eventLimit: true, // allow "more" link when too many events
+
       events: { url: "data" },
+
       eventClick: function (info, jsEvent, view) {
 
         $("#tituloEvento").html(info.event.title);
