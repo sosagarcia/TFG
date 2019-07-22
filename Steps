@@ -1,5 +1,6 @@
 1 Instala y configurar  herramientas (visual studio/ Python /
  Apache: https://www.digitalocean.com/community/tutorials/como-instalar-el-servidor-web-apache-en-ubuntu-18-04-es) / github / 
+ http://www.knight-of-pi.org/installing-python3-6-on-a-raspberry-pi/
 
  Crear entorno virtual (https://www.youtube.com/watch?v=-XIsKyNWILo)
  instalar phpmyAdmin (https://maslinux.es/guia-facil-para-instalar-phpmyadmin-en-ubuntu/)
@@ -9,3 +10,7 @@
  sudo apt-get install python3.6-dev libmysqlclient-dev para poder instalar pip3 flask-mysqldb
  instalar php sudo apt-get install php7  
  https://www.redeszone.net/2017/08/26/instalar-php-7-0-php-7-1-ubuntu/
+
+
+
+ Despliegue de flask en apache https://www.codementor.io/abhishake/minimal-apache-configuration-for-deploying-a-flask-app-ubuntu-18-04-phu50a7ft
