@@ -1,4 +1,4 @@
-#! /usr/bin/python3
+#! /usr/bin/python3.7
 
 from index import app as application
 import logging
