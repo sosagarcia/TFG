@@ -3,7 +3,7 @@ from datetime import date, datetime
 from flask.json import JSONEncoder
 import datetime as dt
 from flask import Flask, render_template, request, url_for, redirect, flash, session, Response
-from flask_mysqldb import MySQL, MySQLdb
+from flaskext.mysql import MySQL
 import bcrypt
 from flask import jsonify, json
 from static.py.mensajes import *
@@ -28,10 +28,10 @@ app.json_encoder = CustomJSONEncoder
 
 
 # MYSQL connection
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'renato'
-app.config['MYSQL_PASSWORD'] = 'Jota.1584'
-app.config['MYSQL_DB'] = 'flaskcontacts'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['MYSQL_DATABASE_USER'] = 'renato'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'renato12'
+app.config['MYSQL_DATABASE_DB'] = 'flaskcontacts'
 mysql = MySQL(app)
 
 # Settings
@@ -40,7 +40,7 @@ app.secret_key = 'mysecretkey'
 
 # Funciones
 def conn(texto):
-    cur = mysql.connection.cursor()
+    cur = mysql.get_db().cursor()
     cur.execute(texto)
     data = cur.fetchall()
     return data
@@ -60,13 +60,13 @@ def usuarios():
 
     data = conn('SELECT fullname, id FROM contacts')
     data = [i for sub in data for i in sub]
-    
+
     return data
 
 
 def entre(fecha):
     fecha = datetime.strptime(fecha, '%Y-%m-%dT%H:%M')
-    
+
     data = conn('SELECT start, end FROM eventos')
     data = [i for sub in data for i in sub]
     max = len(data)
@@ -92,7 +92,7 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password'].encode('utf-8')
-        cur = mysql.connection.cursor()
+        cur = mysql.get_db().cursor()
         cur.execute("SELECT * FROM contacts WHERE email = %s", (email,))
         user = cur.fetchone()
 
@@ -149,7 +149,7 @@ def add_event():
         idUser = request.form['title']
         color = request.form['color']
         start = request.form['start']
-        cur = mysql.connection.cursor()
+        cur = mysql.get_db().cursor()
         cur.execute("SELECT fullname FROM contacts WHERE id = %s", (idUser,))
         title = cur.fetchone()
         end = request.form['end']
@@ -162,7 +162,7 @@ def add_event():
         if (entre(start) or entre(end)):
             return render_template('calendar.html', mensaje=fechae, lista=listado)
 
-        cur = mysql.connection.cursor()
+        cur = mysql.get_db().cursor()
         cur.execute(
             'INSERT INTO eventos (title, color, start, end, idUser) VALUES(%s, %s, %s, %s, %s)', (title, color, start, end, idUser))
         mysql.connection.commit()
@@ -188,7 +188,7 @@ def registro():
 
 @app.route('/delete/<string:id>')
 def delete_contact(id):
-    cur = mysql.connection.cursor()
+    cur = mysql.get_db().cursor()
     cur.execute('DELETE FROM contacts WHERE id = {0}'.format(id))
     mysql.connection.commit()
     flash('Se ha borrado el contacto correctamente')
@@ -197,7 +197,7 @@ def delete_contact(id):
 
 @app.route('/edit/<id>')
 def edit_contact(id):
-    cur = mysql.connection.cursor()
+    cur = mysql.get_db().cursor()
     cur.execute('SELECT * FROM contacts WHERE id = %s', [id])
     data = cur.fetchall()
     return render_template('edit-contact.html', contact=data[0])
@@ -209,7 +209,7 @@ def update_contact(id):
         fullname = request.form['fullname']
         phone = request.form['phone']
         email = request.form['email']
-        cur = mysql.connection.cursor()
+        cur = mysql.get_db().cursor()
         cur.execute("""
 
             UPDATE contacts
@@ -248,14 +248,14 @@ def add_contact():
         elif password != repassword:
             return render_template('registro.html', title='Registro', mensaje=coincide)
         else:
-            cur = mysql.connection.cursor()
+            cur = mysql.get_db().cursor()
             cur.execute("SELECT * FROM contacts WHERE email = %s", (email,))
             user = cur.fetchone()
             if user is not None:
                 return render_template('registro.html', title='Registro', mensaje=usua)
             else:
                 hash_password = bcrypt.hashpw(password, bcrypt.gensalt())
-                cur = mysql.connection.cursor()
+                cur = mysql.get_db().cursor()
                 cur.execute(
                     'INSERT INTO contacts (fullname, phone, email, password) VALUES(%s, %s, %s, %s)', (fullname, phone, email, hash_password))
                 mysql.connection.commit()

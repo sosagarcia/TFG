@@ -14,3 +14,6 @@
 
 
  Despliegue de flask en apache https://www.codementor.io/abhishake/minimal-apache-configuration-for-deploying-a-flask-app-ubuntu-18-04-phu50a7ft
+ sudo pip3 install mod_wsgi NUNCA sudo apt install apache2-dev libapache2-mod-wsgi-py3
+
+ https://stackoverflow.com/questions/41535284/run-python3-script-on-linux-apache-2-4
