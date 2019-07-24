@@ -7,6 +7,8 @@ from flaskext.mysql import MySQL
 import bcrypt
 from flask import jsonify, json
 from static.py.mensajes import *
+#import mysql
+#import mysql.connector
 
 
 class CustomJSONEncoder(JSONEncoder):
@@ -23,16 +25,18 @@ class CustomJSONEncoder(JSONEncoder):
         return JSONEncoder.default(self, obj)
 
 
+mysql = MySQL()
 app = Flask(__name__)
 app.json_encoder = CustomJSONEncoder
 
 
 # MYSQL connection
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_USER'] = 'renato'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'renato12'
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'admin'
 app.config['MYSQL_DATABASE_DB'] = 'flaskcontacts'
-mysql = MySQL(app)
+mysql.init_app(app)
+
 
 # Settings
 app.secret_key = 'mysecretkey'
@@ -165,7 +169,7 @@ def add_event():
         cur = mysql.get_db().cursor()
         cur.execute(
             'INSERT INTO eventos (title, color, start, end, idUser) VALUES(%s, %s, %s, %s, %s)', (title, color, start, end, idUser))
-        mysql.connection.commit()
+        mysql.get_db().commit()
         return render_template('calendar.html', mensaje=event, lista=listado)
 
 
@@ -190,7 +194,7 @@ def registro():
 def delete_contact(id):
     cur = mysql.get_db().cursor()
     cur.execute('DELETE FROM contacts WHERE id = {0}'.format(id))
-    mysql.connection.commit()
+    mysql.get_db().commit()
     flash('Se ha borrado el contacto correctamente')
     return redirect(url_for('lista'))
 
@@ -218,7 +222,7 @@ def update_contact(id):
                 email=% s
             WHERE ID= % s
         """, (fullname, phone, email, id))
-        mysql.connection.commit()
+        mysql.get_db().commit()
         flash('El contacto ha sido actualizado correctamente ')
         return redirect(url_for('lista'))
 
@@ -248,6 +252,7 @@ def add_contact():
         elif password != repassword:
             return render_template('registro.html', title='Registro', mensaje=coincide)
         else:
+
             cur = mysql.get_db().cursor()
             cur.execute("SELECT * FROM contacts WHERE email = %s", (email,))
             user = cur.fetchone()
@@ -255,10 +260,13 @@ def add_contact():
                 return render_template('registro.html', title='Registro', mensaje=usua)
             else:
                 hash_password = bcrypt.hashpw(password, bcrypt.gensalt())
+
                 cur = mysql.get_db().cursor()
                 cur.execute(
                     'INSERT INTO contacts (fullname, phone, email, password) VALUES(%s, %s, %s, %s)', (fullname, phone, email, hash_password))
-                mysql.connection.commit()
+                
+                mysql.get_db().commit()
+                
                 flash('El contacto ha sido agregado correctamente ')
                 return redirect(url_for('lista'))
 
