@@ -33,8 +33,20 @@
                 <option value="#ffff00">Amarillo</option>
                 <option value="#81d6fe">Azul</option>
               </select>
-              <input type="datetime-local" id="login" class="fadeIn second" name="start" placeholder="" />
-              <input type="datetime-local" id="login" class="fadeIn third" name="end" placeholder="" />
+              <input
+                type="datetime-local"
+                id="login"
+                class="fadeIn second"
+                name="start"
+                placeholder=""
+              />
+              <input
+                type="datetime-local"
+                id="login"
+                class="fadeIn third"
+                name="end"
+                placeholder=""
+              />
               <input type="submit" class="fadeIn fourth" value="Guardar" />
             </form>
           </div>
@@ -45,60 +57,75 @@
 </div>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+<button
+  type="button"
+  class="btn btn-primary"
+  data-toggle="modal"
+  data-target="#exampleModal"
+>
   Launch demo modal
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="tituloEvento">Editar Evento</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+
       <div class="modal-body">
-
-        Usuario : {{ lista | safe }} <br />
-        Inicio: <input type="datetime-local" id="2" name="start" />
-        prueba: <input type="text" id="colorEvento" name="idEvento">
-        Fin: <input type="datetime-local" id="txtFechaF" name="end" />
-        Color: <input type="color" id="colorEvento" name="txtColor"><br />
-
-
+        ID : <input type="text" id="idEvento" name="idEvento" /> Usuario :
+        {{ lista | safe }} <br />
+        Inicio: <input type="text" id="inicioEvento" name="inicioEvento" /> Fin:
+        <input type="datetime" id="finEvento" name="finEvento" /> Color:
+        <input type="color" id="colorEvento" name="colorEvento" /><br />
       </div>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Cerrar
         </button>
-        <button type="button" class="btn btn-danger">
+        <button type="button" id="btnBorrar" class="btn btn-danger">
           Borrar Evento
         </button>
-        <button type="button" id="btnGuardar" class="btn btn-success">Guardar cambios</button>
+        <button type="button" id="btnGuardar" class="btn btn-success">
+          Guardar cambios
+        </button>
       </div>
     </div>
   </div>
 </div>
-
-
-
 
 {% endblock %} {% block script %}
 
 <script src="../static/js/calendar/vendorRrule.js"></script>
 <script src="../static/js/calendar/core.js"></script>
 <script src="../static/js/calendar/interaction.js"></script>
+<script src="../static/js/calendar/moment.js"></script>
 <script src="../static/js/calendar/daygrid.js"></script>
 <script src="../static/js/calendar/timegrid.js"></script>
 <script src="../static/js/calendar/list.js"></script>
 <script src="../static/js/calendar/rrule.js"></script>
 <script src="../static/js/calendar/es.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function() {
     var calendarEl = document.getElementById("calendar");
     var calendar = new FullCalendar.Calendar(calendarEl, {
       locale: "es",
@@ -112,22 +139,42 @@
       //defaultDate: { url: "today" },
 
       navLinks: true, // can click day/week names to navigate views
-      editable: true,
+      editable: false,
       eventLimit: true, // allow "more" link when too many events
 
       events: { url: "data" },
 
-      eventClick: function (info, jsEvent, view) {
-
+      eventClick: function(info, jsEvent, view) {
+        //H
         $("#tituloEvento").html(info.event.title);
-        $("#inicioEvento").val(info.event.start);
-        $("#finEvento").val(info.event.end);
-        $("#colorEvento").val(info.jsEvent.color);
-        $("#idEvento").val(info.event.id);
-        $("#exampleModal").modal();
-        //FechaHora = info.event.start.toString()
-        //FechaHora = FechaHora.split(" ");
+        // Mostrar información de evento en los inputs
 
+        $("#finEvento").val(info.event.end);
+        $("#colorEvento").val(info.event.color);
+        $("#idEvento").val(info.event.id);
+        $("#idUser").val(info.event.idUser);
+        var event = calendar.getEventById(info.event.id);
+        var end = event.end;
+        var start = event.start;
+
+        $("#finEvento").val(end);
+        $("#inicioEvento").val(start);
+
+        $("#exampleModal").modal();
+
+        /*
+        var idE = info.event.id;
+        document.getElementById("btnBorrar").onclick = function() {
+          doWork();
+        };
+
+        function doWork() {
+          // ajax the JSON to the server
+          $.post("deletEvent", idE, function() {});
+          // stop link reloading the page
+          event.preventDefault();
+        }
+        */
 
         //$("#txtFechaI").val(typeof (info.start));
         //$("#txtHoraI").val(FechaHora[1]);
@@ -139,7 +186,6 @@
 
         // change the border color just for fun
         //info.el.style.borderColor = "red";
-
       }
     });
     calendar.render();
@@ -147,15 +193,16 @@
 </script>
 
 <script>
-  $("#btnAgregar").click(function () {
+  $("#event_delete").on("click", function() {
+    $("#calendar").fullCalendar("removeEvents", calEvent.id);
 
-    var Evento = {
-      title: $("#textTitulo").val(),
-      start: $("#txtFechaI").val(),
-      end: $("#txtFechaF").val(),
-      color: $("#txtColor").val(),
-
+    $.ajax({
+      data: { id: calEvent.id },
+      type: "POST",
+      url: "http://localhost/index/js/delete_events.php"
     });
-
+    alert(calEvent.id);
+    CloseModalBox();
+  });
 </script>
 {% endblock %}

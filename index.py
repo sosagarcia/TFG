@@ -1,5 +1,6 @@
 
 from datetime import date, datetime
+
 from flask.json import JSONEncoder
 import datetime as dt
 from flask import Flask, render_template, request, url_for, redirect, flash, session, Response
@@ -32,8 +33,8 @@ app.json_encoder = CustomJSONEncoder
 
 # MYSQL connection
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'admin'
+app.config['MYSQL_DATABASE_USER'] = 'renato'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'Jota.1584'
 app.config['MYSQL_DATABASE_DB'] = 'flaskcontacts'
 mysql.init_app(app)
 
@@ -76,12 +77,15 @@ def pasaFecha(fecha):
 def dosMin(start, end):
     start = pasaFecha(start)
     end = pasaFecha(end)
-    dosM = datetime.strptime("0:03:00", "%X")
-    print(dosM)
-    print((end - start))
-    if ((end - start).time() < dosM):
-        print("hola")
-
+    dosM = 3 *60
+    dif = end - start
+    dif = dif.total_seconds()  
+    print (dif)
+    print (dosM)
+    if (dif < dosM):
+        return 1
+    return 0
+ 
 
 def entre(fechaI, fechaF):
     fechaI = pasaFecha(fechaI)
@@ -91,9 +95,9 @@ def entre(fechaI, fechaF):
     data = [i for sub in data for i in sub]
     max = len(data)
     for i in range(0, max, 2):
-        if (data[i] < fechaI < data[i+1]):
+        if (data[i] <= fechaI < data[i+1]):
             return 1
-        if (data[i] < fechaF < data[i+1]):
+        if (data[i] < fechaF <= data[i+1]):
             return 1
     for i in range(0, max):
         if (fechaI < data[i] < fechaF):
@@ -151,7 +155,7 @@ def data():
 
     for row in data:
         callist.append(
-            {'title': row[1], 'color': row[2], 'start': row[3], 'end': row[4]})
+            {'id': row[0],'title': row[1], 'color': row[2], 'start': row[3], 'end': row[4],'idUser': row[5],})
 
     return Response(json.dumps(callist),  mimetype='application/json')
 
@@ -179,11 +183,12 @@ def add_event():
         title = cur.fetchone()
         end = request.form['end']
         listado = users(usuarios())
-        dosMin(start, end)
         if len(title and start and end) == 0:
             return render_template('calendar.html', mensaje=vacioE, lista=listado)
         if (end < start):
             return render_template('calendar.html', mensaje=menor, lista=listado)
+        if(dosMin(start, end)):
+            return render_template('calendar.html', mensaje=dosmin, lista=listado)
         # Comprobar si start o end esta entre el start o el end de algun otro evento
         if (entre(start, end)):
             return render_template('calendar.html', mensaje=fechae, lista=listado)
@@ -193,6 +198,18 @@ def add_event():
             'INSERT INTO eventos (title, color, start, end, idUser) VALUES(%s, %s, %s, %s, %s)', (title, color, start, end, idUser))
         mysql.get_db().commit()
         return render_template('calendar.html', mensaje=event, lista=listado)
+
+
+@app.route('/deletEvent', methods = ['POST'])
+def deletEvent():
+    
+    id = request.get_json()
+    print (id)
+    cur = mysql.get_db().cursor()
+    cur.execute('DELETE FROM eventos WHERE id = {0}'.format(id))
+    mysql.get_db().commit()
+    flash('Se ha borrado el evento correctamente')
+    return redirect(url_for('calendar'))
 
 
 @app.route('/test')
