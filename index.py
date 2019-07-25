@@ -7,8 +7,8 @@ from flaskext.mysql import MySQL
 import bcrypt
 from flask import jsonify, json
 from static.py.mensajes import *
-#import mysql
-#import mysql.connector
+# import mysql
+# import mysql.connector
 
 
 class CustomJSONEncoder(JSONEncoder):
@@ -68,14 +68,35 @@ def usuarios():
     return data
 
 
-def entre(fecha):
+def pasaFecha(fecha):
     fecha = datetime.strptime(fecha, '%Y-%m-%dT%H:%M')
+    return fecha
+
+
+def dosMin(start, end):
+    start = pasaFecha(start)
+    end = pasaFecha(end)
+    dosM = datetime.strptime("0:03:00", "%X")
+    print(dosM)
+    print((end - start))
+    if ((end - start).time() < dosM):
+        print("hola")
+
+
+def entre(fechaI, fechaF):
+    fechaI = pasaFecha(fechaI)
+    fechaF = pasaFecha(fechaF)
 
     data = conn('SELECT start, end FROM eventos')
     data = [i for sub in data for i in sub]
     max = len(data)
     for i in range(0, max, 2):
-        if (data[i] < fecha < data[i+1]):
+        if (data[i] < fechaI < data[i+1]):
+            return 1
+        if (data[i] < fechaF < data[i+1]):
+            return 1
+    for i in range(0, max):
+        if (fechaI < data[i] < fechaF):
             return 1
     return 0
 
@@ -158,12 +179,13 @@ def add_event():
         title = cur.fetchone()
         end = request.form['end']
         listado = users(usuarios())
+        dosMin(start, end)
         if len(title and start and end) == 0:
             return render_template('calendar.html', mensaje=vacioE, lista=listado)
         if (end < start):
             return render_template('calendar.html', mensaje=menor, lista=listado)
         # Comprobar si start o end esta entre el start o el end de algun otro evento
-        if (entre(start) or entre(end)):
+        if (entre(start, end)):
             return render_template('calendar.html', mensaje=fechae, lista=listado)
 
         cur = mysql.get_db().cursor()
@@ -264,9 +286,9 @@ def add_contact():
                 cur = mysql.get_db().cursor()
                 cur.execute(
                     'INSERT INTO contacts (fullname, phone, email, password) VALUES(%s, %s, %s, %s)', (fullname, phone, email, hash_password))
-                
+
                 mysql.get_db().commit()
-                
+
                 flash('El contacto ha sido agregado correctamente ')
                 return redirect(url_for('lista'))
 

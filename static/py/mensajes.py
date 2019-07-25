@@ -135,3 +135,12 @@ fechae = [
         'tipo': 'danger'
     }
 ]
+
+dosmin = [
+    {
+        'author': 'Error al registrar evento',
+        'titulo': 'EVENTOS',
+        'mensaje': 'La diferencia entre el inicio y el final del evento tiene que ser mayor a 2 minutos',
+        'tipo': 'danger'
+    }
+]
