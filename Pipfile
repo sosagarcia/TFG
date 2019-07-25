@@ -12,6 +12,7 @@ flake8 = "*"
 bcrypt = "==3.1.7"
 Flask = "==1.0.3"
 flak-mysqldb = "*"
+flaskext = "*"
 
 [requires]
 python_version = "3.6"
