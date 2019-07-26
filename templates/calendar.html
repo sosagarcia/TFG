@@ -24,7 +24,7 @@
               {% endfor %}
             </div>
             <!-- Login Form -->
-            <form action="/add_event" method="POST">
+            <form action="/add_event" method="POST" id="myForm">
               <!--  <input type="text" id="login" class="fadeIn second" name="title" placeholder="Nombre del evento" /> -->
               {{ lista | safe }}
               <select name="color">
@@ -33,20 +33,18 @@
                 <option value="#ffff00">Amarillo</option>
                 <option value="#81d6fe">Azul</option>
               </select>
-              <input
-                type="datetime-local"
-                id="login"
-                class="fadeIn second"
-                name="start"
-                placeholder=""
-              />
-              <input
-                type="datetime-local"
-                id="login"
-                class="fadeIn third"
-                name="end"
-                placeholder=""
-              />
+              <input type="datetime-local" id="login" class="fadeIn second" name="start" />
+              <input type="datetime-local" id="login" class="fadeIn third" name="end" />
+
+              <label for="input-2">Reglas de Repetición</label>
+              <input id="input-2" type="checkbox">
+              <!--  <div class="custom-control custom-checkbox my-1 mr-sm-2 align-self-start">
+                <input type="checkbox" class="custom-control-input" id="customControlInline">
+                <label class="custom-control-label" for="customControlInline">Reglas de Repetición</label>
+              </div>-->
+
+              <p id="changeShipInputs">Checkbox is CHECKED!</p>
+
               <input type="submit" class="fadeIn fourth" value="Guardar" />
             </form>
           </div>
@@ -57,34 +55,18 @@
 </div>
 
 <!-- Button trigger modal -->
-<button
-  type="button"
-  class="btn btn-primary"
-  data-toggle="modal"
-  data-target="#exampleModal"
->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
   Launch demo modal
 </button>
 
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="exampleModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="tituloEvento">Editar Evento</h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -123,9 +105,11 @@
 <script src="../static/js/calendar/list.js"></script>
 <script src="../static/js/calendar/rrule.js"></script>
 <script src="../static/js/calendar/es.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="../static/js/bootstrap-checkbox-1.5.0/dist/js/bootstrap-checkbox.js" defer></script>
+
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", function () {
+    $(':checkbox').checkboxpicker();
     var calendarEl = document.getElementById("calendar");
     var calendar = new FullCalendar.Calendar(calendarEl, {
       locale: "es",
@@ -141,10 +125,16 @@
       navLinks: true, // can click day/week names to navigate views
       editable: false,
       eventLimit: true, // allow "more" link when too many events
+      eventTimeFormat: { // like '14:30:00'
+        hour: '2-digit',
+        minute: '2-digit',
 
+        meridiem: true
+
+      },
       events: { url: "data" },
 
-      eventClick: function(info, jsEvent, view) {
+      eventClick: function (info, jsEvent, view) {
         //H
         $("#tituloEvento").html(info.event.title);
         // Mostrar información de evento en los inputs
@@ -156,12 +146,16 @@
         var event = calendar.getEventById(info.event.id);
         var end = event.end;
         var start = event.start;
-
+        var id = info.event.id
         $("#finEvento").val(end);
         $("#inicioEvento").val(start);
 
-        $("#exampleModal").modal();
 
+
+        $("#exampleModal").modal();
+        $("#btnBorrar").click(function () {
+          borrar(id);
+        });
         /*
         var idE = info.event.id;
         document.getElementById("btnBorrar").onclick = function() {
@@ -188,21 +182,29 @@
         //info.el.style.borderColor = "red";
       }
     });
+    function borrar(id) {
+
+      var mensaje;
+      var opcion = confirm("¿Está Seguro de querer eliminar el evento?");
+      if (opcion == true) {
+        $.post("/deletEvent", {
+          canvas_data: JSON.stringify(id)
+        }, function (err, req, resp) {
+          window.location.href = "/results/" + resp["responseJSON"];
+        });
+        window.location.href = "/calendar"
+      } else {
+
+      }
+
+
+
+    }
     calendar.render();
   });
 </script>
-
 <script>
-  $("#event_delete").on("click", function() {
-    $("#calendar").fullCalendar("removeEvents", calEvent.id);
 
-    $.ajax({
-      data: { id: calEvent.id },
-      type: "POST",
-      url: "http://localhost/index/js/delete_events.php"
-    });
-    alert(calEvent.id);
-    CloseModalBox();
-  });
 </script>
+
 {% endblock %}

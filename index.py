@@ -33,8 +33,8 @@ app.json_encoder = CustomJSONEncoder
 
 # MYSQL connection
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_USER'] = 'renato'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'Jota.1584'
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'admin'
 app.config['MYSQL_DATABASE_DB'] = 'flaskcontacts'
 mysql.init_app(app)
 
@@ -77,15 +77,15 @@ def pasaFecha(fecha):
 def dosMin(start, end):
     start = pasaFecha(start)
     end = pasaFecha(end)
-    dosM = 3 *60
+    dosM = 3 * 60
     dif = end - start
-    dif = dif.total_seconds()  
-    print (dif)
-    print (dosM)
+    dif = dif.total_seconds()
+    print(dif)
+    print(dosM)
     if (dif < dosM):
         return 1
     return 0
- 
+
 
 def entre(fechaI, fechaF):
     fechaI = pasaFecha(fechaI)
@@ -155,7 +155,7 @@ def data():
 
     for row in data:
         callist.append(
-            {'id': row[0],'title': row[1], 'color': row[2], 'start': row[3], 'end': row[4],'idUser': row[5],})
+            {'id': row[0], 'title': row[1], 'color': row[2], 'start': row[3], 'end': row[4], 'idUser': row[5], })
 
     return Response(json.dumps(callist),  mimetype='application/json')
 
@@ -200,16 +200,17 @@ def add_event():
         return render_template('calendar.html', mensaje=event, lista=listado)
 
 
-@app.route('/deletEvent', methods = ['POST'])
+@app.route('/deletEvent', methods=['POST'])
 def deletEvent():
-    
-    id = request.get_json()
-    print (id)
+
+    id = request.form['canvas_data']
+    print(id)
     cur = mysql.get_db().cursor()
     cur.execute('DELETE FROM eventos WHERE id = {0}'.format(id))
     mysql.get_db().commit()
-    flash('Se ha borrado el evento correctamente')
-    return redirect(url_for('calendar'))
+    listado = users(usuarios())
+    print("hola")
+    return redirect('evento.html')
 
 
 @app.route('/test')

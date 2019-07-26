@@ -144,3 +144,12 @@ dosmin = [
         'tipo': 'danger'
     }
 ]
+
+delEv = [
+    {
+        'author': 'Evento borrado correctamente',
+        'titulo': 'EVENTOS',
+        'mensaje': 'Se ha borrado el evento correctamente',
+        'tipo': 'success'
+    }
+]
