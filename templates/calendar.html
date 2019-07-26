@@ -36,14 +36,14 @@
               <input type="datetime-local" id="login" class="fadeIn second" name="start" />
               <input type="datetime-local" id="login" class="fadeIn third" name="end" />
 
-              <label for="input-2">Reglas de Repetición</label>
+              <label for="input-2">Reglas de Repetición </label> <br>
               <input id="input-2" type="checkbox">
               <!--  <div class="custom-control custom-checkbox my-1 mr-sm-2 align-self-start">
                 <input type="checkbox" class="custom-control-input" id="customControlInline">
                 <label class="custom-control-label" for="customControlInline">Reglas de Repetición</label>
               </div>-->
 
-              <p id="changeShipInputs">Checkbox is CHECKED!</p>
+              <p id="myDIV">Checkbox is CHECKED!</p>
 
               <input type="submit" class="fadeIn fourth" value="Guardar" />
             </form>
@@ -109,7 +109,22 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    $(':checkbox').checkboxpicker();
+    var x = document.getElementById("myDIV");
+    x.style.display = "none";
+    $(':checkbox').checkboxpicker({
+
+      offLabel: 'No',
+      onLabel: 'Sí'
+    }).on('change', function () {
+
+
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    });
+
     var calendarEl = document.getElementById("calendar");
     var calendar = new FullCalendar.Calendar(calendarEl, {
       locale: "es",
@@ -200,10 +215,13 @@
 
 
     }
+
     calendar.render();
   });
 </script>
 <script>
+
+
 
 </script>
 

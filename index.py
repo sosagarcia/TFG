@@ -329,3 +329,5 @@ if __name__ == '__main__':
 
 # https://fullcalendar.io/docs/event-source
 # Full calendar edit events https://www.youtube.com/watch?v=8OOddEiM55A&list=PLSuKjujFoGJ3xqSJHnZUR-INEO71t1znq&index=11
+
+#https://vsn4ik.github.io/bootstrap-checkbox/
