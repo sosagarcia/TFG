@@ -33,11 +33,21 @@
                 <option value="#ffff00">Amarillo</option>
                 <option value="#81d6fe">Azul</option>
               </select>
-              <input type="datetime-local" id="login" class="fadeIn second" name="start" />
-              <input type="datetime-local" id="login" class="fadeIn third" name="end" />
+              <input
+                type="datetime-local"
+                id="login"
+                class="fadeIn second"
+                name="start"
+              />
+              <input
+                type="datetime-local"
+                id="login"
+                class="fadeIn third"
+                name="end"
+              />
 
-              <label for="input-2">Reglas de Repetición </label> <br>
-              <input id="input-2" type="checkbox">
+              <label for="input-2">Reglas de Repetición </label> <br />
+              <input id="input-2" type="checkbox" />
               <!--  <div class="custom-control custom-checkbox my-1 mr-sm-2 align-self-start">
                 <input type="checkbox" class="custom-control-input" id="customControlInline">
                 <label class="custom-control-label" for="customControlInline">Reglas de Repetición</label>
@@ -55,18 +65,82 @@
 </div>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
+<button
+  type="button"
+  class="btn btn-danger"
+  data-toggle="modal"
+  data-target="#borradoModal"
+>
+  Borrado masivo
 </button>
 
+<!-- Modal de Borrado -->
+<div
+  class="modal fade"
+  id="borradoModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="borradoTitulo">Borrador de eventos</h3>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <select id="tipoBorrado">
+          <option value="" disabled selected>Seleccione tipo de borrado</option>
+          <option value="full">Vaciar el calendario</option>
+          <option value="day">Vaciar un día entero</option>
+          <option value="user">Vaciar todos los eventos de un usuario</option>
+        </select>
+        Usuario : {{ lista | safe }} <br />
+        Inicio: <input type="text" id="" name="" /> Fin:
+        <input type="datetime" id="" name="" /> Color:
+        <input type="color" id="" name="" /><br />
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" id="borradoBTN" class="btn btn-danger">
+          Borrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="tituloEvento">Editar Evento</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -105,25 +179,27 @@
 <script src="../static/js/calendar/list.js"></script>
 <script src="../static/js/calendar/rrule.js"></script>
 <script src="../static/js/calendar/es.js"></script>
-<script src="../static/js/bootstrap-checkbox-1.5.0/dist/js/bootstrap-checkbox.js" defer></script>
+<script
+  src="../static/js/bootstrap-checkbox-1.5.0/dist/js/bootstrap-checkbox.js"
+  defer
+></script>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function() {
     var x = document.getElementById("myDIV");
     x.style.display = "none";
-    $(':checkbox').checkboxpicker({
-
-      offLabel: 'No',
-      onLabel: 'Sí'
-    }).on('change', function () {
-
-
-      if (x.style.display === "none") {
-        x.style.display = "block";
-      } else {
-        x.style.display = "none";
-      }
-    });
+    $(":checkbox")
+      .checkboxpicker({
+        offLabel: "No",
+        onLabel: "Sí"
+      })
+      .on("change", function() {
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      });
 
     var calendarEl = document.getElementById("calendar");
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -140,16 +216,16 @@
       navLinks: true, // can click day/week names to navigate views
       editable: false,
       eventLimit: true, // allow "more" link when too many events
-      eventTimeFormat: { // like '14:30:00'
-        hour: '2-digit',
-        minute: '2-digit',
+      eventTimeFormat: {
+        // like '14:30:00'
+        hour: "2-digit",
+        minute: "2-digit",
 
         meridiem: true
-
       },
       events: { url: "data" },
 
-      eventClick: function (info, jsEvent, view) {
+      eventClick: function(info, jsEvent, view) {
         //H
         $("#tituloEvento").html(info.event.title);
         // Mostrar información de evento en los inputs
@@ -161,14 +237,12 @@
         var event = calendar.getEventById(info.event.id);
         var end = event.end;
         var start = event.start;
-        var id = info.event.id
+        var id = info.event.id;
         $("#finEvento").val(end);
         $("#inicioEvento").val(start);
 
-
-
         $("#exampleModal").modal();
-        $("#btnBorrar").click(function () {
+        $("#btnBorrar").click(function() {
           borrar(id);
         });
         /*
@@ -198,31 +272,51 @@
       }
     });
     function borrar(id) {
-
       var mensaje;
       var opcion = confirm("¿Está Seguro de querer eliminar el evento?");
       if (opcion == true) {
-        $.post("/deletEvent", {
-          canvas_data: JSON.stringify(id)
-        }, function (err, req, resp) {
-          window.location.href = "/results/" + resp["responseJSON"];
-        });
-        window.location.href = "/calendar"
+        $.post(
+          "/deletEvent",
+          {
+            canvas_data: JSON.stringify(id)
+          },
+          function(err, req, resp) {
+            window.location.href = "/results/" + resp["responseJSON"];
+          }
+        );
+        window.location.href = "/calendar";
       } else {
-
       }
-
-
-
     }
 
     calendar.render();
   });
 </script>
 <script>
-
-
-
+  var select = document.getElementById("tipoBorrado");
+  select.addEventListener("change", function() {
+    var selectedOption = this.options[select.selectedIndex];
+    console.log(selectedOption.value);
+    $("#borradoBTN").click(function() {
+      borrado(selectedOption.value);
+    });
+    function borrado(valor) {
+      var opcion = confirm("¿Está Seguro de lo que quieres borrar?");
+      if (opcion == true) {
+        $.post(
+          "/deletAlgo",
+          {
+            canvas_data: JSON.stringify(valor)
+          },
+          function(err, req, resp) {
+            window.location.href = "/results/" + resp["responseJSON"];
+          }
+        );
+        window.location.href = "/calendar";
+      } else {
+      }
+    }
+  });
 </script>
 
 {% endblock %}

@@ -33,8 +33,8 @@ app.json_encoder = CustomJSONEncoder
 
 # MYSQL connection
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'admin'
+app.config['MYSQL_DATABASE_USER'] = 'renato'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'Jota.1584'
 app.config['MYSQL_DATABASE_DB'] = 'flaskcontacts'
 mysql.init_app(app)
 
@@ -209,8 +209,23 @@ def deletEvent():
     cur.execute('DELETE FROM eventos WHERE id = {0}'.format(id))
     mysql.get_db().commit()
     listado = users(usuarios())
-    print("hola")
-    return redirect('evento.html')
+
+@app.route('/deletAlgo', methods=['POST'])
+def deletAlgo():
+
+    algo = request.form['canvas_data']
+    
+    full = "full"
+    print(algo == full)
+    if algo == full:
+        print(algo)
+        cur = mysql.get_db().cursor()
+        cur.execute('TRUNCATE TABLE eventos ')
+        mysql.get_db().commit() 
+        
+    
+    
+
 
 
 @app.route('/test')
