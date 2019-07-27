@@ -100,21 +100,27 @@
       <div class="modal-body">
         <select id="tipoBorrado">
           <option value="" disabled selected>Seleccione tipo de borrado</option>
-          <option value="full">Vaciar el calendario</option>
-          <option value="day">Vaciar un día entero</option>
-          <option value="user">Vaciar todos los eventos de un usuario</option>
-        </select>
-        Usuario : {{ lista | safe }} <br />
-        Inicio: <input type="text" id="" name="" /> Fin:
-        <input type="datetime" id="" name="" /> Color:
-        <input type="color" id="" name="" /><br />
+          <option value="full">Calendario entero</option>
+          <option value="day">Día entero</option>
+          <option value="user">Todos los eventos de un usuario</option
+          ><option value="conv"
+            >Todos los eventos de un usuario en un día</option
+          > </select
+        ><br />
+        <div id="usrS">Usuario : {{ lista | safe }} <br /></div>
+        <div id="fchS">Fecha: <input type="date" id="fechaBorrado" /></div>
       </div>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Cancelar
         </button>
-        <button type="button" id="borradoBTN" class="btn btn-danger">
+        <button
+          type="button"
+          id="borradoBTN"
+          class="btn btn-danger"
+          onclick="borradoItem()"
+        >
           Borrar
         </button>
       </div>
@@ -293,30 +299,77 @@
   });
 </script>
 <script>
+  var fchS = document.getElementById("fchS");
+  fchS.style.display = "none";
+  var usrS = document.getElementById("usrS");
+  usrS.style.display = "none";
   var select = document.getElementById("tipoBorrado");
+  var borradoB = document.getElementById("#borradoBTN");
+  var selectedOption;
+
   select.addEventListener("change", function() {
-    var selectedOption = this.options[select.selectedIndex];
+    selectedOption = this.options[select.selectedIndex];
     console.log(selectedOption.value);
-    $("#borradoBTN").click(function() {
-      borrado(selectedOption.value);
-    });
-    function borrado(valor) {
-      var opcion = confirm("¿Está Seguro de lo que quieres borrar?");
-      if (opcion == true) {
-        $.post(
-          "/deletAlgo",
-          {
-            canvas_data: JSON.stringify(valor)
-          },
-          function(err, req, resp) {
-            window.location.href = "/results/" + resp["responseJSON"];
-          }
-        );
-        window.location.href = "/calendar";
-      } else {
-      }
+    if (selectedOption.value == "full") {
+      fchS.style.display = "none";
+      usrS.style.display = "none";
+    }
+    if (selectedOption.value == "day") {
+      fchS.style.display = "block";
+      usrS.style.display = "none";
+    }
+    if (selectedOption.value == "user") {
+      fchS.style.display = "none";
+      usrS.style.display = "block";
+    }
+    if (selectedOption.value == "conv") {
+      fchS.style.display = "block";
+      usrS.style.display = "block";
     }
   });
+  function borradoItem() {
+    select = document.getElementById("tipoBorrado");
+    selectedOption = this.options[select.selectedIndex];
+    if (selectedOption.value == "day") {
+      var fch = document.getElementById("fechaBorrado");
+      var obj = 0;
+      var date = fch.value;
+      var ds = confirm(date);
+    }
+    if (selectedOption.value == "user") {
+      var usr = document.getElementById("usuarioBorrado");
+      var usrSelected = this.options[usr.selectedIndex];
+      var obj = usrSelected.value;
+      var date = 0;
+      var ds = confirm(obj);
+    }
+    if (selectedOption.value == "conv") {
+      var fch = document.getElementById("fechaBorrado");
+      var usr = document.getElementById("usuarioBorrado");
+      date = fch.value;
+      obj = usr.value;
+      var ds = confirm(obj);
+      var ds = confirm(date);
+    }
+    borrado(selectedOption.value, date, obj);
+  }
+  function borrado(valor, date, obj) {
+    var opcion = confirm("¿está seguro de borrar lo seleccionado?");
+
+    if (opcion == true) {
+      $.post(
+        "/deletAlgo",
+        {
+          canvas_data: JSON.stringify(valor)
+        },
+        function(err, req, resp) {
+          window.location.href = "/results/" + resp["responseJSON"];
+        }
+      );
+      window.location.href = "/calendar";
+    } else {
+    }
+  }
 </script>
 
 {% endblock %}

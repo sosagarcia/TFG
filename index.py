@@ -52,12 +52,14 @@ def conn(texto):
 
 
 def users(data):
-    result = "<select name= 'title'> "
+    result = "<select name= 'title' id='suarioBorrado'> "
     max = len(data)
+    
     for i in range(0, max, 2):
         result += '<option value="%s"selected>%s</option>' % (
             data[i + 1], data[i])
     result += '</select>'
+    
     return (result)
 
 
@@ -214,10 +216,9 @@ def deletEvent():
 def deletAlgo():
 
     algo = request.form['canvas_data']
-    
-    full = "full"
-    print(algo == full)
-    if algo == full:
+    item = str(algo)
+    full = str("full")
+    if algo == item:
         print(algo)
         cur = mysql.get_db().cursor()
         cur.execute('TRUNCATE TABLE eventos ')
