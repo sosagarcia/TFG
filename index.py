@@ -33,8 +33,8 @@ app.json_encoder = CustomJSONEncoder
 
 # MYSQL connection
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'admin'
+app.config['MYSQL_DATABASE_USER'] = 'renato'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'Jota.1584'
 app.config['MYSQL_DATABASE_DB'] = 'flaskcontacts'
 mysql.init_app(app)
 
