@@ -17,3 +17,17 @@
  sudo pip3 install mod_wsgi NUNCA sudo apt install apache2-dev libapache2-mod-wsgi-py3
 
  https://stackoverflow.com/questions/41535284/run-python3-script-on-linux-apache-2-4
+
+ 
+<VirtualHost *:80>
+ServerName 10.42.0.133
+WSGIDaemonProcess server_app threads=5
+WSGIScriptAlias /ini /var/www/html/TFG/iniciar.wsgi
+DocumentRoot /var/www/html/TFG
+<Directory /var/www/html/TFG>
+    WSGIProcessGroup server_app
+    WSGIApplicationGroup %{GLOBAL}
+    Order deny,allow
+    Allow from all
+</Directory>
+</VirtualHost>
