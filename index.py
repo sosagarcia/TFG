@@ -33,8 +33,8 @@ app.json_encoder = CustomJSONEncoder
 
 # MYSQL connection
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_USER'] = 'renato'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'Jota.1584'
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'admin'
 app.config['MYSQL_DATABASE_DB'] = 'flaskcontacts'
 mysql.init_app(app)
 
@@ -52,14 +52,14 @@ def conn(texto):
 
 
 def users(data):
-    result = "<select name= 'title' id='suarioBorrado'> "
+    result = ""
     max = len(data)
-    
+
     for i in range(0, max, 2):
         result += '<option value="%s"selected>%s</option>' % (
             data[i + 1], data[i])
     result += '</select>'
-    
+
     return (result)
 
 
@@ -212,21 +212,18 @@ def deletEvent():
     mysql.get_db().commit()
     listado = users(usuarios())
 
-@app.route('/deletAlgo', methods=['POST'])
+
+@app.route('/deletFull', methods=['POST'])
 def deletAlgo():
 
     algo = request.form['canvas_data']
-    item = str(algo)
-    full = str("full")
-    if algo == item:
+    algoInt = int(algo)
+    print(type(algoInt))
+    if algoInt == 0:
         print(algo)
         cur = mysql.get_db().cursor()
         cur.execute('TRUNCATE TABLE eventos ')
-        mysql.get_db().commit() 
-        
-    
-    
-
+        mysql.get_db().commit()
 
 
 @app.route('/test')
@@ -346,4 +343,4 @@ if __name__ == '__main__':
 # https://fullcalendar.io/docs/event-source
 # Full calendar edit events https://www.youtube.com/watch?v=8OOddEiM55A&list=PLSuKjujFoGJ3xqSJHnZUR-INEO71t1znq&index=11
 
-#https://vsn4ik.github.io/bootstrap-checkbox/
+# https://vsn4ik.github.io/bootstrap-checkbox/
