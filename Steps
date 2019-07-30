@@ -3,7 +3,7 @@
  http://www.knight-of-pi.org/installing-python3-6-on-a-raspberry-pi/
 
  Crear entorno virtual (https://www.youtube.com/watch?v=-XIsKyNWILo)
- instalar phpmyAdmin (https://maslinux.es/guia-facil-para-instalar-phpmyadmin-en-ubuntu/)
+ instalar phpmyAdmin  https://youtu.be/YggXN_xJKbs?t=696  (https://maslinux.es/guia-facil-para-instalar-phpmyadmin-en-ubuntu/)
 
  Configurar BBDD (Base de datos : flaskcontacts : tabla contacts)
 
@@ -14,20 +14,23 @@
 
 
  Despliegue de flask en apache https://www.codementor.io/abhishake/minimal-apache-configuration-for-deploying-a-flask-app-ubuntu-18-04-phu50a7ft
- sudo pip3 install mod_wsgi NUNCA sudo apt install apache2-dev libapache2-mod-wsgi-py3
+ sudo pip3 install mod_wsgi NUNC sudo apt install apache2-dev libapache2-mod-wsgi-py3
 
  https://stackoverflow.com/questions/41535284/run-python3-script-on-linux-apache-2-4
 
  
+  GNU nano 3.2                                                                                  index.conf                                                                                               
 <VirtualHost *:80>
-ServerName 10.42.0.133
-WSGIDaemonProcess server_app threads=5
+ServerName 192.168.137.146
 WSGIScriptAlias /ini /var/www/html/TFG/iniciar.wsgi
 DocumentRoot /var/www/html/TFG
 <Directory /var/www/html/TFG>
-    WSGIProcessGroup server_app
-    WSGIApplicationGroup %{GLOBAL}
-    Order deny,allow
-    Allow from all
+   AllowOverride None
+   Require all granted
+
+#  WSGIProcessGroup app
+   # WSGIApplicationGroup %{GLOBAL}
+   # Order deny,allow
+   # Allow from all
 </Directory>
 </VirtualHost>
