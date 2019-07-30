@@ -1,5 +1,5 @@
 
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 from flask.json import JSONEncoder
 import datetime as dt
@@ -73,6 +73,11 @@ def usuarios():
 
 def pasaFecha(fecha):
     fecha = datetime.strptime(fecha, '%Y-%m-%dT%H:%M')
+    return fecha
+
+
+def pasaFecha1(fecha):
+    fecha = datetime.strptime(fecha, '"%Y-%m-%d"')
     return fecha
 
 
@@ -196,6 +201,7 @@ def add_event():
             return render_template('calendar.html', mensaje=fechae, lista=listado)
 
         cur = mysql.get_db().cursor()
+        print(type(start))
         cur.execute(
             'INSERT INTO eventos (title, color, start, end, idUser) VALUES(%s, %s, %s, %s, %s)', (title, color, start, end, idUser))
         mysql.get_db().commit()
@@ -229,11 +235,18 @@ def deletAlgo():
 @app.route('/deletDay', methods=['POST'])
 def deletDay():
     algo = request.form['canvas_data']
+    print(algo)
+    algo = pasaFecha1(algo)
+    print(algo)
+    finDay = algo + timedelta(days=1)
+    algo = str(algo)
+    finDate = str(finDay)
+    print(type(algo))
     cur = mysql.get_db().cursor()
-    cur.execute('DELETE FROM eventos WHERE start = %s', (algo,) )
+    cur.execute(
+        'DELETE FROM eventos WHERE start BETWEEN  %s to  %s', (algo, finDay))
     mysql.get_db().commit()
-  
-   
+
 
 @app.route('/deletUser', methods=['POST'])
 def deletUser():
