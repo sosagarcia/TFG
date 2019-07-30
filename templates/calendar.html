@@ -334,19 +334,50 @@
       borrado(idBorrado, date, obj);
     }
     function borrado(valor, date, obj) {
-      var opcion = confirm("¿está seguro de borrar lo seleccionado?");
+      var opcion = confirm("¿Está seguro/a de borrar lo seleccionado?");
 
       if (opcion == true) {
         if (valor == 0) {
-          $.post(
-            "/deletFull",
-            {
-              canvas_data: JSON.stringify(valor)
-            },
-            function (err, req, resp) {
-              window.location.href = "/results/" + resp["responseJSON"];
-            }
-          );
+          var men = confirm("Se borrará TODOS los eventos, ¿Está seguro/a de querer continuar?");
+          if (men == true) {
+            $.post(
+              "/deletFull",
+              {
+                canvas_data: JSON.stringify(valor)
+              },
+              function (err, req, resp) {
+                window.location.href = "/results/" + resp["responseJSON"];
+              }
+            );
+          }
+        }
+        if (valor == 1) {
+          var men = confirm("Se borrará TODOS los eventos que comiecen y terminen en el  día seleccionado ¿Está seguro/a de querer continuar?");
+          if (men == true) {
+            $.post(
+              "/deletDay",
+              {
+                canvas_data: JSON.stringify(date)
+              },
+              function (err, req, resp) {
+                window.location.href = "/results/" + resp["responseJSON"];
+              }
+            );
+          }
+        }
+        if (valor == 2) {
+          var men = confirm("Se borrará TODOS los eventos del usuario seleccionado ¿Está seguro/a de querer continuar?");
+          if (men == true) {
+            $.post(
+              "/deletUser",
+              {
+                canvas_data: JSON.stringify(obj)
+              },
+              function (err, req, resp) {
+                window.location.href = "/results/" + resp["responseJSON"];
+              }
+            );
+          }
         }
 
         window.location.href = "/calendar";

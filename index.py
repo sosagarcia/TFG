@@ -33,8 +33,8 @@ app.json_encoder = CustomJSONEncoder
 
 # MYSQL connection
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_USER'] = 'renato'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'Jota.1584'
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'admin'
 app.config['MYSQL_DATABASE_DB'] = 'flaskcontacts'
 mysql.init_app(app)
 
@@ -226,6 +226,23 @@ def deletAlgo():
         mysql.get_db().commit()
 
 
+@app.route('/deletDay', methods=['POST'])
+def deletDay():
+    algo = request.form['canvas_data']
+    cur = mysql.get_db().cursor()
+    cur.execute('DELETE FROM eventos WHERE start = %s', (algo,) )
+    mysql.get_db().commit()
+  
+   
+
+@app.route('/deletUser', methods=['POST'])
+def deletUser():
+
+    algo = request.form['canvas_data']
+    print(algo)
+    print(type(algo))
+
+
 @app.route('/test')
 def test():
 
@@ -325,7 +342,7 @@ def add_contact():
 
 
 if __name__ == '__main__':
-    app.run( debug=True)
+    app.run(debug=True)
     # app.run()
 
 # https://bootswatch.com/
