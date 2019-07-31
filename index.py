@@ -4,7 +4,7 @@ from datetime import date, datetime, timedelta
 from flask.json import JSONEncoder
 import datetime as dt
 from flask import Flask, render_template, request, url_for, redirect, flash, session, Response
-#from flaskext.mysql import MySQL
+from flaskext.mysql import MySQL
 import bcrypt
 from flask import jsonify, json
 from static.py.mensajes import *
@@ -26,7 +26,7 @@ class CustomJSONEncoder(JSONEncoder):
         return JSONEncoder.default(self, obj)
 
 
-#mysql = MySQL()
+mysql = MySQL()
 app = Flask(__name__)
 app.json_encoder = CustomJSONEncoder
 
