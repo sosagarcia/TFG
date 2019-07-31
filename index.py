@@ -52,11 +52,12 @@ def conn(texto):
 
 
 def users(data):
-    result = ""
+    #result = '<select>'
+    result = '<option value="" selected disabled hidden>Seleccione un usuario</option>'
     max = len(data)
 
     for i in range(0, max, 2):
-        result += '<option value="%s"selected>%s</option>' % (
+        result += '<option value="%s">%s</option>' % (
             data[i + 1], data[i])
     result += '</select>'
 
@@ -235,16 +236,18 @@ def deletAlgo():
 @app.route('/deletDay', methods=['POST'])
 def deletDay():
     algo = request.form['canvas_data']
-    print(algo)
+
     algo = pasaFecha1(algo)
-    print(algo)
+
     finDay = algo + timedelta(days=1)
     algo = str(algo)
     finDate = str(finDay)
-    print(type(algo))
+    print(algo)
+    print(finDate)
+
     cur = mysql.get_db().cursor()
     cur.execute(
-        'DELETE FROM eventos WHERE start BETWEEN  %s to  %s', (algo, finDay))
+        'DELETE FROM eventos where (%s < start) and ( start <  %s) ', (algo, finDate))
     mysql.get_db().commit()
 
 
