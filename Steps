@@ -1,25 +1,15 @@
 1 Instala y configurar  herramientas (visual studio/ Python /
- Apache: https://www.digitalocean.com/community/tutorials/como-instalar-el-servidor-web-apache-en-ubuntu-18-04-es) / github / 
- http://www.knight-of-pi.org/installing-python3-6-on-a-raspberry-pi/
-
- Crear entorno virtual (https://www.youtube.com/watch?v=-XIsKyNWILo)
- instalar phpmyAdmin  https://youtu.be/YggXN_xJKbs?t=696  (https://maslinux.es/guia-facil-para-instalar-phpmyadmin-en-ubuntu/)
+ Apache y mysql :https://youtu.be/YggXN_xJKbs?t=696 
 
  Configurar BBDD (Base de datos : flaskcontacts : tabla contacts)
 
- sudo apt-get install python3.6-dev libmysqlclient-dev para poder instalar pip3 flask-mysqldb
- instalar php sudo apt-get install php7  
- https://www.redeszone.net/2017/08/26/instalar-php-7-0-php-7-1-ubuntu/
+ CLonar el codigo de GItHub
 
+ Instalar requerements.txt
 
+ Configurar Apache para que ejecute flask en py3: 
 
- Despliegue de flask en apache https://www.codementor.io/abhishake/minimal-apache-configuration-for-deploying-a-flask-app-ubuntu-18-04-phu50a7ft
- sudo pip3 install mod_wsgi NUNC sudo apt install apache2-dev libapache2-mod-wsgi-py3
-
- https://stackoverflow.com/questions/41535284/run-python3-script-on-linux-apache-2-4
-
- 
-  GNU nano 3.2                                                                                  index.conf                                                                                               
+ index.conf                   
 <VirtualHost *:80>
 ServerName 192.168.137.146
 WSGIScriptAlias /ini /var/www/html/TFG/iniciar.wsgi
@@ -34,3 +24,18 @@ DocumentRoot /var/www/html/TFG
    # Allow from all
 </Directory>
 </VirtualHost>
+
+
+
+ sudo apt-get install python3.6-dev libmysqlclient-dev para poder instalar pip3 flask-mysqldb
+ instalar php sudo apt-get install php7  
+ https://www.redeszone.net/2017/08/26/instalar-php-7-0-php-7-1-ubuntu/
+
+
+
+ Despliegue de flask en apache https://www.codementor.io/abhishake/minimal-apache-configuration-for-deploying-a-flask-app-ubuntu-18-04-phu50a7ft
+ sudo pip3 install mod_wsgi NUNC sudo apt install apache2-dev libapache2-mod-wsgi-py3
+
+ https://stackoverflow.com/questions/41535284/run-python3-script-on-linux-apache-2-4
+
+ 
