@@ -114,7 +114,7 @@ event = [
     {
         'author': 'Evento registrado correctamente',
         'titulo': 'EVENTOS',
-        'mensaje': 'Rellene todos los campos para añadir un evento',
+        'mensaje': 'Rellene todos los campos para añadir un nuevo evento',
         'tipo': 'success'
     }
 ]
