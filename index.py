@@ -33,8 +33,8 @@ app.json_encoder = CustomJSONEncoder
 
 # MYSQL connection
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'admin'
+app.config['MYSQL_DATABASE_USER'] = 'renato'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'Jota.1584'
 app.config['MYSQL_DATABASE_DB'] = 'flaskcontacts'
 mysql.init_app(app)
 
@@ -49,6 +49,29 @@ def conn(texto):
     cur.execute(texto)
     data = cur.fetchall()
     return data
+
+
+
+def conjunto(data):
+    # result = '<select>'
+    result = '<ul class="list-group align-self-start first shadow p-3 mb-5 bg-white rounded mx-auto">'
+    max = len(data)
+    print(data)
+
+    for i in range(0, max, 2):
+        result += '<li class="list-group-item">%s</li>' % (
+            data[i])
+    result += '</ul>'
+    print(result)
+    return (result)
+
+def titulos():
+
+    data = conn('SELECT title, start FROM eventos')
+    data = [i for sub in data for i in sub]
+
+    return data
+
 
 
 def users(data):
@@ -121,7 +144,8 @@ def home():
 
 @app.route('/main')
 def main():
-    return render_template('main.html')
+    agenda = conjunto(titulos())
+    return render_template('main.html', agenda=agenda)
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -153,7 +177,10 @@ def login():
 @app.route('/calendar')
 def calendar():
     listado = users(usuarios())
+    
     return render_template('calendar.html', mensaje=cal, lista=listado)
+
+
 
 
 @app.route('/data')
@@ -201,8 +228,12 @@ def add_event():
                 horas = 0
             else:
                 horas = int(horas)
+            if (minutos == ''):
+                minutos = 0
+            else:
+                minutos = int(minutos)
 
-            minutos = int(minutos)
+            
             print(horas)
             end = end + timedelta(hours=horas)
             end = end + timedelta(minutes=minutos)
@@ -303,7 +334,8 @@ def delet2():
 @app.route('/test')
 def test():
 
-    print(entre())
+    listado = conjunto(titulos())
+    return listado
 
 
 @app.route('/logout')
@@ -364,6 +396,8 @@ def lista():
 
     data = conn('SELECT * FROM contacts')
     return render_template('lista.html', contactos=data, title='Lista')
+
+
 
 
 @app.route('/add_contact', methods=['POST'])

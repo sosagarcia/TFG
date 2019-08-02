@@ -6,9 +6,14 @@
 
 {% endblock %} {% block body %}
 <div>
-  <div class="row">
-    <div class="col ml-4 fadeIn first" id="calendar"></div>
-    <div class="col">
+  <div class="row " >
+    <div class="col ml-4 mt-3 fadeIn  align-self-start first shadow p-3 mb-5 bg-white rounded" id="calendar"> 
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borradoModal">
+        Borrado masivo
+      </button>
+      </div>
+    <div class="col align-self-start">
       <div class="wrapper fadeInDown">
         <div id="formContent">
           <!-- Mensaje -->
@@ -51,9 +56,6 @@
                 <input type="datetime-local" id="login-2" class="fadeIn ml-4" name="end" />
 
 
-
-
-
                 <div id="Duration" class=" fadeIn w-50 ml-1" style=" white-space:nowrap;">
                   <label for="horas">H:</label>
 
@@ -80,7 +82,7 @@
                   </div>
                   <div id="ShowM">
                     <label for="meses">Límite de meses:</label>
-                    <input type="number" id="meses" name="meses" min="1" placeholder="1">
+                    <input type="number" id="meses" name="meses" min="1" >
                   </div>
                 </div>
 
@@ -93,10 +95,6 @@
   </div>
 </div>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borradoModal">
-  Borrado masivo
-</button>
 
 <!-- Modal de Borrado -->
 <div class="modal fade" id="borradoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
