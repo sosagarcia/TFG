@@ -52,8 +52,8 @@ def conn(texto):
 
 
 def users(data):
-    #result = '<select>'
-    result = '<option value="" selected disabled hidden>Seleccione un usuario</option>'
+    # result = '<select>'
+    result = '<option value="" selected hidden>Seleccione un usuario</option>'
     max = len(data)
 
     for i in range(0, max, 2):
@@ -189,9 +189,33 @@ def add_event():
         cur = mysql.get_db().cursor()
         cur.execute("SELECT fullname FROM contacts WHERE id = %s", (idUser,))
         title = cur.fetchone()
-        end = request.form['end']
+        horas = request.form['horas']
+        minutos = request.form['minutos']
+        print(minutos)
+        if len(minutos or horas) == 0:
+            end = request.form['end']
+            print("normal")
+        else:
+            end = pasaFecha(start)
+            if (horas == ''):
+                horas = 0
+            else:
+                horas = int(horas)
+
+            minutos = int(minutos)
+            print(horas)
+            end = end + timedelta(hours=horas)
+            end = end + timedelta(minutes=minutos)
+            end = str(end)
+            print(type(start))
+            print(start)
+            print(type(end))
+            temp = len(end)
+            end = end.replace(" ", "T")
+            end = end[:temp - 3]
+            print(end)
         listado = users(usuarios())
-        if len(title and start and end) == 0:
+        if len(idUser and start and end) == 0:
             return render_template('calendar.html', mensaje=vacioE, lista=listado)
         if (end < start):
             return render_template('calendar.html', mensaje=menor, lista=listado)
@@ -242,8 +266,6 @@ def deletDay():
     finDay = algo + timedelta(days=1)
     algo = str(algo)
     finDate = str(finDay)
-    print(algo)
-    print(finDate)
 
     cur = mysql.get_db().cursor()
     cur.execute(
@@ -255,8 +277,27 @@ def deletDay():
 def deletUser():
 
     algo = request.form['canvas_data']
-    print(algo)
-    print(type(algo))
+
+    cur = mysql.get_db().cursor()
+    cur.execute(
+        'DELETE FROM eventos where  idUser = {0}'.format(algo))
+    mysql.get_db().commit()
+
+
+@app.route('/delet2', methods=['POST'])
+def delet2():
+
+    obj = request.form['canvas_data']
+    date = request.form['canvas_data_date']
+
+    date = pasaFecha1(date)
+    finDay = date + timedelta(days=1)
+    date = str(date)
+    finDay = str(finDay)
+    cur = mysql.get_db().cursor()
+    cur.execute(
+        'DELETE FROM eventos where (%s < start) and ( start <  %s) and idUser = {0}'.format(obj), (date, finDay))
+    mysql.get_db().commit()
 
 
 @app.route('/test')

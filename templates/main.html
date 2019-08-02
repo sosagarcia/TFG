@@ -1,59 +1,19 @@
 {% extends "layout.html" %} {% block body %}
+<div class="">
+  {% if primer %}
+  <div class="card text-white bg-success mb-2 fadeInDown fadeIn first">
+    <div class="card-header">¡Exito!</div>
+    <div class="card-body">
+      <h4 class="card-title">Se ha iniciado sesión correctamente</h4>
+      <p class="card-text">Bienvenido/a {{ session["name"] }} .</p>
+    </div>
+  </div>
+  {% endif %}
+
+</div>
 
 <div class="row ustify-content-center justify-content-md-start  ">
   <!-- Izquierda -->
-  <div class="col-auto col-md-2 ">
-    {% if primer %}
-    <div class="card text-white bg-success mb-2 fadeInDown fadeIn first">
-      <div class="card-header">¡Exito!</div>
-      <div class="card-body">
-        <h4 class="card-title">Se ha iniciado sesión correctamente</h4>
-        <p class="card-text">Bienvenido/a {{ session["name"] }} .</p>
-      </div>
-    </div>
-    {% endif %}
-    <div class="card text-white bg-danger mb-2 ">
-      <div class="card-header">¡Peligro!</div>
-      <div class="card-body">
-        <h4 class="card-title">Danger card title</h4>
-        <p class="card-text">
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </p>
-      </div>
-    </div>
-    <div class="card text-white bg-dark mb-2">
-      <div class="card-header">Header</div>
-      <div class="card-body">
-        <h4 class="card-title">Dark card title</h4>
-        <p class="card-text">
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </p>
-      </div>
-    </div>
-
-    <div class="card text-white bg-primary mb-2">
-      <div class="card-header">Aviso:</div>
-      <div class="card-body">
-        <h4 class="card-title">Primary card title</h4>
-        <p class="card-text">
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </p>
-      </div>
-    </div>
-    <div class="card text-white bg-warning mb-2">
-      <div class="card-header">Alerta</div>
-      <div class="card-body">
-        <h4 class="card-title">Warning card title</h4>
-        <p class="card-text">
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </p>
-      </div>
-    </div>
-  </div>
 
   <!-- Centro -->
   <div class="col-xs-6 col-md-7 colorPrueba fadeIn first">centtro</div>

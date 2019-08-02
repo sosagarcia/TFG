@@ -29,7 +29,7 @@
               <select name='title'>
                 {{ lista | safe }}
                 <select name="color">
-                  <option value="" selected disabled hidden>Seleccione un color</option>
+                  <option value="" selected hidden>Seleccione un color</option>
                   <option value="#ff0000">Rojo</option>
                   <option value="#00ff00">Verde</option>
                   <option value="#ffff00">Amarillo</option>
@@ -48,21 +48,41 @@
                   data-on-active-cls="btn-primary" />
 
 
-                <input type="datetime-local" id="login-2" class="fadeIn " name="end" />
+                <input type="datetime-local" id="login-2" class="fadeIn ml-4" name="end" />
 
 
 
-                <!--  <div class="custom-control custom-checkbox my-1 mr-sm-2 align-self-start">
-                <input type="checkbox" class="custom-control-input" id="customControlInline">
-                <label class="custom-control-label" for="customControlInline">Reglas de Repetición</label>
-              </div>-->
 
-                <div id="myDIV" class="w-25" style=" white-space:nowrap;"><label for="horas">Horas:</label>
 
-                  <input type="number" id="horas" name="horas" min="0">
-                  <label for="minutos">Minutos:</label>
+                <div id="Duration" class=" fadeIn w-50 ml-1" style=" white-space:nowrap;">
+                  <label for="horas">H:</label>
 
-                  <input type="number" id="minutos" name="minutos" min="0" max="59"></div>
+                  <input type="number" id="horas" name="horas" min="0" placeholder="0">
+                  <label for="minutos">M:</label>
+
+                  <input type="number" id="minutos" name="minutos" min="0" max="59" placeholder="0"></div>
+                <select id="repe">
+                  <option value="0" selected hidden>¿Desea repetir el evento?</option>
+                  <option value="0">Sin repetición</option>
+                  <option value="1">Repetición diaria</option>
+                  <option value="2">Repetición semanal</option>
+                  <option value="3">Repetición mensual</option>
+                </select>
+
+                <div id="repet" class="fadeIn ml-1">
+                  <div id="ShowD">
+                    <label for=" dias">Límite de días:</label>
+                    <input type="number" id="semanas" name="semanas" min="1" placeholder="1">
+                  </div>
+                  <div id="ShowS">
+                    <label for="semanas">Límite de semanas:</label>
+                    <input type="number" id="semanas" name="semanas" min="1" placeholder="1">
+                  </div>
+                  <div id="ShowM">
+                    <label for="meses">Límite de meses:</label>
+                    <input type="number" id="meses" name="meses" min="1" placeholder="1">
+                  </div>
+                </div>
 
                 <input type="submit" class="fadeIn fourth" value="Guardar" />
             </form>
@@ -171,8 +191,10 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    var x = document.getElementById("myDIV");
+    var x = document.getElementById("Duration");
     var y = document.getElementById("login-2");
+    var horas = document.getElementById("horas");
+    var minutos = document.getElementById("minutos");
     x.style.display = "none";
     y.style.display = "block";
     $(":checkbox")
@@ -184,9 +206,13 @@
         if (x.style.display === "none") {
           x.style.display = "block";
           y.style.display = "none";
+
         } else {
           x.style.display = "none";
           y.style.display = "block";
+
+          horas.value = "";
+          minutos.value = "";
         }
       });
 
@@ -282,7 +308,50 @@
   });
 </script>
 <script>
+
+
   window.onload = function () {
+
+    var repe = document.getElementById("repe");
+    var repeSelected;
+    var showD = document.getElementById("ShowD");
+
+    var showS = document.getElementById("ShowS");
+    var showM = document.getElementById("ShowM");
+    showD.style.display = "none";
+    showS.style.display = "none";
+    showM.style.display = "none";
+    repe.addEventListener("change", function () {
+
+      repeSelected = this.options[repe.selectedIndex];
+      console.log(repeSelected.value);
+
+
+
+      if (repeSelected.value == 0) {
+        showD.style.display = "none";
+        showS.style.display = "none";
+        showM.style.display = "none";
+      }
+      if (repeSelected.value == 1) {
+        showD.style.display = "block";
+        showS.style.display = "none";
+        showM.style.display = "none";
+      }
+      if (repeSelected.value == 2) {
+        showD.style.display = "none";
+        showS.style.display = "block";
+        showM.style.display = "none";
+      }
+      if (repeSelected.value == 3) {
+        showD.style.display = "none";
+        showS.style.display = "none";
+        showM.style.display = "block";
+      }
+
+    });
+
+
     var fchS = document.getElementById("fchS");
     fchS.style.display = "none";
     var usrS = document.getElementById("usrS");
@@ -295,6 +364,8 @@
     var obj = 0;
     var date;
     var idBorrado = 0;
+
+
     select.addEventListener("change", function () {
       selectedOption = this.options[select.selectedIndex];
       console.log(selectedOption.value);
@@ -330,29 +401,23 @@
     function borradoItem() {
 
       var fch = document.getElementById("fechaBorrado");
-      console.log("Hola " + selectedOption.value + "Fin");
+
       if (selectedOption.value == "day") {
 
         obj = 0;
         date = fch.value;
-        console.log(obj);
-        console.log(date);
         idBorrado = 1;
       }
       if (selectedOption.value == "user") {
 
         obj = usrSelected.value;
         date = 0;
-        console.log(obj);
-        console.log(date);
         idBorrado = 2;
       }
       if (selectedOption.value == "conv") {
 
         date = fch.value;
         obj = usr.value;
-        console.log(obj);
-        console.log(date);
         idBorrado = 3;
       }
       borrado(idBorrado, date, obj);
@@ -395,7 +460,23 @@
             $.post(
               "/deletUser",
               {
+
                 canvas_data: JSON.stringify(obj)
+              },
+              function (err, req, resp) {
+                window.location.href = "/results/" + resp["responseJSON"];
+              }
+            );
+          }
+        }
+        if (valor == 3) {
+          var men = confirm("Se borrará TODOS los eventos del usuario que empiecen en la fecha seleccionada ¿Está seguro/a de querer continuar?");
+          if (men == true) {
+            $.post(
+              "/delet2",
+              {
+                canvas_data: JSON.stringify(obj),
+                canvas_data_date: JSON.stringify(date)
               },
               function (err, req, resp) {
                 window.location.href = "/results/" + resp["responseJSON"];
