@@ -95,13 +95,14 @@
   </header>
 
   <body onload="startTime()">
-    <div id="txt"></div>
+    <div></div>
+    <span class="badge badge-dark" id="reloj"></span>
 
     <div class="mt-4 ml-4 mr-4">
       {% block body %} {% endblock %}
     </div>
   </body>
-  {% include "footer.html" %}
+  {% include "reloj.html" %}
   <!-- Optional JavaScript -->
   {% block script %} {% endblock %}
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -136,23 +137,5 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.7/js/mdb.min.js"
   ></script>
 
-  <script>
-    function startTime() {
-      var today = new Date();
-      console.log(today);
-      var h = today.getHours();
-      var m = today.getMinutes();
-      var s = today.getSeconds();
-      m = checkTime(m);
-      s = checkTime(s);
-      document.getElementById("txt").innerHTML = h + ":" + m + ":" + s;
-      var t = setTimeout(startTime, 500);
-    }
-    function checkTime(i) {
-      if (i < 10) {
-        i = "0" + i;
-      } // add zero in front of numbers < 10
-      return i;
-    }
-  </script>
+  {% include "footer.html" %}
 </html>

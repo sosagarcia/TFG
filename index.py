@@ -8,6 +8,8 @@ from flaskext.mysql import MySQL
 import bcrypt
 from flask import jsonify, json
 from static.py.mensajes import *
+from static.py.funciones import *
+
 # import mysql
 # import mysql.connector
 
@@ -26,95 +28,12 @@ class CustomJSONEncoder(JSONEncoder):
         return JSONEncoder.default(self, obj)
 
 
-mysql = MySQL()
-app = Flask(__name__)
-app.json_encoder = CustomJSONEncoder
-
-
-# MYSQL connection
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_USER'] = 'renato'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'renato12'
-app.config['MYSQL_DATABASE_DB'] = 'flaskcontacts'
-mysql.init_app(app)
-
-
-# Settings
-app.secret_key = 'mysecretkey'
-
-
-# Funciones
-def conn(texto):
-    cur = mysql.get_db().cursor()
-    cur.execute(texto)
-    data = cur.fetchall()
-    return data
-
-def hora():
-    now = datetime.now()
-    fecha = now.strftime("%d/%m/%Y")
-    hora = now.strftime("%H:%M:%S")
-
-def conjunto(data):
-    # result = '<select>'
-    result = '<ul class="list-group align-self-start first shadow p-3 mb-5 bg-white rounded mx-auto">'
-    max = len(data)
-
-    for i in range(0, max, 2):
-        result += '<li class="list-group-item">%s</li>' % (
-            data[i])
-    result += '</ul>'
-    return (result)
-
 def titulos():
 
     data = conn('SELECT title, start FROM eventos')
     data = [i for sub in data for i in sub]
 
     return data
-
-
-
-def users(data):
-    # result = '<select>'
-    result = '<option value="" selected hidden>Seleccione un usuario</option>'
-    max = len(data)
-
-    for i in range(0, max, 2):
-        result += '<option value="%s">%s</option>' % (
-            data[i + 1], data[i])
-    result += '</select>'
-
-    return (result)
-
-
-def usuarios():
-
-    data = conn('SELECT fullname, id FROM contacts')
-    data = [i for sub in data for i in sub]
-
-    return data
-
-
-def pasaFecha(fecha):
-    fecha = datetime.strptime(fecha, '%Y-%m-%dT%H:%M')
-    return fecha
-
-
-def pasaFecha1(fecha):
-    fecha = datetime.strptime(fecha, '"%Y-%m-%d"')
-    return fecha
-
-
-def dosMin(start, end):
-    start = pasaFecha(start)
-    end = pasaFecha(end)
-    dosM = 3 * 60
-    dif = end - start
-    dif = dif.total_seconds()
-    if (dif < dosM):
-        return 1
-    return 0
 
 
 def entre(fechaI, fechaF):
@@ -135,6 +54,50 @@ def entre(fechaI, fechaF):
     return 0
 
 
+
+def usuarios():
+
+    data = conn('SELECT fullname, id FROM contacts')
+    data = [i for sub in data for i in sub]
+    return data
+
+
+
+def searchUser(email):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM contacts WHERE email = %s", (email,))
+    user = cur.fetchone()
+    return user
+
+
+def conn(texto):
+    print("hol")
+    cur = mysql.get_db().cursor()
+    cur.execute(texto)
+    data = cur.fetchall()
+    return data
+
+
+mysql = MySQL()
+app = Flask(__name__)
+app.json_encoder = CustomJSONEncoder
+
+
+# MYSQL connection
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['MYSQL_DATABASE_USER'] = 'renato'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'renato12'
+app.config['MYSQL_DATABASE_DB'] = 'flaskcontacts'
+mysql.init_app(app)
+
+
+# Settings
+app.secret_key = 'mysecretkey'
+
+
+
+
+
 @app.route('/')
 def home():
 
@@ -143,9 +106,9 @@ def home():
 
 @app.route('/main')
 def main():
-    
+    hoy = fecha()
     agenda = conjunto(titulos())
-    return render_template('main.html', agenda=agenda)
+    return render_template('main.html', agenda=agenda, fecha=hoy)
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -181,7 +144,16 @@ def calendar():
     
     return render_template('calendar.html', mensaje=cal, lista=listado)
 
-
+@app.route('/background_process')
+def background_process():
+	try:
+		lang = request.args.get('proglang', 0, type=str)
+		if lang.lower() == 'python':
+			return jsonify(result='You are wise')
+		else:
+			return jsonify(result='Try again.')
+	except Exception as e:
+		return str(e)
 
 
 @app.route('/data')
@@ -329,14 +301,19 @@ def delet2():
 @app.route('/test')
 def test():
 
-    listado = conjunto(titulos())
-    return listado
+    return render_template('test.html')
+
+@app.route('/testa')
+def testa():
+    hoy = fecha()
+    return jsonify(result=hoy)
 
 
 @app.route('/logout')
 def logout():
-    return render_template('index.html', mensaje=adios)
     session['name'] = none
+    return render_template('index.html', mensaje=adios)
+    
 
 
 @app.route('/registro')
