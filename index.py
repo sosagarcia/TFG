@@ -34,7 +34,7 @@ app.json_encoder = CustomJSONEncoder
 # MYSQL connection
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['MYSQL_DATABASE_USER'] = 'renato'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'Jota.1584'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'renato12'
 app.config['MYSQL_DATABASE_DB'] = 'flaskcontacts'
 mysql.init_app(app)
 
@@ -50,19 +50,20 @@ def conn(texto):
     data = cur.fetchall()
     return data
 
-
+def hora():
+    now = datetime.now()
+    fecha = now.strftime("%d/%m/%Y")
+    hora = now.strftime("%H:%M:%S")
 
 def conjunto(data):
     # result = '<select>'
     result = '<ul class="list-group align-self-start first shadow p-3 mb-5 bg-white rounded mx-auto">'
     max = len(data)
-    print(data)
 
     for i in range(0, max, 2):
         result += '<li class="list-group-item">%s</li>' % (
             data[i])
     result += '</ul>'
-    print(result)
     return (result)
 
 def titulos():
@@ -111,8 +112,6 @@ def dosMin(start, end):
     dosM = 3 * 60
     dif = end - start
     dif = dif.total_seconds()
-    print(dif)
-    print(dosM)
     if (dif < dosM):
         return 1
     return 0
@@ -144,6 +143,7 @@ def home():
 
 @app.route('/main')
 def main():
+    
     agenda = conjunto(titulos())
     return render_template('main.html', agenda=agenda)
 
@@ -166,7 +166,8 @@ def login():
             if bcrypt.checkpw(password, user[4].encode('utf-8')):
                 session['name'] = user[1]
                 session['email'] = user[3]
-                return render_template("main.html", primer=1)
+                agenda = conjunto(titulos())
+                return render_template("main.html", primer=1, agenda=agenda)
             else:
                 return render_template("index.html", mensaje=contra)
 
@@ -218,10 +219,10 @@ def add_event():
         title = cur.fetchone()
         horas = request.form['horas']
         minutos = request.form['minutos']
-        print(minutos)
+        
         if len(minutos or horas) == 0:
             end = request.form['end']
-            print("normal")
+           
         else:
             end = pasaFecha(start)
             if (horas == ''):
@@ -234,17 +235,15 @@ def add_event():
                 minutos = int(minutos)
 
             
-            print(horas)
+            
             end = end + timedelta(hours=horas)
             end = end + timedelta(minutes=minutos)
             end = str(end)
-            print(type(start))
-            print(start)
-            print(type(end))
+
             temp = len(end)
             end = end.replace(" ", "T")
             end = end[:temp - 3]
-            print(end)
+
         listado = users(usuarios())
         if len(idUser and start and end) == 0:
             return render_template('calendar.html', mensaje=vacioE, lista=listado)
@@ -257,7 +256,6 @@ def add_event():
             return render_template('calendar.html', mensaje=fechae, lista=listado)
 
         cur = mysql.get_db().cursor()
-        print(type(start))
         cur.execute(
             'INSERT INTO eventos (title, color, start, end, idUser) VALUES(%s, %s, %s, %s, %s)', (title, color, start, end, idUser))
         mysql.get_db().commit()
@@ -268,7 +266,6 @@ def add_event():
 def deletEvent():
 
     id = request.form['canvas_data']
-    print(id)
     cur = mysql.get_db().cursor()
     cur.execute('DELETE FROM eventos WHERE id = {0}'.format(id))
     mysql.get_db().commit()
@@ -280,9 +277,7 @@ def deletAlgo():
 
     algo = request.form['canvas_data']
     algoInt = int(algo)
-    print(type(algoInt))
     if algoInt == 0:
-        print(algo)
         cur = mysql.get_db().cursor()
         cur.execute('TRUNCATE TABLE eventos ')
         mysql.get_db().commit()

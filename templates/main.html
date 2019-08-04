@@ -17,17 +17,8 @@
   <!-- Centro -->
   <div class="colorPrueba fadeIn first mx-auto align-self-start">centtro</div>
   <!-- Derecha -->
+
   {{ agenda | safe }}
 </div>
 
-{% endblock %} {% block script %}
-<script>
-  window.onload = function() {
-    // Set variable to current date and time const
-    now = new Date(); // View the output now;
-
-    console.log(now);
-  };
-</script>
-
-{% endblock %}
+{% endblock %} {% block script %} {% endblock %}
