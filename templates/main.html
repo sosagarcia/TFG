@@ -1,7 +1,7 @@
 {% extends "layout.html" %} {% block body %}
 <div class="">
   {% if primer %}
-  <div class="card text-white bg-success mb-2 fadeInDown fadeIn first">
+  <div class="card text-white bg-success mb-2 fadeInDown fadeIn first w-50">
     <div class="card-header">¡Exito!</div>
     <div class="card-body">
       <h4 class="card-title">Se ha iniciado sesión correctamente</h4>
@@ -17,7 +17,7 @@
   <!-- Centro -->
   <div class="colorPrueba fadeIn first mx-auto align-self-start">centtro</div>
   <!-- Derecha -->
-
+  <label for="comp-name">Name:</label>
   {{ agenda | safe }}
 </div>
 

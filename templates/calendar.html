@@ -52,9 +52,9 @@
                 <input id="input-2" type="checkbox" data-off-active-cls="btn-warning"
                   data-on-active-cls="btn-primary" />
 
-
-                <input type="datetime-local" id="login-2" class="fadeIn ml-4" name="end" />
-
+              <div class="d-flex justify-content-center">
+                <input type="datetime-local" id="login-2" class="fadeIn " name="end" />
+              </div>
 
                 <div id="Duration" class=" fadeIn w-50 ml-1" style=" white-space:nowrap;">
                   <label for="horas">H:</label>
@@ -305,196 +305,191 @@
     calendar.render();
   });
 </script>
-<script>
 
-
-  window.onload = function () {
-
-    var repe = document.getElementById("repe");
-    var repeSelected;
-    var showD = document.getElementById("ShowD");
-
-    var showS = document.getElementById("ShowS");
-    var showM = document.getElementById("ShowM");
-    showD.style.display = "none";
-    showS.style.display = "none";
-    showM.style.display = "none";
-    repe.addEventListener("change", function () {
-
-      repeSelected = this.options[repe.selectedIndex];
-      console.log(repeSelected.value);
-
-
-
-      if (repeSelected.value == 0) {
-        showD.style.display = "none";
-        showS.style.display = "none";
-        showM.style.display = "none";
-      }
-      if (repeSelected.value == 1) {
-        showD.style.display = "block";
-        showS.style.display = "none";
-        showM.style.display = "none";
-      }
-      if (repeSelected.value == 2) {
-        showD.style.display = "none";
-        showS.style.display = "block";
-        showM.style.display = "none";
-      }
-      if (repeSelected.value == 3) {
-        showD.style.display = "none";
-        showS.style.display = "none";
-        showM.style.display = "block";
-      }
-
-    });
-
-
-    var fchS = document.getElementById("fchS");
-    fchS.style.display = "none";
-    var usrS = document.getElementById("usrS");
-    usrS.style.display = "none";
-    var select = document.getElementById("tipoBorrado");
-    var selectedOption;
-    var usrSelected;
-    document.getElementById("borradoBTN").addEventListener("click", myFunction);
-    var usr = document.getElementById("usuarioBorrado");
-    var obj = 0;
-    var date;
-    var idBorrado = 0;
-
-
-    select.addEventListener("change", function () {
-      selectedOption = this.options[select.selectedIndex];
-      console.log(selectedOption.value);
-      if (selectedOption.value == "full") {
-        fchS.style.display = "none";
-        usrS.style.display = "none";
-      }
-      if (selectedOption.value == "day") {
-        fchS.style.display = "block";
-        usrS.style.display = "none";
-      }
-      if (selectedOption.value == "user") {
-        fchS.style.display = "none";
-        usrS.style.display = "block";
-      }
-      if (selectedOption.value == "conv") {
-        fchS.style.display = "block";
-        usrS.style.display = "block";
-      }
-    });
-
-    usr.addEventListener("change", function () {
-      usrSelected = this.options[usr.selectedIndex];
-      console.log("El usuario seleccionado a borrar es" + usrSelected);
-
-    });
-    function myFunction() {
-      borradoItem()
-      console.log("Hola " + selectedOption.value + "Fin");
-    }
-
-
-    function borradoItem() {
-
-      var fch = document.getElementById("fechaBorrado");
-
-      if (selectedOption.value == "day") {
-
-        obj = 0;
-        date = fch.value;
-        idBorrado = 1;
-      }
-      if (selectedOption.value == "user") {
-
-        obj = usrSelected.value;
-        date = 0;
-        idBorrado = 2;
-      }
-      if (selectedOption.value == "conv") {
-
-        date = fch.value;
-        obj = usr.value;
-        idBorrado = 3;
-      }
-      borrado(idBorrado, date, obj);
-    }
-    function borrado(valor, date, obj) {
-      var opcion = confirm("¿Está seguro/a de borrar lo seleccionado?");
-
-      if (opcion == true) {
-        if (valor == 0) {
-          var men = confirm("Se borrará TODOS los eventos, ¿Está seguro/a de querer continuar?");
-          if (men == true) {
-            $.post(
-              "/deletFull",
-              {
-                canvas_data: JSON.stringify(valor)
-              },
-              function (err, req, resp) {
-                window.location.href = "/results/" + resp["responseJSON"];
-              }
-            );
-          }
-        }
-        if (valor == 1) {
-          var men = confirm("Se borrará TODOS los eventos que comiecen en el día seleccionado ¿Está seguro/a de querer continuar?");
-          if (men == true) {
-            $.post(
-              "/deletDay",
-              {
-                canvas_data: JSON.stringify(date)
-              },
-              function (err, req, resp) {
-                window.location.href = "/results/" + resp["responseJSON"];
-              }
-            );
-          }
-        }
-        if (valor == 2) {
-          var men = confirm("Se borrará TODOS los eventos del usuario seleccionado ¿Está seguro/a de querer continuar?");
-          if (men == true) {
-            $.post(
-              "/deletUser",
-              {
-
-                canvas_data: JSON.stringify(obj)
-              },
-              function (err, req, resp) {
-                window.location.href = "/results/" + resp["responseJSON"];
-              }
-            );
-          }
-        }
-        if (valor == 3) {
-          var men = confirm("Se borrará TODOS los eventos del usuario que empiecen en la fecha seleccionada ¿Está seguro/a de querer continuar?");
-          if (men == true) {
-            $.post(
-              "/delet2",
-              {
-                canvas_data: JSON.stringify(obj),
-                canvas_data_date: JSON.stringify(date)
-              },
-              function (err, req, resp) {
-                window.location.href = "/results/" + resp["responseJSON"];
-              }
-            );
-          }
-        }
-
-        window.location.href = "/calendar";
-      } else {
-      }
-    }
-  }
-</script>
 
 <script>
 
 
-
-
-
-</script>
+    window.onload = function () {
+  
+      var repe = document.getElementById("repe");
+      var repeSelected;
+      var showD = document.getElementById("ShowD");
+  
+      var showS = document.getElementById("ShowS");
+      var showM = document.getElementById("ShowM");
+      showD.style.display = "none";
+      showS.style.display = "none";
+      showM.style.display = "none";
+      repe.addEventListener("change", function () {
+  
+        repeSelected = this.options[repe.selectedIndex];
+        console.log(repeSelected.value);
+  
+  
+  
+        if (repeSelected.value == 0) {
+          showD.style.display = "none";
+          showS.style.display = "none";
+          showM.style.display = "none";
+        }
+        if (repeSelected.value == 1) {
+          showD.style.display = "block";
+          showS.style.display = "none";
+          showM.style.display = "none";
+        }
+        if (repeSelected.value == 2) {
+          showD.style.display = "none";
+          showS.style.display = "block";
+          showM.style.display = "none";
+        }
+        if (repeSelected.value == 3) {
+          showD.style.display = "none";
+          showS.style.display = "none";
+          showM.style.display = "block";
+        }
+  
+      });
+  
+  
+      var fchS = document.getElementById("fchS");
+      fchS.style.display = "none";
+      var usrS = document.getElementById("usrS");
+      usrS.style.display = "none";
+      var select = document.getElementById("tipoBorrado");
+      var selectedOption;
+      var usrSelected;
+      document.getElementById("borradoBTN").addEventListener("click", myFunction);
+      var usr = document.getElementById("usuarioBorrado");
+      var obj = 0;
+      var date;
+      var idBorrado = 0;
+  
+  
+      select.addEventListener("change", function () {
+        selectedOption = this.options[select.selectedIndex];
+        console.log(selectedOption.value);
+        if (selectedOption.value == "full") {
+          fchS.style.display = "none";
+          usrS.style.display = "none";
+        }
+        if (selectedOption.value == "day") {
+          fchS.style.display = "block";
+          usrS.style.display = "none";
+        }
+        if (selectedOption.value == "user") {
+          fchS.style.display = "none";
+          usrS.style.display = "block";
+        }
+        if (selectedOption.value == "conv") {
+          fchS.style.display = "block";
+          usrS.style.display = "block";
+        }
+      });
+  
+      usr.addEventListener("change", function () {
+        usrSelected = this.options[usr.selectedIndex];
+        console.log("El usuario seleccionado a borrar es" + usrSelected);
+  
+      });
+      function myFunction() {
+        borradoItem()
+        console.log("Hola " + selectedOption.value + "Fin");
+      }
+  
+  
+      function borradoItem() {
+  
+        var fch = document.getElementById("fechaBorrado");
+  
+        if (selectedOption.value == "day") {
+  
+          obj = 0;
+          date = fch.value;
+          idBorrado = 1;
+        }
+        if (selectedOption.value == "user") {
+  
+          obj = usrSelected.value;
+          date = 0;
+          idBorrado = 2;
+        }
+        if (selectedOption.value == "conv") {
+  
+          date = fch.value;
+          obj = usr.value;
+          idBorrado = 3;
+        }
+        borrado(idBorrado, date, obj);
+      }
+      function borrado(valor, date, obj) {
+        var opcion = confirm("¿Está seguro/a de borrar lo seleccionado?");
+  
+        if (opcion == true) {
+          if (valor == 0) {
+            var men = confirm("Se borrará TODOS los eventos, ¿Está seguro/a de querer continuar?");
+            if (men == true) {
+              $.post(
+                "/deletFull",
+                {
+                  canvas_data: JSON.stringify(valor)
+                },
+                function (err, req, resp) {
+                  window.location.href = "/results/" + resp["responseJSON"];
+                }
+              );
+            }
+          }
+          if (valor == 1) {
+            var men = confirm("Se borrará TODOS los eventos que comiecen en el día seleccionado ¿Está seguro/a de querer continuar?");
+            if (men == true) {
+              $.post(
+                "/deletDay",
+                {
+                  canvas_data: JSON.stringify(date)
+                },
+                function (err, req, resp) {
+                  window.location.href = "/results/" + resp["responseJSON"];
+                }
+              );
+            }
+          }
+          if (valor == 2) {
+            var men = confirm("Se borrará TODOS los eventos del usuario seleccionado ¿Está seguro/a de querer continuar?");
+            if (men == true) {
+              $.post(
+                "/deletUser",
+                {
+  
+                  canvas_data: JSON.stringify(obj)
+                },
+                function (err, req, resp) {
+                  window.location.href = "/results/" + resp["responseJSON"];
+                }
+              );
+            }
+          }
+          if (valor == 3) {
+            var men = confirm("Se borrará TODOS los eventos del usuario que empiecen en la fecha seleccionada ¿Está seguro/a de querer continuar?");
+            if (men == true) {
+              $.post(
+                "/delet2",
+                {
+                  canvas_data: JSON.stringify(obj),
+                  canvas_data_date: JSON.stringify(date)
+                },
+                function (err, req, resp) {
+                  window.location.href = "/results/" + resp["responseJSON"];
+                }
+              );
+            }
+          }
+  
+          window.location.href = "/calendar";
+        } else {
+        }
+      }
+      startTime();
+    }
+  </script>
 {% endblock %}

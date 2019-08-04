@@ -103,12 +103,27 @@ def home():
 
     return render_template('index.html', mensaje=inicio)
 
+@app.route('/ahora')
+def ahora():
+    now = datetime.now()
+    d = now.strftime("%d")
+    M = now.strftime("%m")
+    a = now.strftime("%Y")
+    h = now.strftime("%H")
+    m = now.strftime("%M")
+    s = now.strftime("%S")
+    M = int(M) - 1
+    hoy = [a,M,d,h,m,s]
+
+    # need to be (year, month, day, hours, minutes, seconds, milliseconds)
+
+    return jsonify(result=hoy)
 
 @app.route('/main')
 def main():
-    hoy = fecha()
+
     agenda = conjunto(titulos())
-    return render_template('main.html', agenda=agenda, fecha=hoy)
+    return render_template('main.html', agenda=agenda)
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -144,16 +159,6 @@ def calendar():
     
     return render_template('calendar.html', mensaje=cal, lista=listado)
 
-@app.route('/background_process')
-def background_process():
-	try:
-		lang = request.args.get('proglang', 0, type=str)
-		if lang.lower() == 'python':
-			return jsonify(result='You are wise')
-		else:
-			return jsonify(result='Try again.')
-	except Exception as e:
-		return str(e)
 
 
 @app.route('/data')
@@ -311,7 +316,7 @@ def testa():
 
 @app.route('/logout')
 def logout():
-    session['name'] = none
+    session['name'] = "none"
     return render_template('index.html', mensaje=adios)
     
 

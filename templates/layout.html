@@ -95,8 +95,10 @@
   </header>
 
   <body onload="startTime()">
-    <div></div>
-    <span class="badge badge-dark" id="reloj"></span>
+    <h3 class="d-flex justify-content-end">
+      Hora actual del sistema<span class="badge badge-dark" id="reloj"></span>
+    </h3>
+    <span class="badge badge-dark"></span>
 
     <div class="mt-4 ml-4 mr-4">
       {% block body %} {% endblock %}
