@@ -30,7 +30,18 @@ class CustomJSONEncoder(JSONEncoder):
 
 def titulos():
 
-    data = conn('SELECT title, start FROM eventos')
+    hoy = dt.datetime.now()
+
+    ayer = hoy - timedelta(days=1)
+    mañana = hoy + timedelta(days=1)
+    ayer = str(ayer)
+    mañana = str(mañana)
+    
+    cur = mysql.get_db().cursor()
+    cur.execute(
+        'SELECT title, start, end FROM eventos where (%s < start) and ( start <  %s) ORDER BY start ASC', (ayer, mañana))
+    data = cur.fetchall()
+    print (data)
     data = [i for sub in data for i in sub]
 
     return data
@@ -85,8 +96,8 @@ app.json_encoder = CustomJSONEncoder
 
 # MYSQL connection
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_USER'] = 'renato'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'renato12'
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'admin'
 app.config['MYSQL_DATABASE_DB'] = 'flaskcontacts'
 mysql.init_app(app)
 

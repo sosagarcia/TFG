@@ -1,4 +1,12 @@
-{% extends "layout.html" %} {% block body %}
+{% extends "layout.html" %}
+
+{% block head %}
+
+
+{% endblock %}
+
+
+{% block body %}
 <div class="">
   {% if primer %}
   <div class="card text-white bg-success mb-2 fadeInDown fadeIn first w-50">
@@ -17,8 +25,20 @@
   <!-- Centro -->
   <div class="colorPrueba fadeIn first mx-auto align-self-start">centtro</div>
   <!-- Derecha -->
-  <label for="comp-name">Name:</label>
+
   {{ agenda | safe }}
 </div>
 
-{% endblock %} {% block script %} {% endblock %}
+{% endblock %} {% block script %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
+
+{% endblock %}

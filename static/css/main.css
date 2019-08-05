@@ -1,6 +1,6 @@
 body {
-  margin: 0;
-  padding: 0;
+  padding-right: 0px !important;
+  margin-right: 0px !important;
   background: url(../img/Fondo1b.jpeg) no-repeat center top fixed;
   background-size: cover;
   font-family: sans-serif;
@@ -24,4 +24,16 @@ body {
 
 .colorPrueba1 {
   background: blue;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.modal-open {
+  overflow: visible;
+}
+
+.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
+  padding-right: 0px!important;
 }
