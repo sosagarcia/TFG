@@ -40,8 +40,7 @@ body {
 
 div#general3 {
   margin: auto;
-  width: 960px;
-  height: 800px;
+
   background: #abbaab;
   /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #ffffff, #abbaab);

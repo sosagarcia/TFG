@@ -2,14 +2,105 @@
 
 {% block body %}
 
-<div class="container" id="general3">
-    <canvas id="myChart"></canvas>
-</div>
+
+
+<div>
+    <div class="row ">
+      <div class="col  fadeIn  align-self-start first shadow ml-4 mt-3 rounded" id="general3" >
+        <!-- Button trigger modal -->
+        <canvas id="myChart" ></canvas>
+        
+      </div>
+      <div class="col align-self-start">
+        <div class="wrapper fadeInDown">
+          <div id="formContent">
+            <!-- Mensaje -->
+            <div class="fadeIn first">
+              {% for mensaje in mensaje %}
+              <div class="card text-white bg-{{ mensaje.tipo }} mb-3 ">
+                <div class="card-header">{{ mensaje.titulo }}</div>
+                <div class="card-body">
+                  <h4 class="card-title">{{ mensaje.author }}</h4>
+                  <p class="card-text">{{ mensaje.mensaje }}</p>
+                </div>
+  
+                {% endfor %}
+              </div>
+              <!-- Login Form -->
+              <form action="/add_event" method="POST" id="myForm">
+                <!--  <input type="text" id="login" class="fadeIn second" name="title" placeholder="Nombre del evento" /> -->
+                <select name='title'>
+                  {{ lista | safe }}
+                  <select name="color">
+                    <option value="" selected hidden>Seleccione un color</option>
+                    <option value="#ff0000">Rojo</option>
+                    <option value="#00ff00">Verde</option>
+                    <option value="#ffff00">Amarillo</option>
+                    <option value="#81d6fe">Azul</option>
+                  </select>
+                  <label for="login-1">
+                    Seleccione Fecha de inicio
+                  </label> <br />
+                  <input type="datetime-local" id="login-1" class="fadeIn second" name="start" />
+  
+                  <label for="input-2">
+                    Seleccione Método de fin
+                  </label> <br />
+  
+                  <input id="input-2" type="checkbox" data-off-active-cls="btn-warning"
+                    data-on-active-cls="btn-primary" />
+  
+                  <div class="d-flex justify-content-center">
+                    <input type="datetime-local" id="login-2" class="fadeIn " name="end" />
+                  </div>
+  
+                  <div id="Duration" class=" fadeIn w-50 ml-1" style=" white-space:nowrap;">
+                    <label for="horas">H:</label>
+  
+                    <input type="number" id="horas" name="horas" min="0" placeholder="0">
+                    <label for="minutos">M:</label>
+  
+                    <input type="number" id="minutos" name="minutos" min="0" max="59" placeholder="0"></div>
+                  <select id="repe">
+                    <option value="0" selected hidden>¿Desea repetir el evento?</option>
+                    <option value="0">Sin repetición</option>
+                    <option value="1">Repetición diaria</option>
+                    <option value="2">Repetición semanal</option>
+                    <option value="3">Repetición mensual</option>
+                  </select>
+  
+                  <div id="repet" class="fadeIn ml-1">
+                    <div id="ShowD">
+                      <label for=" dias">Límite de días:</label>
+                      <input type="number" id="semanas" name="semanas" min="1" placeholder="1">
+                    </div>
+                    <div id="ShowS">
+                      <label for="semanas">Límite de semanas:</label>
+                      <input type="number" id="semanas" name="semanas" min="1" placeholder="1">
+                    </div>
+                    <div id="ShowM">
+                      <label for="meses">Límite de meses:</label>
+                      <input type="number" id="meses" name="meses" min="1">
+                    </div>
+                  </div>
+  
+                  <input type="submit" class="fadeIn fourth" value="Guardar" />
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
 
 {% endblock %}
 {% block script %}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 
 <script>
 
@@ -20,6 +111,15 @@
     Chart.defaults.global.defaultFontSize = 18;
     Chart.defaults.global.defaultFontColor = '#777';
 
+    var data
+    fetch("/data1")
+      .then(res => res.json())
+      .then(out => {
+        console.log(out);
+        data: out
+      })
+      .catch(error => console.error ('Error al obtener datos de estadísticas') )
+    console.log(data);
     let massPopChart = new Chart(myChart, {
         type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
         data: {

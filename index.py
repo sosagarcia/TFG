@@ -94,8 +94,8 @@ app.json_encoder = CustomJSONEncoder
 
 # MYSQL connection
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'admin'
+app.config['MYSQL_DATABASE_USER'] = 'renato'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'renato12'
 app.config['MYSQL_DATABASE_DB'] = 'flaskcontacts'
 mysql.init_app(app)
 
@@ -180,6 +180,17 @@ def data():
             {'id': row[0], 'title': row[1], 'color': row[2], 'start': row[3], 'end': row[4], 'idUser': row[5], })
 
     return Response(json.dumps(callist),  mimetype='application/json')
+
+@app.route('/data1')
+def data1():
+    
+
+    labels = ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford']
+    data = [617594,181045,153060,106519,105162,95072]
+    
+    
+
+    return jsonify(labels = labels, data = data)
 
 
 # @app.route('/today')
@@ -371,7 +382,7 @@ def update_contact(id):
 
 @app.route('/estadisticas')
 def estadisticas():
-    return render_template('estadisticas.html')
+    return render_template('estadisticas.html', mensaje=esta)
 
 
 @app.route('/lista')

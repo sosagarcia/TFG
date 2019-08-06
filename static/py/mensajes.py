@@ -153,3 +153,11 @@ delEv = [
         'tipo': 'success'
     }
 ]
+esta = [
+    {
+        'author': 'Selección de estadísticas',
+        'titulo': 'ESTADÍSTICAS',
+        'mensaje': 'Seleccione el tipo de estadística que desea visualizar',
+        'tipo': 'primary'
+    }
+]

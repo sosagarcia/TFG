@@ -10,7 +10,6 @@
     fetch("/ahora")
       .then(res => res.json())
       .then(out => {
-        console.log(out.result[1]);
         dt = new Date(
           out.result[0],
           out.result[1],
@@ -19,7 +18,7 @@
           out.result[4],
           out.result[5]
         );
-        console.log(dt);
+
         // ensure date comes as 01, 09 etc
         DD = ("0" + dt.getDate()).slice(-2);
         // getMonth returns month from 0
@@ -32,7 +31,6 @@
           YYYY + "-" + MM + "-" + DD + " " + hh + ":" + mm + ":" + ss;
 
         // will output something like "2019-02-14 11:04:42"
-        console.log(date_string);
 
         document.getElementById("reloj").innerHTML = date_string;
       })
