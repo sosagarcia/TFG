@@ -6,11 +6,14 @@ def conjunto(data):
     # result = '<select>'
 
     result = '<ul class="list-group align-self-start first shadow p-3 mb-5 bg-white rounded mx-auto " >'
-    result += '<h2 class="badge badge-warning">Listado de eventos recientes y próximos:</h1>'
+    result += '<label class="bg-warning rounded">Listado de eventos recientes y próximos</label>'
     max = len(data)
 
     if max == 0:
-        result += '<li class = "list-group-item badge badge-light pointer" > No hay ningún evento para hoy </li>'
+        
+        result += '<span class=" mt-1 d-inline-block" tabindex="0" data-toggle="tooltip" data-placement="right" title="No hay eventos programados para las próximas 24Hs.">'
+        result += '<li class = "list-group-item bg-light pointer" > No hay ningún evento para hoy </li>'
+        result += '</span>'
 
     else:
         style = ""
@@ -22,9 +25,9 @@ def conjunto(data):
                 style = "light"
             strDesde = data[i+1].strftime('%d/%m/%y a las %H:%M')
             strHasta = data[i+2].strftime('%d/%m/%y a las %H:%M')
-            result += '<span class="mt-2 d-inline-block" tabindex="0" data-toggle="tooltip" data-placement="right" title="Desde el %s hasta el %s">' % (
+            result += '<span class=" mt-1 d-inline-block" tabindex="0" data-toggle="tooltip" data-placement="right" title="Desde el %s hasta el %s">' % (
                 strDesde, strHasta)
-            result += '<li class="pointer list-group-item badge badge-%s">%s </li>' % (
+            result += '<li class="pointer list-group-item bg-%s">%s </li>' % (
                 style, data[i])
             result += '</span>'
         result += '</ul>'

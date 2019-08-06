@@ -191,9 +191,6 @@ def data():
 #   return Response(json.dumps(hoy),  mimetype='application/json')
 
 
-@app.route('/evento')
-def evento():
-    return render_template('evento.html', mensaje=cal)
 
 
 @app.route('/add_event', methods=['POST'])

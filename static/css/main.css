@@ -37,3 +37,15 @@ body {
 .modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
   padding-right: 0px!important;
 }
+
+div#general3 {
+  margin: auto;
+  width: 960px;
+  height: 800px;
+  background: #abbaab;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #ffffff, #abbaab);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #ffffff, #abbaab);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}

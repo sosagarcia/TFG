@@ -14,46 +14,51 @@
 
   <link rel="stylesheet" href="{{url_for('static', filename='css/master.css')}}" />
   <link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}" />
+  <link rel="stylesheet" href="{{url_for('static', filename='css/footer.css')}}" />
 
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" />
   <!-- Bootstrap core CSS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
   <!-- Material Design Bootstrap -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.7/css/mdb.min.css" rel="stylesheet" />
+
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">Inicio</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link" href="{{ url_for('registro') }}">Crear un nuevo usuario</a>
-        <a class="nav-item nav-link" href="{{ url_for('lista') }}">Lista de Contactos</a>
+  <div id="wrap">
+    <div id="main" class=" clear-top">
+      <nav class="navbar navbar-expand-lg navbar-dark " id="f3">
+        <a class="navbar-brand" href="/">Inicio</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link" href="{{ url_for('registro') }}">Crear un nuevo usuario</a>
+            <a class="nav-item nav-link" href="{{ url_for('lista') }}">Lista de Contactos</a>
 
-        <a class="nav-item nav-link" href="{{ url_for('main') }}">Acceder</a>
-        <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Texto inhabilitado</a>
+            <a class="nav-item nav-link" href="{{ url_for('main') }}">Acceder</a>
+            <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Texto inhabilitado</a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Centro -->
+      <div class="mt-4 ml-4 mr-4">
+        {% block conten %} {% endblock %}
       </div>
-    </div>
-  </nav>
 
-  <!-- Centro -->
-  <div class="mt-4 ml-4 mr-4">
-    {% block conten %} {% endblock %}
+    </div>
   </div>
-</body>
-<div class="mt-4">
   {% include "footer.html" %}
-  <!-- JavaScript -->
-</div>
+</body>
+
+
+<!-- JavaScript -->
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
@@ -70,5 +75,9 @@
   src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.7/js/mdb.min.js"></script>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
 
 </html>
