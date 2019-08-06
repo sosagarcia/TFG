@@ -109,31 +109,26 @@
     // Global Options
     Chart.defaults.global.defaultFontFamily = 'Lato';
     Chart.defaults.global.defaultFontSize = 18;
-    Chart.defaults.global.defaultFontColor = '#777';
+    //Chart.defaults.global.defaultFontColor = '#777';
+    
 
     var data
     fetch("/data1")
       .then(res => res.json())
       .then(out => {
         console.log(out);
-        data: out
+        miFuncion(out);
       })
       .catch(error => console.error ('Error al obtener datos de estadísticas') )
-    console.log(data);
-    let massPopChart = new Chart(myChart, {
+    function miFuncion(data){
+        
+        let massPopChart = new Chart(myChart, {
         type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
         data: {
-            labels: ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
+            labels: data.labels,
             datasets: [{
                 label: 'Population',
-                data: [
-                    617594,
-                    181045,
-                    153060,
-                    106519,
-                    105162,
-                    95072
-                ],
+                data: data.data,
                 //backgroundColor:'green',
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.6)',
@@ -176,5 +171,8 @@
             }
         }
     });
+    }
+    
+    
 </script>
 {% endblock %}
