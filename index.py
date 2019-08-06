@@ -41,7 +41,6 @@ def titulos():
     cur.execute(
         'SELECT title, start, end FROM eventos where (%s < start) and ( start <  %s) ORDER BY start ASC', (ayer, mañana))
     data = cur.fetchall()
-    print (data)
     data = [i for sub in data for i in sub]
 
     return data
@@ -82,7 +81,6 @@ def searchUser(email):
 
 
 def conn(texto):
-    print("hol")
     cur = mysql.get_db().cursor()
     cur.execute(texto)
     data = cur.fetchall()
