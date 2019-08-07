@@ -1,0 +1,111 @@
+<script>
+
+    var user = document.getElementById("users");
+    var userSelected
+    var peri = document.getElementById("peri");
+    peri.style.display = "none";
+    var tipoD = document.getElementById("tipoD");
+    var tipoDSelected
+    var periodo = document.getElementById("periodo");
+    var periodoSelected
+
+
+    user.addEventListener("change", function () {
+
+        userSelected = this.options[user.selectedIndex];
+        console.log(userSelected.value);
+    })
+
+
+    tipoD.addEventListener("change", function () {
+
+        tipoDSelected = this.options[tipoD.selectedIndex];
+        console.log(tipoDSelected.value);
+    })
+
+    periodo.addEventListener("change", function () {
+
+        periodoSelected = this.options[periodo.selectedIndex];
+
+        if (periodoSelected.value == "intervalo") {
+            peri.style.display = "block";
+        } else {
+            peri.style.display = "none";
+        }
+    })
+
+</script>
+
+<script>
+
+    let myChart = document.getElementById('myChart').getContext('2d');
+
+    // Global Options
+    Chart.defaults.global.defaultFontFamily = 'Lato';
+    Chart.defaults.global.defaultFontSize = 18;
+    //Chart.defaults.global.defaultFontColor = '#777';
+
+
+    var data
+    fetch("/data1")
+        .then(res => res.json())
+        .then(out => {
+            console.log(out);
+            miFuncion(out);
+        })
+        .catch(error => console.error('Error al obtener datos de estadísticas'))
+    function miFuncion(data) {
+
+        let massPopChart = new Chart(myChart, {
+            type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Population',
+                    data: data.data,
+                    //backgroundColor:'green',
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)',
+                        'rgba(255, 99, 132, 0.6)'
+                    ],
+                    borderWidth: 1,
+                    borderColor: '#777',
+                    hoverBorderWidth: 3,
+                    hoverBorderColor: '#000'
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Largest Cities In Massachusetts',
+                    fontSize: 25
+                },
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 50,
+                        right: 0,
+                        bottom: 0,
+                        top: 0
+                    }
+                },
+                tooltips: {
+                    enabled: true
+                }
+            }
+        });
+    }
+
+
+</script>

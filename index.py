@@ -94,8 +94,8 @@ app.json_encoder = CustomJSONEncoder
 
 # MYSQL connection
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_USER'] = 'renato'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'renato12'
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'admin'
 app.config['MYSQL_DATABASE_DB'] = 'flaskcontacts'
 mysql.init_app(app)
 
@@ -382,7 +382,8 @@ def update_contact(id):
 
 @app.route('/estadisticas')
 def estadisticas():
-    return render_template('estadisticas.html', mensaje=esta)
+    listado = users(usuarios())
+    return render_template('estadisticas.html', mensaje=esta, listado=listado)
 
 
 @app.route('/lista')

@@ -1,0 +1,305 @@
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var x = document.getElementById("Duration");
+        var y = document.getElementById("login-2");
+        var horas = document.getElementById("horas");
+        var minutos = document.getElementById("minutos");
+        x.style.display = "none";
+        y.style.display = "block";
+        $(":checkbox")
+            .checkboxpicker({
+                onLabel: "Duración",
+                offLabel: "Fecha Exacta"
+            })
+            .on("change", function () {
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                    y.style.display = "none";
+
+                } else {
+                    x.style.display = "none";
+                    y.style.display = "block";
+
+                    horas.value = "";
+                    minutos.value = "";
+                }
+            });
+
+        var calendarEl = document.getElementById("calendar");
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            locale: "es",
+
+            plugins: ["dayGrid", "timeGrid", "list", "interaction"],
+            header: {
+                left: "prev,next today",
+                center: "title",
+                right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
+            },
+            //defaultDate: { url: "today" },
+
+            navLinks: true, // can click day/week names to navigate views
+            editable: false,
+            eventLimit: true, // allow "more" link when too many events
+            eventTimeFormat: {
+                // like '14:30:00'
+                hour: "2-digit",
+                minute: "2-digit",
+
+                meridiem: true
+            },
+            events: { url: "data" },
+
+            eventClick: function (info, jsEvent, view) {
+                //H
+                $("#tituloEvento").html(info.event.title);
+                // Mostrar información de evento en los inputs
+
+                $("#finEvento").val(info.event.end);
+                $("#colorEvento").val(info.event.color);
+                $("#idEvento").val(info.event.id);
+                $("#idUser").val(info.event.idUser);
+                var event = calendar.getEventById(info.event.id);
+                var end = event.end;
+                var start = event.start;
+                var id = info.event.id;
+                $("#finEvento").val(end);
+                $("#inicioEvento").val(start);
+
+                $("#exampleModal").modal();
+                $("#btnBorrar").click(function () {
+                    borrar(id);
+                });
+                /*
+                var idE = info.event.id;
+                document.getElementById("btnBorrar").onclick = function() {
+                  doWork();
+                };
+        
+                function doWork() {
+                  // ajax the JSON to the server
+                  $.post("deletEvent", idE, function() {});
+                  // stop link reloading the page
+                  event.preventDefault();
+                }
+                */
+
+                //$("#txtFechaI").val(typeof (info.start));
+                //$("#txtHoraI").val(FechaHora[1]);
+
+                //document.getElementById("txtFechaI").value = info.event.start
+                //lert("Event: " + info.event.title);
+                //alert("Coordinates: " + info.jsEvent.pageX + "," + info.jsEvent.pageY);
+                //alert("View: " + info.view.type);
+
+                // change the border color just for fun
+                //info.el.style.borderColor = "red";
+            }
+        });
+        function borrar(id) {
+            var mensaje;
+            var opcion = confirm("¿Está Seguro de querer eliminar el evento?");
+            if (opcion == true) {
+                $.post(
+                    "/deletEvent",
+                    {
+                        canvas_data: JSON.stringify(id)
+                    },
+                    function (err, req, resp) {
+                        window.location.href = "/results/" + resp["responseJSON"];
+                    }
+                );
+                window.location.href = "/calendar";
+            } else {
+            }
+        }
+
+        calendar.render();
+    });
+</script>
+
+
+<script>
+
+
+    window.onload = function () {
+
+        var repe = document.getElementById("repe");
+        var repeSelected;
+        var showD = document.getElementById("ShowD");
+
+        var showS = document.getElementById("ShowS");
+        var showM = document.getElementById("ShowM");
+        showD.style.display = "none";
+        showS.style.display = "none";
+        showM.style.display = "none";
+        repe.addEventListener("change", function () {
+
+            repeSelected = this.options[repe.selectedIndex];
+            console.log(repeSelected.value);
+
+
+
+            if (repeSelected.value == 0) {
+                showD.style.display = "none";
+                showS.style.display = "none";
+                showM.style.display = "none";
+            }
+            if (repeSelected.value == 1) {
+                showD.style.display = "block";
+                showS.style.display = "none";
+                showM.style.display = "none";
+            }
+            if (repeSelected.value == 2) {
+                showD.style.display = "none";
+                showS.style.display = "block";
+                showM.style.display = "none";
+            }
+            if (repeSelected.value == 3) {
+                showD.style.display = "none";
+                showS.style.display = "none";
+                showM.style.display = "block";
+            }
+
+        });
+
+
+        var fchS = document.getElementById("fchS");
+        fchS.style.display = "none";
+        var usrS = document.getElementById("usrS");
+        usrS.style.display = "none";
+        var select = document.getElementById("tipoBorrado");
+        var selectedOption;
+        var usrSelected;
+        document.getElementById("borradoBTN").addEventListener("click", myFunction);
+        var usr = document.getElementById("usuarioBorrado");
+        var obj = 0;
+        var date;
+        var idBorrado = 0;
+
+
+        select.addEventListener("change", function () {
+            selectedOption = this.options[select.selectedIndex];
+            console.log(selectedOption.value);
+            if (selectedOption.value == "full") {
+                fchS.style.display = "none";
+                usrS.style.display = "none";
+            }
+            if (selectedOption.value == "day") {
+                fchS.style.display = "block";
+                usrS.style.display = "none";
+            }
+            if (selectedOption.value == "user") {
+                fchS.style.display = "none";
+                usrS.style.display = "block";
+            }
+            if (selectedOption.value == "conv") {
+                fchS.style.display = "block";
+                usrS.style.display = "block";
+            }
+        });
+
+        usr.addEventListener("change", function () {
+            usrSelected = this.options[usr.selectedIndex];
+            console.log("El usuario seleccionado a borrar es" + usrSelected);
+
+        });
+        function myFunction() {
+            borradoItem()
+            console.log("Hola " + selectedOption.value + "Fin");
+        }
+
+
+        function borradoItem() {
+
+            var fch = document.getElementById("fechaBorrado");
+
+            if (selectedOption.value == "day") {
+
+                obj = 0;
+                date = fch.value;
+                idBorrado = 1;
+            }
+            if (selectedOption.value == "user") {
+
+                obj = usrSelected.value;
+                date = 0;
+                idBorrado = 2;
+            }
+            if (selectedOption.value == "conv") {
+
+                date = fch.value;
+                obj = usr.value;
+                idBorrado = 3;
+            }
+            borrado(idBorrado, date, obj);
+        }
+        function borrado(valor, date, obj) {
+            var opcion = confirm("¿Está seguro/a de borrar lo seleccionado?");
+
+            if (opcion == true) {
+                if (valor == 0) {
+                    var men = confirm("Se borrará TODOS los eventos, ¿Está seguro/a de querer continuar?");
+                    if (men == true) {
+                        $.post(
+                            "/deletFull",
+                            {
+                                canvas_data: JSON.stringify(valor)
+                            },
+                            function (err, req, resp) {
+                                window.location.href = "/results/" + resp["responseJSON"];
+                            }
+                        );
+                    }
+                }
+                if (valor == 1) {
+                    var men = confirm("Se borrará TODOS los eventos que comiecen en el día seleccionado ¿Está seguro/a de querer continuar?");
+                    if (men == true) {
+                        $.post(
+                            "/deletDay",
+                            {
+                                canvas_data: JSON.stringify(date)
+                            },
+                            function (err, req, resp) {
+                                window.location.href = "/results/" + resp["responseJSON"];
+                            }
+                        );
+                    }
+                }
+                if (valor == 2) {
+                    var men = confirm("Se borrará TODOS los eventos del usuario seleccionado ¿Está seguro/a de querer continuar?");
+                    if (men == true) {
+                        $.post(
+                            "/deletUser",
+                            {
+
+                                canvas_data: JSON.stringify(obj)
+                            },
+                            function (err, req, resp) {
+                                window.location.href = "/results/" + resp["responseJSON"];
+                            }
+                        );
+                    }
+                }
+                if (valor == 3) {
+                    var men = confirm("Se borrará TODOS los eventos del usuario que empiecen en la fecha seleccionada ¿Está seguro/a de querer continuar?");
+                    if (men == true) {
+                        $.post(
+                            "/delet2",
+                            {
+                                canvas_data: JSON.stringify(obj),
+                                canvas_data_date: JSON.stringify(date)
+                            },
+                            function (err, req, resp) {
+                                window.location.href = "/results/" + resp["responseJSON"];
+                            }
+                        );
+                    }
+                }
+
+                window.location.href = "/calendar";
+            } else {
+            }
+        }
+        startTime();
+    }
+</script>

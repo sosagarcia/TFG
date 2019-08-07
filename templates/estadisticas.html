@@ -5,93 +5,79 @@
 
 
 <div>
-    <div class="row ">
-      <div class="col  fadeIn  align-self-start first shadow ml-4 mt-3 rounded" id="general3" >
-        <!-- Button trigger modal -->
-        <canvas id="myChart" ></canvas>
-        
-      </div>
-      <div class="col align-self-start">
-        <div class="wrapper fadeInDown">
-          <div id="formContent">
-            <!-- Mensaje -->
-            <div class="fadeIn first">
-              {% for mensaje in mensaje %}
-              <div class="card text-white bg-{{ mensaje.tipo }} mb-3 ">
-                <div class="card-header">{{ mensaje.titulo }}</div>
-                <div class="card-body">
-                  <h4 class="card-title">{{ mensaje.author }}</h4>
-                  <p class="card-text">{{ mensaje.mensaje }}</p>
-                </div>
-  
-                {% endfor %}
+  <div class="row ">
+    <div class="col  fadeIn  align-self-start first shadow ml-4 mt-3 rounded" id="general3">
+      <!-- Button trigger modal -->
+      <canvas id="myChart"></canvas>
+
+    </div>
+    <div class="col align-self-start">
+      <div class="wrapper fadeInDown">
+        <div id="formContent">
+          <!-- Mensaje -->
+          <div class="fadeIn first">
+            {% for mensaje in mensaje %}
+            <div class="card text-white bg-{{ mensaje.tipo }} mb-3 ">
+              <div class="card-header">{{ mensaje.titulo }}</div>
+              <div class="card-body">
+                <h4 class="card-title">{{ mensaje.author }}</h4>
+                <p class="card-text">{{ mensaje.mensaje }}</p>
               </div>
-              <!-- Login Form -->
-              <form action="/add_event" method="POST" id="myForm">
-                <!--  <input type="text" id="login" class="fadeIn second" name="title" placeholder="Nombre del evento" /> -->
-                <select name='title'>
-                  {{ lista | safe }}
-                  <select name="color">
-                    <option value="" selected hidden>Seleccione un color</option>
-                    <option value="#ff0000">Rojo</option>
-                    <option value="#00ff00">Verde</option>
-                    <option value="#ffff00">Amarillo</option>
-                    <option value="#81d6fe">Azul</option>
-                  </select>
-                  <label for="login-1">
-                    Seleccione Fecha de inicio
+
+              {% endfor %}
+            </div>
+            <!-- Login Form -->
+            <form action="/add_event" method="POST" id="myForm">
+              <!--  <input type="text" id="login" class="fadeIn second" name="title" placeholder="Nombre del evento" /> -->
+
+              <select id='users'>
+                {{ listado | safe }}
+
+
+                <select id="tipoD">
+                  <option value="" selected hidden>Seleccione un dato</option>
+                  <option value="caudal">Caudal</option>
+                  <option value="tiempo">Tiempo de beneficio</option>
+                </select>
+
+
+                <select id="periodo">
+                  <option value="0" selected hidden>Intervalo de tiempo</option>
+                  <option value="siempre">Desde siempre</option>
+                  <option value="mes">Último mes</option>
+                  <option value="semana">Última semana</option>
+                  <option value="dia">Último día</option>
+                  <option value="intervalo">Intervalo definido</option>
+                </select><br />
+
+                <div id="peri">
+                  <label for="input-1">
+                    Inicio
                   </label> <br />
-                  <input type="datetime-local" id="login-1" class="fadeIn second" name="start" />
-  
+
+                  <div class="d-flex justify-content-center">
+                    <input type="datetime-local" id="login-1" class="fadeIn " name="end" />
+                  </div>
+
                   <label for="input-2">
-                    Seleccione Método de fin
+                    Fin
                   </label> <br />
-  
-                  <input id="input-2" type="checkbox" data-off-active-cls="btn-warning"
-                    data-on-active-cls="btn-primary" />
-  
+
                   <div class="d-flex justify-content-center">
                     <input type="datetime-local" id="login-2" class="fadeIn " name="end" />
                   </div>
-  
-                  <div id="Duration" class=" fadeIn w-50 ml-1" style=" white-space:nowrap;">
-                    <label for="horas">H:</label>
-  
-                    <input type="number" id="horas" name="horas" min="0" placeholder="0">
-                    <label for="minutos">M:</label>
-  
-                    <input type="number" id="minutos" name="minutos" min="0" max="59" placeholder="0"></div>
-                  <select id="repe">
-                    <option value="0" selected hidden>¿Desea repetir el evento?</option>
-                    <option value="0">Sin repetición</option>
-                    <option value="1">Repetición diaria</option>
-                    <option value="2">Repetición semanal</option>
-                    <option value="3">Repetición mensual</option>
-                  </select>
-  
-                  <div id="repet" class="fadeIn ml-1">
-                    <div id="ShowD">
-                      <label for=" dias">Límite de días:</label>
-                      <input type="number" id="semanas" name="semanas" min="1" placeholder="1">
-                    </div>
-                    <div id="ShowS">
-                      <label for="semanas">Límite de semanas:</label>
-                      <input type="number" id="semanas" name="semanas" min="1" placeholder="1">
-                    </div>
-                    <div id="ShowM">
-                      <label for="meses">Límite de meses:</label>
-                      <input type="number" id="meses" name="meses" min="1">
-                    </div>
-                  </div>
-  
-                  <input type="submit" class="fadeIn fourth" value="Guardar" />
-              </form>
-            </div>
+                </div>
+
+
+
+                <input type="submit" class="fadeIn fourth" value="Guardar" />
+            </form>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
 
 
@@ -102,77 +88,5 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 
-<script>
-
-    let myChart = document.getElementById('myChart').getContext('2d');
-
-    // Global Options
-    Chart.defaults.global.defaultFontFamily = 'Lato';
-    Chart.defaults.global.defaultFontSize = 18;
-    //Chart.defaults.global.defaultFontColor = '#777';
-    
-
-    var data
-    fetch("/data1")
-      .then(res => res.json())
-      .then(out => {
-        console.log(out);
-        miFuncion(out);
-      })
-      .catch(error => console.error ('Error al obtener datos de estadísticas') )
-    function miFuncion(data){
-        
-        let massPopChart = new Chart(myChart, {
-        type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
-        data: {
-            labels: data.labels,
-            datasets: [{
-                label: 'Population',
-                data: data.data,
-                //backgroundColor:'green',
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.6)',
-                    'rgba(54, 162, 235, 0.6)',
-                    'rgba(255, 206, 86, 0.6)',
-                    'rgba(75, 192, 192, 0.6)',
-                    'rgba(153, 102, 255, 0.6)',
-                    'rgba(255, 159, 64, 0.6)',
-                    'rgba(255, 99, 132, 0.6)'
-                ],
-                borderWidth: 1,
-                borderColor: '#777',
-                hoverBorderWidth: 3,
-                hoverBorderColor: '#000'
-            }]
-        },
-        options: {
-            title: {
-                display: true,
-                text: 'Largest Cities In Massachusetts',
-                fontSize: 25
-            },
-            legend: {
-                display: true,
-                position: 'right',
-                labels: {
-                    fontColor: '#000'
-                }
-            },
-            layout: {
-                padding: {
-                    left: 50,
-                    right: 0,
-                    bottom: 0,
-                    top: 0
-                }
-            },
-            tooltips: {
-                enabled: true
-            }
-        }
-    });
-    }
-    
-    
-</script>
+{% include "estadisticasScp.html" %}
 {% endblock %}

@@ -157,7 +157,7 @@ esta = [
     {
         'author': 'Selección de estadísticas',
         'titulo': 'ESTADÍSTICAS',
-        'mensaje': 'Seleccione el tipo de estadística que desea visualizar',
+        'mensaje': 'Seleccione el tipo de datos que desea visualizar',
         'tipo': 'primary'
     }
 ]
