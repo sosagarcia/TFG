@@ -8,6 +8,11 @@
     var tipoDSelected
     var periodo = document.getElementById("periodo");
     var periodoSelected
+    var fin = document.getElementById("fin");
+    fin.style.display = "none";
+
+
+
 
 
     user.addEventListener("change", function () {
@@ -29,9 +34,25 @@
 
         if (periodoSelected.value == "intervalo") {
             peri.style.display = "block";
+
         } else {
             peri.style.display = "none";
         }
+
+        $(":checkbox")
+            .checkboxpicker({
+                onLabel: "Fecha Exacta",
+                offLabel: "Hasta la actualidad"
+            })
+            .on("change", function () {
+                if (fin.style.display == "none") {
+                    fin.style.display = "block"
+                } else {
+                    fin.style.display = "none"
+                }
+            })
+
+
     })
 
 </script>

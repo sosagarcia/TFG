@@ -63,8 +63,13 @@
                     Fin
                   </label> <br />
 
-                  <div class="d-flex justify-content-center">
-                    <input type="datetime-local" id="login-2" class="fadeIn " name="end" />
+                  <input id="input-3" type="checkbox" data-off-active-cls="btn-warning"
+                    data-on-active-cls="btn-primary" />
+
+                  <div id="fin">
+                    <div class="d-flex justify-content-center">
+                      <input type="datetime-local" id="login-2" class="fadeIn " name="end" />
+                    </div>
                   </div>
                 </div>
 
@@ -87,6 +92,7 @@
 {% block script %}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+<script src="../static/js/bootstrap-checkbox-1.5.0/dist/js/bootstrap-checkbox.js" defer></script>
 
 {% include "estadisticasScp.html" %}
 {% endblock %}
