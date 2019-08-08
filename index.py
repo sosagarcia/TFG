@@ -187,10 +187,11 @@ def data1():
 
     labels = ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford']
     data = [617594,181045,153060,106519,105162,95072]
+    title = "título"
     
     
 
-    return jsonify(labels = labels, data = data)
+    return jsonify(labels = labels, data = data, titulo =  title)
 
 
 # @app.route('/today')
