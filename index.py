@@ -11,7 +11,7 @@ from flask import jsonify, json
 from static.py.mensajes import *
 from static.py.funciones import *
 
-#from flask.ext.session import Session
+# from flask.ext.session import Session
 # import mysql
 # import mysql.connector
 
@@ -90,9 +90,6 @@ mysql = MySQL()
 app = Flask(__name__)
 
 
-
-
-
 # MYSQL connection
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['MYSQL_DATABASE_USER'] = 'renato'
@@ -106,13 +103,11 @@ app.json_encoder = CustomJSONEncoder
 app.secret_key = os.urandom(16)
 
 
-
-
-
 @app.route('/')
 def home():
 
     return render_template('index.html', mensaje=inicio)
+
 
 @app.route('/ahora')
 def ahora():
@@ -124,7 +119,7 @@ def ahora():
     m = now.strftime("%M")
     s = now.strftime("%S")
     M = int(M) - 1
-    hoy = [a,M,d,h,m,s]
+    hoy = [a, M, d, h, m, s]
 
     # need to be (year, month, day, hours, minutes, seconds, milliseconds)
 
@@ -167,49 +162,39 @@ def login():
         return render_template("index.html", mensaje=inicio)
 
 
-
 @app.route('/perfil')
 def perfil():
     if session.get("name", None) is not None:
         username = session.get("name")
-        print(username)
         return render_template('perfil1.html')
     else:
         print("No se ha iniciado sesión")
         return redirect(url_for("login"))
 
 
-
 @app.route('/calendar')
 def calendar():
     listado = users(usuarios())
-    
     return render_template('calendar.html', mensaje=cal, lista=listado)
-
 
 
 @app.route('/data')
 def data():
     callist = list()
     data = conn('SELECT * FROM eventos')
-
     for row in data:
         callist.append(
             {'id': row[0], 'title': row[1], 'color': row[2], 'start': row[3], 'end': row[4], 'idUser': row[5], })
 
     return Response(json.dumps(callist),  mimetype='application/json')
 
+
 @app.route('/data1')
 def data1():
-    
-
     labels = ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford']
-    data = [617594,181045,153060,106519,105162,95072]
+    data = [617594, 181045, 153060, 106519, 105162, 95072]
     title = "título"
-    
-    
-
-    return jsonify(labels = labels, data = data, titulo =  title)
+    return jsonify(labels=labels, data=data, titulo=title)
 
 
 # @app.route('/today')
@@ -217,9 +202,6 @@ def data1():
 #    hoy = date.today()
 #
 #   return Response(json.dumps(hoy),  mimetype='application/json')
-
-
-
 
 @app.route('/add_event', methods=['POST'])
 def add_event():
@@ -232,10 +214,8 @@ def add_event():
         title = cur.fetchone()
         horas = request.form['horas']
         minutos = request.form['minutos']
-        
         if len(minutos or horas) == 0:
-            end = request.form['end']
-           
+            end = request.form['end']       
         else:
             end = pasaFecha(start)
             if (horas == ''):
@@ -245,10 +225,7 @@ def add_event():
             if (minutos == ''):
                 minutos = 0
             else:
-                minutos = int(minutos)
-
-            
-            
+                minutos = int(minutos)                
             end = end + timedelta(hours=horas)
             end = end + timedelta(minutes=minutos)
             end = str(end)
@@ -299,13 +276,10 @@ def deletAlgo():
 @app.route('/deletDay', methods=['POST'])
 def deletDay():
     algo = request.form['canvas_data']
-
     algo = pasaFecha1(algo)
-
     finDay = algo + timedelta(days=1)
     algo = str(algo)
     finDate = str(finDay)
-
     cur = mysql.get_db().cursor()
     cur.execute(
         'DELETE FROM eventos where (%s < start) and ( start <  %s) ', (algo, finDate))
@@ -316,7 +290,6 @@ def deletDay():
 def deletUser():
 
     algo = request.form['canvas_data']
-
     cur = mysql.get_db().cursor()
     cur.execute(
         'DELETE FROM eventos where  idUser = {0}'.format(algo))
@@ -328,7 +301,6 @@ def delet2():
 
     obj = request.form['canvas_data']
     date = request.form['canvas_data_date']
-
     date = pasaFecha1(date)
     finDay = date + timedelta(days=1)
     date = str(date)
@@ -354,10 +326,8 @@ def testa():
 
 @app.route('/logout')
 def logout():
-    
     session.pop("name", None)
     return render_template('index.html', mensaje=adios)
-    
 
 
 @app.route('/registro')
@@ -389,7 +359,6 @@ def update_contact(id):
         phone = request.form['phone']
         email = request.form['email']
         message = request.form['message']
-        
         cambia = request.form['bool']
         texto = """
 
@@ -404,12 +373,10 @@ def update_contact(id):
         if cambia == "1":
             password = request.form['newpass'].encode('utf-8')
             repassword = request.form['repass'].encode('utf-8')
-            if password != repassword:
-                
+            if password != repassword:             
                 flash('Las contraseñas no coinciden', 'danger')
                 return redirect(url_for('perfil'))
-            if len(password and repassword) == 0:
-                
+            if len(password and repassword) == 0:               
                 flash('Las contraseñas no pueden estar vacías', 'danger')
                 return redirect(url_for('perfil'))
             else:
@@ -433,8 +400,7 @@ def update_contact(id):
         session['phone'] = phone
         session['email'] = email
         session['message'] = message
-        flash('El contacto ha sido actualizado correctamente ', 'success')
-        
+        flash('El contacto ha sido actualizado correctamente ', 'success')    
         return redirect(url_for('perfil'))
 
 
