@@ -4,16 +4,16 @@
 
 
 {% endblock %}
-
+{% block title %}Página Principal{% endblock %}
 
 {% block body %}
 <div class="">
   {% if primer %}
   <div class="card text-white bg-success mb-2 fadeInDown fadeIn first w-50">
-    <div class="card-header">¡Exito!</div>
+    <div class="card-header">{{ session["name"] }}</div>
     <div class="card-body">
       <h4 class="card-title">Se ha iniciado sesión correctamente</h4>
-      <p class="card-text">Bienvenido/a {{ session["name"] }} .</p>
+      <p class="card-text"> {{ session["message"] }} </p>
     </div>
   </div>
   {% endif %}

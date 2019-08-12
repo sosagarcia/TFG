@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+
+
+
+
+<div class="container fadeInDown">
+  <div class="row">
+    <div class="col">
+
+      <h1>Perfil</h1>
+      <hr>
+
+      <div class="card">
+        <div class="card-body">
+          <h4>{{ session["name"] }}</h4>
+          <hr>
+
+          <p>{{ session["email"] }}</p>
+          <p class="text-muted"></p>
+
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}
+{% block script %}
+
+
+
+{% endblock %}

@@ -4,12 +4,14 @@ from datetime import date, datetime, timedelta
 from flask.json import JSONEncoder
 import datetime as dt
 from flask import Flask, render_template, request, url_for, redirect, flash, session, Response
+import os
 from flaskext.mysql import MySQL
 import bcrypt
 from flask import jsonify, json
 from static.py.mensajes import *
 from static.py.funciones import *
 
+#from flask.ext.session import Session
 # import mysql
 # import mysql.connector
 
@@ -36,7 +38,6 @@ def titulos():
     mañana = hoy + timedelta(days=1)
     ayer = str(ayer)
     mañana = str(mañana)
-    
     cur = mysql.get_db().cursor()
     cur.execute(
         'SELECT title, start, end FROM eventos where (%s < start) and ( start <  %s) ORDER BY start ASC', (ayer, mañana))
@@ -64,13 +65,11 @@ def entre(fechaI, fechaF):
     return 0
 
 
-
 def usuarios():
 
     data = conn('SELECT fullname, id FROM contacts')
     data = [i for sub in data for i in sub]
     return data
-
 
 
 def searchUser(email):
@@ -89,19 +88,22 @@ def conn(texto):
 
 mysql = MySQL()
 app = Flask(__name__)
-app.json_encoder = CustomJSONEncoder
+
+
+
 
 
 # MYSQL connection
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'admin'
+app.config['MYSQL_DATABASE_USER'] = 'renato'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'renato12'
 app.config['MYSQL_DATABASE_DB'] = 'flaskcontacts'
 mysql.init_app(app)
 
 
 # Settings
-app.secret_key = 'mysecretkey'
+app.json_encoder = CustomJSONEncoder
+app.secret_key = os.urandom(16)
 
 
 
@@ -151,8 +153,11 @@ def login():
             return render_template("index.html", mensaje=usu)
         else:
             if bcrypt.checkpw(password, user[4].encode('utf-8')):
+                session['id'] = user[0]
                 session['name'] = user[1]
+                session['phone'] = user[2]
                 session['email'] = user[3]
+                session['message'] = user[5]
                 agenda = conjunto(titulos())
                 return render_template("main.html", primer=1, agenda=agenda)
             else:
@@ -160,6 +165,20 @@ def login():
 
     else:
         return render_template("index.html", mensaje=inicio)
+
+
+
+@app.route('/perfil')
+def perfil():
+    if session.get("name", None) is not None:
+        username = session.get("name")
+        print(username)
+
+        return render_template('perfil1.html')
+    else:
+        print("No se ha iniciado sesión")
+        return redirect(url_for("login"))
+
 
 
 @app.route('/calendar')
@@ -324,7 +343,9 @@ def delet2():
 @app.route('/test')
 def test():
 
-    return render_template('test.html')
+    if 'user' in session:
+        return session['user']
+    return 'Not Logged'
 
 @app.route('/testa')
 def testa():
@@ -334,7 +355,8 @@ def testa():
 
 @app.route('/logout')
 def logout():
-    session['name'] = "none"
+    
+    session.pop("name", None)
     return render_template('index.html', mensaje=adios)
     
 
@@ -367,18 +389,34 @@ def update_contact(id):
         fullname = request.form['fullname']
         phone = request.form['phone']
         email = request.form['email']
+        message = request.form['message']
+        password = request.form['newpass'].encode('utf-8')
+        repassword = request.form['repass'].encode('utf-8')
+        
+        if password != repassword:
+            flash('Las contraseñas no coinciden')
+            return redirect(url_for('perfil'))
+
+
+
+
         cur = mysql.get_db().cursor()
         cur.execute("""
 
             UPDATE contacts
             SET fullname=% s,
                 phone=% s,
-                email=% s
+                email=% s,
+                message=% s
             WHERE ID= % s
-        """, (fullname, phone, email, id))
+        """, (fullname, phone, email, message, id))
         mysql.get_db().commit()
+        session['name'] = fullname
+        session['phone'] = phone
+        session['email'] = email
+        session['message'] = message
         flash('El contacto ha sido actualizado correctamente ')
-        return redirect(url_for('lista'))
+        return redirect(url_for('perfil'))
 
 
 @app.route('/estadisticas')
@@ -392,8 +430,6 @@ def lista():
 
     data = conn('SELECT * FROM contacts')
     return render_template('lista.html', contactos=data, title='Lista')
-
-
 
 
 @app.route('/add_contact', methods=['POST'])
@@ -448,3 +484,5 @@ if __name__ == '__main__':
 # Full calendar edit events https://www.youtube.com/watch?v=8OOddEiM55A&list=PLSuKjujFoGJ3xqSJHnZUR-INEO71t1znq&index=11
 
 # https://vsn4ik.github.io/bootstrap-checkbox/
+
+# Flas Session :https://pythonise.com/feed/flask/flask-session-object

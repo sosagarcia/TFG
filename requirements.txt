@@ -1,3 +1,4 @@
 bcrypt==3.1.7
 flask==1.0.3
 flask-mysql
+Flask-Session

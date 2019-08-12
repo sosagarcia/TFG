@@ -1,7 +1,17 @@
-{% extends "layout1.html" %} {% block conten %} {% with messages =
-get_flashed_messages() %} {% if messages %} {% for message in messages %}
-<p>{{ message }}</p>
-{% endfor %} {% endif %} {% endwith %}
+{% extends "layout1.html" %} {% block conten %}       {% with messages = get_flashed_messages() %} {% if messages %} {% for
+  message in messages %}
+  <div class="alert alert-dismissible alert-success fade show" role="alert">
+    <strong> {{ message }} </strong>
+    <button
+      type="button"
+      class="close"
+      data-dismiss="alert"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endfor %} {% endif %} {% endwith %}
 
 <div class="wrapper fadeInDown">
   <div id="formContent">
