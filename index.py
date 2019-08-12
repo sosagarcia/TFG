@@ -173,7 +173,6 @@ def perfil():
     if session.get("name", None) is not None:
         username = session.get("name")
         print(username)
-
         return render_template('perfil1.html')
     else:
         print("No se ha iniciado sesión")
@@ -390,32 +389,52 @@ def update_contact(id):
         phone = request.form['phone']
         email = request.form['email']
         message = request.form['message']
-        password = request.form['newpass'].encode('utf-8')
-        repassword = request.form['repass'].encode('utf-8')
         
-        if password != repassword:
-            flash('Las contraseñas no coinciden')
-            return redirect(url_for('perfil'))
+        cambia = request.form['bool']
+        texto = """
 
+        UPDATE contacts
+        SET fullname=% s,
+            phone=% s,
+            email=% s,
+            message=% s
+        WHERE ID= % s
+    """
+        variables = (fullname, phone, email, message, id)
+        if cambia == "1":
+            password = request.form['newpass'].encode('utf-8')
+            repassword = request.form['repass'].encode('utf-8')
+            if password != repassword:
+                
+                flash('Las contraseñas no coinciden', 'danger')
+                return redirect(url_for('perfil'))
+            if len(password and repassword) == 0:
+                
+                flash('Las contraseñas no pueden estar vacías', 'danger')
+                return redirect(url_for('perfil'))
+            else:
+                hash_password = bcrypt.hashpw(password, bcrypt.gensalt())
+                texto = """
 
-
+        UPDATE contacts
+        SET fullname=% s,
+            phone=% s,
+            email=% s,
+            message=% s,
+            password=% s
+        WHERE ID= % s
+    """
+                variables =(fullname, phone, email, message, hash_password, id)
 
         cur = mysql.get_db().cursor()
-        cur.execute("""
-
-            UPDATE contacts
-            SET fullname=% s,
-                phone=% s,
-                email=% s,
-                message=% s
-            WHERE ID= % s
-        """, (fullname, phone, email, message, id))
+        cur.execute( texto, variables)
         mysql.get_db().commit()
         session['name'] = fullname
         session['phone'] = phone
         session['email'] = email
         session['message'] = message
-        flash('El contacto ha sido actualizado correctamente ')
+        flash('El contacto ha sido actualizado correctamente ', 'success')
+        
         return redirect(url_for('perfil'))
 
 
