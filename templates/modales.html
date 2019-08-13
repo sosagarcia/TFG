@@ -1,0 +1,142 @@
+<!-- Modal de Modo Manual -->
+<div class="modal fade" id="ManualModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="borradoTitulo">Modo manual</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <h6>  Al activar el modo manual se desactivaran las restricciones y condiciones para poder crear y borrar un evento.<br/><br/>
+           Permitiendo que pueda haber más de un evento simultáneamente y realizar borrado masivos<br/><br/>
+          Los cambios se guardarán automáticamente</h6>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" id="manualBTN" class="btn btn-warning">
+          Activar Modo manual
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal de Modo Automático -->
+<div class="modal fade" id="AutoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="borradoTitulo">Modo Automático</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <h6>  Al activar el modo automático se activará las restricciones y condiciones para poder crear y borrar un evento.<br/><br/>
+           Impidiendo que se peuda crear pueda más de un evento simultáneamente y realizar borrado masivos<br/><br/>
+          Los cambios se guardarán automáticamente</h6>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" id="autoBTN" class="btn btn-primary">
+          Activar Modo automático
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal de Borrado -->
+<div class="modal fade" id="borradoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="borradoTitulo">Borrador de eventos</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <select id="tipoBorrado">
+          <option value="" selected disabled hidden>Seleccione tipo de borrado</option>
+          <option value="full">Calendario entero</option>
+          <option value="day">Día entero</option>
+          <option value="user">Todos los eventos de un usuario</option>
+          <option value="conv">Todos los eventos de un usuario en un día</option>
+        </select><br />
+
+        <div id="usrS"><select name='title' id='usuarioBorrado'>
+            {{ lista | safe }} <br />
+        </div>
+        <div id="fchS"><input type="date" id="fechaBorrado" /></div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" id="borradoBTN" class="btn btn-danger">
+          Borrar
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Selección-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="tituloEvento">Editar Evento</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        ID : <input type="text" id="idEvento" name="idEvento" />
+        <select name='title1' id=''>
+          {{ lista | safe }} <br />
+          Inicio: <input type="text" id="inicioEvento" name="inicioEvento" /> Fin:
+          <input type="datetime" id="finEvento" name="finEvento" /> Color:
+          <input type="color" id="colorEvento" name="colorEvento" /><br />
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cerrar
+        </button>
+        <button type="button" id="btnBorrar" class="btn btn-danger">
+          Borrar Evento
+        </button>
+        <button type="button" id="btnGuardar" class="btn btn-success">
+          Guardar cambios
+        </button>
+      </div>
+
+
+    </div>
+  </div>
+</div>

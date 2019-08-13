@@ -15,6 +15,7 @@ from static.py.funciones import *
 # import mysql
 # import mysql.connector
 
+manualMode = 0
 
 class CustomJSONEncoder(JSONEncoder):
 
@@ -153,6 +154,10 @@ def login():
                 session['phone'] = user[2]
                 session['email'] = user[3]
                 session['message'] = user[5]
+               
+                print(manualMode)
+                
+
                 agenda = conjunto(titulos())
                 return render_template("main.html", primer=1, agenda=agenda)
             else:
@@ -272,6 +277,31 @@ def deletAlgo():
         cur.execute('TRUNCATE TABLE eventos ')
         mysql.get_db().commit()
 
+@app.route('/manual', methods=['POST'])
+def manual():
+    
+    print("joder")
+    manualMode = 1
+
+    return redirect(url_for('calendar'))
+
+@app.route('/auto', methods=['POST'])
+def auto():
+    
+    print("Auto")
+    manualMode = 0
+
+    return redirect(url_for('calendar'))
+
+
+
+@app.route('/manualdata')
+def manualdata():
+    print("joder1")
+
+
+    return jsonify(estado=manualMode)
+   
 
 @app.route('/deletDay', methods=['POST'])
 def deletDay():
@@ -327,6 +357,7 @@ def testa():
 @app.route('/logout')
 def logout():
     session.pop("name", None)
+    manualMode = 0
     return render_template('index.html', mensaje=adios)
 
 

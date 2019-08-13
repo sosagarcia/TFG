@@ -9,9 +9,19 @@
   <div class="row ">
     <div class="col ml-4 mt-3 fadeIn  align-self-start first shadow p-3 mb-5 bg-white rounded" id="calendar">
       <!-- Button trigger modal -->
-      <button type="button" class="btn-danger" data-toggle="modal" data-target="#borradoModal">
+      
+      <button type="button" class="btn-danger" data-toggle="modal" id="borra" data-target="#borradoModal" >
         Borrado masivo
       </button>
+    
+      <button type="button" class="btn-warning" data-toggle="modal" id="manual" data-target="#ManualModal" >
+        Modo manual
+      </button>
+      <button type="button" class="btn-primary" data-toggle="modal" id="auto" data-target="#AutoModal" >
+          Modo Automático
+        </button>
+
+        <input id="oculto" name="oculto" class="" type="text" placeholder="">
     </div>
     <div class="col align-self-start">
       <div class="wrapper fadeInDown">
@@ -97,83 +107,8 @@
 </div>
 
 
-<!-- Modal de Borrado -->
-<div class="modal fade" id="borradoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="borradoTitulo">Borrador de eventos</h3>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+{% include "modales.html" %}
 
-      <div class="modal-body">
-        <select id="tipoBorrado">
-          <option value="" selected disabled hidden>Seleccione tipo de borrado</option>
-          <option value="full">Calendario entero</option>
-          <option value="day">Día entero</option>
-          <option value="user">Todos los eventos de un usuario</option>
-          <option value="conv">Todos los eventos de un usuario en un día</option>
-        </select><br />
-
-        <div id="usrS"><select name='title' id='usuarioBorrado'>
-            {{ lista | safe }} <br />
-        </div>
-        <div id="fchS"><input type="date" id="fechaBorrado" /></div>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Cancelar
-        </button>
-        <button type="button" id="borradoBTN" class="btn btn-danger">
-          Borrar
-        </button>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal de Selección-->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="tituloEvento">Editar Evento</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-      <div class="modal-body">
-        ID : <input type="text" id="idEvento" name="idEvento" />
-        <select name='title1' id=''>
-          {{ lista | safe }} <br />
-          Inicio: <input type="text" id="inicioEvento" name="inicioEvento" /> Fin:
-          <input type="datetime" id="finEvento" name="finEvento" /> Color:
-          <input type="color" id="colorEvento" name="colorEvento" /><br />
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Cerrar
-        </button>
-        <button type="button" id="btnBorrar" class="btn btn-danger">
-          Borrar Evento
-        </button>
-        <button type="button" id="btnGuardar" class="btn btn-success">
-          Guardar cambios
-        </button>
-      </div>
-
-
-    </div>
-  </div>
-</div>
 
 {% endblock %} {% block script %}
 
