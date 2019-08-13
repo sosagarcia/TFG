@@ -119,11 +119,90 @@
 
 
 <script>
+    
+
+document.getElementById("manualBTN").addEventListener("click", myFunctionManual);
+document.getElementById("autoBTN").addEventListener("click", myFunctionAuto);
+
+function refresh(){
+    console.log("refreshing");
+    fetch("/manualdata")
+            .then(res => res.json())
+            .then(out => {
+                
+                toDo(out);
+        })
+        .catch(error => console.error('Error al obtener datos de ManualMode'))
+        
+        
+        
+        function toDo(data) {
+            console.log(data);
+            if (data.estado == "0"){
+                console.log("2")
+                document.getElementById('borra').style.visibility = 'hidden';
+                document.getElementById('auto').style.visibility = 'hidden';
+                document.getElementById('manual').style.visibility = 'visible';
+                document.getElementById("manualmode").innerHTML = "";
+
+                
+            }else{
+                console.log("3")
+                document.getElementById('manual').style.visibility = 'hidden';
+                document.getElementById('borra').style.visibility = 'visible';
+                document.getElementById('auto').style.visibility = 'visible';
+                document.getElementById("manualmode").innerHTML = "Modo Manual";
+                
+            }
+            
+        console.log(data)
+        }
+
+
+}
+
+function myFunctionManual() {
+            
+    console.log("Hola ");
+    $.post(
+        "/manual",
+                
+        function (err, req, resp) {
+            refresh();   
+        }
+    );
+    refresh();                      
+    document.getElementById("manualCerrar").click();
+                
+        }
+
+        function myFunctionAuto() {
+            
+    console.log("Hola ");
+    $.post(
+        "/auto",
+                
+        function (err, req, resp) {
+            refresh(); 
+        }
+                );
+    refresh();
+    document.getElementById("autoCerrar").click();        
+                
+        }
+
+
+        
+
+</script>
+
+
+<script>
 
 
     window.onload = function () {
 
-        var oculto = document.getElementById("oculto");
+        refresh();
 
         var repe = document.getElementById("repe");
         var repeSelected;
@@ -131,7 +210,6 @@
 
         var showS = document.getElementById("ShowS");
         var showM = document.getElementById("ShowM");
-        oculto.style.display = "";
         showD.style.display = "none";
         showS.style.display = "none";
         showM.style.display = "none";
@@ -174,13 +252,11 @@
         var selectedOption;
         var usrSelected;
         document.getElementById("borradoBTN").addEventListener("click", myFunction);
-        document.getElementById("manualBTN").addEventListener("click", myFunctionManual);
-        document.getElementById("manualBTN").addEventListener("click", myFunctionAuto);
         var usr = document.getElementById("usuarioBorrado");
         var obj = 0;
         var date;
         var idBorrado = 0;
-        var manualMode = 0 ;
+        
         
 
 
@@ -214,89 +290,6 @@
             borradoItem()
             console.log("Hola " + selectedOption.value + "Fin");
         }
-        function myFunctionManual() {
-            
-            console.log("Hola ");
-            $.post(
-                "/manual",
-                
-                function (err, req, resp) {
-                    //window.location.reload(true); 
-                }
-                        );
-                        //window.location.reload(true);
-                        
-                        fetch("/manualdata")
-            .then(res => res.json())
-            .then(out => {
-                
-                miFuncion(out);
-        })
-        .catch(error => console.error('Error al obtener datos de estadísticas'))
-        
-        
-        
-        function miFuncion(data) {
-            console.log("1");
-            if (data.disabled == "disabled"){
-                console.log("2")
-                document.getElementById("borra").disabled = true;
-                document.getElementById("auto").disabled = true;
-                document.getElementById("maual").disabled = false;
-            }else{
-                console.log("3")
-                document.getElementById("borra").disabled = false;
-                document.getElementById("auto").disabled = false;
-                document.getElementById("maual").disabled = false;
-            }
-            
-        console.log(data)
-        }
-                
-        }
-
-        function myFunctionAuto() {
-            
-            console.log("Hola ");
-            $.post(
-                "/auto",
-                
-                function (err, req, resp) {
-                    //window.location.reload(true); 
-                }
-                        );
-                        //window.location.reload(true);
-                        
-                        fetch("/manualdata")
-            .then(res => res.json())
-            .then(out => {
-                
-                miFuncion(out);
-        })
-        .catch(error => console.error('Error al obtener datos de estadísticas'))
-        
-        
-        
-        function miFuncion(data) {
-            console.log("1");
-            if (data.disabled == "disabled"){
-                console.log("2")
-                document.getElementById("borra").disabled = true;
-                document.getElementById("auto").disabled = true;
-                document.getElementById("maual").disabled = false;
-            }else{
-                console.log("3")
-                document.getElementById("borra").disabled = false;
-                document.getElementById("auto").disabled = false;
-                document.getElementById("maual").disabled = false;
-            }
-            
-        console.log(data)
-        }
-                
-        }
-
-
         
 
         function borradoItem() {

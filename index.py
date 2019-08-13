@@ -15,7 +15,8 @@ from static.py.funciones import *
 # import mysql
 # import mysql.connector
 
-manualMode = 0
+
+
 
 class CustomJSONEncoder(JSONEncoder):
 
@@ -90,7 +91,6 @@ def conn(texto):
 mysql = MySQL()
 app = Flask(__name__)
 
-
 # MYSQL connection
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['MYSQL_DATABASE_USER'] = 'renato'
@@ -149,15 +149,13 @@ def login():
             return render_template("index.html", mensaje=usu)
         else:
             if bcrypt.checkpw(password, user[4].encode('utf-8')):
+                
                 session['id'] = user[0]
                 session['name'] = user[1]
                 session['phone'] = user[2]
                 session['email'] = user[3]
                 session['message'] = user[5]
-               
-                print(manualMode)
-                
-
+                session['manual'] = "0"
                 agenda = conjunto(titulos())
                 return render_template("main.html", primer=1, agenda=agenda)
             else:
@@ -169,6 +167,7 @@ def login():
 
 @app.route('/perfil')
 def perfil():
+    
     if session.get("name", None) is not None:
         username = session.get("name")
         return render_template('perfil1.html')
@@ -277,31 +276,26 @@ def deletAlgo():
         cur.execute('TRUNCATE TABLE eventos ')
         mysql.get_db().commit()
 
+
 @app.route('/manual', methods=['POST'])
 def manual():
+    session['manual'] = "1"
+    return render_template('calendar.html')
+
     
-    print("joder")
-    manualMode = 1
-
-    return redirect(url_for('calendar'))
-
 @app.route('/auto', methods=['POST'])
 def auto():
-    
     print("Auto")
-    manualMode = 0
+    session['manual'] = "0"
 
     return redirect(url_for('calendar'))
-
 
 
 @app.route('/manualdata')
 def manualdata():
-    print("joder1")
+    print("el Manualmode actual es " , session['manual'])
+    return jsonify(estado=session['manual'])
 
-
-    return jsonify(estado=manualMode)
-   
 
 @app.route('/deletDay', methods=['POST'])
 def deletDay():
@@ -357,7 +351,6 @@ def testa():
 @app.route('/logout')
 def logout():
     session.pop("name", None)
-    manualMode = 0
     return render_template('index.html', mensaje=adios)
 
 
@@ -481,6 +474,7 @@ def add_contact():
 
 
 if __name__ == '__main__':
+   
     app.run(debug=True)
     # app.run()
 
