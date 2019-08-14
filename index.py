@@ -10,6 +10,7 @@ import bcrypt
 from flask import jsonify, json
 from static.py.mensajes import *
 from static.py.funciones import *
+#from static.py.humtemp import *
 
 # from flask.ext.session import Session
 # import mysql
@@ -338,9 +339,9 @@ def delet2():
 @app.route('/test')
 def test():
 
-    if 'user' in session:
-        return session['user']
-    return 'Not Logged'
+    #actual = humtemp()
+    return ("actual")
+
 
 @app.route('/testa')
 def testa():
