@@ -1,19 +1,12 @@
-{% extends "layout.html" %}
-
-{% block head %}
-
-
-{% endblock %}
-{% block title %}Página Principal{% endblock %}
-
-{% block body %}
+{% extends "layout.html" %} {% block head %} {% endblock %} {% block title
+%}Página Principal{% endblock %} {% block body %}
 <div class="">
   {% if primer %}
-  <div class="card text-white bg-success mb-2 fadeInDown fadeIn first w-50">
+  <div class="card text-white bg-success mb-2 fadeInDown fadeIn first ">
     <div class="card-header">{{ session["name"] }}</div>
     <div class="card-body">
       <h4 class="card-title">Se ha iniciado sesión correctamente</h4>
-      <p class="card-text"> {{ session["message"] }} </p>
+      <p class="card-text">{{ session["message"] }}</p>
     </div>
   </div>
   {% endif %}
@@ -34,9 +27,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-
 <script>
-  $(document).ready(function () {
+  $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
   });
 </script>
