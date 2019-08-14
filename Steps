@@ -41,4 +41,7 @@ DocumentRoot /var/www/html/TFG
 
  humedad : https://www.internetdelascosas.cl/2017/05/19/raspberry-pi-conectando-un-sensor-de-temperatura-y-humedad-dht11/ , para que el apache pueda tener acceso a los GPIO: usermod -a -G gpio www-data
 
+
+ Thread https://www.programiz.com/python-programming/time/sleep
+
  

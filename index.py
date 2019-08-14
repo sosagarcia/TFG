@@ -386,7 +386,7 @@ def update_contact(id):
         message = request.form['message']
         cambia = request.form['bool']
         texto = """
-
+ 
         UPDATE contacts
         SET fullname=% s,
             phone=% s,

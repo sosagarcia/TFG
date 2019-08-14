@@ -8,10 +8,9 @@ sensor = Adafruit_DHT.DHT11
 pin = 4
 
 
-#pin = 23
 
 
-def get():
+def humtemp():
 
 # Try to grab a sensor reading.  Use the read_retry method which will retry up
 # to 15 times to get a sensor reading (waiting 2 seconds between each retry).
@@ -22,6 +21,6 @@ def get():
 # guarantee the timing of calls to read the sensor).
 # If this happens try again!
     if humidity is not None and temperature is not None:
-        return('Temperatura={0:0.1f}*C  Humedad={1:0.1f}%'.format(temperature, humidity))
+        return('Temperatura={0:0.1f}ºC  Humedad={1:0.1f}%'.format(temperature, humidity))
     else:
         return ('Fallo al obtener temperatura y humedad')
