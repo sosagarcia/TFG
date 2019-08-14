@@ -14,7 +14,7 @@ pin = 4
 
 # Escribe un archivo log en log_path con el nombre en el formato yyyy-mm-dd_dht.log
 def write_log(text):
-	log = open(log_path + datetime.datetime.now().strftime("%d/%m/%Y") + "_dht.log","a")
+	log = open(log_path + datetime.datetime.now().strftime("%d-%m-%Y") + "HumTemp.log","a")
 	line = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S") + " " + text + "\n"
 	log.write(line)
 	log.close()
