@@ -39,6 +39,6 @@ DocumentRoot /var/www/html/TFG
  https://stackoverflow.com/questions/41535284/run-python3-script-on-linux-apache-2-4
 
 
- humedad : https://www.internetdelascosas.cl/2017/05/19/raspberry-pi-conectando-un-sensor-de-temperatura-y-humedad-dht11/
+ humedad : https://www.internetdelascosas.cl/2017/05/19/raspberry-pi-conectando-un-sensor-de-temperatura-y-humedad-dht11/ , para que el apache pueda tener acceso a los GPIO: usermod -a -G gpio www-data
 
  
