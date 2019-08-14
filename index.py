@@ -123,8 +123,8 @@ def ahora():
     hoy = [a, M, d, h, m, s]
 
     # need to be (year, month, day, hours, minutes, seconds, milliseconds)
-
-    return jsonify(result=hoy)
+    estado = session['manual']
+    return jsonify(result=hoy, estado=estado)
 
 @app.route('/main')
 def main():
