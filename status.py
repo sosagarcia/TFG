@@ -105,15 +105,7 @@ def distanceW():
     threading.Timer(global_distance, distanceW).start()
     distancia = distance()
     print (distancia)
-    if temperatura > tempMax:
-        GPIO.output(ledT, True)
-    else:
-        GPIO.output(ledT, False)
-    if humedad > humMax:
-        GPIO.output(ledH, True)
-    else:
-        GPIO.output(ledH, False)  
-    
+  
 
 def temphum():
     humedad, temperatura = Adafruit_DHT.read_retry(sensor, pin)
