@@ -24,9 +24,8 @@ def alarma (channel):
     global global_enable
     global global_distance 
     global_distance = 1
-    
     print ("Se ha detectado movimiento")
-    GPIO.output(ledA, True)
+    GPIO.output(ledM, True)
 
 
 
@@ -68,6 +67,11 @@ GPIO.setup(ledM, GPIO.OUT)
 GPIO.setup(ledH, GPIO.OUT)
 GPIO.setup(ledT, GPIO.OUT)
 GPIO.setup(ledA, GPIO.OUT)
+GPIO.output(ledT, False)
+GPIO.output(ledH, False)
+GPIO.output(ledA, False)
+GPIO.output(ledM, False)
+
 
 #Valores de aviso
 
@@ -143,16 +147,19 @@ def temphumW():
 
 
 
-if __name__ == '__main__':
-
+try:
     t1 = threading.Thread(target=temphumW)
     t2 = threading.Thread(target=distanceW)
     t1.start()
     t2.start()
     t1.join()
     t2.join()
-    print("Measurement stopped by User")
-    GPIO.cleanup()
+finally:
+    GPIO.output(ledT, False)
+    GPIO.output(ledH, False)
+    GPIO.output(ledA, False)
+    GPIO.output(ledM, False)
+	GPIO.cleanup() #reset all GPIO
 
 
 
