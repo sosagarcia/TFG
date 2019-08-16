@@ -6,7 +6,7 @@ import RPi.GPIO as GPIO
 import mysql.connector
 
 
-global_distance = 20.0
+global_distance = 10.0
 global_enabled = 0
 
 mydb = mysql.connector.connect(
@@ -30,9 +30,15 @@ def alarma(channel):
     global_distance = 1
     print("Se ha detectado movimiento")
     GPIO.output(ledM, True)
+
+    distancia = distance()
+    print("La distancia actual es de ", distancia)
+    if (140.0 > distancia < 150.0):
+        GPIO.output(ledA, True)
     time.sleep(6)
     GPIO.output(ledM, False)
-    global_distance = 20.0
+    GPIO.output(ledA, False)
+    global_distance = 10.0
 
 
 # Distance
@@ -139,7 +145,7 @@ def temphumW():
                 GPIO.output(ledH, True)
             else:
                 GPIO.output(ledH, False)
-            time.sleep(10)
+            time.sleep(5)
 
     except KeyboardInterrupt:
         print("Medida interrumpida")
