@@ -162,26 +162,26 @@ def temphumW():
 
     while True:
         humedad, temperatura = temphum()
-        if (humedad < 100):
-            if humedad is not None and temperatura is not None:
-                textoT = str(temperatura) + " ºC"
-                textoH = str(humedad) + " %"
-            else:
-                textoT = 'Error al obtener la lectura del sensor'
-                textoH = 'Error al obtener la lectura del sensor'
+        if humedad is not None and temperatura is not None:
+            textoT = str(temperatura) + " ºC"
+            textoH = str(humedad) + " %"
+        else:
+            textoT = 'Error al obtener la lectura del sensor'
+            textoH = 'Error al obtener la lectura del sensor'
 
-            write_log(textoT, tPath, tName)
-            write_log(textoH, hPath, hName)
+        write_log(textoT, tPath, tName)
+        write_log(textoH, hPath, hName)
 
-            if temperatura > tempMax:
-                GPIO.output(ledT, True)
-            else:
-                GPIO.output(ledT, False)
-            if humedad > humMax:
-                GPIO.output(ledH, True)
-            else:
-                GPIO.output(ledH, False)
-            time.sleep(global_temhum)
+        if temperatura > tempMax:
+            GPIO.output(ledT, True)
+        else:
+            GPIO.output(ledT, False)
+        if humedad > humMax:
+            GPIO.output(ledH, True)
+        else:
+            GPIO.output(ledH, False)
+        
+        time.sleep(15)
 
 
 if __name__ == '__main__':
