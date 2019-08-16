@@ -35,24 +35,6 @@ def alarma(channel):
     global_distance = 20.0
 
 
-def alarmaCheck():
-    try:
-        while True:
-
-            if global_enabled == 1:
-                time.sleep(6)
-                GPIO.output(ledM, False)
-
-                global global_distance
-                global_enabled = 0
-                global_distance = 20.0
-            else:
-                time.sleep(1)
-    except KeyboardInterrupt:
-        print("Medida interrumpida")
-        GPIO.output(ledM, False)
-
-
 # Distance
 GPIO_TRIGGER = 23
 GPIO_ECHO = 24
@@ -168,13 +150,12 @@ def temphumW():
 if __name__ == '__main__':
     t1 = threading.Thread(target=temphumW)
     t2 = threading.Thread(target=distanceW)
-    t3 = threading.Thread(target=alarmaCheck)
+
     t1.setDaemon(True)
     t2.setDaemon(True)
-    t3.setDaemon(True)
+
     t1.start()
     t2.start()
-    t3.start()
 
     try:
         t1.join()
