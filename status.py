@@ -109,9 +109,9 @@ def distanceW():
             distancia = distance()
             print (distancia)
             time.sleep(global_distance) 
-    except Exception,e:
+    except KeyboardInterrupt:
 	    # Registra el error en el archivo log y termina la ejecucion
-	    print(str(e))
+	    print("Measurement stopped by User")
   
 
 def temphum():
@@ -135,11 +135,12 @@ def temphumW():
                 GPIO.output(ledH, False)
             time.sleep(10)     
     
-    except Exception,e:
+    except KeyboardInterrupt:
+	    # Registra el error en el archivo log y termina la ejecucion
+	    print("Measurement stopped by User")
         GPIO.output(ledT, False)
         GPIO.output(ledH, False)
-	    # Registra el error en el archivo log y termina la ejecucion
-	    print(str(e))
+
 
 
 if __name__ == '__main__':
