@@ -137,10 +137,10 @@ def temphumW():
 
 if __name__ == '__main__':
     temphumW()
-    temphumW()  
+    distanceW()  
     try:
         while True:   
-            if global_enable==1:
+            if global_enabled==1:
                 print ("Se ha detectado movimiento")
                 GPIO.output(ledA, True)
             else:
