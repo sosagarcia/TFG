@@ -24,18 +24,25 @@ disPath = "/var/log/iot/dis/"
 GPIO.setmode(GPIO.BCM)
 
 
+def alarmaCheck():
+    while True:
+        distancia = distance()
+        print("La distancia actual es de ", distancia)
+        if (140.0 > distancia < 150.0):
+            GPIO.output(ledA, True)
+            break
+        time.sleep(0.5)
+
+
 def alarma(channel):
 
     global global_distance
     global_distance = 1
     print("Se ha detectado movimiento")
     GPIO.output(ledM, True)
-
-    distancia = distance()
-    print("La distancia actual es de ", distancia)
-    if (140.0 > distancia < 150.0):
-        GPIO.output(ledA, True)
-    time.sleep(6)
+    t3 = threading.Thread(target=alarmaCheck)
+    t3.setDaemon(True)
+    t3.join(6.0)
     GPIO.output(ledM, False)
     GPIO.output(ledA, False)
     global_distance = 10.0
