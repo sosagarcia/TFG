@@ -22,7 +22,8 @@ GPIO.setmode(GPIO.BCM)
 
 def alarma (channel):
     global global_enable
-    global global_distance 
+    global global_distance
+    global_enabled = 1 
     global_distance = 1
     print ("Se ha detectado movimiento")
     GPIO.output(ledM, True)
@@ -159,6 +160,8 @@ if __name__ == '__main__':
                 GPIO.output(ledM, False)
                 global_enabled = 0
                 global_distance = 20
+            else:
+                pass
 
     finally:
         GPIO.output(ledT, False)
