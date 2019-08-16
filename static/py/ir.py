@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import RPi.GPIO as GPIO
+import datetime
 import time
 log_path = "/var/log/iot/ir/"
 GPIO.setmode(GPIO.BOARD) #Set GPIO to pin numbering
