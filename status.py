@@ -21,10 +21,9 @@ GPIO.setmode(GPIO.BCM)
 
 
 def alarma (channel):
-    global global_enabled
+    global global_enable
     global global_distance 
     global_distance = 1
-    global_enabled = 1
     print ("Se ha detectado movimiento")
     GPIO.output(ledM, True)
 
@@ -148,28 +147,14 @@ def temphumW():
 
 
 
-
+if __name__ == '__main__':
 t1 = threading.Thread(target=temphumW)
 t2 = threading.Thread(target=distanceW)
 t1.start()
 t2.start()
-
-try : 
-    while True:
-        if global_enabled == 1 :
-            sleep(6)
-            GPIO.output(ledM, False)
-            global_enabled = 0
-            global_distance = 20
-
-
-
-finally:
-    GPIO.output(ledT, False)
-    GPIO.output(ledH, False)
-    GPIO.output(ledA, False)
-    GPIO.output(ledM, False)
-    GPIO.cleanup() #reset all GPIO
+t1.join()
+t2.join()
+    
 
 
 
