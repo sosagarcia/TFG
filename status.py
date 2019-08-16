@@ -60,7 +60,8 @@ GPIO.setup(ledA, GPIO.OUT)
 #Valores de aviso
 
 tempMax = 23
-humMax = 
+humMax = 60
+
 
 def write_log(text, path, name):
 	log = open(path + datetime.datetime.now().strftime("%d-%m-%Y") + name,"a")
@@ -106,11 +107,28 @@ def alarma ():
     global_enable = 1
 
 
-while True:
-    humedad, temperatura = temhum()
-    distancia = distance()
 
-    if temperatura > tempMax
+if __name__ == '__main__':
+    try:
+        while True:
+            humedad, temperatura = temhum()
+            distancia = distance()
+            print (humedad)
+            print (temperatura)
+            print (distancia)
+
+            if temperatura > tempMax:
+                GPIO.output(ledT, True)
+            else:
+                GPIO.output(ledT, False)
+            if humedad > humMax:
+                GPIO.output(ledH, True)
+            else:
+                GPIO.output(ledH, False)  
+
+    except KeyboardInterrupt:
+                print("Measurement stopped by User")
+                GPIO.cleanup()
 
 
 """ write_log(str(distance), disPath, "_Distancia")
