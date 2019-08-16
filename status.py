@@ -6,13 +6,13 @@ import RPi.GPIO as GPIO
 import mysql.connector
 
 # Intervalo de toma de muestras
-global_distance = 10.0
-global_temhum = 5
+global_distance = 60.0
+global_temhum = 15
 
 # Valores de aviso
 
 tempMax = 25
-humMax = 70
+humMax = 60
 
 mydb = mysql.connector.connect(
     host="localhost",
@@ -27,11 +27,11 @@ irPath = "/var/log/iot/ir/"
 disPath = "/var/log/iot/dis/"
 aPath = "/var/log/iot/a/"
 
-dName = "_Distancia"
-hName = "_Humedad"
-tName = "_Temperatura"
-irName = "_Movimientos"
-aName = "_Alarmas"
+dName = "_Distancia.log"
+hName = "_Humedad.log"
+tName = "_Temperatura.log"
+irName = "_Movimientos.log"
+aName = "_Alarmas.logsudo "
 
 GPIO.setmode(GPIO.BCM)
 
@@ -41,16 +41,19 @@ def alarmaCheck():
     maxIterations = 12
     while True:
 
-        distancia = distance()
-        text = str(distancia) + " cm."
-        write_log(text, disPath, dName)
         if (140.0 > distancia < 150.0):
             GPIO.output(ledA, True)
+            distancia = distance()
+            text = str(distancia) + " cm."
+            write_log(text, disPath, dName)
             text = "Se ha registrado una alarma, la distancia es de " + \
                 str(distancia)
             write_log(text, aPath, aName)
+            time.sleep(1)
+            distancia = distance()
+            text = str(distancia) + " cm."
+            write_log(text, disPath, dName)
             GPIO.output(ledA, False)
-            time.sleep(0.5)
             break
         iteration += 1
         if (iteration > maxIterations):
@@ -78,6 +81,7 @@ def alarma(channel):
 GPIO_TRIGGER = 23
 GPIO_ECHO = 24
 
+GPIO.setwarnings(False)
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
 
@@ -159,25 +163,28 @@ def temphumW():
 
     while True:
         humedad, temperatura = temphum()
-        if humedad is not None and temperatura is not None:
-            textoT = str(temperatura) + " ºC"
-            textoH = str(humedad) + " %"
-        else:
-            textoT = 'Error al obtener la lectura del sensor'
-            textoH = 'Error al obtener la lectura del sensor'
+        if (humedad < 100):
+            if humedad is not None and temperatura is not None:
+                textoT = str(temperatura) + " ºC"
+                textoH = str(humedad) + " %"
+            else:
+                textoT = 'Error al obtener la lectura del sensor'
+                textoH = 'Error al obtener la lectura del sensor'
 
-        write_log(textoT, tPath, tName)
-        write_log(textoH, hPath, hName)
+            write_log(textoT, tPath, tName)
+            write_log(textoH, hPath, hName)
 
-        if temperatura > tempMax:
-            GPIO.output(ledT, True)
+            if temperatura > tempMax:
+                GPIO.output(ledT, True)
+            else:
+                GPIO.output(ledT, False)
+            if humedad > humMax:
+                GPIO.output(ledH, True)
+            else:
+                GPIO.output(ledH, False)
+            time.sleep(global_temhum)
         else:
-            GPIO.output(ledT, False)
-        if humedad > humMax:
-            GPIO.output(ledH, True)
-        else:
-            GPIO.output(ledH, False)
-        time.sleep(global_temhum)
+            time.sleep(1)
 
 
 if __name__ == '__main__':
