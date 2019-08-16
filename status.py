@@ -20,6 +20,12 @@ disPath = "/var/log/iot/dis/"
 GPIO.setmode(GPIO.BOARD)
 
 
+def alarma ():
+    global global_enable
+    global_enable = 1
+
+
+
 # Distance
  
 GPIO_TRIGGER = 16
@@ -37,7 +43,7 @@ GPIO.setup(pir, GPIO.IN)
 
 global_enabled = 0
 #Interrupción
-GPIO.add_event_detect(pir, GPIO.RISING, callback = Alarma)
+GPIO.add_event_detect(pir, GPIO.RISING, callback = alarma)
 
 
 #Humedad y Temperatura
@@ -102,9 +108,6 @@ def temphum():
     humedad, temperatura = Adafruit_DHT.read_retry(sensor, pin)
     return (humedad, temperatura)
 
-def alarma ():
-    global global_enable
-    global_enable = 1
 
 
 
