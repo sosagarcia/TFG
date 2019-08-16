@@ -1,4 +1,4 @@
-import threading 
+import threading
 import time
 import datetime
 import Adafruit_DHT
@@ -6,13 +6,14 @@ import RPi.GPIO as GPIO
 import mysql.connector
 
 
-
+global_distance = 20.0
+global_distance = 0
 
 mydb = mysql.connector.connect(
-  host="localhost",
-  user="renato",
-  passwd="renato12",
-  database="flaskcontacts"
+    host="localhost",
+    user="renato",
+    passwd="renato12",
+    database="flaskcontacts"
 )
 
 hPath = "/var/log/iot/hum/"
@@ -20,24 +21,26 @@ tPath = "/var/log/iot/tem/"
 irPath = "/var/log/iot/ir/"
 disPath = "/var/log/iot/dis/"
 
-GPIO.setmode(GPIO.BCM) 
+GPIO.setmode(GPIO.BCM)
 
 
-def alarma (channel):
+def alarma(channel):
     global global_enable
     global global_distance
-    global_enabled = 1 
+    global_enabled = 1
     global_distance = 1
-    print ("Se ha detectado movimiento")
+    print("Se ha detectado movimiento")
     GPIO.output(ledM, True)
-    
+
 
 def alarmaCheck():
-    try : 
+    try:
         while True:
-            if global_enabled == 1 :
+            if global_enabled == 1:
                 time.sleep(6)
                 GPIO.output(ledM, False)
+                global global_enabled
+                global global_distance
                 global_enabled = 0
                 global_distance = 20.0
             else:
@@ -50,32 +53,29 @@ def alarmaCheck():
 # Distance
 GPIO_TRIGGER = 23
 GPIO_ECHO = 24
- 
+
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
 
-global_distance = 20.0
-global_distance = 0
 
-
-#Mouvement
+# Mouvement
 
 pir = 25
 
-GPIO.setup(pir, GPIO.IN) 
+GPIO.setup(pir, GPIO.IN)
 
 global_enabled = 0
-#Interrupción
-GPIO.add_event_detect(pir, GPIO.RISING, callback = alarma)
+# Interrupción
+GPIO.add_event_detect(pir, GPIO.RISING, callback=alarma)
 
 
-#Humedad y Temperatura
+# Humedad y Temperatura
 
 sensor = Adafruit_DHT.DHT11
 pin = 4
-GPIO.setup(pin, GPIO.IN) 
+GPIO.setup(pin, GPIO.IN)
 
-#Leds de aviso
+# Leds de aviso
 ledM = 18
 ledH = 16
 ledT = 20
@@ -91,18 +91,17 @@ GPIO.output(ledA, False)
 GPIO.output(ledM, False)
 
 
-#Valores de aviso
+# Valores de aviso
 
 tempMax = 25
 humMax = 70
 
 
-
 def write_log(text, path, name):
-	log = open(path + datetime.datetime.now().strftime("%d-%m-%Y") + name,"a")
-	line = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S") + " " + text + "\n"
-	log.write(line)
-	log.close()
+    log = open(path + datetime.datetime.now().strftime("%d-%m-%Y") + name, "a")
+    line = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S") + " " + text + "\n"
+    log.write(line)
+    log.close()
 
 
 def distance():
@@ -125,28 +124,30 @@ def distance():
     distance = (TimeElapsed * 34300) / 2
     return distance
 
+
 def distanceW():
     try:
         while True:
             distancia = distance()
-            print (distancia)
-            time.sleep(global_distance) 
+            print(distancia)
+            time.sleep(global_distance)
     except KeyboardInterrupt:
-	    # Registra el error en el archivo log y termina la ejecucion
-	    print("Measurement stopped by User")
-  
+            # Registra el error en el archivo log y termina la ejecucion
+        print("Measurement stopped by User")
+
 
 def temphum():
     humedad, temperatura = Adafruit_DHT.read_retry(sensor, pin)
     return (humedad, temperatura)
 
+
 def temphumW():
     try:
         while True:
             humedad, temperatura = temphum()
-            print (humedad)
-            print (temperatura)
-    
+            print(humedad)
+            print(temperatura)
+
             if temperatura > tempMax:
                 GPIO.output(ledT, True)
             else:
@@ -155,14 +156,12 @@ def temphumW():
                 GPIO.output(ledH, True)
             else:
                 GPIO.output(ledH, False)
-            time.sleep(10)     
-    
+            time.sleep(10)
+
     except KeyboardInterrupt:
         print("Medida interrumpida")
         GPIO.output(ledT, False)
         GPIO.output(ledH, False)
-
-
 
 
 if __name__ == '__main__':
@@ -175,7 +174,7 @@ if __name__ == '__main__':
     t1.start()
     t2.start()
     t3.start()
-    
+
     try:
         t1.join()
     finally:
@@ -183,12 +182,7 @@ if __name__ == '__main__':
         GPIO.output(ledH, False)
         GPIO.output(ledA, False)
         GPIO.output(ledM, False)
-        GPIO.cleanup() #reset all GPIO
-
-
-
-    
-
+        GPIO.cleanup()  # reset all GPIO
 
 
 """ write_log(str(distance), disPath, "_Distancia")
