@@ -7,7 +7,7 @@ import mysql.connector
 
 
 global_distance = 20.0
-global_distance = 0
+global_enabled = 0
 
 mydb = mysql.connector.connect(
     host="localhost",
@@ -25,21 +25,24 @@ GPIO.setmode(GPIO.BCM)
 
 
 def alarma(channel):
-    global global_enable
+
     global global_distance
-    global_enabled = 1
     global_distance = 1
     print("Se ha detectado movimiento")
     GPIO.output(ledM, True)
+    time.sleep(6)
+    GPIO.output(ledM, False)
+    global_distance = 20.0
 
 
 def alarmaCheck():
     try:
         while True:
+
             if global_enabled == 1:
                 time.sleep(6)
                 GPIO.output(ledM, False)
-                global global_enabled
+
                 global global_distance
                 global_enabled = 0
                 global_distance = 20.0
@@ -63,8 +66,6 @@ GPIO.setup(GPIO_ECHO, GPIO.IN)
 pir = 25
 
 GPIO.setup(pir, GPIO.IN)
-
-global_enabled = 0
 # Interrupción
 GPIO.add_event_detect(pir, GPIO.RISING, callback=alarma)
 
