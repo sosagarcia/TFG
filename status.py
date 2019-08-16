@@ -31,7 +31,7 @@ dName = "_Distancia.log"
 hName = "_Humedad.log"
 tName = "_Temperatura.log"
 irName = "_Movimientos.log"
-aName = "_Alarmas.logsudo "
+aName = "_Alarmas.log"
 
 GPIO.setmode(GPIO.BCM)
 
