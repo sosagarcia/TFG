@@ -17,7 +17,7 @@ tPath = "/var/log/iot/tem/"
 irPath = "/var/log/iot/ir/"
 disPath = "/var/log/iot/dis/"
 
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM) 
 
 
 def alarma ():
@@ -28,8 +28,8 @@ def alarma ():
 
 # Distance
  
-GPIO_TRIGGER = 16
-GPIO_ECHO = 18
+GPIO_TRIGGER = 23
+GPIO_ECHO = 24
  
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
@@ -37,7 +37,7 @@ GPIO.setup(GPIO_ECHO, GPIO.IN)
 
 #Mouvement
 
-pir = 8 
+pir = 25
 
 GPIO.setup(pir, GPIO.IN) 
 
@@ -49,14 +49,14 @@ GPIO.add_event_detect(pir, GPIO.RISING, callback = alarma)
 #Humedad y Temperatura
 
 sensor = Adafruit_DHT.DHT11
-pin = 9
+pin = 4
 GPIO.setup(pin, GPIO.IN) 
 
 #Leds de aviso
-ledM = 12 
-ledH = 36
-ledT = 38
-ledA = 40
+ledM = 18
+ledH = 16
+ledT = 20
+ledA = 21
 
 GPIO.setup(ledM, GPIO.OUT)
 GPIO.setup(ledH, GPIO.OUT)
