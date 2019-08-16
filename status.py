@@ -161,6 +161,7 @@ def temphum():
 def temphumW():
 
     while True:
+        time.sleep(15)
         humedad, temperatura = temphum()
         if humedad is not None and temperatura is not None:
             textoT = str(temperatura) + " ºC"
@@ -180,8 +181,6 @@ def temphumW():
             GPIO.output(ledH, True)
         else:
             GPIO.output(ledH, False)
-        
-        time.sleep(15)
 
 
 if __name__ == '__main__':
