@@ -24,7 +24,9 @@ def alarma (channel):
     global global_enable
     global global_distance 
     global_distance = 1
-    global_enable = 1
+    
+    print ("Se ha detectado movimiento")
+    GPIO.output(ledA, True)
 
 
 
@@ -36,7 +38,7 @@ GPIO_ECHO = 24
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
 
-global_distance = 60.0
+global_distance = 20.0
 
 
 #Mouvement
@@ -69,8 +71,8 @@ GPIO.setup(ledA, GPIO.OUT)
 
 #Valores de aviso
 
-tempMax = 23
-humMax = 60
+tempMax = 25
+humMax = 70
 
 
 
@@ -102,9 +104,14 @@ def distance():
     return distance
 
 def distanceW():
-    threading.Timer(global_distance, distanceW).start()
-    distancia = distance()
-    print (distancia)
+    try:
+        while True:
+            distancia = distance()
+            print (distancia)
+            time.sleep(global_distance) 
+    except Exception,e:
+	    # Registra el error en el archivo log y termina la ejecucion
+	    print(str(e))
   
 
 def temphum():
@@ -112,36 +119,36 @@ def temphum():
     return (humedad, temperatura)
 
 def temphumW():
-    threading.Timer(10.0, temphumW).start()
-    humedad, temperatura = temphum()
-    print (humedad)
-    print (temperatura)
-    if temperatura > tempMax:
-        GPIO.output(ledT, True)
-    else:
+    try:
+        while True:
+            humedad, temperatura = temphum()
+            print (humedad)
+            print (temperatura)
+    
+            if temperatura > tempMax:
+                GPIO.output(ledT, True)
+            else:
+                GPIO.output(ledT, False)
+            if humedad > humMax:
+                GPIO.output(ledH, True)
+            else:
+                GPIO.output(ledH, False)
+            time.sleep(10)     
+    
+    except Exception,e:
         GPIO.output(ledT, False)
-    if humedad > humMax:
-        GPIO.output(ledH, True)
-    else:
-        GPIO.output(ledH, False)     
-
+        GPIO.output(ledH, False)
+	    # Registra el error en el archivo log y termina la ejecucion
+	    print(str(e))
 
 
 if __name__ == '__main__':
-    temphumW()
-    distanceW()  
-    try:
-        while True:   
-            if global_enabled==1:
-                print ("Se ha detectado movimiento")
-                GPIO.output(ledA, True)
-            else:
-                GPIO.output(ledA, False)
 
+    t1 = threading.Thread(target=temphumW)
+    t2 = threading.Thread(target=distanceW)
+    t1.start()
+    t2.start()
 
-    except KeyboardInterrupt:
-                print("Measurement stopped by User")
-                GPIO.cleanup()
 
 
 """ write_log(str(distance), disPath, "_Distancia")
