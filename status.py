@@ -55,6 +55,7 @@ GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
 
 global_distance = 20.0
+global_distance = 0
 
 
 #Mouvement
@@ -175,14 +176,14 @@ if __name__ == '__main__':
     t2.start()
     t3.start()
     
-
-    t1.join()
-    
-    GPIO.output(ledT, False)
-    GPIO.output(ledH, False)
-    GPIO.output(ledA, False)
-    GPIO.output(ledM, False)
-    GPIO.cleanup() #reset all GPIO
+    try:
+        t1.join()
+    finally:
+        GPIO.output(ledT, False)
+        GPIO.output(ledH, False)
+        GPIO.output(ledA, False)
+        GPIO.output(ledM, False)
+        GPIO.cleanup() #reset all GPIO
 
 
 
