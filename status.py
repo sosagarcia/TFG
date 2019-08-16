@@ -143,6 +143,7 @@ def temphumW():
 
 
 
+
 if __name__ == '__main__':
 
     t1 = threading.Thread(target=temphumW)
