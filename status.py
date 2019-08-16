@@ -6,12 +6,7 @@ import RPi.GPIO as GPIO
 import mysql.connector
 
 
-t1 = threading.Thread(target=temphumW)
-t2 = threading.Thread(target=distanceW)
-t3 = threading.Thread(target=alarmaCheck)
-t1.setDaemon(True)
-t2.setDaemon(True)
-t3.setDaemon(True)
+
 
 mydb = mysql.connector.connect(
   host="localhost",
@@ -170,19 +165,24 @@ def temphumW():
 
 
 if __name__ == '__main__':
-    
+    t1 = threading.Thread(target=temphumW)
+    t2 = threading.Thread(target=distanceW)
+    t3 = threading.Thread(target=alarmaCheck)
+    t1.setDaemon(True)
+    t2.setDaemon(True)
+    t3.setDaemon(True)
     t1.start()
     t2.start()
     t3.start()
     
 
     t1.join()
-    finally:
-        GPIO.output(ledT, False)
-        GPIO.output(ledH, False)
-        GPIO.output(ledA, False)
-        GPIO.output(ledM, False)
-        GPIO.cleanup() #reset all GPIO
+    
+    GPIO.output(ledT, False)
+    GPIO.output(ledH, False)
+    GPIO.output(ledA, False)
+    GPIO.output(ledM, False)
+    GPIO.cleanup() #reset all GPIO
 
 
 
