@@ -5,9 +5,14 @@ import Adafruit_DHT
 import RPi.GPIO as GPIO
 import mysql.connector
 
-
+# Intervalo de toma de muestras
 global_distance = 10.0
-global_enabled = 0
+global_temhum = 5
+
+# Valores de aviso
+
+tempMax = 25
+humMax = 70
 
 mydb = mysql.connector.connect(
     host="localhost",
@@ -20,22 +25,32 @@ hPath = "/var/log/iot/hum/"
 tPath = "/var/log/iot/tem/"
 irPath = "/var/log/iot/ir/"
 disPath = "/var/log/iot/dis/"
-disPath = "/var/log/iot/a/"
+aPath = "/var/log/iot/a/"
+
+dName = "_Distancia"
+hName = "_Humedad"
+tName = "_Temperatura"
+irName = "_Movimientos"
+aName = "_Alarmas"
 
 GPIO.setmode(GPIO.BCM)
 
 
 def alarmaCheck():
+    iteration = 0
+    maxIterations = 12
     while True:
-        iteration = 0
-        maxIterations = 12
+
         distancia = distance()
-        print("La distancia actual es de ", distancia)
+        text = distancia + " cm."
+        write_log(str(text), disPath, dName)
         if (140.0 > distancia < 150.0):
             GPIO.output(ledA, True)
-            print("Se ha registrado una alarma")
-        else:
+            text = "Se ha registrado una alarma, la distancia es de " + str(distancia)
+            write_log(text, aPath, aName)
             GPIO.output(ledA, False)
+            time.sleep(0.5)
+            break
         iteration += 1
         if (iteration > maxIterations):
             GPIO.output(ledA, False)
@@ -47,14 +62,15 @@ def alarma(channel):
 
     global global_distance
     global_distance = 1
-    print("Se ha detectado movimiento")
+    text = "Se ha detectado movimiento"
+    write_log(text, irPath, irName)
     GPIO.output(ledM, True)
-    t3 = threading.Thread(target=alarmaCheck, args=(lambda: stop_threads, ))
+    t3 = threading.Thread(target=alarmaCheck)
     t3.setDaemon(True)
-    t3.start
+    t3.start()
     t3.join(6.0)
     GPIO.output(ledM, False)
-    global_distance = 10.0
+    global_distance = 10
 
 
 # Distance
@@ -96,12 +112,6 @@ GPIO.output(ledA, False)
 GPIO.output(ledM, False)
 
 
-# Valores de aviso
-
-tempMax = 25
-humMax = 70
-
-
 def write_log(text, path, name):
     log = open(path + datetime.datetime.now().strftime("%d-%m-%Y") + name, "a")
     line = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S") + " " + text + "\n"
@@ -131,14 +141,12 @@ def distance():
 
 
 def distanceW():
-    try:
-        while True:
-            distancia = distance()
-            print(distancia)
-            time.sleep(global_distance)
-    except KeyboardInterrupt:
-            # Registra el error en el archivo log y termina la ejecucion
-        print("Measurement stopped by User")
+
+    while True:
+        distancia = distance()
+        text = distancia + " cm."
+        write_log(str(text), disPath, dName)
+        time.sleep(global_distance)
 
 
 def temphum():
@@ -147,26 +155,28 @@ def temphum():
 
 
 def temphumW():
-    try:
-        while True:
-            humedad, temperatura = temphum()
-            print(humedad)
-            print(temperatura)
 
-            if temperatura > tempMax:
-                GPIO.output(ledT, True)
-            else:
-                GPIO.output(ledT, False)
-            if humedad > humMax:
-                GPIO.output(ledH, True)
-            else:
-                GPIO.output(ledH, False)
-            time.sleep(5)
+    while True:
+        humedad, temperatura = temphum()
+        if humedad is not None and temperatura is not None:
+            textoT = str(temperatura) + " ºC"
+            textoH = str(humedad) + " %"
+        else:
+            textoT = 'Error al obtener la lectura del sensor'
+            textoH = 'Error al obtener la lectura del sensor'
 
-    except KeyboardInterrupt:
-        print("Medida interrumpida")
-        GPIO.output(ledT, False)
-        GPIO.output(ledH, False)
+        write_log(textoT, tPath, tName)
+        write_log(textoH, hPath, hName)
+
+        if temperatura > tempMax:
+            GPIO.output(ledT, True)
+        else:
+            GPIO.output(ledT, False)
+        if humedad > humMax:
+            GPIO.output(ledH, True)
+        else:
+            GPIO.output(ledH, False)
+        time.sleep(global_temhum)
 
 
 if __name__ == '__main__':
