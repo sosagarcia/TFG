@@ -158,8 +158,7 @@ try :
     while True:
         if global_enabled == 1 :
             sleep(6)
-            global global_enabled
-            global global_distance
+            GPIO.output(ledM, False)
             global_enabled = 0
             global_distance = 20
 
