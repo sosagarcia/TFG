@@ -7,7 +7,7 @@ import mysql.connector
 
 # Intervalo de toma de muestras
 global_distance = 60.0
-global_temhum = 15
+global_temhum = 15.0
 
 # Valores de aviso
 
@@ -73,7 +73,7 @@ def alarma(channel):
     t3.start()
     t3.join(6.0)
     GPIO.output(ledM, False)
-    global_distance = 10
+    global_distance = 60
 
 
 # Distance
@@ -182,8 +182,6 @@ def temphumW():
             else:
                 GPIO.output(ledH, False)
             time.sleep(global_temhum)
-        else:
-            time.sleep(1)
 
 
 if __name__ == '__main__':
