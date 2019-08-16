@@ -20,8 +20,10 @@ disPath = "/var/log/iot/dis/"
 GPIO.setmode(GPIO.BCM) 
 
 
-def alarma ():
+def alarma (channel):
     global global_enable
+    global global_distance 
+    global_distance = 1
     global_enable = 1
 
 
@@ -33,6 +35,8 @@ GPIO_ECHO = 24
  
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
+
+global_distance = 60.0
 
 
 #Mouvement
@@ -69,6 +73,7 @@ tempMax = 23
 humMax = 60
 
 
+
 def write_log(text, path, name):
 	log = open(path + datetime.datetime.now().strftime("%d-%m-%Y") + name,"a")
 	line = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S") + " " + text + "\n"
@@ -79,55 +84,68 @@ def write_log(text, path, name):
 def distance():
     # set Trigger to HIGH
     GPIO.output(GPIO_TRIGGER, True)
- 
     # set Trigger after 0.01ms to LOW
     time.sleep(0.00001)
     GPIO.output(GPIO_TRIGGER, False)
- 
     StartTime = time.time()
     StopTime = time.time()
- 
     # save StartTime
     while GPIO.input(GPIO_ECHO) == 0:
         StartTime = time.time()
- 
     # save time of arrival
     while GPIO.input(GPIO_ECHO) == 1:
         StopTime = time.time()
- 
     TimeElapsed = StopTime - StartTime
     # multiply with the sonic speed (34300 cm/s)
     # and divide by 2, because there and back
     distance = (TimeElapsed * 34300) / 2
- 
     return distance
 
+def distanceW():
+    threading.Timer(global_distance, distanceW).start()
+    distancia = distance()
+    print (distancia)
+    if temperatura > tempMax:
+        GPIO.output(ledT, True)
+    else:
+        GPIO.output(ledT, False)
+    if humedad > humMax:
+        GPIO.output(ledH, True)
+    else:
+        GPIO.output(ledH, False)  
     
 
 def temphum():
     humedad, temperatura = Adafruit_DHT.read_retry(sensor, pin)
     return (humedad, temperatura)
 
+def temphumW():
+    threading.Timer(10.0, temphumW).start()
+    humedad, temperatura = temphum()
+    print (humedad)
+    print (temperatura)
+    if temperatura > tempMax:
+        GPIO.output(ledT, True)
+    else:
+        GPIO.output(ledT, False)
+    if humedad > humMax:
+        GPIO.output(ledH, True)
+    else:
+        GPIO.output(ledH, False)     
 
 
 
 if __name__ == '__main__':
+    temphumW()
+    temphumW()  
     try:
-        while True:
-            humedad, temperatura = temhum()
-            distancia = distance()
-            print (humedad)
-            print (temperatura)
-            print (distancia)
+        while True:   
+            if global_enable==1:
+                print ("Se ha detectado movimiento")
+                GPIO.output(ledA, True)
+            else:
+                GPIO.output(ledA, False)
 
-            if temperatura > tempMax:
-                GPIO.output(ledT, True)
-            else:
-                GPIO.output(ledT, False)
-            if humedad > humMax:
-                GPIO.output(ledH, True)
-            else:
-                GPIO.output(ledH, False)  
 
     except KeyboardInterrupt:
                 print("Measurement stopped by User")
