@@ -40,10 +40,9 @@ def alarmaCheck():
     iteration = 0
     maxIterations = 12
     while True:
-
+        distancia = distance()
         if (140.0 > distancia < 150.0):
             GPIO.output(ledA, True)
-            distancia = distance()
             text = str(distancia) + " cm."
             write_log(text, disPath, dName)
             text = "Se ha registrado una alarma, la distancia es de " + \
