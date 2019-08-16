@@ -136,8 +136,7 @@ def temphumW():
             time.sleep(10)     
     
     except KeyboardInterrupt:
-	    # Registra el error en el archivo log y termina la ejecucion
-	    print("Measurement stopped by User")
+        print("Medida interrumpida")
         GPIO.output(ledT, False)
         GPIO.output(ledH, False)
 
