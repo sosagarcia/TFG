@@ -20,16 +20,25 @@ hPath = "/var/log/iot/hum/"
 tPath = "/var/log/iot/tem/"
 irPath = "/var/log/iot/ir/"
 disPath = "/var/log/iot/dis/"
+disPath = "/var/log/iot/a/"
 
 GPIO.setmode(GPIO.BCM)
 
 
 def alarmaCheck():
     while True:
+        iteration = 0
+        maxIterations = 12
         distancia = distance()
         print("La distancia actual es de ", distancia)
         if (140.0 > distancia < 150.0):
             GPIO.output(ledA, True)
+            print("Se ha registrado una alarma")
+        else:
+            GPIO.output(ledA, False)
+        iteration += 1
+        if (iteration > maxIterations):
+            GPIO.output(ledA, False)
             break
         time.sleep(0.5)
 
@@ -40,11 +49,11 @@ def alarma(channel):
     global_distance = 1
     print("Se ha detectado movimiento")
     GPIO.output(ledM, True)
-    t3 = threading.Thread(target=alarmaCheck)
+    t3 = threading.Thread(target=alarmaCheck, args=(lambda: stop_threads, ))
     t3.setDaemon(True)
+    t3.start
     t3.join(6.0)
     GPIO.output(ledM, False)
-    GPIO.output(ledA, False)
     global_distance = 10.0
 
 
