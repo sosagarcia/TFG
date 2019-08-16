@@ -27,18 +27,7 @@ def alarma (channel):
     print ("Se ha detectado movimiento")
     GPIO.output(ledM, True)
 
-def alarmaCheck():
-    try : 
-        while True:
-            if global_enabled == 1 :
-                time.sleep(6)
-                GPIO.output(ledM, False)
-                global_enabled = 0
-                global_distance = 20
-
-
 # Distance
- 
 GPIO_TRIGGER = 23
 GPIO_ECHO = 24
  
@@ -163,7 +152,22 @@ if __name__ == '__main__':
     t2.setDaemon(True)
     t1.start()
     t2.start()
-    print("fuck")
+    try : 
+        while True:
+            if global_enabled == 1 :
+                time.sleep(6)
+                GPIO.output(ledM, False)
+                global_enabled = 0
+                global_distance = 20
+
+    finally:
+        GPIO.output(ledT, False)
+        GPIO.output(ledH, False)
+        GPIO.output(ledA, False)
+        GPIO.output(ledM, False)
+        GPIO.cleanup() #reset all GPIO
+
+
 
     
 
