@@ -5,6 +5,14 @@ import Adafruit_DHT
 import RPi.GPIO as GPIO
 import mysql.connector
 
+
+t1 = threading.Thread(target=temphumW)
+t2 = threading.Thread(target=distanceW)
+t3 = threading.Thread(target=alarmaCheck)
+t1.setDaemon(True)
+t2.setDaemon(True)
+t3.setDaemon(True)
+
 mydb = mysql.connector.connect(
   host="localhost",
   user="renato",
@@ -27,6 +35,22 @@ def alarma (channel):
     global_distance = 1
     print ("Se ha detectado movimiento")
     GPIO.output(ledM, True)
+    
+
+def alarmaCheck():
+    try : 
+        while True:
+            if global_enabled == 1 :
+                time.sleep(6)
+                GPIO.output(ledM, False)
+                global_enabled = 0
+                global_distance = 20.0
+            else:
+                time.sleep(1)
+    except KeyboardInterrupt:
+        print("Medida interrumpida")
+        GPIO.output(ledM, False)
+
 
 # Distance
 GPIO_TRIGGER = 23
@@ -146,23 +170,13 @@ def temphumW():
 
 
 if __name__ == '__main__':
-    t1 = threading.Thread(target=temphumW)
-    t2 = threading.Thread(target=distanceW)
     
-    t1.setDaemon(True)
-    t2.setDaemon(True)
     t1.start()
     t2.start()
-    try : 
-        while True:
-            if global_enabled == 1 :
-                time.sleep(6)
-                GPIO.output(ledM, False)
-                global_enabled = 0
-                global_distance = 20
-            else:
-                pass
+    t3.start()
+    
 
+    t1.join()
     finally:
         GPIO.output(ledT, False)
         GPIO.output(ledH, False)
