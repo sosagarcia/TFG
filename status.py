@@ -27,6 +27,14 @@ def alarma (channel):
     print ("Se ha detectado movimiento")
     GPIO.output(ledM, True)
 
+def alarmaCheck():
+    try : 
+        while True:
+            if global_enabled == 1 :
+                time.sleep(6)
+                GPIO.output(ledM, False)
+                global_enabled = 0
+                global_distance = 20
 
 
 # Distance
@@ -148,12 +156,15 @@ def temphumW():
 
 
 if __name__ == '__main__':
-t1 = threading.Thread(target=temphumW)
-t2 = threading.Thread(target=distanceW)
-t1.start()
-t2.start()
-t1.join()
-t2.join()
+    t1 = threading.Thread(target=temphumW)
+    t2 = threading.Thread(target=distanceW)
+    
+    t1.setDaemon(True)
+    t2.setDaemon(True)
+    t1.start()
+    t2.start()
+    print("fuck")
+
     
 
 
