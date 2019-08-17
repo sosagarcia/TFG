@@ -1,3 +1,21 @@
+# Rutas de LOG
+
+hPath = "/var/log/iot/hum/"
+tPath = "/var/log/iot/tem/"
+irPath = "/var/log/iot/ir/"
+disPath = "/var/log/iot/dis/"
+aPath = "/var/log/iot/a/"
+cpuTPath = "/var/log/iot/cpuT/"
+cpuPath = "/var/log/iot/cpu/"
+
+dName = "_Distancia.log"
+hName = "_Humedad.log"
+tName = "_Temperatura.log"
+irName = "_Movimientos.log"
+aName = "_Alarmas.log"
+cpuTName = "_TemperaturaCPU.log"
+cpuName = "_UsoCPU.log"
+
 # Diccionario de mensajes
 
 calendario = [

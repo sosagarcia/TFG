@@ -7,9 +7,9 @@ import psutil
 from static.py.correo import *
 
 # Intervalo de toma de muestras
-global_distance = 6.0
-global_temhum = 1.0
-global_cpu = 2.0
+global_distance = 60.0
+global_temhum = 10.0
+global_cpu = 10.0
 
 # Valores de aviso
 
@@ -29,8 +29,8 @@ aPath = "/var/log/iot/a/"
 cpuTPath = "/var/log/iot/cpuT/"
 cpuPath = "/var/log/iot/cpu/"
 
-dName = "_Distancia.log"
 hName = "_Humedad.log"
+dName = "_Distancia.log"
 tName = "_Temperatura.log"
 irName = "_Movimientos.log"
 aName = "_Alarmas.log"

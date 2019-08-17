@@ -2,6 +2,16 @@ from datetime import date, datetime, timedelta
 import datetime as dt
 
 
+
+
+def statusNow(path, name):
+    log = open ( path + datetime.datetime.now().strftime("%d-%m-%Y") + name, "r")
+    logLines = log.readlines ()
+    log.close ()
+    actual = logLines [len (logLines) -1]
+    return actual
+
+
 def conjunto(data):
     # result = '<select>'
 
