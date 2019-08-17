@@ -1,5 +1,6 @@
 <script type="text/javascript">
-  $(document).ready(function() {
+  var body = window.document.getElementsByTagName("body")[0];
+  body.ready(function() {
     function datosS() {
       fetch("/state")
         .then(res => res.json())
