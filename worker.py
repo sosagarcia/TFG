@@ -45,10 +45,9 @@ def titulos():
     despues = ahora + timedelta(hours=1)
     antes = str(antes)
     despues = str(despues)
-    cur = mysql.get_db().cursor()
-    cur.execute(
+    sql(
         'SELECT idUser, start, end FROM eventos where (%s < start) and ( start <  %s) ORDER BY start ASC', (antes, despues))
-    data = cur.fetchall()
+    data = actualiza(sql)
     data = [i for sub in data for i in sub]
     return data
 
@@ -83,7 +82,7 @@ if __name__ == '__main__':
     t3.start()
 
     try:
-        print("El usuario actual es "user)
+        print("El usuario actual es ", user)
         t1.join()
         t2.join()
         t3.join()
