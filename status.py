@@ -4,6 +4,7 @@ import datetime
 import Adafruit_DHT
 import RPi.GPIO as GPIO
 import mysql.connector
+from static.py.correo import *
 
 # Intervalo de toma de muestras
 global_distance = 60.0
@@ -48,7 +49,7 @@ def alarmaCheck():
             text = "Se ha registrado una alarma, la distancia es de " + \
                 str(distancia)
             write_log(text, aPath, aName)
-            time.sleep(1)
+            sendEmail(text, "monitycont@gmail.com", "Alarma Registrada")
             distancia = distance()
             text = str(distancia) + " cm."
             write_log(text, disPath, dName)
