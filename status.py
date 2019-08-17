@@ -67,8 +67,9 @@ def alarmaCheck():
             texto = (datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S"))
             mycursor = mydb.cursor()
             sql = 'UPDATE estado SET alarma= "' + texto + '" WHERE id= 0 '
-            mycursor.execute(sql)
-            mydb.commit()
+            ta = threading.Thread(target=actualiza, args=[sql])
+            ta.start()
+            ta.join()
             distancia = distance()
             text = str(distancia) + " cm."
             write_log(text, disPath, dName)
@@ -87,10 +88,10 @@ def alarma(channel):
     global_distance = 1
     text = "Se ha detectado movimiento"
     texto = (datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S"))
-    mycursor = mydb.cursor()
     sql = 'UPDATE estado SET movimiento= "' + texto + '" WHERE id= 0 '
-    mycursor.execute(sql)
-    mydb.commit()
+    tm = threading.Thread(target=actualiza, args=[sql])
+    tm.start()
+    tm.join()
     write_log(text, irPath, irName)
     t3 = threading.Thread(target=alarmaCheck)
     t3.setDaemon(True)
@@ -175,8 +176,9 @@ def distanceW():
         write_log(text, disPath, dName)
         mycursor = mydb.cursor()
         sql = 'UPDATE estado SET distancia= "' + text + '" WHERE id= 0 '
-        mycursor.execute(sql)
-        mydb.commit()
+        td = threading.Thread(target=actualiza, args=[sql])
+        td.start()
+        td.join()
         time.sleep(global_distance)
 
 
@@ -225,10 +227,10 @@ def tempW():
     while True:
         time.sleep(global_cpu)
         temperatura, cpu = tempcpu()
-        mycursor = mydb.cursor()
-        mycursor.execute(
-                'UPDATE estado  SET cpuT= %s, cpu= %s  WHERE id= 0 ', (temperatura, cpu))
-        mydb.commit()
+        sql = 'UPDATE estado  SET cpuT= %s, cpu= %s  WHERE id= 0 ', (temperatura, cpu)
+        tcpu = threading.Thread(target=actualiza, args=[sql])
+        tcpu.start()
+        tcpu.join()
         write_log(temperatura, cpuTPath, cpuTName)
         write_log(cpu, cpuPath, cpuName)
         
