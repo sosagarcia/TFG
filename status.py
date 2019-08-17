@@ -50,7 +50,7 @@ def alarmaCheck():
                 str(distancia)
             write_log(text, aPath, aName)
             feedback = sendEmail(
-                text, "monitycont@gmail.com", "Alarma Registrada")
+                str(text), "renmanzo@hotmail.com", "Alarma Registrada")
             print(feedback)
             distancia = distance()
             text = str(distancia) + " cm."

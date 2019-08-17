@@ -14,8 +14,8 @@ def sendEmail(msg, destinatario, asunto):
     # setup the parameters of the message
     password = "EmeyCe.123"
     msg['From'] = "monitycont@gmail.com"
-    msg['To'] = destinatario
-    msg['Subject'] = asunto
+    msg['To'] = str(destinatario)
+    msg['Subject'] = str(asunto)
 
     # add in the message body
     msg.attach(MIMEText(message, 'plain'))
