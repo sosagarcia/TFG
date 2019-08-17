@@ -65,7 +65,6 @@ def alarmaCheck():
             feedback = sendEmail(
                 str(text), "monitycont@gmail.com", "Alarma Registrada")
             texto = (datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S"))
-            mycursor = mydb.cursor()
             sql = 'UPDATE estado SET alarma= "' + texto + '" WHERE id= 0 '
             ta = threading.Thread(target=actualiza, args=[sql])
             ta.start()
@@ -174,7 +173,6 @@ def distanceW():
         distancia = distance()
         text = str(distancia) + " cm."
         write_log(text, disPath, dName)
-        mycursor = mydb.cursor()
         sql = 'UPDATE estado SET distancia= "' + text + '" WHERE id= 0 '
         td = threading.Thread(target=actualiza, args=[sql])
         td.start()
@@ -195,7 +193,6 @@ def temphumW():
         if humedad is not None and temperatura is not None:
             textoT = str(temperatura) + " ºC"
             textoH = str(humedad) + " %"
-            
             sql ='UPDATE estado  SET temperatura= '+ textoT +', humedad= '+textoH+' WHERE id= 0 '
             thum = threading.Thread(target=actualiza, args=[sql])
             thum.start()
