@@ -14,6 +14,12 @@
     alarma = data.movimiento;
     temperaturaCPU = data.temperaturaCPU;
     usoCPU = data.usoCPU;
-    document.getElementById("hum").innerHTML = humedad.substr(-7);
+    document.getElementById("hum").innerHTML = humedad.substr(20);
+    document.getElementById("tem").innerHTML = temperatura.substr(20);
+    document.getElementById("dis").innerHTML = distancia.substr(20);
+    document.getElementById("av").innerHTML = humedad.substr(20);
+    document.getElementById("al").innerHTML = humedad.substr(20);
+    document.getElementById("cpuT").innerHTML = humedad.substr(20);
+    document.getElementById("cpu").innerHTML = humedad.substr(20);
   }
 </script>
