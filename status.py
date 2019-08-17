@@ -169,9 +169,9 @@ def temphumW():
             textoT = str(temperatura) + " ºC"
             textoH = str(humedad) + " %"
             mycursor = mydb.cursor()
-            sql = "UPDATE status  SET temperatura= 'a', humedad='s',  WHERE id = '0' "
-            variables = (textoT, textoH)
-            mycursor.execute(sql)
+            id = 0
+            mycursor.execute(
+                'UPDATE status  SET temperatura="a", humedad="s",  WHERE id={0}'.format(id))
             mydb.commit()
 
         else:
