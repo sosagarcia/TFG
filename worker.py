@@ -1,7 +1,6 @@
 from datetime import date, datetime, timedelta
 import datetime as dt
 import mysql.connector
-import threading
 import time
 import RPi.GPIO as GPIO
 GPIO.setwarnings(False)
@@ -23,12 +22,12 @@ mydb = mysql.connector.connect(
 )
 
 
-def blink(led):
-    while True:  # Run forever
-        GPIO.output(led, GPIO.HIGH)  # Turn on
-        time.sleep(1)  # Sleep for 1 second
-        GPIO.output(led, GPIO.LOW)  # Turn off
-        time.sleep(1)  # Sleep for 1 second
+def start(led):
+    GPIO.output(led, GPIO.HIGH)  # Turn on
+
+
+def stop(led):
+    GPIO.output(led, GPIO.LOW)  # Turn off
 
 
 def titulos():
@@ -54,33 +53,23 @@ def ganador(data):
 
 
 if __name__ == '__main__':
-
-    t1 = threading.Thread(target=blink, args=[user1])
-    t2 = threading.Thread(target=blink, args=[user2])
-    t3 = threading.Thread(target=blink, args=[user3])
-
-    t1.setDaemon(True)
-    t2.setDaemon(True)
-    t3.setDaemon(True)
-
-    user = ganador(titulos())
-    print(user)
-    if (user == 1):
-        t1.start()
-    if (user == 2):
-        t2.start()
-    if (user == 1):
-        t2.start()
-
     try:
         while True:
+            user = ganador(titulos())
+            print(user)
             if (user == 1):
-                t1.start()
+                start(user1)
+                stop(user2)
+                stop(user3)
             if (user == 2):
-                t2.start()
-            if (user == 1):
-                t2.start()
-            time.sleep(30)
+                stop(user1)
+                start(user2)
+                stop(user3)
+            if (user == 3):
+                stop(user1)
+                stop(user2)
+                start(user3)
+            time.sleep(3)
     finally:
 
         GPIO.cleanup()
