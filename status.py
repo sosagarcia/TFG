@@ -6,10 +6,6 @@ import RPi.GPIO as GPIO
 import psutil
 from static.py.correo import *
 
-# Intervalo de toma de muestras
-global_distance = 60.0
-global_temhum = 10.0
-global_cpu = 10.0
 
 # Valores de aviso
 
@@ -66,8 +62,7 @@ def alarmaCheck():
 
 def alarma(channel):
     GPIO.output(ledM, True)
-    global global_distance
-    global_distance = 1
+
     text = "Se ha detectado movimiento"
     write_log(text, irPath, irName)
     t3 = threading.Thread(target=alarmaCheck)
@@ -75,7 +70,6 @@ def alarma(channel):
     t3.start()
     t3.join(6.0)
     GPIO.output(ledM, False)
-    global_distance = 60
 
 
 
@@ -141,17 +135,17 @@ def distance():
     # multiply with the sonic speed (34300 cm/s)
     # and divide by 2, because there and back
     distance = (TimeElapsed * 34300) / 2
-    return distance
+    return "{0:.2f}".format(distance)
 
 
 def distanceW():
 
     while True:
-        time.sleep(global_distance)
+        time.sleep(60)
         distancia = distance()
         text = str(distancia) + " cm."
         write_log(text, disPath, dName)
-        time.sleep(global_distance)
+        
 
 
 def temphum():
@@ -192,7 +186,7 @@ def tempcpu():
 
 def tempW():
     while True:
-        time.sleep(global_cpu)
+        time.sleep(10)
         temperatura, cpu = tempcpu()
         write_log(temperatura, cpuTPath, cpuTName)
         write_log(cpu, cpuPath, cpuName)
