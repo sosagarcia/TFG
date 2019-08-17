@@ -1,25 +1,27 @@
 <script>
-  fetch("/state")
-    .then(res => res.json())
-    .then(out => {
-      console.log(out);
-      miFuncion(out);
-    })
-    .catch(error => console.error("Error al obtener datos de estadísticas"));
-  function miFuncion(data) {
-    humedad = data.humedad;
-    temperatura = data.temperatura;
-    distancia = data.distancia;
-    movimiento = data.movimiento;
-    alarma = data.alarma;
-    temperaturaCPU = data.temperaturaCPU;
-    usoCPU = data.usoCPU;
-    document.getElementById("hum").innerHTML = humedad.substr(20);
-    document.getElementById("tem").innerHTML = temperatura.substr(20);
-    document.getElementById("dis").innerHTML = distancia.substr(20);
-    document.getElementById("av").innerHTML = movimiento.substr(20);
-    document.getElementById("al").innerHTML = alarma.substr(20);
-    document.getElementById("cpuT").innerHTML = temperaturaCPU.substr(20);
-    document.getElementById("cpu").innerHTML = usoCPU.substr(20);
+  function lalala() {
+    fetch("/state")
+      .then(res => res.json())
+      .then(out => {
+        miFuncion(out);
+      })
+      .catch(error => console.error("Error al obtener datos de estadísticas"));
+    function miFuncion(data) {
+      humedad = data.humedad;
+      temperatura = data.temperatura;
+      distancia = data.distancia;
+      movimiento = data.movimiento;
+      alarma = data.alarma;
+      temperaturaCPU = data.temperaturaCPU;
+      usoCPU = data.usoCPU;
+      document.getElementById("hum").innerHTML = humedad.substr(20);
+      document.getElementById("tem").innerHTML = temperatura.substr(20);
+      document.getElementById("dis").innerHTML = distancia.substr(20);
+      document.getElementById("av").innerHTML = movimiento.substr(20);
+      document.getElementById("al").innerHTML = alarma.substr(20);
+      document.getElementById("cpuT").innerHTML = temperaturaCPU.substr(20);
+      document.getElementById("cpu").innerHTML = usoCPU.substr(20);
+    }
+    //var tt = setTimeout(lalala, 10000);
   }
 </script>
