@@ -5,17 +5,17 @@ from email.mime.text import MIMEText
 import smtplib
 
 
-def sendEmail(msg, destinatario, asunto):
+def sendEmail(msge, destinatario, asunto):
     # create message object instance
     msg = MIMEMultipart()
 
-    message = str(msg)
+    message = msge
 
     # setup the parameters of the message
     password = "EmeyCe.123"
     msg['From'] = "monitycont@gmail.com"
-    msg['To'] = str(destinatario)
-    msg['Subject'] = str(asunto)
+    msg['To'] = destinatario
+    msg['Subject'] = asunto
 
     # add in the message body
     msg.attach(MIMEText(message, 'plain'))
