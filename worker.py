@@ -43,13 +43,13 @@ def titulos():
 def ganador(data):
 
     max = len(data)
-    result = list()
+    result = 0
     if max == 0:
-        result.append(0)
+        result = -1
     else:
         for i in range(0, max, 3):
             if (data[i+1] <= dt.datetime.now() < data[i+2]):
-                result.append(data[i])
+                result = data[i]
     return result
 
 
