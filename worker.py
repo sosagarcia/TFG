@@ -74,12 +74,13 @@ if __name__ == '__main__':
 
     try:
         while True:
-            if (user == 1):
+            if ((user == 1) and (not t1.isAlive())):
                 t1.start()
-            if (user == 2):
+            if ((user == 1) and (not t2.isAlive()):
                 t2.start()
-            if (user == 1):
+            if ((user == 1) and (not t3.isAlive()):
                 t2.start()
+            time.sleep(30)
     finally:
 
         GPIO.cleanup()
