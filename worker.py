@@ -64,7 +64,7 @@ if __name__ == '__main__':
     t3.setDaemon(True)
 
     user = ganador(titulos())
-
+    print(user)
     if (user == 1):
         t1.start()
     if (user == 2):
@@ -73,10 +73,13 @@ if __name__ == '__main__':
         t2.start()
 
     try:
-        print("El usuario actual es ", user)
-        t1.join()
-        t2.join()
-        t3.join()
+        while True:
+            if (user == 1):
+                t1.start()
+            if (user == 2):
+                t2.start()
+            if (user == 1):
+                t2.start()
     finally:
 
         GPIO.cleanup()
