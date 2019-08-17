@@ -71,7 +71,7 @@ def dif(start, end, intervalo):
     end = pasaFecha(end)
     diferencia = intervalo * 60
     resta = end - start
-    resta = dif.total_seconds()
+    resta = resta.total_seconds()
     if (resta < diferencia):
         return 1
     return 0
