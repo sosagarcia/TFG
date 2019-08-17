@@ -16,6 +16,10 @@ global_temhum = 15.0
 tempMax = 25
 humMax = 60
 
+# Distance
+GPIO_TRIGGER = 23
+GPIO_ECHO = 24
+
 mydb = mysql.connector.connect(
     host="localhost",
     user="renato",
@@ -41,6 +45,10 @@ cpuName = "_UsoCPU.log"
 
 GPIO.setmode(GPIO.BCM)
 
+def actualiza(sql):
+    mycursor = mydb.cursor()
+    mycursor.execute(sql)
+    mydb.commit()
 
 def alarmaCheck():
     iteration = 0
@@ -91,9 +99,7 @@ def alarma(channel):
     global_distance = 60
 
 
-# Distance
-GPIO_TRIGGER = 23
-GPIO_ECHO = 24
+
 
 GPIO.setwarnings(False)
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
@@ -186,10 +192,11 @@ def temphumW():
         if humedad is not None and temperatura is not None:
             textoT = str(temperatura) + " ºC"
             textoH = str(humedad) + " %"
-            mycursor = mydb.cursor()
-            mycursor.execute(
-                'UPDATE estado  SET temperatura= %s, humedad= %s  WHERE id= 0 ', (textoT, textoH))
-            mydb.commit()
+            
+            sql ='UPDATE estado  SET temperatura= %s, humedad= %s  WHERE id= 0 ', (textoT, textoH)
+            thum = threading.Thread(target=actualiza, args=(sql)
+            thum.start()
+            thum.join()
             if temperatura > tempMax:
                 GPIO.output(ledT, True)
             else:
@@ -210,7 +217,7 @@ def temphumW():
 def tempcpu():
     temp = int(open('/sys/class/thermal/thermal_zone0/temp').read()) / 1e3
     cpusan = psutil.cpu_percent(interval=1, percpu=False)
-    return ( str(temp) +' ºC', cpusan +' %')
+    return ( str(temp) +' ºC', str(cpusan) +' %')
 
 
 def tempW():
