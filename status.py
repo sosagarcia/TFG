@@ -50,7 +50,10 @@ def alarmaCheck():
             write_log(text, aPath, aName)
             feedback = sendEmail(
                 str(text), "monitycont@gmail.com", "Alarma Registrada")
-            print(feedback)
+             mycursor = mydb.cursor()
+            mycursor.execute(
+                'UPDATE estado  SET alarma= %s WHERE id= 0 ', (datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")))
+            mydb.commit()
             distancia = distance()
             text = str(distancia) + " cm."
             write_log(text, disPath, dName)
@@ -64,12 +67,15 @@ def alarmaCheck():
 
 
 def alarma(channel):
-
+    GPIO.output(ledM, True)
     global global_distance
     global_distance = 1
     text = "Se ha detectado movimiento"
+    mycursor = mydb.cursor()
+    mycursor.execute(
+        'UPDATE estado  SET movimiento= %s WHERE id= 0 ', (datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")))
+    mydb.commit()
     write_log(text, irPath, irName)
-    GPIO.output(ledM, True)
     t3 = threading.Thread(target=alarmaCheck)
     t3.setDaemon(True)
     t3.start()
@@ -152,6 +158,10 @@ def distanceW():
         distancia = distance()
         text = str(distancia) + " cm."
         write_log(text, disPath, dName)
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            'UPDATE estado  SET distancia= %s WHERE id= 0 ', (text))
+        mydb.commit()
         time.sleep(global_distance)
 
 
@@ -168,12 +178,10 @@ def temphumW():
         if humedad is not None and temperatura is not None:
             textoT = str(temperatura) + " ºC"
             textoH = str(humedad) + " %"
-            print(time.time())
             mycursor = mydb.cursor()
             mycursor.execute(
-                'UPDATE estado  SET temperatura=% s, humedad=% s  WHERE id= 0 ', (textoT, textoH))
+                'UPDATE estado  SET temperatura= %s, humedad= %s  WHERE id= 0 ', (textoT, textoH))
             mydb.commit()
-            print(time.time())
 
         else:
             textoT = 'Error al obtener la lectura del sensor'
