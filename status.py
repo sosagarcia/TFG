@@ -3,6 +3,7 @@ import time
 import datetime
 import Adafruit_DHT
 import RPi.GPIO as GPIO
+import psutil
 import mysql.connector
 from static.py.correo import *
 
@@ -157,6 +158,7 @@ def distance():
 def distanceW():
 
     while True:
+        time.sleep(global_distance)
         distancia = distance()
         text = str(distancia) + " cm."
         write_log(text, disPath, dName)
@@ -201,15 +203,33 @@ def temphumW():
         write_log(textoH, hPath, hName)
 
 
+def tempcpu():
+    temp = int(open('/sys/class/thermal/thermal_zone0/temp').read()) / 1e3
+    cpusan = psutil.cpu_percent(interval=1, percpu=False)
+    return ( 'Temp.CPU =>' + str(temp), cpusan)
+
+
+def tempW():
+    while True:
+        time.sleep(10)
+        temperatura, cpu = tempcpu()
+        print (temperatura)
+        print (cpu)
+        
+        
+       
 if __name__ == '__main__':
     t1 = threading.Thread(target=temphumW)
     t2 = threading.Thread(target=distanceW)
+    t4 = threading.Thread(target=tempW)
 
     t1.setDaemon(True)
     t2.setDaemon(True)
+    t4.setDaemon(False)
 
     t1.start()
     t2.start()
+    t4.start()
 
     try:
         t1.join()
