@@ -45,9 +45,9 @@ def titulos():
     despues = ahora + timedelta(hours=1)
     antes = str(antes)
     despues = str(despues)
-    sql = 'SELECT idUser, start, end FROM eventos where (' + antes + \
-        ' < start) and ( start <  ' + despues + ') ORDER BY start ASC'
-    data = actualiza(sql)
+    sql = 'SELECT idUser, start, end FROM eventos WHERE (' + antes + \
+        ' < start) and ( start <  ' + despues + ') '
+    data = actualiza(str(sql))
     data = [i for sub in data for i in sub]
     return data
 
