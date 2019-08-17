@@ -46,10 +46,13 @@ def alarmaCheck():
         if (140.0 > distancia):
             print("3")
             GPIO.output(ledA, True)
-            text = "Se ha registrado una alarma, la distancia es de " + distancia
+            text = "Se ha registrado una alarma, la distancia es de " + \
+                str(distancia) + " cm."
             write_log(text, aPath, aName)
             feedback = sendEmail(
                 str(text), "monitycont@gmail.com", "Alarma Registrada")
+            textD = str(distancia) + " cm."
+            write_log(textD, disPath, dName)
             GPIO.output(ledA, False)
             iteration = 6
             break
