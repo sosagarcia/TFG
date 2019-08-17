@@ -161,8 +161,9 @@ def distanceW():
         text = str(distancia) + " cm."
         write_log(text, disPath, dName)
         mycursor = mydb.cursor()
-        mycursor.execute(
-            'UPDATE estado SET distancia= %s WHERE id= 0 ', text)
+        sql = 'UPDATE estado SET distancia='+ text +'WHERE id= 0 '
+        print (sql)
+        mycursor.execute(sql)
         mydb.commit()
         time.sleep(global_distance)
 
@@ -184,6 +185,14 @@ def temphumW():
             mycursor.execute(
                 'UPDATE estado  SET temperatura= %s, humedad= %s  WHERE id= 0 ', (textoT, textoH))
             mydb.commit()
+            if temperatura > tempMax:
+                GPIO.output(ledT, True)
+            else:
+                GPIO.output(ledT, False)
+            if humedad > humMax:
+                GPIO.output(ledH, True)
+            else:
+                GPIO.output(ledH, False)
 
         else:
             textoT = 'Error al obtener la lectura del sensor'
@@ -191,15 +200,6 @@ def temphumW():
 
         write_log(textoT, tPath, tName)
         write_log(textoH, hPath, hName)
-
-        if temperatura > tempMax:
-            GPIO.output(ledT, True)
-        else:
-            GPIO.output(ledT, False)
-        if humedad > humMax:
-            GPIO.output(ledH, True)
-        else:
-            GPIO.output(ledH, False)
 
 
 if __name__ == '__main__':
