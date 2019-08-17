@@ -28,12 +28,16 @@ tPath = "/var/log/iot/tem/"
 irPath = "/var/log/iot/ir/"
 disPath = "/var/log/iot/dis/"
 aPath = "/var/log/iot/a/"
+cpuTPath = "/var/log/iot/cpuT/"
+cpuPath = "/var/log/iot/cpu/"
 
 dName = "_Distancia.log"
 hName = "_Humedad.log"
 tName = "_Temperatura.log"
 irName = "_Movimientos.log"
 aName = "_Alarmas.log"
+cpuTName = "_TemperaturaCPU.log"
+cpuName = "_UsoCPU.log"
 
 GPIO.setmode(GPIO.BCM)
 
@@ -206,15 +210,19 @@ def temphumW():
 def tempcpu():
     temp = int(open('/sys/class/thermal/thermal_zone0/temp').read()) / 1e3
     cpusan = psutil.cpu_percent(interval=1, percpu=False)
-    return ( 'Temp.CPU =>' + str(temp), cpusan)
+    return ( str(temp) +' ºC', cpusan +' %')
 
 
 def tempW():
     while True:
         time.sleep(10)
         temperatura, cpu = tempcpu()
-        print (temperatura)
-        print (cpu)
+        mycursor = mydb.cursor()
+        mycursor.execute(
+                'UPDATE estado  SET cpuT= %s, cpu= %s  WHERE id= 0 ', (temperatura, cpu))
+        mydb.commit()
+        write_log(temperatura, cpuTPath, cpuTName)
+        write_log(cpu, cpuPath, cpuName)
         
         
        
