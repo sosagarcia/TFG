@@ -168,11 +168,12 @@ def temphumW():
         if humedad is not None and temperatura is not None:
             textoT = str(temperatura) + " ºC"
             textoH = str(humedad) + " %"
+            print(time.time())
             mycursor = mydb.cursor()
-            id = 0
             mycursor.execute(
-                'UPDATE status  SET temperatura="a", humedad="s",  WHERE id={0}'.format(id))
+                'UPDATE estado  SET temperatura=% s, humedad=% s  WHERE id= 0 ', (textoT, textoH))
             mydb.commit()
+            print(time.time())
 
         else:
             textoT = 'Error al obtener la lectura del sensor'
