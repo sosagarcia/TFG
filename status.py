@@ -4,7 +4,6 @@ import datetime
 import Adafruit_DHT
 import RPi.GPIO as GPIO
 import psutil
-import mysql.connector
 from static.py.correo import *
 
 # Intervalo de toma de muestras
@@ -21,12 +20,6 @@ humMax = 60
 GPIO_TRIGGER = 23
 GPIO_ECHO = 24
 
-mydb = mysql.connector.connect(
-    host="localhost",
-    user="renato",
-    passwd="renato12",
-    database="flaskcontacts"
-)
 
 hPath = "/var/log/iot/hum/"
 tPath = "/var/log/iot/tem/"
@@ -46,11 +39,6 @@ cpuName = "_UsoCPU.log"
 
 GPIO.setmode(GPIO.BCM)
 
-def actualiza(sql):
-    mycursor = mydb.cursor()
-    mycursor.execute(sql)
-    mydb.commit()
-
 def alarmaCheck():
     iteration = 0
     maxIterations = 12
@@ -64,11 +52,6 @@ def alarmaCheck():
             write_log(text, aPath, aName)
             feedback = sendEmail(
                 str(text), "monitycont@gmail.com", "Alarma Registrada")
-            texto = (datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S"))
-            sql = 'UPDATE estado SET alarma= "' + texto + '" WHERE id= 0 '
-            ta = threading.Thread(target=actualiza, args=[sql])
-            ta.start()
-            ta.join()
             distancia = distance()
             text = str(distancia) + " cm."
             write_log(text, disPath, dName)
@@ -86,11 +69,6 @@ def alarma(channel):
     global global_distance
     global_distance = 1
     text = "Se ha detectado movimiento"
-    texto = (datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S"))
-    sql = 'UPDATE estado SET movimiento= "' + texto + '" WHERE id= 0 '
-    tm = threading.Thread(target=actualiza, args=[sql])
-    tm.start()
-    tm.join()
     write_log(text, irPath, irName)
     t3 = threading.Thread(target=alarmaCheck)
     t3.setDaemon(True)
@@ -173,10 +151,6 @@ def distanceW():
         distancia = distance()
         text = str(distancia) + " cm."
         write_log(text, disPath, dName)
-        sql = 'UPDATE estado SET distancia= "' + text + '" WHERE id= 0 '
-        td = threading.Thread(target=actualiza, args=[sql])
-        td.start()
-        td.join()
         time.sleep(global_distance)
 
 
@@ -193,10 +167,6 @@ def temphumW():
         if humedad is not None and temperatura is not None:
             textoT = str(temperatura) + " ºC"
             textoH = str(humedad) + " %"
-            sql ='UPDATE estado  SET temperatura= '+ textoT +', humedad= '+textoH+' WHERE id= 0 '
-            thum = threading.Thread(target=actualiza, args=[sql])
-            thum.start()
-            thum.join()
             if temperatura > tempMax:
                 GPIO.output(ledT, True)
             else:
@@ -224,10 +194,6 @@ def tempW():
     while True:
         time.sleep(global_cpu)
         temperatura, cpu = tempcpu()
-        sql = 'UPDATE estado  SET cpuT= ' + temperatura  +', cpu= '+ cpu + '  WHERE id= 0 '
-        tcpu = threading.Thread(target=actualiza, args=[sql])
-        tcpu.start()
-        tcpu.join()
         write_log(temperatura, cpuTPath, cpuTName)
         write_log(cpu, cpuPath, cpuName)
         
