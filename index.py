@@ -10,7 +10,6 @@ import bcrypt
 from flask import jsonify, json
 from static.py.mensajes import *
 from static.py.funciones import *
-from static.py.humtemp import *
 
 # from flask.ext.session import Session
 # import mysql
@@ -336,11 +335,21 @@ def delet2():
     mysql.get_db().commit()
 
 
-@app.route('/test')
-def test():
+@app.route('/state')
+def state():
 
-    hum = statusNow(hPath,hName)
-    return (hum)
+    humedad = statusNow(hPath,hName)
+    temperatura = statusNow(tPath,tName)
+    distancia = statusNow(disPath,dName)
+    movimiento = statusNow(irPath,irName)
+    alarma = statusNow(aPath,aName)
+    temperaturaCPU = statusNow(cpuTPath,cpuTName)
+    usoCPU = statusNow(cpuPath,cpuName)
+
+    return jsonify ( humedad=humedad, temperatura=temperatura, distancia=distancia, movimiento=movimiento, alarma=alarma, temperaturaCPU=temperaturaCPU, usoCPU=usoCPU)
+ 
+
+
 
 
 @app.route('/testa')

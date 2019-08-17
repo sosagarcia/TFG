@@ -16,13 +16,25 @@
   <!-- Izquierda -->
 
   <!-- Centro -->
-  <div class="colorPrueba fadeIn first mx-auto align-self-start">centtro</div>
+  <div class="colorPrueba fadeIn first mx-auto align-self-start">
+    <ul class="list-group">
+      <li class="list-group-item">
+        Humedad: <span class="badge badge-danger ml-3" id="hum"></span>
+      </li>
+      <li class="list-group-item">Temperatura:</li>
+      <li class="list-group-item">Distancia:</li>
+      <li class="list-group-item">Aviso:</li>
+      <li class="list-group-item">Alarma:</li>
+      <li class="list-group-item">Temperatura del Sistema:</li>
+      <li class="list-group-item">Uso del sistema:</li>
+    </ul>
+  </div>
   <!-- Derecha -->
 
   {{ agenda | safe }}
 </div>
 
-{% endblock %} {% block script %}
+{% endblock %} {% block script %} {% include "estadoScp.html" %}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>

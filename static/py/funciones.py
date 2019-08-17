@@ -5,7 +5,7 @@ import datetime as dt
 
 
 def statusNow(path, name):
-    log = open ( path + datetime.datetime.now().strftime("%d-%m-%Y") + name, "r")
+    log = open ( path + dt.datetime.now().strftime("%d-%m-%Y") + name, "r")
     logLines = log.readlines ()
     log.close ()
     actual = logLines [len (logLines) -1]
