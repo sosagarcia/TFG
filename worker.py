@@ -57,6 +57,10 @@ if __name__ == '__main__':
         while True:
             user = ganador(titulos())
             print(user)
+            if (user == 0):
+                stop(user1)
+                stop(user2)
+                stop(user3)
             if (user == 1):
                 start(user1)
                 stop(user2)
@@ -69,7 +73,7 @@ if __name__ == '__main__':
                 stop(user1)
                 stop(user2)
                 start(user3)
-            time.sleep(3)
+            time.sleep(5)
     finally:
 
         GPIO.cleanup()
