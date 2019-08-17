@@ -38,7 +38,7 @@ GPIO.setmode(GPIO.BCM)
 def alarmaCheck():
     iteration = 0
     maxIterations = 12
-    while True:
+    while (iteration > maxIterations):
         distancia = distance()
         if (140.0 > distancia > 150.0):
             GPIO.output(ledA, True)
@@ -52,11 +52,9 @@ def alarmaCheck():
             text = str(distancia) + " cm."
             write_log(text, disPath, dName)
             GPIO.output(ledA, False)
+            iteration = maxIterations + 1
             break
         iteration += 1
-        if (iteration > maxIterations):
-            GPIO.output(ledA, False)
-            break
         time.sleep(0.5)
 
 
@@ -136,6 +134,7 @@ def distance():
     # and divide by 2, because there and back
     distance = (TimeElapsed * 34300) / 2
     distance = "{0:.2f}".format(distance)
+    distance = float(distance)
     return distance
 
 
