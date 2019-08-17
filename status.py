@@ -40,7 +40,7 @@ def alarmaCheck():
     maxIterations = 12
     while True:
         distancia = distance()
-        if (140.0 > distancia < 150.0):
+        if (140.0 > distancia > 150.0):
             GPIO.output(ledA, True)
             text = str(distancia) + " cm."
             write_log(text, disPath, dName)
@@ -135,7 +135,8 @@ def distance():
     # multiply with the sonic speed (34300 cm/s)
     # and divide by 2, because there and back
     distance = (TimeElapsed * 34300) / 2
-    return "{0:.2f}".format(distance)
+    distance = "{0:.2f}".format(distance)
+    return distance
 
 
 def distanceW():
@@ -215,15 +216,3 @@ if __name__ == '__main__':
         GPIO.output(ledM, False)
         GPIO.cleanup()  # reset all GPIO
 
-
-""" write_log(str(distance), disPath, "_Distancia")
-
-if humedad is not None and temperatura is not None:
-		textoT = str(temperatura)
-        textoH = str(humedad)
-	else:
-		textoT = 'Error al obtener la lectura del sensor'
-        textoH = 'Error al obtener la lectura del sensor'
-                
-    write_log(textoT, tPath, "_Temperatura")
-	write_log(textoH, hPath, "_Humedad") """
