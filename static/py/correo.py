@@ -9,7 +9,7 @@ def sendEmail(msg, destinatario, asunto):
     # create message object instance
     msg = MIMEMultipart()
 
-    message = msg
+    message = str(msg)
 
     # setup the parameters of the message
     password = "EmeyCe.123"
