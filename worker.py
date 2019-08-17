@@ -74,11 +74,11 @@ if __name__ == '__main__':
 
     try:
         while True:
-            if ((user == 1) and (not t1.isAlive())):
+            if (user == 1):
                 t1.start()
-            if ((user == 1) and (not t2.isAlive()):
+            if (user == 2):
                 t2.start()
-            if ((user == 1) and (not t3.isAlive()):
+            if (user == 1):
                 t2.start()
             time.sleep(30)
     finally:
