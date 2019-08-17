@@ -246,7 +246,7 @@ def add_event():
         if(dif(start, end, 3)):
             return render_template('calendar.html', mensaje=dosmin, lista=listado)
         mesEnMinutos = 44.640
-        if(dif(start, end,mesEnMinutos)):
+        if(not ( dif(start, end,mesEnMinutos))):
             return render_template('calendar.html', mensaje=unmes, lista=listado)
         # Comprobar si start o end esta entre el start o el end de algun otro evento
         
