@@ -38,7 +38,7 @@ GPIO.setmode(GPIO.BCM)
 def alarmaCheck():
     iteration = 0
     maxIterations = 5
-    while (iteration > maxIterations):
+    while (iteration < maxIterations):
         distancia = distance()
         if (140.0 > distancia):
             GPIO.output(ledA, True)
