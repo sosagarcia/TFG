@@ -95,34 +95,6 @@
     </nav>
   </header>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      function datosS() {
-        fetch("/state")
-          .then(res => res.json())
-          .then(out => {
-            humedad = data.humedad;
-            temperatura = data.temperatura;
-            distancia = data.distancia;
-            movimiento = data.movimiento;
-            alarma = data.alarma;
-            temperaturaCPU = data.temperaturaCPU;
-            usoCPU = data.usoCPU;
-            document.getElementById("hum").innerHTML = humedad.substr(20);
-            document.getElementById("tem").innerHTML = temperatura.substr(20);
-            document.getElementById("dis").innerHTML = distancia.substr(20);
-            document.getElementById("av").innerHTML = movimiento.substr(20);
-            document.getElementById("al").innerHTML = alarma.substr(20);
-            document.getElementById("cpuT").innerHTML = temperaturaCPU.substr(
-              20
-            );
-            document.getElementById("cpu").innerHTML = usoCPU.substr(20);
-          })
-          .catch(error => console.error("Error al obtener datos del sistema"));
-      }
-      setInterval(datosS, 3000);
-    });
-  </script>
 
   <body onload="startTime()">
     <div id="wrap">
