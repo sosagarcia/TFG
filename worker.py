@@ -1,5 +1,8 @@
+from datetime import date, datetime, timedelta
+import datetime as dt
 import mysql.connector
 import threading
+import time
 import RPi.GPIO as GPIO
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -30,9 +33,37 @@ def actualiza(sql):
 def blink(led):
     while True:  # Run forever
         GPIO.output(led, GPIO.HIGH)  # Turn on
-        sleep(1)  # Sleep for 1 second
+        time.sleep(1)  # Sleep for 1 second
         GPIO.output(led, GPIO.LOW)  # Turn off
-        sleep(1)  # Sleep for 1 second
+        time.sleep(1)  # Sleep for 1 second
+
+
+def titulos():
+
+    ahora = dt.datetime.now()
+    antes = ahora - timedelta(days=32)
+    despues = ahora + timedelta(hours=1)
+    antes = str(antes)
+    despues = str(despues)
+    cur = mysql.get_db().cursor()
+    cur.execute(
+        'SELECT idUser, start, end FROM eventos where (%s < start) and ( start <  %s) ORDER BY start ASC', (antes, despues))
+    data = cur.fetchall()
+    data = [i for sub in data for i in sub]
+    return data
+
+
+def ganador(data):
+    print("La data es ", data)
+    max = len(data)
+    result = list()
+    if max == 0:
+        result.append(0)
+    else:
+        for i in range(0, max, 3):
+            if (data[i+1] <= dt.datetime.now() < data[i+2]):
+                result.append(data[i])
+    return result
 
 
 if __name__ == '__main__':
@@ -45,9 +76,17 @@ if __name__ == '__main__':
     t2.setDaemon(True)
     t3.setDaemon(True)
 
+    user = ganador(titulos())
+
     t1.start()
     t2.start()
     t3.start()
 
-    while True:
-        print("Hello")
+    try:
+        print("El usuario actual es "user)
+        t1.join()
+        t2.join()
+        t3.join()
+    finally:
+
+        GPIO.cleanup()

@@ -2,13 +2,11 @@ from datetime import date, datetime, timedelta
 import datetime as dt
 
 
-
-
 def statusNow(path, name):
-    log = open ( path + dt.datetime.now().strftime("%d-%m-%Y") + name, "r")
-    logLines = log.readlines ()
-    log.close ()
-    actual = logLines [len (logLines) -1]
+    log = open(path + dt.datetime.now().strftime("%d-%m-%Y") + name, "r")
+    logLines = log.readlines()
+    log.close()
+    actual = logLines[len(logLines) - 1]
     return actual
 
 
@@ -20,7 +18,7 @@ def conjunto(data):
     max = len(data)
 
     if max == 0:
-        
+
         result += '<span class=" mt-1 d-inline-block" tabindex="0" data-toggle="tooltip" data-placement="right" title="No hay eventos programados para las próximas 24Hs.">'
         result += '<li class = "list-group-item bg-light pointer" > No hay ningún evento para hoy </li>'
         result += '</span>'
@@ -68,12 +66,12 @@ def pasaFecha1(fecha):
     return fecha
 
 
-def dosMin(start, end):
+def dif(start, end, intervalo):
     start = pasaFecha(start)
     end = pasaFecha(end)
-    dosM = 3 * 60
-    dif = end - start
-    dif = dif.total_seconds()
-    if (dif < dosM):
+    diferencia = intervalo * 60
+    resta = end - start
+    resta = dif.total_seconds()
+    if (resta < diferencia):
         return 1
     return 0

@@ -243,10 +243,13 @@ def add_event():
             return render_template('calendar.html', mensaje=vacioE, lista=listado)
         if (end < start):
             return render_template('calendar.html', mensaje=menor, lista=listado)
-        if(dosMin(start, end)):
+        if(dif(start, end, 3)):
             return render_template('calendar.html', mensaje=dosmin, lista=listado)
+        if(dif(start, end,)):
+            return render_template('calendar.html', mensaje=unmes, lista=listado)
         # Comprobar si start o end esta entre el start o el end de algun otro evento
-        if (entre(start, end)):
+        mesEnMinutos = 44.640
+        if (entre(start, end, mesEnMinutos)):
             return render_template('calendar.html', mensaje=fechae, lista=listado)
 
         cur = mysql.get_db().cursor()

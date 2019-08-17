@@ -162,6 +162,14 @@ dosmin = [
         'tipo': 'danger'
     }
 ]
+unmes = [
+    {
+        'author': 'Error al registrar evento',
+        'titulo': 'EVENTOS',
+        'mensaje': 'La diferencia entre el inicio y el final del evento tiene que ser menor a un mes (31 días)',
+        'tipo': 'danger'
+    }
+]
 
 delEv = [
     {
