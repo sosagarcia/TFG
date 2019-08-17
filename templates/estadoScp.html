@@ -1,4 +1,5 @@
 <script>
+  var refresh = 1;
   $(document).ready(function() {
     function datosS() {
       fetch("/state")
@@ -22,8 +23,9 @@
         document.getElementById("al").innerHTML = alarma.substr(20);
         document.getElementById("cpuT").innerHTML = temperaturaCPU.substr(20);
         document.getElementById("cpu").innerHTML = usoCPU.substr(20);
+        refresh = 5000;
       }
     }
-    setInterval(datosS, 5000);
+    setInterval(datosS, refresh);
   });
 </script>

@@ -39,12 +39,9 @@ GPIO.setmode(GPIO.BCM)
 def alarmaCheck():
     iteration = 0
     maxIterations = 5
-    print("1")
     while (iteration < maxIterations):
-        print("2")
         distancia = distance()
         if (140.0 > distancia):
-            print("3")
             GPIO.output(ledA, True)
             text = "Se ha registrado una alarma, la distancia es de " + \
                 str(distancia) + " cm."
