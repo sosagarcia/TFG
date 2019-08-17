@@ -40,7 +40,6 @@ def titulos():
 
 
 def ganador(data):
-
     max = len(data)
     result = 0
     if max == 0:
@@ -56,11 +55,14 @@ if __name__ == '__main__':
     try:
         while True:
             user = ganador(titulos())
-            print(user)
-            if (user == 0):
+            if (user == -1):
                 stop(user1)
                 stop(user2)
                 stop(user3)
+            if (user == 0):
+                start(user1)
+                start(user2)
+                start(user3)
             if (user == 1):
                 start(user1)
                 stop(user2)
@@ -74,6 +76,7 @@ if __name__ == '__main__':
                 stop(user2)
                 start(user3)
             time.sleep(5)
+            mydb.commit()
     finally:
 
         GPIO.cleanup()
