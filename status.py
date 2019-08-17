@@ -46,11 +46,10 @@ def alarmaCheck():
             GPIO.output(ledA, True)
             text = str(distancia) + " cm."
             write_log(text, disPath, dName)
-            text = "Se ha registrado una alarma, la distancia es de " + \
-                str(distancia)
+            text = "Se ha registrado una alarma, la distancia es de " + text
             write_log(text, aPath, aName)
             feedback = sendEmail(
-                str(text), "renmanzo@hotmail.com", "Alarma Registrada")
+                str(text), "monitycont@gmail.com", "Alarma Registrada")
             print(feedback)
             distancia = distance()
             text = str(distancia) + " cm."
@@ -169,6 +168,12 @@ def temphumW():
         if humedad is not None and temperatura is not None:
             textoT = str(temperatura) + " ºC"
             textoH = str(humedad) + " %"
+            mycursor = mydb.cursor()
+            sql = "UPDATE status  SET temperatura=% s, humedad=% s,  WHERE id = '0", (
+                temperatura, humedad)
+            mycursor.execute(sql)
+            mydb.commit()
+
         else:
             textoT = 'Error al obtener la lectura del sensor'
             textoH = 'Error al obtener la lectura del sensor'
