@@ -95,8 +95,7 @@
     </nav>
   </header>
   <script type="text/javascript">
-    var body = window.document.getElementsByTagName("body")[0];
-    body.ready(function() {
+    $(document).ready(function() {
       function datosS() {
         fetch("/state")
           .then(res => res.json())
