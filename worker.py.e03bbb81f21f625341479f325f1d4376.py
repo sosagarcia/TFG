@@ -41,7 +41,7 @@ def titulos():
 
 
 def ganador(data):
-
+    
     max = len(data)
     result = list()
     if max == 0:
@@ -70,7 +70,8 @@ if __name__ == '__main__':
     if (user == 2):
         t2.start()
     if (user == 1):
-        t2.start()
+        t2.start()   
+ 
 
     try:
         print("El usuario actual es ", user)
