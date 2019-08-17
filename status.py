@@ -52,8 +52,8 @@ def alarmaCheck():
                 str(text), "monitycont@gmail.com", "Alarma Registrada")
             texto = (datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S"))
             mycursor = mydb.cursor()
-            mycursor.execute(
-                'UPDATE estado SET alarma= %s WHERE id= 0 ', texto)
+            sql = 'UPDATE estado SET alarma= "' + texto + '" WHERE id= 0 '
+            mycursor.execute(sql)
             mydb.commit()
             distancia = distance()
             text = str(distancia) + " cm."
@@ -74,8 +74,8 @@ def alarma(channel):
     text = "Se ha detectado movimiento"
     texto = (datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S"))
     mycursor = mydb.cursor()
-    mycursor.execute(
-        'UPDATE estado SET movimiento= %s WHERE id= 0 ', texto)
+    sql = 'UPDATE estado SET movimiento= "' + texto + '" WHERE id= 0 '
+    mycursor.execute(sql)
     mydb.commit()
     write_log(text, irPath, irName)
     t3 = threading.Thread(target=alarmaCheck)
@@ -161,8 +161,7 @@ def distanceW():
         text = str(distancia) + " cm."
         write_log(text, disPath, dName)
         mycursor = mydb.cursor()
-        sql = 'UPDATE estado SET distancia='+ text +'WHERE id= 0 '
-        print (sql)
+        sql = 'UPDATE estado SET distancia= "' + text + '" WHERE id= 0 '
         mycursor.execute(sql)
         mydb.commit()
         time.sleep(global_distance)
