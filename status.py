@@ -8,8 +8,9 @@ import mysql.connector
 from static.py.correo import *
 
 # Intervalo de toma de muestras
-global_distance = 60.0
-global_temhum = 15.0
+global_distance = 6.0
+global_temhum = 1.0
+global_cpu = 2.0
 
 # Valores de aviso
 
@@ -222,7 +223,7 @@ def tempcpu():
 
 def tempW():
     while True:
-        time.sleep(10)
+        time.sleep(global_cpu)
         temperatura, cpu = tempcpu()
         mycursor = mydb.cursor()
         mycursor.execute(
