@@ -46,7 +46,7 @@ cpuName = "_UsoCPU.log"
 
 GPIO.setmode(GPIO.BCM)
 
-def actualiza(sq, **sql):
+def actualiza(sql):
     mycursor = mydb.cursor()
     mycursor.execute(sql)
     mydb.commit()
@@ -195,7 +195,7 @@ def temphumW():
             textoH = str(humedad) + " %"
             
             sql ='UPDATE estado  SET temperatura= %s, humedad= %s  WHERE id= 0 ', (textoT, textoH)
-            thum = threading.Thread(target=actualiza, args=(sql,), kwargs=sql)
+            thum = threading.Thread(target=actualiza, args=[sql])
             thum.start()
             thum.join()
             if temperatura > tempMax:
