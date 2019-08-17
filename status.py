@@ -35,20 +35,25 @@ cpuName = "_UsoCPU.log"
 
 GPIO.setmode(GPIO.BCM)
 
+
 def alarmaCheck():
     iteration = 0
     maxIterations = 5
+    print("1")
     while (iteration < maxIterations):
+        print("2")
         distancia = distance()
         if (140.0 > distancia):
+            print("3")
             GPIO.output(ledA, True)
             text = "Se ha registrado una alarma, la distancia es de " + text
             write_log(text, aPath, aName)
             feedback = sendEmail(
                 str(text), "monitycont@gmail.com", "Alarma Registrada")
             GPIO.output(ledA, False)
-            iteration = maxIterations + 1
+            iteration = 6
             break
+        print(iteration)
         iteration += 1
         time.sleep(1)
 
@@ -60,8 +65,6 @@ def alarma(channel):
     write_log(text, irPath, irName)
     alarmaCheck()
     GPIO.output(ledM, False)
-
-
 
 
 GPIO.setwarnings(False)
@@ -137,7 +140,6 @@ def distanceW():
         distancia = distance()
         text = str(distancia) + " cm."
         write_log(text, disPath, dName)
-        
 
 
 def temphum():
@@ -173,7 +175,7 @@ def temphumW():
 def tempcpu():
     temp = int(open('/sys/class/thermal/thermal_zone0/temp').read()) / 1e3
     cpusan = psutil.cpu_percent(interval=1, percpu=False)
-    return ( str(temp) +' ºC', str(cpusan) +' %')
+    return (str(temp) + ' ºC', str(cpusan) + ' %')
 
 
 def tempW():
@@ -182,9 +184,8 @@ def tempW():
         temperatura, cpu = tempcpu()
         write_log(temperatura, cpuTPath, cpuTName)
         write_log(cpu, cpuPath, cpuName)
-        
-        
-       
+
+
 if __name__ == '__main__':
     t1 = threading.Thread(target=temphumW)
     t2 = threading.Thread(target=distanceW)
@@ -206,4 +207,3 @@ if __name__ == '__main__':
         GPIO.output(ledA, False)
         GPIO.output(ledM, False)
         GPIO.cleanup()  # reset all GPIO
-
