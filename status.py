@@ -186,7 +186,7 @@ def tempcpu():
 
 def tempW():
     while True:
-        time.sleep(10)
+        time.sleep(5)
         temperatura, cpu = tempcpu()
         write_log(temperatura, cpuTPath, cpuTName)
         write_log(cpu, cpuPath, cpuName)
