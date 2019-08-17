@@ -23,13 +23,6 @@ mydb = mysql.connector.connect(
 )
 
 
-def actualiza(sql):
-    mycursor = mydb.cursor()
-    mycursor.execute(sql)
-    myresult = mycursor.fetchall()
-    return myresult
-
-
 def blink(led):
     while True:  # Run forever
         GPIO.output(led, GPIO.HIGH)  # Turn on
@@ -39,13 +32,10 @@ def blink(led):
 
 
 def titulos():
-
-    ahora = dt.datetime.now()
-    despues = ahora + timedelta(hours=1)
-    despues = str(despues)
-    sql = 'SELECT idUser, start, end FROM eventos WHERE ( start <  ' + \
-        despues + ') ORDER BY start ASC'
-    data = actualiza(str(sql))
+    mycursor = mydb.cursor()
+    mycursor.execute(
+        "SELECT idUser, start, end FROM eventos ORDER BY start ASC")
+    data = mycursor.fetchall()
     data = [i for sub in data for i in sub]
     return data
 
