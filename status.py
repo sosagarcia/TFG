@@ -196,7 +196,7 @@ def temphumW():
             textoT = str(temperatura) + " ºC"
             textoH = str(humedad) + " %"
             
-            sql ='UPDATE estado  SET temperatura= %s, humedad= %s  WHERE id= 0 ', (textoT, textoH)
+            sql ='UPDATE estado  SET temperatura= '+ textoT +', humedad= '+textoH+' WHERE id= 0 '
             thum = threading.Thread(target=actualiza, args=[sql])
             thum.start()
             thum.join()
@@ -227,7 +227,7 @@ def tempW():
     while True:
         time.sleep(global_cpu)
         temperatura, cpu = tempcpu()
-        sql = 'UPDATE estado  SET cpuT= %s, cpu= %s  WHERE id= 0 ', (temperatura, cpu)
+        sql = 'UPDATE estado  SET cpuT= ' + temperatura  +', cpu= '+ cpu + '  WHERE id= 0 '
         tcpu = threading.Thread(target=actualiza, args=[sql])
         tcpu.start()
         tcpu.join()
