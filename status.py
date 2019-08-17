@@ -37,25 +37,20 @@ GPIO.setmode(GPIO.BCM)
 
 def alarmaCheck():
     iteration = 0
-    maxIterations = 12
+    maxIterations = 5
     while (iteration > maxIterations):
         distancia = distance()
-        if (140.0 > distancia > 150.0):
+        if (140.0 > distancia):
             GPIO.output(ledA, True)
-            text = str(distancia) + " cm."
-            write_log(text, disPath, dName)
             text = "Se ha registrado una alarma, la distancia es de " + text
             write_log(text, aPath, aName)
             feedback = sendEmail(
                 str(text), "monitycont@gmail.com", "Alarma Registrada")
-            distancia = distance()
-            text = str(distancia) + " cm."
-            write_log(text, disPath, dName)
             GPIO.output(ledA, False)
             iteration = maxIterations + 1
             break
         iteration += 1
-        time.sleep(0.5)
+        time.sleep(1)
 
 
 def alarma(channel):
@@ -63,10 +58,7 @@ def alarma(channel):
 
     text = "Se ha detectado movimiento"
     write_log(text, irPath, irName)
-    t3 = threading.Thread(target=alarmaCheck)
-    t3.setDaemon(True)
-    t3.start()
-    t3.join(6.0)
+    alarmaCheck()
     GPIO.output(ledM, False)
 
 
