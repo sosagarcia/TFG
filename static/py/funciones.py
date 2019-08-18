@@ -81,7 +81,6 @@ def getLogs(path, name, fecha, muestras):
     fechas = list()
     valores = list()
     subresult = list()
-    muestras = 500
     log = open(str(path) + str(fecha) + str(name), "r")
     logLines = log.readlines()
     log.close()

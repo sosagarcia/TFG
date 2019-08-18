@@ -405,7 +405,7 @@ def chart():
 def testb():
     legend = 'Temperaturas'
     fecha = "17-08-2019"
-    muestra = 100
+    muestra = 50
     fechas, valores  = getLogs(tPath,tName,fecha,muestra) 
     #tiempos = separa(fechas)
     return render_template('pruebaa.html', values=valores, labels=fechas, legend=legend)
@@ -414,7 +414,7 @@ def testb():
 def testc():
     legend = 'Temperaturas'
     fecha = "17-08-2019"
-    muestra = 100
+    muestra = 50
     fechas, valores  = getLogs(tPath,tName,fecha, muestra) 
     #tiempos = separa(fechas)
     return render_template('prueba.html', values=valores, labels=fechas, legend=legend)
