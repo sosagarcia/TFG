@@ -84,7 +84,7 @@ def getLogs(path, name, fecha):
     log = open(str(path) + str(fecha) + str(name), "r")
     logLines = log.readlines()
     log.close()
-    saltos = int(1000)
+    saltos = int(300)
     for i in range(0, len(logLines), saltos):
         linea = logLines[i]
         valores.append(linea[20:24])

@@ -53,7 +53,7 @@ def alarmaCheck():
             GPIO.output(ledA, False)
             iteration = 6
             break
-        print(iteration)
+
         iteration += 1
         time.sleep(1)
 
@@ -63,7 +63,7 @@ def alarma(channel):
     text = "Se ha detectado movimiento"
     write_log(text, irPath, irName)
     alarmaCheck()
-    print("fin Check")
+
     GPIO.output(ledM, False)
 
 
