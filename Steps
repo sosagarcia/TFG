@@ -55,8 +55,9 @@ FUTURAS IMPLEMENTACIONES :
 - Repeticiones para crear evento
 - reloj
 - Que el admin pueda seleccionar que usuario tiene cada puerto
-- Correo de confirmación al crear usuario y recuperar contraseña
+- Correo de confirmación al crear usuario
 - obviar valores absurdos de las lecturas
 - la recuperación de contraseña en una sola vista
 -Las busquedas sql en el main, hay una función
+- CArgando... hasta qu eaparezcan los valores  y colores 
  

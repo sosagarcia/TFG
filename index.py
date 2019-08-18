@@ -160,6 +160,7 @@ def login():
                 session['phone'] = user[2]
                 session['email'] = user[3]
                 session['message'] = user[5]
+                session['root'] = user[8]
                 session['manual'] = "0"
                 agenda = conjunto(titulos())
                 return render_template("main.html", primer=1, agenda=agenda)
@@ -400,7 +401,7 @@ def pass_email():
         cur = mysql.get_db().cursor()
         cur.execute("SELECT fullname, id FROM contacts WHERE email = %s", (email,))
         user = cur.fetchone()
-        if len (user) == 0 :
+        if user is None:
              return render_template('forgot.html', mensaje=usuF)
         codigo = random.randrange(100000, 999999)
         text = cambio_pass + str(codigo)
@@ -423,10 +424,7 @@ def verify(id):
         cur = mysql.get_db().cursor()
         cur.execute("SELECT cambio_pass FROM contacts WHERE id = %s", (id,))
         codigo = cur.fetchone()
-        print (id)
-        print (type(codigo[0]))
-        print (codigo[0])
-        if not (int(code) == codigo[0]) :
+        if not (code == str(codigo[0])) :
             return render_template('insert_code.html', mensaje=codeI, user=id)
         now = dt.datetime.now()
         cur = mysql.get_db().cursor()
