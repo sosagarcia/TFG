@@ -407,7 +407,7 @@ def testb():
     fecha, valores  = getLogs(tPath,tName,fecha) 
     aa = str (len(fecha))
     bb = str (len(valores))
-    return (1 + 2)
+    return (aa + bb)
     
 
 
