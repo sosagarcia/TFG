@@ -85,7 +85,7 @@ def getLogs(path, name, fecha):
     log.close()
     for linea in logLines:
         valores.append(linea[20:24])
-        fechas.append(linea[11:19])
+        fechas.append(linea[11:13], linea[14:16], linea[17:19])
 
     return (fechas, valores)
 

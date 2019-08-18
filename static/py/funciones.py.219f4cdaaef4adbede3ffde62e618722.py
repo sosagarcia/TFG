@@ -85,15 +85,14 @@ def getLogs(path, name, fecha):
     log.close()
     for linea in logLines:
         valores.append(linea[20:24])
-        fechas.append(linea[11:19])
+        fechas.append(linea[11:13], linea[14:16], linea[17:19])
 
     return (fechas, valores)
-
 
 def separa(fechas):
     result = list()
     subresult = list()
     for fecha in fechas:
-        subresult = [fecha[0:1],fecha[3:4],fecha[6:9]]
+        subresult = [fecha[0:1], fecha[3:4], fecha[6:9]]
         result.append(subresult)
     return result

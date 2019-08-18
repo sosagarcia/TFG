@@ -406,8 +406,8 @@ def testb():
     legend = 'Temperaturas'
     fecha = "17-08-2019"
     fechas, valores  = getLogs(tPath,tName,fecha) 
-    tiempos = separa(fechas)
-    return render_template('pruebaa.html', values=valores, labels=tiempos, legend=legend)
+    #tiempos = separa(fechas)
+    return render_template('pruebaa.html', values=valores, labels=fechas, legend=legend)
     
 
 
