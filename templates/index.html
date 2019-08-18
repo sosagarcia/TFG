@@ -1,5 +1,4 @@
-{% extends "layout1.html" %} {% block conten %}
-
+{% extends "layout1.html" %} {% block conten %} {% include "flash.html" %}
 <div class="wrapper fadeInDown">
   <div id="formContent">
     <!-- Tabs Titles -->
@@ -18,8 +17,20 @@
       </div>
       <!-- Login Form -->
       <form action="/login" method="POST">
-        <input type="text" id="login" class="fadeIn second" name="email" placeholder="Email" />
-        <input type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña" />
+        <input
+          type="text"
+          id="login"
+          class="fadeIn second"
+          name="email"
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          id="password"
+          class="fadeIn third"
+          name="password"
+          placeholder="Contraseña"
+        />
         <input type="submit" class="fadeIn fourth" value="Iniciar" />
       </form>
 

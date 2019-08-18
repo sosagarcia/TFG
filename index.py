@@ -128,9 +128,12 @@ def ahora():
 
 @app.route('/main')
 def main():
-
-    agenda = conjunto(titulos())
-    return render_template('main.html', agenda=agenda)
+    if session.get("name", None) is not None:
+        agenda = conjunto(titulos())
+        return render_template('main.html', agenda=agenda)
+    else:
+        flash("sesión caducada",'dark')
+        return redirect(url_for("login"))
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -169,17 +172,20 @@ def login():
 def perfil():
     
     if session.get("name", None) is not None:
-        username = session.get("name")
         return render_template('perfil1.html')
     else:
-        print("No se ha iniciado sesión")
+        flash("sesión caducada",'dark')
         return redirect(url_for("login"))
 
 
 @app.route('/calendar')
 def calendar():
-    listado = users(usuarios())
-    return render_template('calendar.html', mensaje=cal, lista=listado)
+    if session.get("name", None) is not None:
+        listado = users(usuarios())
+        return render_template('calendar.html', mensaje=cal, lista=listado)
+    else:
+        flash("sesión caducada",'dark')
+        return redirect(url_for("login"))
 
 
 @app.route('/data')
@@ -378,7 +384,7 @@ def delete_contact(id):
     cur = mysql.get_db().cursor()
     cur.execute('DELETE FROM contacts WHERE id = {0}'.format(id))
     mysql.get_db().commit()
-    flash('Se ha borrado el contacto correctamente')
+    flash('Se ha borrado el contacto correctamente', 'success')
     return redirect(url_for('lista'))
 
 
@@ -444,8 +450,12 @@ def update_contact(id):
 
 @app.route('/estadisticas')
 def estadisticas():
-    listado = users(usuarios())
-    return render_template('estadisticas.html', mensaje=esta, listado=listado)
+    if session.get("name", None) is not None:
+        listado = users(usuarios())
+        return render_template('estadisticas.html', mensaje=esta, listado=listado)
+    else:
+        flash("sesión caducada",'dark')
+        return redirect(url_for("login"))
 
 
 @app.route('/lista')
@@ -483,7 +493,7 @@ def add_contact():
 
                 mysql.get_db().commit()
 
-                flash('El contacto ha sido agregado correctamente ')
+                flash('El contacto ha sido agregado correctamente ', 'success')
                 return redirect(url_for('lista'))
 
 
