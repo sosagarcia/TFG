@@ -84,12 +84,12 @@ def getLogs(path, name, fecha):
     log = open(str(path) + str(fecha) + str(name), "r")
     logLines = log.readlines()
     log.close()
-    for linea in logLines:
-        valor = linea[20:24]
-        subresult = [fecha[0:1], fecha[3:4], fecha[6:9]]
-        if not(len(valor and subresult) == 0):
-            valores.append(valor)
-            fechas.append(subresult)
+    for i in range(0, max, 1000):
+        linea = logLines[i]
+        valores.append(linea[20:24])
+        subresult = [linea[11:13], linea[14:16], linea[17:19]]
+
+        fechas.append(subresult)
 
     return (fechas, valores)
 
