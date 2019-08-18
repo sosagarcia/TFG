@@ -405,8 +405,8 @@ def chart():
 def testb():
     fecha = "17-08-2019"
     fecha, valores  = getLogs(tPath,tName,fecha) 
-    1 = str (len(fecha))
-    2 = str (len(valores))
+    aa = str (len(fecha))
+    bb = str (len(valores))
     return (1 + 2)
     
 
