@@ -1,15 +1,13 @@
-{% extends "layout.html" %}
-
-{% block body %}
-
-
+{% extends "layout.html" %} {% block body %}
 
 <div>
   <div class="row ">
-    <div class="col  fadeIn  align-self-start first shadow ml-4 mt-3 rounded" id="general3">
+    <div
+      class="col  fadeIn  align-self-start first shadow ml-4 mt-3 rounded"
+      id="general3"
+    >
       <!-- Button trigger modal -->
       <canvas id="myChart"></canvas>
-
     </div>
     <div class="col align-self-start">
       <div class="wrapper fadeInDown">
@@ -30,52 +28,65 @@
             <form action="/add_event" method="POST" id="myForm">
               <!--  <input type="text" id="login" class="fadeIn second" name="title" placeholder="Nombre del evento" /> -->
 
-              <select id='users'>
-                {{ listado | safe }}
+              <select id="tipoD">
+                <option value="" selected hidden>Seleccione un dato</option>
+                <option value="humedad">Humedad</option>
+                <option value="temp">Temperatura exterior</option>
+                <option value="dis">Distancia</option>
+                <option value="mov">Movimientos</option>
+                <option value="al">Alarmas</option>
+                <option value="tempI">Temperatura interior</option>
+                <option value="cpu">Uso de CPU</option>
+              </select>
 
+              <select id="periodo">
+                <option value="0" selected hidden>Intervalo de tiempo</option>
+                <option value="siempre">Desde siempre</option>
+                <option value="mes">Último mes</option>
+                <option value="semana">Última semana</option>
+                <option value="dia">Último día</option>
+                <option value="intervalo">Intervalo definido</option> </select
+              ><br />
 
-                <select id="tipoD">
-                  <option value="" selected hidden>Seleccione un dato</option>
-                  <option value="caudal">Caudal</option>
-                  <option value="tiempo">Tiempo de beneficio</option>
-                </select>
+              <div id="peri">
+                <label for="input-1">
+                  Inicio
+                </label>
+                <br />
 
-
-                <select id="periodo">
-                  <option value="0" selected hidden>Intervalo de tiempo</option>
-                  <option value="siempre">Desde siempre</option>
-                  <option value="mes">Último mes</option>
-                  <option value="semana">Última semana</option>
-                  <option value="dia">Último día</option>
-                  <option value="intervalo">Intervalo definido</option>
-                </select><br />
-
-                <div id="peri">
-                  <label for="input-1">
-                    Inicio
-                  </label> <br />
-
-                  <div class="d-flex justify-content-center">
-                    <input type="datetime-local" id="login-1" class="fadeIn " name="end" />
-                  </div>
-
-                  <label for="input-2">
-                    Fin
-                  </label> <br />
-
-                  <input id="input-3" type="checkbox" data-off-active-cls="btn-warning"
-                    data-on-active-cls="btn-primary" />
-
-                  <div id="fin">
-                    <div class="d-flex justify-content-center">
-                      <input type="datetime-local" id="login-2" class="fadeIn " name="end" />
-                    </div>
-                  </div>
+                <div class="d-flex justify-content-center">
+                  <input
+                    type="datetime-local"
+                    id="login-1"
+                    class="fadeIn "
+                    name="end"
+                  />
                 </div>
 
+                <label for="input-2">
+                  Fin
+                </label>
+                <br />
 
+                <input
+                  id="input-3"
+                  type="checkbox"
+                  data-off-active-cls="btn-warning"
+                  data-on-active-cls="btn-primary"
+                />
 
-                <input type="submit" class="fadeIn fourth" value="Guardar" />
+                <div id="fin">
+                  <div class="d-flex justify-content-center">
+                    <input
+                      type="datetime-local"
+                      id="login-2"
+                      class="fadeIn "
+                      name="end"
+                    />
+                  </div>
+                </div>
+              </div>
+              <input type="submit" class="fadeIn fourth" value="Guardar" />
             </form>
           </div>
         </div>
@@ -84,15 +95,12 @@
   </div>
 </div>
 
-
-
-
-
-{% endblock %}
-{% block script %}
+{% endblock %} {% block script %}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
-<script src="../static/js/bootstrap-checkbox-1.5.0/dist/js/bootstrap-checkbox.js" defer></script>
+<script
+  src="../static/js/bootstrap-checkbox-1.5.0/dist/js/bootstrap-checkbox.js"
+  defer
+></script>
 
-{% include "estadisticasScp.html" %}
-{% endblock %}
+{% include "estadisticasScp.html" %} {% endblock %}

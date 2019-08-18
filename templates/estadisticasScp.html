@@ -1,6 +1,4 @@
 <script>
-  var user = document.getElementById("users");
-  var userSelected;
   var peri = document.getElementById("peri");
   peri.style.display = "none";
   var tipoD = document.getElementById("tipoD");
@@ -9,11 +7,6 @@
   var periodoSelected;
   var fin = document.getElementById("fin");
   fin.style.display = "none";
-
-  user.addEventListener("change", function() {
-    userSelected = this.options[user.selectedIndex];
-    console.log(userSelected.value);
-  });
 
   tipoD.addEventListener("change", function() {
     tipoDSelected = this.options[tipoD.selectedIndex];

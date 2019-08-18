@@ -75,3 +75,10 @@ def dif(start, end, intervalo):
     if (resta < diferencia):
         return 1
     return 0
+
+
+def getLogs(path, name, fecha):
+    log = open(path + fecha + name, "r")
+    logLines = log.readlines()
+    log.close()
+    return logLines

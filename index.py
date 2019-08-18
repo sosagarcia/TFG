@@ -1,6 +1,5 @@
 
 from datetime import date, datetime, timedelta
-
 from flask.json import JSONEncoder
 import datetime as dt
 from flask import Flask, render_template, request, url_for, redirect, flash, session, Response
@@ -375,9 +374,40 @@ def state():
 
 
 @app.route('/testa')
-def testa():
-    hoy = fecha()
-    return jsonify(result=hoy)
+def chart():
+    legend = 'Temperatures'
+    temperatures = [73.7, 73.4, 73.8, 72.8, 68.7, 65.2,
+                    61.8, 58.7, 58.2, 58.3, 60.5, 65.7,
+                    70.2, 71.4, 71.2, 70.9, 71.3, 71.1]
+    times = [ [11,14,15],
+              [11,14,30],
+              [11,14,45],
+              [11,15,00],
+              [11,15,15],
+              [11,15,30],
+              [11,15,45],
+              [11,16,00],
+              [11,16,15],
+              [11,16,30],
+              [11,16,45],
+              [11,17,00],
+              [11,17,15],
+              [11,17,30],
+              [11,17,45],
+              [11,18,00],
+              [11,18,15],
+              [11,18,30]]
+    print (times)
+    return render_template('pruebaa.html', values=temperatures, labels=times, legend=legend)
+ 
+
+@app.route('/testb')
+def charta():
+    legend = 'Temperatura'
+    fecha = "17-08-2019"
+    times  = getTemp(tPath,tName,fecha) 
+    return (times)
+    
 
 
 @app.route('/logout')

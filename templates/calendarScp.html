@@ -107,7 +107,7 @@
             window.location.href = "/results/" + resp["responseJSON"];
           }
         );
-        window.location.href = "{{ url_for('calendar') }}";
+        window.location.href = "/calendar";
       } else {
       }
     }
@@ -303,11 +303,15 @@
             "Se borrará TODOS los eventos que comiecen en el día seleccionado ¿Está seguro/a de querer continuar?"
           );
           if (men == true) {
-            $.post("/deletDay", { canvas_data: JSON.stringify(date) }, function(
-              resp
-            ) {
-              window.location.href = "/calendar";
-            });
+            $.post(
+              "/deletDay",
+              {
+                canvas_data: JSON.stringify(date)
+              },
+              function(err, req, resp) {
+                window.location.href = "/results/" + resp["responseJSON"];
+              }
+            );
           }
         }
         if (valor == 2) {
@@ -338,13 +342,13 @@
                 canvas_data_date: JSON.stringify(date)
               },
               function(err, req, resp) {
-                window.location.href = "/calendar";
+                window.location.href = "/results/" + resp["responseJSON"];
               }
             );
           }
         }
 
-        // window.location.href = "/calendar";
+        window.location.href = "/calendar";
       } else {
       }
     }
