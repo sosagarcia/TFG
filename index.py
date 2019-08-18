@@ -404,10 +404,10 @@ def chart():
 @app.route('/testb')
 def testb():
     fecha = "17-08-2019"
-    fecha, valores  = getLogs(tPath,tName,fecha) 
-    aa = str (len(fecha))
+    fechas, valores  = getLogs(tPath,tName,fecha) 
+    aa = str (len(fechas))
     bb = str (len(valores))
-    return (aa + bb)
+    return (aa +"XX"+ bb)
     
 
 
