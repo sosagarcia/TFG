@@ -411,10 +411,9 @@ def testb():
     
 @app.route('/testc')
 def testc():
-    a = 1902381
-    b =  10000
-    c = a/b
-    print (int(c))
+    fecha = "17-08-2019"
+    fechas, valores  = getLogs(tPath,tName,fecha)
+    return (fechas[11854] + fechas[11855]+ fechas[11856])
    
 
 

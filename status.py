@@ -152,7 +152,7 @@ def temphumW():
     while True:
         time.sleep(15)
         humedad, temperatura = temphum()
-        if humedad is not None and temperatura is not None:
+        if humedad is not None and temperatura is not None and (humedad <= 100):
             textoT = str(temperatura) + " ºC"
             textoH = str(humedad) + " %"
             if temperatura > tempMax:
