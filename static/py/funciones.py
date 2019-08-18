@@ -87,10 +87,11 @@ def getLogs(path, name, fecha):
     saltos = int(300)
     for i in range(0, len(logLines), saltos):
         linea = logLines[i]
-        valores.append(linea[20:24])
-        subresult = [linea[11:13], linea[14:16], linea[17:19]]
-
-        fechas.append(subresult)
+        valor = linea[20:24]
+        if not (valor == "Erro"):
+            valores.append(valor)
+            subresult = [linea[11:13], linea[14:16], linea[17:19]]
+            fechas.append(subresult)
 
     return (fechas, valores)
 

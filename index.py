@@ -409,7 +409,15 @@ def testb():
     #tiempos = separa(fechas)
     return render_template('pruebaa.html', values=valores, labels=fechas, legend=legend)
     
+@app.route('/testc')
+def testc():
+    a = "22.0"
+    b =  "AAA"
+    print (type(a))
+    print (type(b))
 
+
+    
 
 @app.route('/logout')
 def logout():
