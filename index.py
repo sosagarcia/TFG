@@ -183,14 +183,9 @@ def perfil():
 
 @app.route('/calendar')
 def calendar():
-    
-    
-    if session.get("name", None) is not None:
-        listado = users(usuarios())
-        return render_template('calendar.html', mensaje=cal, lista=listado)
-    else:
-        flash("Sesión caducada",'dark')
-        return redirect(url_for("login"))
+
+    listado = users(usuarios())
+    return render_template('calendar.html', mensaje=cal, lista=listado)
 
 
 @app.route('/data')
