@@ -411,10 +411,11 @@ def testb():
     
 @app.route('/testc')
 def testc():
-    a = "22.0"
-    b =  "AAA"
-    print (type(a))
-    print (type(b))
+    a = 1902381
+    b =  10000
+    c = a/b
+    print (int(c))
+   
 
 
     
