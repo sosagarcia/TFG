@@ -183,6 +183,8 @@ def perfil():
 
 @app.route('/calendar')
 def calendar():
+    
+    
     if session.get("name", None) is not None:
         listado = users(usuarios())
         return render_template('calendar.html', mensaje=cal, lista=listado)
@@ -284,7 +286,7 @@ def deletEvent():
     cur = mysql.get_db().cursor()
     cur.execute('DELETE FROM eventos WHERE id = {0}'.format(id))
     mysql.get_db().commit()
-    listado = users(usuarios())
+
 
 
 @app.route('/deletFull', methods=['POST'])
@@ -296,6 +298,7 @@ def deletAlgo():
         cur = mysql.get_db().cursor()
         cur.execute('TRUNCATE TABLE eventos ')
         mysql.get_db().commit()
+    l
 
 
 @app.route('/manual', methods=['POST'])
@@ -329,6 +332,7 @@ def deletDay():
     cur.execute(
         'DELETE FROM eventos where (%s < start) and ( start <  %s) ', (algo, finDate))
     mysql.get_db().commit()
+    
 
 
 @app.route('/deletUser', methods=['POST'])
@@ -339,6 +343,7 @@ def deletUser():
     cur.execute(
         'DELETE FROM eventos where  idUser = {0}'.format(algo))
     mysql.get_db().commit()
+    
 
 
 @app.route('/delet2', methods=['POST'])
@@ -354,6 +359,7 @@ def delet2():
     cur.execute(
         'DELETE FROM eventos where (%s < start) and ( start <  %s) and idUser = {0}'.format(obj), (date, finDay))
     mysql.get_db().commit()
+
 
 
 @app.route('/state')
