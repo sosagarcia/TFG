@@ -1,9 +1,8 @@
 {% extends "layout1.html" %} {% block conten %} {% include "flash.html" %}
+
 <div class="wrapper fadeInDown">
   <div id="formContent">
-    <!-- Tabs Titles -->
-
-    <!-- Icon -->
+    <!-- Mensaje -->
     <div class="fadeIn first">
       {% for mensaje in mensaje %}
       <div class="card text-white bg-{{ mensaje.tipo }} mb-3 ">
@@ -16,31 +15,16 @@
         {% endfor %}
       </div>
       <!-- Login Form -->
-      <form action="/login" method="POST">
+      <form action="/pass_email" method="POST">
         <input
           type="text"
           id="login"
           class="fadeIn second"
           name="email"
-          placeholder="Email"
+          placeholder="Correo electrónico"
         />
-        <input
-          type="password"
-          id="password"
-          class="fadeIn third"
-          name="password"
-          placeholder="Contraseña"
-        />
-        <input type="submit" class="fadeIn fourth" value="Iniciar" />
+        <input type="submit" class="fadeIn fourth" value="Enviar" />
       </form>
-
-      <!-- Remind Passowrd -->
-      <div id="formFooter">
-        <a class="underlineHover" href="forgot">¿Ha olvidado su contraseña?</a>
-      </div>
-      <div id="formFooter">
-        <a class="underlineHover" href="registro">Crear una cuenta</a>
-      </div>
     </div>
   </div>
 </div>

@@ -5,11 +5,13 @@ from flask.json import JSONEncoder
 import datetime as dt
 from flask import Flask, render_template, request, url_for, redirect, flash, session, Response
 import os
+import random
 from flaskext.mysql import MySQL
 import bcrypt
 from flask import jsonify, json
 from static.py.mensajes import *
 from static.py.funciones import *
+from static.py.correo import *
 
 # from flask.ext.session import Session
 # import mysql
@@ -132,7 +134,7 @@ def main():
         agenda = conjunto(titulos())
         return render_template('main.html', agenda=agenda)
     else:
-        flash("sesión caducada",'dark')
+        flash("Sesión caducada",'dark')
         return redirect(url_for("login"))
 
 
@@ -174,7 +176,7 @@ def perfil():
     if session.get("name", None) is not None:
         return render_template('perfil1.html')
     else:
-        flash("sesión caducada",'dark')
+        flash("Sesión caducada",'dark')
         return redirect(url_for("login"))
 
 
@@ -184,7 +186,7 @@ def calendar():
         listado = users(usuarios())
         return render_template('calendar.html', mensaje=cal, lista=listado)
     else:
-        flash("sesión caducada",'dark')
+        flash("Sesión caducada",'dark')
         return redirect(url_for("login"))
 
 
@@ -265,7 +267,15 @@ def add_event():
         mysql.get_db().commit()
         return render_template('calendar.html', mensaje=event, lista=listado)
 
-
+    
+    if session.get("name", None) is not None:
+        return render_template('index.html')
+    else:
+        flash("Sesión caducada",'dark')
+        return redirect(url_for("login"))
+        
+        
+        
 @app.route('/deletEvent', methods=['POST'])
 def deletEvent():
 
@@ -376,8 +386,79 @@ def logout():
 
 @app.route('/registro')
 def registro():
-    return render_template('registro.html', title='Registro', mensaje=reg)
+    return render_template('registro.html', mensaje=reg)
+    
 
+@app.route('/forgot')
+def forgot():
+    return render_template('forgot.html', mensaje=fgt)
+
+@app.route('/pass_email', methods=['POST'])
+def pass_email():
+    if request.method == 'POST':
+        email = request.form['email']
+        cur = mysql.get_db().cursor()
+        cur.execute("SELECT fullname, id FROM contacts WHERE email = %s", (email,))
+        user = cur.fetchone()
+        if len (user) == 0 :
+             return render_template('forgot.html', mensaje=usuF)
+        codigo = random.randrange(100000, 999999)
+        text = cambio_pass + str(codigo)
+        asunto = "Recuperación de contraseña - " + user[0]
+        feedback = sendEmail(str(text), email, str(asunto))
+        cur = mysql.get_db().cursor()
+        cur.execute('UPDATE contacts SET cambio_pass = %s WHERE email = %s', (codigo,email))
+        mysql.get_db().commit()
+        id = user[1]
+        return render_template('insert_code.html', mensaje=code, user=str(id))
+
+
+
+
+
+@app.route('/verify/<string:id>', methods=['POST'])
+def verify(id):
+    if request.method == 'POST':
+        code = request.form['code']
+        cur = mysql.get_db().cursor()
+        cur.execute("SELECT cambio_pass FROM contacts WHERE id = %s", (id,))
+        codigo = cur.fetchone()
+        print (id)
+        print (type(codigo[0]))
+        print (codigo[0])
+        if not (int(code) == codigo[0]) :
+            return render_template('insert_code.html', mensaje=codeI, user=id)
+        now = dt.datetime.now()
+        cur = mysql.get_db().cursor()
+        cur.execute('UPDATE contacts SET pass_allow = %s WHERE id = %s', (str(now),id))
+        mysql.get_db().commit()
+        return render_template('change_pass.html', mensaje=cambio, user=id)
+
+
+@app.route('/update_pass/<string:id>', methods=['POST'])
+def update_pass(id):
+    if request.method == 'POST':
+        print (id)
+        cur = mysql.get_db().cursor()
+        cur.execute("SELECT pass_allow FROM contacts WHERE id = %s", (id,))
+        check = cur.fetchone()
+        if not(check == 0):
+            password = request.form['pass'].encode('utf-8')
+            repassword = request.form['repass'].encode('utf-8')
+            if password != repassword:             
+                return render_template('change_pass.html', mensaje=coincideC, user=id)
+            if len(password and repassword) == 0:               
+                return render_template('change_pass.html', mensaje=vacioC, user=id)
+            else:
+                hash_password = bcrypt.hashpw(password, bcrypt.gensalt())
+                cur = mysql.get_db().cursor()
+                cur.execute('UPDATE contacts SET password = %s, pass_allow = 0, cambio_pass = 0  WHERE id = %s', (hash_password,id))  
+                mysql.get_db().commit()  
+                return render_template('index.html', mensaje=cambioS)
+        return render_template('forgot.html', mensaje=fgt)
+        
+               
+        
 
 @app.route('/delete/<string:id>')
 def delete_contact(id):
@@ -454,7 +535,7 @@ def estadisticas():
         listado = users(usuarios())
         return render_template('estadisticas.html', mensaje=esta, listado=listado)
     else:
-        flash("sesión caducada",'dark')
+        flash("Sesión caducada",'dark')
         return redirect(url_for("login"))
 
 

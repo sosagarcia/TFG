@@ -15,28 +15,7 @@
         {% endfor %}
       </div>
       <!-- Login Form -->
-      <form action="/add_contact" method="POST">
-        <input
-          type="text"
-          id="login"
-          class="fadeIn second"
-          name="fullname"
-          placeholder="Nombre completo"
-        />
-        <input
-          type="text"
-          id="login"
-          class="fadeIn second"
-          name="phone"
-          placeholder="Nº de teléfono"
-        />
-        <input
-          type="text"
-          id="login"
-          class="fadeIn second"
-          name="email"
-          placeholder="Email"
-        />
+      <form action="/update_pass/{{ user }}" method="POST">
         <input
           type="password"
           id="password"
@@ -51,7 +30,7 @@
           name="repass"
           placeholder="Confirmar Contraseña"
         />
-        <input type="submit" class="fadeIn fourth" value="Guardar" />
+        <input type="submit" class="fadeIn fourth" value="Actualizar" />
       </form>
     </div>
   </div>

@@ -16,6 +16,14 @@ aName = "_Alarmas.log"
 cpuTName = "_TemperaturaCPU.log"
 cpuName = "_UsoCPU.log"
 
+
+# Texto de Recuperación de contraseña
+cambio_pass = """El siguiente correo se ha generado automáticamente para ayudarle a cambiar su contraseña del aplicativode Sistema de gestión de control de aguas .
+Si usted no ha solicitado la recuperación de la contraseña, ignore este correo.
+
+Para realizar el cambio de contraseña, introduzca el siguiente código de recuperación:
+
+Su código de recuperación es : """
 # Diccionario de mensajes
 
 calendario = [
@@ -39,6 +47,54 @@ inicio = [
         'tipo': 'primary'
     }
 ]
+
+
+fgt = [
+    {
+        'author': 'Obtener código de recuperación',
+        'titulo': 'CAMBIO DE CONTRASEÑA',
+        'mensaje': 'Por favor, introduzca su email para cambiar su contraseña',
+        'tipo': 'warning'
+    }
+]
+
+
+code = [
+    {
+        'author': 'Código de recuperación',
+        'titulo': 'CAMBIO DE CONTRASEÑA',
+        'mensaje': 'Por favor, introduzca el código que le habrá llegado a su correo para cambiar su contraseña. Compruebe su carpeta de SPAM o correo no deseado',
+        'tipo': 'warning'
+    }
+]
+
+codeI = [
+    {
+        'author': 'Código Erroneo',
+        'titulo': 'CAMBIO DE CONTRASEÑA',
+        'mensaje': 'Por favor, introduzca el código que le habrá llegado a su correo para cambiar su contraseña. Compruebe su carpeta de SPAM o correo no deseado',
+        'tipo': 'danger'
+    }
+]
+
+cambio = [
+    {
+        'author': 'Introduzca la nueva contraseña',
+        'titulo': 'CAMBIO DE CONTRASEÑA',
+        'mensaje': 'Por favor, introduzca la nueva contraseña que desea tener',
+        'tipo': 'warning'
+    }
+]
+
+cambioS = [
+    {
+        'author': 'Contraseña cambiada correctamente',
+        'titulo': 'INICIO DE SESIÓN',
+        'mensaje': 'Por favor, inicie sesión para entrar al portal con su usuario y contraseña',
+        'tipo': 'success'
+    }
+]
+
 
 reg = [
     {
@@ -70,7 +126,16 @@ usu = [
     {
         'author': 'Error al iniciar sesión',
         'titulo': 'ERROR',
-        'mensaje': 'El email email introducido es incorrecto.',
+        'mensaje': 'El email introducido es incorrecto.',
+        'tipo': 'danger'
+    }
+]
+
+usuF = [
+    {
+        'author': 'Error al mandar email',
+        'titulo': 'ERROR',
+        'mensaje': 'El email introducido es incorrecto.',
         'tipo': 'danger'
     }
 ]
@@ -78,7 +143,16 @@ usu = [
 coincide = [
     {
         'author': 'Las contraseñas no coinciden',
-        'titulo': 'Error al crear la cuenta',
+        'titulo': 'ERROR AL CREAR CUENTA',
+        'mensaje': '',
+        'tipo': 'danger'
+    }
+]
+
+coincideC = [
+    {
+        'author': 'Las contraseñas no coinciden',
+        'titulo': 'ERROR AL CAMBIAR DE CONTRASEÑA',
         'mensaje': '',
         'tipo': 'danger'
     }
@@ -107,6 +181,15 @@ vacioE = [
         'author': 'Todos los campos son obligatorios',
         'titulo': 'EVENTOS',
         'mensaje': 'Se deben de rellenar todos los campos para poder registrar un evento',
+        'tipo': 'danger'
+    }
+]
+
+vacioC = [
+    {
+        'author': 'Todos los campos son obligatorios',
+        'titulo': 'CAMBIO DE CONTRASEÑ',
+        'mensaje': 'Los campos de contraseñas no pueden estar vacíos',
         'tipo': 'danger'
     }
 ]
