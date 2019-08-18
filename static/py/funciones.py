@@ -81,10 +81,11 @@ def getLogs(path, name, fecha):
     fechas = list()
     valores = list()
     subresult = list()
+    muestras = 500
     log = open(str(path) + str(fecha) + str(name), "r")
     logLines = log.readlines()
     log.close()
-    saltos = len(logLines) / 10000
+    saltos = len(logLines) / muestras
     for i in range(0, len(logLines), int(saltos)):
         linea = logLines[i]
         valor = linea[20:24]

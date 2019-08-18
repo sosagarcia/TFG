@@ -411,9 +411,11 @@ def testb():
     
 @app.route('/testc')
 def testc():
+    legend = 'Temperaturas'
     fecha = "17-08-2019"
-    fechas, valores  = getLogs(tPath,tName,fecha)
-    return (fechas[11854] + fechas[11855]+ fechas[11856])
+    fechas, valores  = getLogs(tPath,tName,fecha) 
+    #tiempos = separa(fechas)
+    return render_template('prueba.html', values=valores, labels=fechas, legend=legend)
    
 
 
