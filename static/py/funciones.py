@@ -92,10 +92,6 @@ def getLogs(path, name, fecha):
 
 def separa(fechas):
     result = list()
-    subresult = list()
     for fecha in fechas:
-        subresult.append(fecha[0:1])
-        subresult.append(fecha[3:4])
-        subresult.append(fecha[6:9])
-        result.append(subresult)
+        result.append(fecha[0:1], fecha[3:4], fecha[6:9])
     return result
