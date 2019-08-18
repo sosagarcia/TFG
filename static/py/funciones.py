@@ -77,7 +77,7 @@ def dif(start, end, intervalo):
     return 0
 
 
-def getLogs(path, name, fecha):
+def getLogs(path, name, fecha, muestras):
     fechas = list()
     valores = list()
     subresult = list()
