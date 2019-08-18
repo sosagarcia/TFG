@@ -80,12 +80,14 @@ def dif(start, end, intervalo):
 def getLogs(path, name, fecha):
     fechas = list()
     valores = list()
+    subresult = list()
     log = open(str(path) + str(fecha) + str(name), "r")
     logLines = log.readlines()
     log.close()
     for linea in logLines:
         valores.append(linea[20:24])
-        fechas.append(linea[11:13], linea[14:16], linea[17:19])
+        subresult = [fecha[0:1], fecha[3:4], fecha[6:9]]
+        fechas.append(subresult)
 
     return (fechas, valores)
 
