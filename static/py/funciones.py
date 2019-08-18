@@ -81,4 +81,4 @@ def getLogs(path, name, fecha):
     log = open(path + fecha + name, "r")
     logLines = log.readlines()
     log.close()
-    return logLines
+    return logLines[len(logLines) - 1]
