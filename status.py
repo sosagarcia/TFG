@@ -164,7 +164,7 @@ def temphumW():
             else:
                 GPIO.output(ledH, False)
 
-        else:
+        else:         
             textoT = 'Error al obtener la lectura del sensor'
             textoH = 'Error al obtener la lectura del sensor'
 
