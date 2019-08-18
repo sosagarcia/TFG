@@ -403,10 +403,11 @@ def chart():
 
 @app.route('/testb')
 def testb():
-    legend = 'Temperatura'
     fecha = "17-08-2019"
-    times  = getLogs(tPath,tName,fecha) 
-    return (times)
+    fecha, valores  = getLogs(tPath,tName,fecha) 
+    1 = str (len(fecha))
+    2 = str (len(valores))
+    return (1 + 2)
     
 
 
