@@ -40,6 +40,7 @@ def alarmaCheck():
     iteration = 0
     maxIterations = 5
     while (iteration < maxIterations):
+        print("iteration")
         distancia = distance()
         if (140.0 > distancia):
             GPIO.output(ledA, True)
@@ -64,6 +65,7 @@ def alarma(channel):
     text = "Se ha detectado movimiento"
     write_log(text, irPath, irName)
     alarmaCheck()
+    print("fin Check")
     GPIO.output(ledM, False)
 
 
