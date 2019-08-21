@@ -4,7 +4,9 @@ import datetime as dt
 
 def statusNow(path, name):
     hoy = dt.datetime.now()
-    while True:
+    i = 0
+    limite = 100
+    while i <= limite:
         try:
             fecha = hoy.strftime("%d-%m-%Y")
             log = open(path + fecha + name, "r")
@@ -15,6 +17,8 @@ def statusNow(path, name):
         except:
             ayer = hoy - timedelta(days=1)
             hoy = ayer
+            i += 1
+    return (-1)
 
 
 def conjunto(data):

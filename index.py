@@ -422,20 +422,10 @@ def testc():
 
 @app.route('/testd')
 def testd():
-    hoy = dt.datetime.now()
-    name = "_a.log"
-    while True:
-        try:
-            fecha = hoy.strftime("%d-%m-%Y")
-            log = open( fecha + name, "r")
-            logLines = log.readlines()
-            log.close()
-            actual = logLines[len(logLines) - 1]
-            return actual
-        except:
-            print ("2")
-            ayer = hoy - timedelta(days=1)
-            hoy = ayer
+    hilo = threading.Thread(target=contar, 
+                            args=(num_hilo,)
+    return  prrueba()
+    
             
 
 @app.route('/logout')
@@ -658,3 +648,5 @@ if __name__ == '__main__':
 # https://vsn4ik.github.io/bootstrap-checkbox/
 
 # Flas Session :https://pythonise.com/feed/flask/flask-session-object
+
+#python hilos https://python-para-impacientes.blogspot.com/2016/12/threading-programacion-con-hilos-i.html
