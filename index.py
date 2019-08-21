@@ -420,11 +420,22 @@ def testc():
     return render_template('prueba.html', values=valores, labels=fechas, legend=legend)
 
 
+@app.route('/data1')
+def data1():
+    fecha = "17-08-2019"
+    muestra = 50
+    fechas, valores  = getLogs(tPath,tName,fecha, muestra)
+    
+    title = "título"
+    return jsonify(labels=fechas, data=valores, titulo=title)
+
+
+    """labels = ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford']
+    data = [617594, 181045, 153060, 106519, 105162, 95072]"""
+
+
 @app.route('/testd')
 def testd():
-    hilo = threading.Thread(target=contar, 
-                            args=(num_hilo,)
-    return  prrueba()
     
             
 

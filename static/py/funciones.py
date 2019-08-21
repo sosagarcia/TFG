@@ -96,6 +96,8 @@ def getLogs(path, name, fecha, muestras):
     logLines = log.readlines()
     log.close()
     saltos = len(logLines) / muestras
+    if (saltos <= 1)
+        saltos = 1 
     for i in range(0, len(logLines), int(saltos)):
         linea = logLines[i]
         valor = linea[20:24]
