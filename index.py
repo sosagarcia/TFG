@@ -422,16 +422,21 @@ def testc():
 
 @app.route('/testd')
 def testd():
-
     hoy = dt.datetime.now()
-    print (hoy)
-    fecha = hoy.strftime("%d-%m-%Y")
-    print (fecha)
-    hoy = hoy - timedelta(days=1)
-    print (hoy)
-    fecha = hoy.strftime("%d-%m-%Y")
-    print (fecha)
-    
+    name = "_a.log"
+    while True:
+        try:
+            fecha = hoy.strftime("%d-%m-%Y")
+            log = open( fecha + name, "r")
+            logLines = log.readlines()
+            log.close()
+            actual = logLines[len(logLines) - 1]
+            return actual
+        except:
+            print ("2")
+            ayer = hoy - timedelta(days=1)
+            hoy = ayer
+            
 
 @app.route('/logout')
 def logout():

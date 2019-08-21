@@ -3,14 +3,18 @@ import datetime as dt
 
 
 def statusNow(path, name):
-    log = open(path + dt.datetime.now().strftime("%d-%m-%Y") + name, "r")
-    logLines = log.readlines()
-    log.close()
-    actual = logLines[len(logLines) - 1]
-    if actual is not None:
-        return actual
-    else:
-        return "No hay data"
+    hoy = dt.datetime.now()
+    while True:
+        try:
+            fecha = hoy.strftime("%d-%m-%Y")
+            log = open(path + fecha + name, "r")
+            logLines = log.readlines()
+            log.close()
+            actual = logLines[len(logLines) - 1]
+            return actual
+        except:
+            ayer = hoy - timedelta(days=1)
+            hoy = ayer
 
 
 def conjunto(data):
