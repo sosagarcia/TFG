@@ -38,8 +38,16 @@
 </script>
 
 <script>
-  let myChart = document.getElementById("myChart").getContext("2d");
-
+  var timeFormat = "HH:mm:ss";
+  var color = Chart.helpers.color;
+  let myChart = document.getElementById("canvas").getContext("2d");
+  function newDateString(hours, minutes, seconds) {
+    return moment()
+      .hour(hours)
+      .minute(minutes)
+      .second(seconds)
+      .format(timeFormat);
+  }
   // Global Options
   Chart.defaults.global.defaultFontFamily = "Lato";
   Chart.defaults.global.defaultFontSize = 18;
@@ -53,6 +61,7 @@
     })
     .catch(error => console.error("Error al obtener datos de estadísticas"));
   function miFuncion(data) {
+    console.log(data.labels);
     let massPopChart = new Chart(myChart, {
       type: "bar", // bar, horizontalBar, pie, line, doughnut, radar, polarArea
       data: {

@@ -15,16 +15,11 @@
     <script>
             var timeFormat = "HH:mm:ss";
 
-            function newDate(days) {
-              return moment()
-                .add(days, "d")
-                .toDate();
-            }
 
             function newDateString(hours, minutes, seconds) {
           return moment().hour(hours).minute(minutes).second(seconds).format(timeFormat);
         }
-            console.log(typeof newDate(0));
+
             var color = Chart.helpers.color;
             var config = {
               type: "line",
