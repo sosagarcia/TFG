@@ -418,9 +418,19 @@ def testc():
     fechas, valores  = getLogs(tPath,tName,fecha, muestra) 
     #tiempos = separa(fechas)
     return render_template('prueba.html', values=valores, labels=fechas, legend=legend)
-   
 
 
+@app.route('/testd')
+def testd():
+
+    hoy = dt.datetime.now()
+    print (hoy)
+    fecha = hoy.strftime("%d-%m-%Y")
+    print (fecha)
+    hoy = hoy - timedelta(days=1)
+    print (hoy)
+    fecha = hoy.strftime("%d-%m-%Y")
+    print (fecha)
     
 
 @app.route('/logout')

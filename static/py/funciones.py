@@ -2,23 +2,23 @@ from datetime import date, datetime, timedelta
 import datetime as dt
 
 
+def statusNow(path, name):
+    hoy = dt.datetime.now()
+    while True:
+        fecha = hoy.strftime("%d-%m-%Y")
+        actual = abrir(path, name, fecha)
+        if len(actual) == 0:
+            hoy = hoy - timedelta(days=1)
+        else:
+            result = actual[len(actual) - 1]
+            return result
+
+
 def abrir(path, name, fecha):
     log = open(path + fecha + name, "r")
-    if f.read(1):
-        logLines = log.readlines()
-        log.close()
-        actual = logLines[len(logLines) - 1]
-        return actual
-    else:
-        log.close()
-        ayer = hoy - timedelta(days=1)
-        abrir(path, name, ayer.strftime("%d-%m-%Y"))
-
-
-def statusNow(path, name):
-    hoy = dt.datetime.now().strftime("%d-%m-%Y")
-    actual = abrir(path, name, hoy)
-    return actual
+    logLines = log.readlines()
+    log.close()
+    return logLines
 
 
 def conjunto(data):
