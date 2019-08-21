@@ -2,11 +2,22 @@ from datetime import date, datetime, timedelta
 import datetime as dt
 
 
+def abrir(path, name, fecha):
+    log = open(path + fecha + name, "r")
+    if f.read(1):
+        logLines = log.readlines()
+        log.close()
+        actual = logLines[len(logLines) - 1]
+        return actual
+    else:
+        log.close()
+        ayer = hoy - timedelta(days=1)
+        abrir(path, name, ayer.strftime("%d-%m-%Y"))
+
+
 def statusNow(path, name):
-    log = open(path + dt.datetime.now().strftime("%d-%m-%Y") + name, "r")
-    logLines = log.readlines()
-    log.close()
-    actual = logLines[len(logLines) - 1]
+    hoy = dt.datetime.now().strftime("%d-%m-%Y")
+    actual = abrir(path, name, hoy)
     return actual
 
 
