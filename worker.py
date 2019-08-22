@@ -3,6 +3,7 @@ import datetime as dt
 import mysql.connector
 import time
 import RPi.GPIO as GPIO
+from static.py.rutas import *
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 

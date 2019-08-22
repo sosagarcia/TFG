@@ -5,6 +5,7 @@ import Adafruit_DHT
 import RPi.GPIO as GPIO
 import psutil
 from static.py.correo import *
+from static.py.rutas import *
 
 
 # Valores de aviso
@@ -15,23 +16,6 @@ humMax = 60
 # Distance
 GPIO_TRIGGER = 23
 GPIO_ECHO = 24
-
-
-hPath = "/var/log/iot/hum/"
-tPath = "/var/log/iot/tem/"
-irPath = "/var/log/iot/ir/"
-disPath = "/var/log/iot/dis/"
-aPath = "/var/log/iot/a/"
-cpuTPath = "/var/log/iot/cpuT/"
-cpuPath = "/var/log/iot/cpu/"
-
-hName = "_Humedad.log"
-dName = "_Distancia.log"
-tName = "_Temperatura.log"
-irName = "_Movimientos.log"
-aName = "_Alarmas.log"
-cpuTName = "_TemperaturaCPU.log"
-cpuName = "_UsoCPU.log"
 
 GPIO.setmode(GPIO.BCM)
 
@@ -103,13 +87,6 @@ GPIO.output(ledA, False)
 GPIO.output(ledM, False)
 
 
-def write_log(text, path, name):
-    log = open(path + datetime.datetime.now().strftime("%d-%m-%Y") + name, "a")
-    line = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S") + " " + text + "\n"
-    log.write(line)
-    log.close()
-
-
 def distance():
     # set Trigger to HIGH
     GPIO.output(GPIO_TRIGGER, True)
@@ -164,7 +141,7 @@ def temphumW():
             else:
                 GPIO.output(ledH, False)
 
-        else:         
+        else:
             textoT = 'Error al obtener la lectura del sensor'
             textoH = 'Error al obtener la lectura del sensor'
 

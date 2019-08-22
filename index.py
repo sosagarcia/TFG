@@ -9,6 +9,7 @@ from flaskext.mysql import MySQL
 import bcrypt
 from flask import jsonify, json
 from static.py.mensajes import *
+from static.py.rutas import *
 from static.py.funciones import *
 from static.py.correo import *
 
