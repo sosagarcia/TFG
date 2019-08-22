@@ -53,29 +53,42 @@ def ganador(data):
 
 
 if __name__ == '__main__':
+    pastUser = -2
     try:
         while True:
             user = ganador(titulos())
-            if (user == -1):
-                stop(user1)
-                stop(user2)
-                stop(user3)
-            if (user == 0):
-                start(user1)
-                start(user2)
-                start(user3)
-            if (user == 1):
-                start(user1)
-                stop(user2)
-                stop(user3)
-            if (user == 2):
-                stop(user1)
-                start(user2)
-                stop(user3)
-            if (user == 3):
-                stop(user1)
-                stop(user2)
-                start(user3)
+            if not (user == pastUser):
+                pastUser = user
+                if (user == -1):
+                    stop(user1)
+                    stop(user2)
+                    stop(user3)
+                    text = "ID: -1"
+                    write_log(text, outPath, outName)
+                if (user == 0):
+                    start(user1)
+                    start(user2)
+                    start(user3)
+                    text = "ID: 0 "
+                    write_log(text, outPath, outName)
+                if (user == 1):
+                    start(user1)
+                    stop(user2)
+                    stop(user3)
+                    text = "ID: " + str(user) + " "
+                    write_log(text, outPath, outName)
+                if (user == 2):
+                    stop(user1)
+                    start(user2)
+                    stop(user3)
+                    text = "ID: " + str(user) + " "
+                    write_log(text, outPath, outName)
+                if (user == 3):
+                    stop(user1)
+                    stop(user2)
+                    start(user3)
+                    text = "ID: " + str(user) + " "
+                    write_log(text, outPath, outName)
             time.sleep(5)
             mydb.commit()
     finally:

@@ -1,3 +1,4 @@
+import datetime
 # Rutas de LOG
 
 hPath = "/var/log/iot/hum/"
