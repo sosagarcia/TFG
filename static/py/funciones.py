@@ -27,7 +27,7 @@ def logs(path):
     data = "Empieza"
     ejemplo = ""
     ruta = path + '*.log'
-    files = glob.glob(ruta)
+    files = sorted(glob.glob(ruta))
     for name in files:
         ejemplo += str(name) + "  "
         try:
