@@ -416,10 +416,11 @@ def testc():
 
 @app.route('/testd')
 def testd():
-    datos = logs(aPath)
+    alarmas = logs(aPath)
+    movimientos = logs(irPath)
     agenda = conjunto(titulos())
     #return str(datos)
-    return render_template('main.html', agenda=agenda, datos=str(datos))
+    return render_template('main.html', agenda=agenda, alarma=str(alarmas), movimiento=movimientos)
 
 @app.route('/data1')
 def data1():
