@@ -414,6 +414,12 @@ def testc():
     return render_template('prueba.html', values=valores, labels=fechas, legend=legend)
 
 
+@app.route('/testd')
+def testd():
+    datos = logs(aPath)
+    agenda = conjunto(titulos())
+    return render_template('main.html', agenda=agenda, datos=datos)
+
 @app.route('/data1')
 def data1():
     fecha = "17-08-2019"

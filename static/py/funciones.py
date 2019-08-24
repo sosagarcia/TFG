@@ -1,5 +1,7 @@
 from datetime import date, datetime, timedelta
 import datetime as dt
+import glob
+import errno
 
 
 def statusNow(path, name):
@@ -19,6 +21,19 @@ def statusNow(path, name):
             hoy = ayer
             i += 1
     return (-1)
+
+
+def logs(path):
+    data = ""
+    ruta = path + '*.log'
+    files = glob.glob(ruta)
+    for name in files:
+        try:
+            with open(name) as f:
+                data += f.read()
+        except IOError as exc:
+            if exc.errno != errno.EISDIR:
+                raise
 
 
 def conjunto(data):
@@ -97,7 +112,7 @@ def getLogs(path, name, fecha, muestras):
     log.close()
     saltos = len(logLines) / muestras
     if (saltos <= 1):
-        saltos = 1 
+        saltos = 1
     for i in range(0, len(logLines), int(saltos)):
         linea = logLines[i]
         valor = linea[20:24]
