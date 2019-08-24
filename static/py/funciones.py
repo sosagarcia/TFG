@@ -24,8 +24,6 @@ def statusNow(path, name):
 
 
 def logs(path):
-    data = "Empieza"
-    a = "Empieza"
     ruta = path + '*.log'
     files = glob.glob(ruta)
     for name in files:
@@ -35,7 +33,7 @@ def logs(path):
         except IOError as exc:
             if exc.errno != errno.EISDIR:
                 raise
-    return a
+    return ruta
 
 
 def conjunto(data):
