@@ -36,7 +36,7 @@ def logs(path):
         except IOError as exc:
             if exc.errno != errno.EISDIR:
                 raise
-    return ejemplo
+    return data
 
 
 def conjunto(data):
