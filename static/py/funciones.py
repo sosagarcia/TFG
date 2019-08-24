@@ -29,9 +29,10 @@ def logs(path):
     ruta = path + '*.log'
     files = glob.glob(ruta)
     for name in files:
-        ejemplo += 1
+
         try:
             with open(name) as f:
+                ejemplo += 1
                 data += f.read()
         except IOError as exc:
             if exc.errno != errno.EISDIR:
