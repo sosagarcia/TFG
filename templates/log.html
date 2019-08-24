@@ -35,6 +35,18 @@
       >Movimientos</a
     >
   </li>
+  <li class="nav-item">
+    <a
+      class="nav-link"
+      id="salida-tab"
+      data-toggle="tab"
+      href="#salida"
+      role="tab"
+      aria-controls="salida"
+      aria-selected="false"
+      >Alarmas</a
+    >
+  </li>
 </ul>
 <div class="tab-content" id="myTabContent">
   <div
@@ -73,6 +85,20 @@
       id="exampleFormControlTextarea2"
       rows="5"
       >{{ movimiento }}
+</textarea
+    >
+  </div>
+  <div
+    class="tab-pane fade"
+    id="salida"
+    role="tabpanel"
+    aria-labelledby="salida-tab"
+  >
+    <textarea
+      class="form-control rounded-0"
+      id="exampleFormControlTextarea2"
+      rows="5"
+      >{{ salida }}
 </textarea
     >
   </div>

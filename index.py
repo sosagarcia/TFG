@@ -418,9 +418,10 @@ def testc():
 def testd():
     alarmas = logs(aPath)
     movimientos = logs(irPath)
+    salidas = logs(outPath)
     agenda = conjunto(titulos())
     #return str(datos)
-    return render_template('main.html', agenda=agenda, alarma=str(alarmas), movimiento=movimientos)
+    return render_template('main.html', agenda=agenda, alarma=str(alarmas), movimiento=movimientos , salida=salidas)
 
 @app.route('/data1')
 def data1():
