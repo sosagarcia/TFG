@@ -24,13 +24,13 @@ def alarmaCheck():
     maxIterations = 5
     while (iteration < maxIterations):
         distancia = distance()
-        if (140.0 > distancia):
+        if (330.0 > distancia):
             GPIO.output(ledA, True)
             text = "Se ha registrado una alarma, la distancia es de " + \
                 str(distancia) + " cm."
             write_log(text, aPath, aName)
             # feedback = sendEmail(
-            #  str(text), "monitycont@gmail.com", "Alarma Registrada")
+            # str(text), "monitycont@gmail.com", "Alarma Registrada")
             textD = str(distancia) + " cm."
             write_log(textD, disPath, dName)
             GPIO.output(ledA, False)
