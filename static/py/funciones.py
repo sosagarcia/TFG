@@ -24,13 +24,14 @@ def statusNow(path, name):
 
 
 def logs(path):
-    data = "Empieza"
+    data = ""
     ruta = path + '*.log'
     files = sorted(glob.glob(ruta))
     for name in files:
         try:
             with open(name) as f:
-                data += f.read()
+                titulo = "-" + str(name) + " :" + '\n' + '\n'
+                data += titulo.upper() + f.read()
         except IOError as exc:
             if exc.errno != errno.EISDIR:
                 raise
