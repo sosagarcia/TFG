@@ -25,11 +25,9 @@ def statusNow(path, name):
 
 def logs(path):
     data = "Empieza"
-    ejemplo = ""
     ruta = path + '*.log'
     files = sorted(glob.glob(ruta))
     for name in files:
-        ejemplo += str(name) + "  "
         try:
             with open(name) as f:
                 data += f.read()
