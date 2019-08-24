@@ -418,8 +418,8 @@ def testc():
 def testd():
     datos = logs(aPath)
     agenda = conjunto(titulos())
-    return str(datos)
-    #return render_template('main.html', agenda=agenda, datos=str(datos))
+    #return str(datos)
+    return render_template('main.html', agenda=agenda, datos=str(datos))
 
 @app.route('/data1')
 def data1():
