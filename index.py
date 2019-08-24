@@ -131,8 +131,11 @@ def ahora():
 @app.route('/main')
 def main():
     if session.get("name", None) is not None:
+        alarmas = logs(aPath)
+        movimientos = logs(irPath)
+        salidas = logs(outPath)
         agenda = conjunto(titulos())
-        return render_template('main.html', agenda=agenda)
+        return render_template('main.html', agenda=agenda, alarma=str(alarmas), movimiento=movimientos , salida=salidas)
     else:
         flash("Sesión caducada",'dark')
         return redirect(url_for("login"))
@@ -162,8 +165,11 @@ def login():
                 session['message'] = user[5]
                 session['root'] = user[8]
                 session['manual'] = "0"
+                alarmas = logs(aPath)
+                movimientos = logs(irPath)
+                salidas = logs(outPath)
                 agenda = conjunto(titulos())
-                return render_template("main.html", primer=1, agenda=agenda)
+                return render_template('main.html', agenda=agenda, alarma=str(alarmas), movimiento=movimientos , salida=salidas)
             else:
                 return render_template("index.html", mensaje=contra)
 
@@ -420,7 +426,6 @@ def testd():
     movimientos = logs(irPath)
     salidas = logs(outPath)
     agenda = conjunto(titulos())
-    #return str(datos)
     return render_template('main.html', agenda=agenda, alarma=str(alarmas), movimiento=movimientos , salida=salidas)
 
 @app.route('/data1')

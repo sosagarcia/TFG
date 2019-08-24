@@ -1,105 +1,108 @@
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item">
-    <a
-      class="nav-link active"
-      id="home-tab"
-      data-toggle="tab"
-      href="#home"
-      role="tab"
-      aria-controls="home"
-      aria-selected="true"
-      >Logs</a
+<div class="container bg-white rounded mt-4 pb-4">
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a
+        class="nav-link active"
+        id="home-tab"
+        data-toggle="tab"
+        href="#home"
+        role="tab"
+        aria-controls="home"
+        aria-selected="true"
+        >Logs</a
+      >
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        id="profile-tab"
+        data-toggle="tab"
+        href="#profile"
+        role="tab"
+        aria-controls="profile"
+        aria-selected="false"
+        >Alarmas</a
+      >
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        id="contact-tab"
+        data-toggle="tab"
+        href="#contact"
+        role="tab"
+        aria-controls="contact"
+        aria-selected="false"
+        >Movimientos</a
+      >
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        id="salida-tab"
+        data-toggle="tab"
+        href="#salida"
+        role="tab"
+        aria-controls="salida"
+        aria-selected="false"
+        >Salidas</a
+      >
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div
+      class="tab-pane fade show active"
+      id="home"
+      role="tabpanel"
+      aria-labelledby="home-tab"
     >
-  </li>
-  <li class="nav-item">
-    <a
-      class="nav-link"
-      id="profile-tab"
-      data-toggle="tab"
-      href="#profile"
-      role="tab"
-      aria-controls="profile"
-      aria-selected="false"
-      >Alarmas</a
+      Se mostrará el histórico que se haya grabado de los eventos ocurridos
+    </div>
+    <div
+      class="tab-pane fade"
+      id="profile"
+      role="tabpanel"
+      aria-labelledby="profile-tab"
     >
-  </li>
-  <li class="nav-item">
-    <a
-      class="nav-link"
-      id="contact-tab"
-      data-toggle="tab"
-      href="#contact"
-      role="tab"
-      aria-controls="contact"
-      aria-selected="false"
-      >Movimientos</a
-    >
-  </li>
-  <li class="nav-item">
-    <a
-      class="nav-link"
-      id="salida-tab"
-      data-toggle="tab"
-      href="#salida"
-      role="tab"
-      aria-controls="salida"
-      aria-selected="false"
-      >Alarmas</a
-    >
-  </li>
-</ul>
-<div class="tab-content" id="myTabContent">
-  <div
-    class="tab-pane fade show active"
-    id="home"
-    role="tabpanel"
-    aria-labelledby="home-tab"
-  >
-    Se mostrará el histórico que se haya grabado de los eventos ocurridos
-  </div>
-  <div
-    class="tab-pane fade"
-    id="profile"
-    role="tabpanel"
-    aria-labelledby="profile-tab"
-  >
-    <div class="">
-      <div class="form-group">
-        <textarea
-          class="form-control rounded-0"
-          id="exampleFormControlTextarea2"
-          rows="5"
-          >{{ alarma }}
-        </textarea>
+      <div class="">
+        <div class="form-group">
+          <textarea
+            class="form-control rounded-0"
+            id="exampleFormControlTextarea2"
+            rows="5"
+            >{{ alarma }}
+        </textarea
+          >
+        </div>
       </div>
     </div>
-  </div>
-  <div
-    class="tab-pane fade"
-    id="contact"
-    role="tabpanel"
-    aria-labelledby="contact-tab"
-  >
-    <textarea
-      class="form-control rounded-0"
-      id="exampleFormControlTextarea2"
-      rows="5"
-      >{{ movimiento }}
-</textarea
+    <div
+      class="tab-pane fade"
+      id="contact"
+      role="tabpanel"
+      aria-labelledby="contact-tab"
     >
-  </div>
-  <div
-    class="tab-pane fade"
-    id="salida"
-    role="tabpanel"
-    aria-labelledby="salida-tab"
-  >
-    <textarea
-      class="form-control rounded-0"
-      id="exampleFormControlTextarea2"
-      rows="5"
-      >{{ salida }}
+      <textarea
+        class="form-control rounded-0"
+        id="exampleFormControlTextarea2"
+        rows="5"
+        >{{ movimiento }}
 </textarea
+      >
+    </div>
+    <div
+      class="tab-pane fade"
+      id="salida"
+      role="tabpanel"
+      aria-labelledby="salida-tab"
     >
+      <textarea
+        class="form-control rounded-0"
+        id="exampleFormControlTextarea2"
+        rows="5"
+        >{{ salida }}
+</textarea
+      >
+    </div>
   </div>
 </div>
