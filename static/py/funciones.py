@@ -24,7 +24,7 @@ def statusNow(path, name):
 
 
 def logs(path):
-    data = "Empieza \n"
+    data = "Empieza"
     ejemplo = 0
     ruta = path + '*.log'
     files = glob.glob(ruta)
