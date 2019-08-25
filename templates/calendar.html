@@ -9,6 +9,7 @@
   <div class="row ">
     <div class="col ml-4 mt-3 fadeIn  align-self-start first shadow p-3 mb-5 bg-white rounded" id="calendar">
       <!-- Button trigger modal -->
+      {% if session["root"] %} 
       <button type="button" class="btn-warning" data-toggle="modal" id="manual" data-target="#ManualModal" >
           Modo manual
       </button>
@@ -18,8 +19,10 @@
       <button type="button" class="btn-danger" data-toggle="modal" id="borra" data-target="#borradoModal" >
         Borrado masivo
       </button>
+      {% endif %}
     
     </div>
+    {% if session["root"] %} 
     <div class="col align-self-start">
       <div class="wrapper fadeInDown">
         <div id="formContent">
@@ -100,6 +103,7 @@
         </div>
       </div>
     </div>
+    {% endif %}
   </div>
 </div>
 
