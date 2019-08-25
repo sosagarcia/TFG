@@ -24,21 +24,23 @@ mydb = mysql.connector.connect(
 
 
 switcher = {
-    1: user1,
-    2: user2,
-    3: user3
+    1: 13,
+    2: 19,
+    3: 26
 }
 
 
 def start(id):
-    user = switcher.get(id, "nothing")
+    user = switcher.get(id, -1)
+    switcher.get(id)
     text = "ID: " + str(id)
+    print
     GPIO.output(user, GPIO.HIGH)  # Turn on
     write_log(text, outPath, outName)
 
 
-def stop(led):
-    user = switcher.get(id, "nothing")
+def stop(id):
+    user = switcher.get(id)
     GPIO.output(user, GPIO.LOW)  # Turn off
 
 
