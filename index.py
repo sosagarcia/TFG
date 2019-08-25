@@ -4,7 +4,7 @@ from flask.json import JSONEncoder
 import datetime as dt
 from flask import Flask, render_template, request, url_for, redirect, flash, session, Response
 import os
-import random
+from random import sample
 from flaskext.mysql import MySQL
 import bcrypt
 from flask import jsonify, json
@@ -422,11 +422,16 @@ def testc():
 
 @app.route('/testd')
 def testd():
-    alarmas = logs(aPath)
-    movimientos = logs(irPath)
-    salidas = logs(outPath)
-    agenda = conjunto(titulos())
-    return render_template('main.html', agenda=agenda, alarma=str(alarmas), movimiento=movimientos , salida=salidas)
+
+    return render_template('pruebaa.html') 
+
+@app.route('/dataD')
+def dataD():
+    datos = sample(range(1,10),5)
+    datos1 = [datos]
+    ## TIene que ser array de array
+    return jsonify (results = datos1)
+
 
 @app.route('/data1')
 def data1():
@@ -665,3 +670,5 @@ if __name__ == '__main__':
 # Flas Session :https://pythonise.com/feed/flask/flask-session-object
 
 #python hilos https://python-para-impacientes.blogspot.com/2016/12/threading-programacion-con-hilos-i.html
+
+# estadisticas
