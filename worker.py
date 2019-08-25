@@ -31,17 +31,19 @@ switcher = {
 
 
 def start(id):
-    user = switcher.get(id, -1)
-    switcher.get(id)
-    text = "ID: " + str(id)
-    print
-    GPIO.output(user, GPIO.HIGH)  # Turn on
-    write_log(text, outPath, outName)
+    user = switcher.get(id)
+    led_is_on = GPIO.input(user)
+    if not led_is_on:
+        text = "ID: " + str(id)
+        GPIO.output(user, GPIO.HIGH)  # Turn on
+        write_log(text, outPath, outName)
 
 
 def stop(id):
     user = switcher.get(id)
-    GPIO.output(user, GPIO.LOW)  # Turn off
+    led_is_on = GPIO.input(user)
+    if led_is_on:
+        GPIO.output(user, GPIO.LOW)  # Turn off
 
 
 def titulos():
@@ -81,7 +83,7 @@ if __name__ == '__main__':
                     else:
                         stop(i)
 
-            time.sleep(5)
+            time.sleep(3)
             mydb.commit()
     finally:
 
