@@ -23,12 +23,23 @@ mydb = mysql.connector.connect(
 )
 
 
-def start(led):
-    GPIO.output(led, GPIO.HIGH)  # Turn on
+switcher = {
+    1: user1,
+    2: user2,
+    3: user3
+}
+
+
+def start(id):
+    user = switcher.get(id, "nothing")
+    text = "ID: " + str(id)
+    GPIO.output(user, GPIO.HIGH)  # Turn on
+    write_log(text, outPath, outName)
 
 
 def stop(led):
-    GPIO.output(led, GPIO.LOW)  # Turn off
+    user = switcher.get(id, "nothing")
+    GPIO.output(user, GPIO.LOW)  # Turn off
 
 
 def titulos():
@@ -42,53 +53,32 @@ def titulos():
 
 def ganador(data):
     max = len(data)
-    result = 0
+    result = list()
     if max == 0:
-        result = -1
+        return result
     else:
         for i in range(0, max, 3):
             if (data[i+1] <= dt.datetime.now() < data[i+2]):
-                result = data[i]
+                result.append(data[i])
     return result
 
 
 if __name__ == '__main__':
-    pastUser = -2
     try:
         while True:
             user = ganador(titulos())
-            if not (user == pastUser):
-                pastUser = user
-                if (user == -1):
-                    stop(user1)
-                    stop(user2)
-                    stop(user3)
-                    text = "ID: -1"
-                    write_log(text, outPath, outName)
-                if (user == 0):
-                    start(user1)
-                    start(user2)
-                    start(user3)
-                    text = "ID: 0 "
-                    write_log(text, outPath, outName)
-                if (user == 1):
-                    start(user1)
-                    stop(user2)
-                    stop(user3)
-                    text = "ID: " + str(user) + " "
-                    write_log(text, outPath, outName)
-                if (user == 2):
-                    stop(user1)
-                    start(user2)
-                    stop(user3)
-                    text = "ID: " + str(user) + " "
-                    write_log(text, outPath, outName)
-                if (user == 3):
-                    stop(user1)
-                    stop(user2)
-                    start(user3)
-                    text = "ID: " + str(user) + " "
-                    write_log(text, outPath, outName)
+            # No hay ningún evento guardado aún
+            if len(user) == 0:
+                stop(1)
+                stop(2)
+                stop(3)
+            else:
+                for i in [1, 2, 3]:
+                    if i in user:
+                        start(i)
+                    else:
+                        stop(i)
+
             time.sleep(5)
             mydb.commit()
     finally:
