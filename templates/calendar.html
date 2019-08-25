@@ -22,8 +22,10 @@
       {% endif %}
     
     </div>
-    {% if session["root"] %} 
+    
+    
     <div class="col align-self-start">
+        {% if session["root"] %} 
       <div class="wrapper fadeInDown">
         <div id="formContent">
           <!-- Mensaje -->
@@ -101,9 +103,11 @@
             </form>
           </div>
         </div>
+        
       </div>
+      {% endif %}
     </div>
-    {% endif %}
+    
   </div>
 </div>
 

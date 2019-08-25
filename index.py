@@ -253,9 +253,9 @@ def add_event():
         mesEnMinutos = 44640
         if(not ( dif(start, end, mesEnMinutos))):
             return render_template('calendar.html', mensaje=unmes, lista=listado)
-        # Comprobar si start o end esta entre el start o el end de algun otro evento
+        # Comprobar si start o end esta entre el start o el end de algun otro evento (comprobación explusiva del modo Auto.)
         
-        if (entre(start, end)):
+        if (entre(start, end)) and (session['manual'] == "0"):
             return render_template('calendar.html', mensaje=fechae, lista=listado)
 
         cur = mysql.get_db().cursor()
@@ -292,7 +292,7 @@ def deletAlgo():
         cur = mysql.get_db().cursor()
         cur.execute('TRUNCATE TABLE eventos ')
         mysql.get_db().commit()
-    l
+    
 
 
 @app.route('/manual', methods=['POST'])
