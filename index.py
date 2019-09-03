@@ -429,8 +429,15 @@ def testd():
 def dataD():
     datos = sample(range(1,10),5)
     datos1 = [datos]
+    label = ["Lun", "Tue", "Wed", "Thu", "Vier"]
+
+
+    fecha = "17-08-2019"
+    muestra = 50
+    fechas, valores  = getLogs(tPath,tName,fecha, muestra)
     ## TIene que ser array de array
-    return jsonify (results = datos1)
+    datos1 = [valores]
+    return jsonify (results = datos1 , labels=fechas)
 
 
 @app.route('/data1')
