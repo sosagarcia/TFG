@@ -9,14 +9,17 @@
   var periodoSelected;
   var fin = document.getElementById("fin");
   fin.style.display = "none";
+  var diaC = document.getElementById("diaConcreto");
+  diaC.style.display = "none";
 
   periodo.addEventListener("change", function() {
     periodoSelected = this.options[periodo.selectedIndex];
-
-    if (periodoSelected.value == "intervalo") {
-      peri.style.display = "block";
-    } else {
-      peri.style.display = "none";
+    if (periodoSelected.value == "dia") {
+      if (periodoSelected.value == "intervalo") {
+        peri.style.display = "block";
+      } else {
+        peri.style.display = "none";
+      }
     }
 
     $(":checkbox")
