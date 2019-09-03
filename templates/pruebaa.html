@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css"
@@ -21,25 +20,12 @@
     <script>
       var myChart;
       var getData = $.get("/dataD");
-      var timeFormat = "HH:mm:ss";
-      function newDateString(hours, minutes, seconds) {
-        return moment()
-          .hour(hours)
-          .minute(minutes)
-          .second(seconds)
-          .format(timeFormat);
-      }
-      function dameFecha(labels) {
-        var fechas = [];
-        for (var i = 0; i < labels.length; i++) {
-          fechas[i] = newDateString(labels[i][0], labels[i][1], labels[i][2]);
-        }
-        return fechas;
-      }
+
       getData.done(function(results) {
+        console.log(results.results);
         var data = {
           // A labels array that can contain any sort of values
-          labels: dameFecha(results.labels),
+          labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
           // Our series array that contains series objects or in this case series data arrays
 
           series: results.results
@@ -47,25 +33,24 @@
 
         var options = {
           width: 800,
-          height: 600,
-          axisX: {
-            type: Chartist.FixedScaleAxis,
-            divisor: 5,
-            labelInterpolationFnc: function(value) {
-              return moment(value).format("MMM D");
-            }
-          }
+          height: 600
         };
 
         myChart = new Chartist.Line(".ct-chart", data, options);
       });
 
       function updateChart() {
-        var updateData = $.get("/dataD");
+        var ejemplo = 1;
+        var ejemplo1 = 2;
+        $.post("/dataA", { dato: ejemplo, dato1: ejemplo1 }).done(function(
+          reply
+        ) {
+          console.log(reply);
+        });
         updateData.done(function(results) {
           var data = {
             // A labels array that can contain any sort of values
-            labels: dameFecha(results.labels),
+            labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
             // Our series array that contains series objects or in this case series data arrays
 
             series: results.results

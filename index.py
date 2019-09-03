@@ -425,15 +425,26 @@ def dataD():
     legend = 'Temperaturas'
     datos = sample(range(1,10),5)
     datos1 = [datos]
-    label = ["Lun", "Tue", "Wed", "Thu", "Vier"]
+    label = ["Lun", "Tue", "Mierda", "Thu", "Vier"]
 
 
     fecha = "17-08-2019"
     muestra = 50
-    fechas, valores  = getLogs(tPath,tName,fecha, muestra)
+    #fechas, valores  = getLogs(tPath,tName,fecha, muestra)
     ## TIene que ser array de array
-    valores1 = [valores]
-    return jsonify (results = valores , labels=fechas,  legend=legend)
+    #valores1 = [valores]
+    return jsonify (results = datos1 , labels=label,  legend=legend)
+
+
+@app.route('/updateStatistics', methods=['POST'])
+def updateStatistics():
+    tipo = request.form.get('tipo')
+    fecha = request.form.get('fecha')
+    muestra = request.form.get('muestras')
+    path = damePath(tipo)
+    name = str(tipo) + ".log"
+    fechas, valores  = getLogs(path,name,fecha, muestra)
+    return jsonify (labels = fecha, data = valores)
 
 
 @app.route('/data1')

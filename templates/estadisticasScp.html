@@ -1,4 +1,6 @@
 <script>
+  var fec;
+  var muestras;
   var peri = document.getElementById("peri");
   peri.style.display = "none";
   var tipoD = document.getElementById("tipoD");
@@ -10,7 +12,6 @@
 
   tipoD.addEventListener("change", function() {
     tipoDSelected = this.options[tipoD.selectedIndex];
-    console.log(tipoDSelected.value);
   });
 
   periodo.addEventListener("change", function() {
@@ -35,11 +36,8 @@
         }
       });
   });
-</script>
 
-<script>
   var timeFormat = "HH:mm:ss";
-
   function dameFecha(labels) {
     var fechas = [];
 
@@ -55,9 +53,22 @@
       .second(seconds)
       .format(timeFormat);
   }
+  function updateStatistics() {
+    muestras = 50;
+    fec = "17-08-2019";
+
+    $.post("/updateStatistics", {
+      tipo: tipoDSelected.value,
+      fecha: fec,
+      muestras: muestras
+    }).done(function(reply) {
+      console.log(reply);
+    });
+  }
   var getData = $.get("/dataD");
-  var color = Chart.helpers.color;
+
   getData.done(function(results) {
+    var color = Chart.helpers.color;
     var config = {
       type: "line",
       data: {
@@ -107,4 +118,5 @@
     var ctx = document.getElementById("canvas").getContext("2d");
     window.myLine = new Chart(ctx, config);
   });
+  $("#act").on("click", updateStatistics);
 </script>

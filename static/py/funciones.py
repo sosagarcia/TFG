@@ -3,6 +3,16 @@ import datetime as dt
 import glob
 import errno
 
+switcher = {
+    "_Distancia": "/var/log/iot/dis/",
+    "_Humedad": "/var/log/iot/hum/",
+    "_Temperatura": "/var/log/iot/tem/",
+    "_Movimientos": "/var/log/iot/ir/",
+    "_Alarmas": "/var/log/iot/a/",
+    "_TemperaturaCPU": "/var/log/iot/cpuT/",
+    "_UsoCPU": "/var/log/iot/cpu/"
+}
+
 
 def statusNow(path, name):
     hoy = dt.datetime.now()
@@ -112,7 +122,7 @@ def getLogs(path, name, fecha, muestras):
     log = open(str(path) + str(fecha) + str(name), "r")
     logLines = log.readlines()
     log.close()
-    saltos = len(logLines) / (muestras - 1)
+    saltos = len(logLines) / (int(muestras) - 1)
     if (saltos <= 1):
         saltos = 1
     for i in range(0, len(logLines), int(saltos)):
@@ -124,6 +134,11 @@ def getLogs(path, name, fecha, muestras):
             fechas.append(subresult)
 
     return (fechas, valores)
+
+
+def damePath(tipo):
+    path = switcher.get(str(tipo))
+    return path
 
 
 def separa(fechas):
