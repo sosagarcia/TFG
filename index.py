@@ -427,6 +427,7 @@ def testd():
 
 @app.route('/dataD')
 def dataD():
+    legend = 'Temperaturas'
     datos = sample(range(1,10),5)
     datos1 = [datos]
     label = ["Lun", "Tue", "Wed", "Thu", "Vier"]
@@ -437,7 +438,7 @@ def dataD():
     fechas, valores  = getLogs(tPath,tName,fecha, muestra)
     ## TIene que ser array de array
     valores1 = [valores]
-    return jsonify (results = valores1 , labels=fechas)
+    return jsonify (results = valores1 , labels=fechas, legend=legend)
 
 
 @app.route('/data1')

@@ -20,9 +20,17 @@
     <script>
       var myChart;
       var getData = $.get("/dataD");
+      var timeFormat = "HH:mm:ss";
+      function newDateString(hours, minutes, seconds) {
+        return moment()
+          .hour(hours)
+          .minute(minutes)
+          .second(seconds)
+          .format(timeFormat);
+      }
 
       getData.done(function(results) {
-        console.log(results.results);
+        console.log(results.labels);
         var data = {
           // A labels array that can contain any sort of values
           labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
