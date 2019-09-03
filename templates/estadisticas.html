@@ -6,7 +6,7 @@
       class="col  fadeIn  align-self-start first shadow ml-4 mt-3 rounded"
       id="general3"
     >
-      <!-- Button trigger modal -->
+      <!-- estadísticas -->
       <canvas id="canvas"></canvas>
     </div>
     <div class="col align-self-start">
@@ -97,10 +97,18 @@
 
 {% endblock %} {% block script %}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 <script
   src="../static/js/bootstrap-checkbox-1.5.0/dist/js/bootstrap-checkbox.js"
   defer
+></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+<script src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
+<script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"
 ></script>
 
 {% include "estadisticasScp.html" %} {% endblock %}

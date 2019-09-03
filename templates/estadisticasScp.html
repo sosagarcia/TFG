@@ -39,8 +39,15 @@
 
 <script>
   var timeFormat = "HH:mm:ss";
-  var color = Chart.helpers.color;
-  let myChart = document.getElementById("canvas").getContext("2d");
+
+  function dameFecha(labels) {
+    var fechas = [];
+
+    for (var i = 0; i < labels.length; i++) {
+      fechas[i] = newDateString(labels[i][0], labels[i][1], labels[i][2]);
+    }
+    return fechas;
+  }
   function newDateString(hours, minutes, seconds) {
     return moment()
       .hour(hours)
@@ -48,72 +55,56 @@
       .second(seconds)
       .format(timeFormat);
   }
-  // Global Options
-  Chart.defaults.global.defaultFontFamily = "Lato";
-  Chart.defaults.global.defaultFontSize = 18;
-  //Chart.defaults.global.defaultFontColor = '#777';
-
-  fetch("/data1")
-    .then(res => res.json())
-    .then(out => {
-      console.log(out);
-      miFuncion(out);
-    })
-    .catch(error => console.error("Error al obtener datos de estadísticas"));
-  function miFuncion(data) {
-    console.log(data.labels);
-    let massPopChart = new Chart(myChart, {
-      type: "bar", // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+  var getData = $.get("/dataD");
+  var color = Chart.helpers.color;
+  getData.done(function(results) {
+    var config = {
+      type: "line",
       data: {
-        labels: data.labels,
+        labels: dameFecha(results.labels),
         datasets: [
           {
-            label: "Population",
-            data: data.data,
-            //backgroundColor:'green',
-            //backgroundColor: 'rgba(255, 99, 132, 0.6)',
-
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.6)",
-              "rgba(54, 162, 235, 0.6)",
-              "rgba(255, 206, 86, 0.6)",
-              "rgba(75, 192, 192, 0.6)",
-              "rgba(153, 102, 255, 0.6)",
-              "rgba(255, 159, 64, 0.6)",
-              "rgba(255, 99, 132, 0.6)"
-            ],
-            borderWidth: 1,
-            borderColor: "#777",
-            hoverBorderWidth: 3,
-            hoverBorderColor: "#000"
+            label: results.legend,
+            backgroundColor: color(window.chartColors.red)
+              .alpha(0.5)
+              .rgbString(),
+            borderColor: window.chartColors.red,
+            fill: false,
+            data: results.results
           }
         ]
       },
       options: {
         title: {
-          display: true,
-          text: data.titulo,
-          fontSize: 25
+          text: "Chart.js Time Scale"
         },
-        legend: {
-          display: true,
-          position: "right",
-          labels: {
-            fontColor: "#000"
-          }
-        },
-        layout: {
-          padding: {
-            left: 50,
-            right: 0,
-            bottom: 0,
-            top: 0
-          }
-        },
-        tooltips: {
-          enabled: true
+        scales: {
+          xAxes: [
+            {
+              type: "time",
+              time: {
+                parser: timeFormat,
+                // round: 'day'
+                tooltipFormat: "ll HH:mm"
+              },
+              scaleLabel: {
+                display: true,
+                labelString: "Date"
+              }
+            }
+          ],
+          yAxes: [
+            {
+              scaleLabel: {
+                display: true,
+                labelString: "value"
+              }
+            }
+          ]
         }
       }
-    });
-  }
+    };
+    var ctx = document.getElementById("canvas").getContext("2d");
+    window.myLine = new Chart(ctx, config);
+  });
 </script>
