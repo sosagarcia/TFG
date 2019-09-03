@@ -47,7 +47,15 @@
 
         var options = {
           width: 800,
-          height: 600
+          height: 600,
+
+          axisX: {
+            type: Chartist.FixedScaleAxis,
+            divisor: 5,
+            labelInterpolationFnc: function(value) {
+              return moment(value).format("ll HH:mm");
+            }
+          }
         };
 
         myChart = new Chartist.Line(".ct-chart", data, options);
