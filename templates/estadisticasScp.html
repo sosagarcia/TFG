@@ -37,6 +37,22 @@
       });
   });
 
+  function addZero(i) {
+    if (i < 10) {
+      i = "0" + i;
+    }
+    return i;
+  }
+  function hoy() {
+    var hoy = new Date();
+    var dd = hoy.getDate();
+    var mm = hoy.getMonth() + 1;
+    var yyyy = hoy.getFullYear();
+    dd = addZero(dd);
+    mm = addZero(mm);
+
+    return dd + "-" + mm + "-" + yyyy;
+  }
   var timeFormat = "HH:mm:ss";
   function dameFecha(labels) {
     var fechas = [];
@@ -53,12 +69,12 @@
       .second(seconds)
       .format(timeFormat);
   }
-  function updateStatistics() {
+  function primera() {
     muestras = 50;
-    fec = "17-08-2019";
+    fec = hoy();
 
     $.post("/updateStatistics", {
-      tipo: tipoDSelected.value,
+      tipo: "_Humedad",
       fecha: fec,
       muestras: muestras
     }).done(function(reply) {
