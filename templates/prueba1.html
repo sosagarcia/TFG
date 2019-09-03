@@ -39,13 +39,14 @@
       var getData = $.get("/dataD");
       var color = Chart.helpers.color;
       getData.done(function(results) {
+        console.log();
         var config = {
           type: "line",
           data: {
-            labels: dameFecha(results.legend),
+            labels: dameFecha(results.label),
             datasets: [
               {
-                label: results.label,
+                label: results.legend,
                 backgroundColor: color(window.chartColors.red)
                   .alpha(0.5)
                   .rgbString(),
