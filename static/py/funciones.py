@@ -115,7 +115,7 @@ def getLogs(path, name, fecha, muestras):
     saltos = len(logLines) / muestras
     if (saltos <= 1):
         saltos = 1
-    for i in range(0, len(logLines), int(saltos) - 1):
+    for i in range(0, len(logLines) - 1, int(saltos)):
         linea = logLines[i]
         valor = linea[20:24]
         if not (valor == "Erro") and (linea[10:11] == " "):
