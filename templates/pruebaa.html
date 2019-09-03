@@ -48,14 +48,13 @@
         var options = {
           width: 800,
           height: 600,
-
-          high: 100,
-          // If low is specified then the axis will display values explicitly down to this value and the computed minimum from the data is ignored
-          low: 0,
-          // If specified then the value range determined from minimum to maximum (or low and high) will be divided by this number and ticks will be generated at those division points. The default divisor is 1.
-          divisor: 4,
-          // If ticks is explicitly set, then the axis will not compute the ticks with the divisor, but directly use the data in ticks to determine at what points on the axis a tick need to be generated.
-          ticks: [1, 10, 20, 30]
+          axisX: {
+            type: Chartist.FixedScaleAxis,
+            divisor: 5,
+            labelInterpolationFnc: function(value) {
+              return moment(value).format("MMM D");
+            }
+          }
         };
 
         myChart = new Chartist.Line(".ct-chart", data, options);
