@@ -51,14 +51,14 @@
       function updateChart() {
         var updateData = $.get("/dataD");
         updateData.done(function(results) {
+          var datos = [];
           for (var i = 0; i < results.labels.length; i++) {
-            console.log(
-              newDateString(
-                results.labels[i][0],
-                results.labels[i][1],
-                results.labels[i][2]
-              )
+            datos[i] = newDateString(
+              results.labels[i][0],
+              results.labels[i][1],
+              results.labels[i][2]
             );
+            console.log(datos);
           }
           var data = {
             // A labels array that can contain any sort of values

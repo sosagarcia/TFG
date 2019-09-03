@@ -112,7 +112,7 @@ def getLogs(path, name, fecha, muestras):
     log = open(str(path) + str(fecha) + str(name), "r")
     logLines = log.readlines()
     log.close()
-    saltos = len(logLines) / (muestras + 1)
+    saltos = len(logLines) / (muestras - 1)
     if (saltos <= 1):
         saltos = 1
     for i in range(0, len(logLines), int(saltos)):
