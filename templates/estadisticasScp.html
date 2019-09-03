@@ -115,7 +115,8 @@
       }
     };
     var ctx = document.getElementById("canvas").getContext("2d");
-    window.myLine = new Chart(ctx, config);
+    myChart = new Chart(ctx, config);
+    window.myLine = myChart;
   }
   $("#act").on("click", updateStatistics);
 </script>
