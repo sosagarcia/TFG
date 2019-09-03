@@ -443,8 +443,9 @@ def updateStatistics():
     muestra = request.form.get('muestras')
     path = damePath(tipo)
     name = str(tipo) + ".log"
+    titulo = str(tipo)[1: len(tipo)]
     fechas, valores  = getLogs(path,name,fecha, muestra)
-    return jsonify (labels = fecha, data = valores)
+    return jsonify (labels = fechas, data = valores, legend = titulo)
 
 
 @app.route('/data1')

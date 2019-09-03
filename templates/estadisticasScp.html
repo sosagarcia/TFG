@@ -62,12 +62,11 @@
       fecha: fec,
       muestras: muestras
     }).done(function(reply) {
-      console.log(reply);
+      actualiza(reply);
     });
   }
-  var getData = $.get("/dataD");
 
-  getData.done(function(results) {
+  function actualiza(results) {
     var color = Chart.helpers.color;
     var config = {
       type: "line",
@@ -81,7 +80,7 @@
               .rgbString(),
             borderColor: window.chartColors.red,
             fill: false,
-            data: results.results
+            data: results.data
           }
         ]
       },
