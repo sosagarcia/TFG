@@ -81,8 +81,12 @@
   function updateStatistics() {
     muestras = 50;
     periodoSelected = periodo.options[periodo.selectedIndex];
-    console.log(periodoSelected.value);
-    fec = hoy();
+    if (periodoSelected.value == "hoy") {
+      fec = hoy();
+    } else {
+      fec = periodoSelected.value;
+    }
+
     tipoDSelected = tipoD.options[tipoD.selectedIndex];
 
     $.post("/updateStatistics", {
