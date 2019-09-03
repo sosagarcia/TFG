@@ -50,11 +50,43 @@
           height: 600,
 
           axisX: {
-            type: time
+            type: Chartist.FixedScaleAxis,
+            divisor: 5,
+            labelInterpolationFnc: function(value) {
+              return moment(value).format("MMM D");
+            }
           }
         };
 
-        myChart = new Chartist.Line(".ct-chart", data, options);
+        myChart = new Chartist.Line(".ct-chart", data, {
+          title: {
+            text: "Chart.js Time Scale"
+          },
+          scales: {
+            xAxes: [
+              {
+                type: "time",
+                time: {
+                  parser: timeFormat,
+                  // round: 'day'
+                  tooltipFormat: "ll HH:mm"
+                },
+                scaleLabel: {
+                  display: true,
+                  labelString: "Date"
+                }
+              }
+            ],
+            yAxes: [
+              {
+                scaleLabel: {
+                  display: true,
+                  labelString: "value"
+                }
+              }
+            ]
+          }
+        });
       });
 
       function updateChart() {
