@@ -24,6 +24,7 @@
 
       function dameFecha(labels) {
         var fechas = [];
+
         for (var i = 0; i < labels.length; i++) {
           fechas[i] = newDateString(labels[i][0], labels[i][1], labels[i][2]);
         }
@@ -39,7 +40,9 @@
       var getData = $.get("/dataD");
       var color = Chart.helpers.color;
       getData.done(function(results) {
-        console.log();
+        console.log(results);
+        console.log(results.results);
+        console.log(results.labels);
         var config = {
           type: "line",
           data: {
