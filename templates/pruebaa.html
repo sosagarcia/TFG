@@ -51,18 +51,17 @@
       function updateChart() {
         var updateData = $.get("/dataD");
         updateData.done(function(results) {
-          var datos = [];
+          var fechas = [];
           for (var i = 0; i < results.labels.length; i++) {
-            datos[i] = newDateString(
+            fechas[i] = newDateString(
               results.labels[i][0],
               results.labels[i][1],
               results.labels[i][2]
             );
-            console.log(datos);
           }
-          var data = {
+          var fechas = {
             // A labels array that can contain any sort of values
-            labels: results.labels,
+            labels: datos,
             // Our series array that contains series objects or in this case series data arrays
 
             series: results.results
