@@ -50,7 +50,16 @@
           height: 600,
 
           axisX: {
-            type: Chartist.FixedScaleAxis
+            type: "time",
+            time: {
+              parser: timeFormat,
+              // round: 'day'
+              tooltipFormat: "ll HH:mm"
+            },
+            scaleLabel: {
+              display: true,
+              labelString: "Date"
+            }
           }
         };
 
