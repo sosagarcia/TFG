@@ -40,10 +40,35 @@
           series: results.results
         };
 
-        var options = {
-          width: 800,
-          height: 600
-        };
+        options: {
+                title: {
+                  text: "Chart.js Time Scale"
+                },
+                scales: {
+                  xAxes: [
+                    {
+                      type: "time",
+                      time: {
+                        parser: timeFormat,
+                        // round: 'day'
+                        tooltipFormat: "ll HH:mm"
+                      },
+                      scaleLabel: {
+                        display: true,
+                        labelString: "Date"
+                      }
+                    }
+                  ],
+                  yAxes: [
+                    {
+                      scaleLabel: {
+                        display: true,
+                        labelString: "value"
+                      }
+                    }
+                  ]
+                }
+              }
 
         myChart = new Chartist.Line(".ct-chart", data, options);
       });
