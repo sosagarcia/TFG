@@ -78,11 +78,30 @@
       fecha: fec,
       muestras: muestras
     }).done(function(reply) {
+      crea(reply);
+    });
+  }
+
+  function updateStatistics{
+    muestras = 50;
+    fec = hoy();
+
+    $.post("/updateStatistics", {
+      tipo: tipoDSelected.value,
+      fecha: fec,
+      muestras: muestras
+    }).done(function(reply) {
       actualiza(reply);
     });
   }
 
-  function actualiza(results) {
+  function actualiza(results){
+
+    chart.data.datasets[0].data = results.data;
+    chart.update();
+  }
+
+  function crea(results) {
     var color = Chart.helpers.color;
     var config = {
       type: "line",
@@ -115,7 +134,7 @@
               },
               scaleLabel: {
                 display: true,
-                labelString: "Date"
+                labelString: "Tiempo"
               }
             }
           ],
@@ -123,7 +142,7 @@
             {
               scaleLabel: {
                 display: true,
-                labelString: "value"
+                labelString: "Valor"
               }
             }
           ]
@@ -131,9 +150,9 @@
       }
     };
     var ctx = document.getElementById("canvas").getContext("2d");
-    myChart = new Chart(ctx, config);
-    window.myLine = myChart;
+    chart = new Chart(ctx, config);
+    window.myLine = chart;
   }
-  //$("#act").on("click", updateStatistics);
+  $("#act").on("click", updateStatistics);
   window.onload = primera;
 </script>
