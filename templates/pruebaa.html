@@ -29,45 +29,25 @@
           .second(seconds)
           .format(timeFormat);
       }
-
+      function dameFecha(labels) {
+        var fechas = [];
+        for (var i = 0; i < labels.length; i++) {
+          fechas[i] = newDateString(labels[i][0], labels[i][1], labels[i][2]);
+        }
+        return fechas;
+      }
       getData.done(function(results) {
-        console.log(results.labels.length);
         var data = {
           // A labels array that can contain any sort of values
-          labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+          labels: dameFecha(results.labels),
           // Our series array that contains series objects or in this case series data arrays
 
           series: results.results
         };
 
         var options = {
-          title: {
-            text: "Chart.js Time Scale"
-          },
-          scales: {
-            xAxes: [
-              {
-                type: "time",
-                time: {
-                  parser: timeFormat,
-                  // round: 'day'
-                  tooltipFormat: "ll HH:mm"
-                },
-                scaleLabel: {
-                  display: true,
-                  labelString: "Date"
-                }
-              }
-            ],
-            yAxes: [
-              {
-                scaleLabel: {
-                  display: true,
-                  labelString: "value"
-                }
-              }
-            ]
-          }
+          width: 800,
+          height: 600
         };
 
         myChart = new Chartist.Line(".ct-chart", data, options);
@@ -76,14 +56,6 @@
       function updateChart() {
         var updateData = $.get("/dataD");
         updateData.done(function(results) {
-          var fechas = [];
-          for (var i = 0; i < results.labels.length; i++) {
-            fechas[i] = newDateString(
-              results.labels[i][0],
-              results.labels[i][1],
-              results.labels[i][2]
-            );
-          }
           var data = {
             // A labels array that can contain any sort of values
             labels: fechas,
