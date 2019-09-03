@@ -433,7 +433,7 @@ def dataD():
     fechas, valores  = getLogs(tPath,tName,fecha, muestra)
     ## TIene que ser array de array
     valores1 = [valores]
-    return jsonify (results = valores1 , labels=fechas,  legend=legend)
+    return jsonify (results = valores , labels=fechas,  legend=legend)
 
 
 @app.route('/data1')

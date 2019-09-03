@@ -40,13 +40,10 @@
       var getData = $.get("/dataD");
       var color = Chart.helpers.color;
       getData.done(function(results) {
-        console.log(results);
-        console.log(results.results);
-        console.log(results.labels);
         var config = {
           type: "line",
           data: {
-            labels: dameFecha(results.label),
+            labels: dameFecha(results.labels),
             datasets: [
               {
                 label: results.legend,
