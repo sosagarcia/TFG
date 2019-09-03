@@ -7,13 +7,8 @@
   var tipoDSelected;
   var periodo = document.getElementById("periodo");
   var periodoSelected;
-  periodoSelected.value = "hoy";
   var fin = document.getElementById("fin");
   fin.style.display = "none";
-
-  tipoD.addEventListener("change", function() {
-    tipoDSelected = this.options[tipoD.selectedIndex];
-  });
 
   periodo.addEventListener("change", function() {
     periodoSelected = this.options[periodo.selectedIndex];
@@ -85,8 +80,10 @@
 
   function updateStatistics() {
     muestras = 50;
+    periodoSelected = periodo.options[periodo.selectedIndex];
     console.log(periodoSelected.value);
     fec = hoy();
+    tipoDSelected = tipoD.options[tipoD.selectedIndex];
 
     $.post("/updateStatistics", {
       tipo: tipoDSelected.value,
