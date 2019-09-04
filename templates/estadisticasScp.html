@@ -141,8 +141,9 @@
   }
 
   function actualiza(results) {
-    chart.data.datasets[0].data = results.data;
     console.log(dameFecha(results.labels));
+    chart.data.datasets[0].data = results.data;
+
     chart.data.labels = dameFecha(results.labels);
     chart.options.tooltips.callbacks.label = item =>
       `${item.yLabel} ` + results.unidad;
