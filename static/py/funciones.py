@@ -187,7 +187,7 @@ def getLogsD(path, name, fecha, muestras):
     subresult = list()
     inicio, fin = divideFechas (fecha)
     logLines = openAllBig(path, inicio, fin )
-    return (logLines,logLines[1])
+    return (logLines,logLines)
     max =len(logLines)
     for i in range(0, max, 1000):
         linea = logLines[i]
@@ -214,7 +214,7 @@ def openAllBig(path, inicio, fin):
                 lenName = len(name)
                 nombre = name [lenPath : lenName]
                 fechaTemp = datetime(year = int(nombre[6:10]), month = int(nombre[3:5]), day = int(nombre[0:2]))
-                if (inicio <= fechaTemp <= fin):
+                if (inicio < fechaTemp):
                     logLines.append(f.readlines())
         except IOError as exc:
             if exc.errno != errno.EISDIR:
