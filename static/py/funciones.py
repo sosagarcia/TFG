@@ -187,7 +187,7 @@ def getLogsD(path, name, fecha, muestras):
     subresult = list()
     inicio, fin = divideFechas (fecha)
     logLines = openAllBig(path, inicio, fin )
-    return (logLines,logLines)
+    return (logLines,logLines[1])
     max =len(logLines)
     for i in range(0, max, 1000):
         linea = logLines[i]
