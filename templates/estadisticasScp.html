@@ -12,6 +12,8 @@
   fin.style.display = "none";
   var diaC = document.getElementById("diaC");
   diaC.style.display = "none";
+  var fecha1 = document.getElementById("login-1");
+  var fecha2 = document.getElementById("login-2");
 
   periodo.addEventListener("change", function() {
     periodoSelected = this.options[periodo.selectedIndex];
@@ -25,18 +27,6 @@
     } else {
       diaC.style.display = "none";
     }
-    $(":checkbox")
-      .checkboxpicker({
-        onLabel: "Fecha Exacta",
-        offLabel: "Hasta la actualidad"
-      })
-      .on("change", function() {
-        if (fin.style.display == "none") {
-          fin.style.display = "block";
-        } else {
-          fin.style.display = "none";
-        }
-      });
   });
 
   function addZero(i) {
@@ -104,13 +94,16 @@
   }
 
   function updateStatistics() {
+    var diaSelected;
     muestras = document.getElementById("muestras");
     periodoSelected = periodo.options[periodo.selectedIndex];
     if (periodoSelected.value == "hoy") {
       fec = hoy();
     } else if (periodoSelected.value == "dia") {
-      var diaSelected = document.getElementById("diaConcreto");
+      diaSelected = document.getElementById("diaConcreto");
       fec = transforma(diaSelected.value);
+    } else if (periodoSelected.value == "intervalo") {
+      fec = fecha1.value + fecha2.value;
     } else {
       fec = periodoSelected.value;
     }
@@ -223,4 +216,19 @@
     return false;
   }
   $(document).ready(primera);
+
+  document.addEventListener("DOMContentLoaded", function() {
+    $(":checkbox")
+      .checkboxpicker({
+        onLabel: "Fecha Exacta",
+        offLabel: "Hasta la actualidad"
+      })
+      .on("change", function() {
+        if (fin.style.display == "none") {
+          fin.style.display = "block";
+        } else {
+          fin.style.display = "none";
+        }
+      });
+  });
 </script>

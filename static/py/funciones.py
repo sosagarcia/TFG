@@ -112,6 +112,21 @@ def pasaFecha1(fecha):
     fecha = datetime.strptime(fecha, '"%Y-%m-%d"')
     return fecha
 
+def divideFechas(fecha):
+    dia1 = fecha[8:10]
+    mes1 = fecha[5:7]
+    año1 = fecha[0:4]
+    hora1 = fecha[11:13]
+    minuto1 = fecha[14:16]
+    dia2 = fecha[24:26]
+    mes2 = fecha[21:23]
+    año2 = fecha[16:20]
+    hora2 = fecha[27:29]
+    minuto2 = fecha[30:32]
+    inicio = datetime(year = int(año1), month = int(mes1), day = int(dia1), hour = int(hora1), minute = int(minuto1))
+    fin = datetime(year = int(año2), month =int( mes2), day = int(dia2), hour = int(hora2), minute = int(minuto2))
+    return (inicio, fin)
+
 
 def dif(start, end, intervalo):
     start = pasaFecha(start)
@@ -139,7 +154,6 @@ def openAll(path):
 
 
 def getLogs(path, name, fecha, muestras):
-    "17-08-2019"
     fechas = list()
     valores = list()
     subresult = list()
@@ -151,6 +165,11 @@ def getLogs(path, name, fecha, muestras):
         logLines = log.readlines()
         log.close()
     
+    fechas, valores = determina(logLines,muestras)
+
+    return (fechas, valores)
+
+def determina(logLines,muestras):
     saltos = len(logLines) / (int(muestras) - 1)
     if (saltos <= 1):
         saltos = 1
@@ -161,8 +180,29 @@ def getLogs(path, name, fecha, muestras):
             valores.append(valor)
             subresult = [linea[11:13], linea[14:16], linea[17:19],linea[0:2],linea[3:5],linea[6:10]]
             fechas.append(subresult)
+    return (fecha,valores)
 
+def getLogsD(path, name, fecha, muestras):
+    fechas = list()
+    valores = list()
+    subresult = list()
+    inicio, fin = divideFechas (fecha)
+   # "17-08-2019"
+    if (inicio == fin):
+        log = open(str(path) + str(inicio) + str(name), "r")
+        logLines = log.readlines()
+        log.close()
+    else:
+        logLines = openAll(path)
+    
+    for i in range(0, len(logLines)):
+        linea = logLines[i]
+        fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour = int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
+        if( inicio < fechaTemp < fin):
+            subresult.append(linea)
+    fechas, valores = determina(subresult,muestras)
     return (fechas, valores)
+
 
 
 def damePath(tipo):

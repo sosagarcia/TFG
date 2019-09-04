@@ -445,7 +445,11 @@ def updateStatistics():
     unit = dameUnit(tipo)
     name = str(tipo) + ".log"
     titulo = str(tipo)[1: len(tipo)]
-    fechas, valores  = getLogs(path,name,fecha, muestra)
+    if (len (fecha) <= 12 ):
+        fechas, valores  = getLogs(path,name,fecha, muestra)
+    else:
+        fechas, valores  = getLogsD(path,name,fecha, muestra)
+
     return jsonify (labels = fechas, data = valores, legend = titulo, unidad = unit)
 
 
