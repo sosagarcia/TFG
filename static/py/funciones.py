@@ -125,7 +125,6 @@ def dif(start, end, intervalo):
 
 def openAll(path):
     ruta = path + '*.log'
-    blanco = '\n'
     files = sorted(glob.glob(ruta))
     for name in files:
         try:
@@ -158,7 +157,7 @@ def getLogs(path, name, fecha, muestras):
         valor = linea[20:24]
         if not (valor == "Erro") and (linea[10:11] == " "):
             valores.append(valor)
-            subresult = [linea[11:13], linea[14:16], linea[17:19],fecha[0:2],fecha[3:5],fecha[6:10]]
+            subresult = [linea[11:13], linea[14:16], linea[17:19],linea[0:2],linea[3:5],linea[6:10]]
             fechas.append(subresult)
 
     return (fechas, valores)
