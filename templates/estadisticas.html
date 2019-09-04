@@ -25,7 +25,11 @@
               {% endfor %}
             </div>
             <!-- Login Form -->
-            <form action="#" id="myForm">
+            <form
+              action="#"
+              id="myForm"
+              onsubmit="return validateFormOnSubmit(this);"
+            >
               <!--  <input type="text" id="login" class="fadeIn second" name="title" placeholder="Nombre del evento" /> -->
 
               <select id="tipoD">

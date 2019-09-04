@@ -216,8 +216,9 @@
     window.myLine = chart;
   }
   $("#act").on("click", updateStatistics);
-  $("form").submit(function() {
+  function validateFormOnSubmit(something) {
     updateStatistics();
-  });
+    return false;
+  }
   $(document).ready(primera);
 </script>
