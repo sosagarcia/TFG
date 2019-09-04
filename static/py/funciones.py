@@ -123,21 +123,18 @@ def dif(start, end, intervalo):
     return 0
 
 
-
-
-def logsasd(path):
-    data = ""
-    blanco = '\n' + '\n'
+def openAll(path):
     ruta = path + '*.log'
+    blanco = '\n'
     files = sorted(glob.glob(ruta))
     for name in files:
         try:
             with open(name) as f:
-                data += f.read() + blanco
+                logLines = f.readlines()
         except IOError as exc:
             if exc.errno != errno.EISDIR:
                 raise
-    return data
+    return logLines
 
 
 def getLogs(path, name, fecha, muestras):
@@ -145,9 +142,14 @@ def getLogs(path, name, fecha, muestras):
     fechas = list()
     valores = list()
     subresult = list()
-    log = open(str(path) + str(fecha) + str(name), "r")
-    logLines = log.readlines()
-    log.close()
+
+    if (str(fecha) == "*"):
+       logLines = openAll(path)
+    else :
+        log = open(str(path) + str(fecha) + str(name), "r")
+        logLines = log.readlines()
+        log.close()
+    
     saltos = len(logLines) / (int(muestras) - 1)
     if (saltos <= 1):
         saltos = 1
