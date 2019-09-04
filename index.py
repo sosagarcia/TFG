@@ -377,6 +377,8 @@ def state():
 def chart():
     fecha = "2019-08-17T12:122019-08-18T11:45"
     inicio, fin = divideFechas(fecha)
+    name = openAllBig("", inicio, fin)
+    print (type (name))
     subresult = list()
     logLines = openAll("")
     for i in range(0, len(logLines)):

@@ -186,8 +186,8 @@ def determina(logLines, muestras):
 def getLogsD(path, name, fecha, muestras):
     subresult = list()
     inicio, fin = divideFechas (fecha)
-    logLines = openAllBig(path)
-    return (logLines,logLines[1])
+    logLines = openAllBig(path, inicio, fin )
+    return (logLines,logLines)
     max =len(logLines)
     for i in range(0, max, 1000):
         linea = logLines[i]
@@ -203,14 +203,17 @@ def getLogsD(path, name, fecha, muestras):
 
 
 
-def openAllBig(path):
+def openAllBig(path, inicio, fin):
     logLines = list()
     ruta = path + '*.log'
     files = sorted(glob.glob(ruta), key=os.path.getmtime)
     for name in files:
         try:
             with open(name) as f:
-                logLines.append(f.readlines())
+                return name
+                fechaTemp = datetime(year = int(name[6:10]), month = int(name[3:5]), day = int(name[0:2]))
+                if (inicio <= fechaTemp <= fin):
+                    logLines.append(f.readlines())
         except IOError as exc:
             if exc.errno != errno.EISDIR:
                 raise
