@@ -61,12 +61,22 @@
     var fechas = [];
 
     for (var i = 0; i < labels.length; i++) {
-      fechas[i] = newDateString(labels[i][0], labels[i][1], labels[i][2]);
+      fechas[i] = newDateString(
+        labels[i][0],
+        labels[i][1],
+        labels[i][2],
+        labels[i][3],
+        labels[i][4],
+        labels[i][5]
+      );
     }
     return fechas;
   }
-  function newDateString(hours, minutes, seconds) {
+  function newDateString(hours, minutes, seconds, day, month, year) {
     return moment()
+      .day(day)
+      .month(month)
+      .year(year)
       .hour(hours)
       .minute(minutes)
       .second(seconds)
