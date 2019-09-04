@@ -54,6 +54,7 @@
   }
   var color = Chart.helpers.color;
   var timeFormat = "HH:mm:ss";
+  var myColor;
   function dameFecha(labels) {
     var fechas = [];
 
@@ -104,12 +105,29 @@
 
   function actualiza(results) {
     chart.data.datasets[0].data = results.data;
-    console.log(results.unidad);
     chart.options.tooltips.callbacks.label = item =>
       `${item.yLabel} ` + results.unidad;
     chart.data.datasets[0].label = results.legend;
-    chart.data.datasets[0].backgroundColor = color(window.chartColors.blue);
-    chart.data.datasets[0].borderColor = window.chartColors.blue;
+    switch (results.legend) {
+      case "Distancia":
+        myColor = window.chartColors.black;
+        break;
+      case "Temperatura":
+        myColor = window.chartColors.red;
+        break;
+      case "TemperaturaCPU":
+        myColor = window.chartColors.purple;
+        break;
+      case "UsoCPU":
+        myColor = window.chartColors.green;
+        break;
+      default:
+        myColor = window.chartColors.blue;
+    }
+    chart.data.datasets[0].backgroundColor = color(myColor)
+      .alpha(0.5)
+      .rgbString();
+    chart.data.datasets[0].borderColor = myColor;
     chart.update();
   }
 
@@ -121,10 +139,10 @@
         datasets: [
           {
             label: results.legend,
-            backgroundColor: color(window.chartColors.red)
+            backgroundColor: color(window.chartColors.blue)
               .alpha(0.5)
               .rgbString(),
-            borderColor: window.chartColors.red,
+            borderColor: window.chartColors.blue,
             fill: false,
             data: results.data
           }
