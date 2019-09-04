@@ -143,30 +143,9 @@
       .alpha(0.5)
       .rgbString();
     chart.data.datasets[0].borderColor = myColor;
-    chart.options.scales = {
-      xAxes: [
-        {
-          type: "time",
-          time: {
-            parser: timeFormat,
-            // round: 'day'
-            tooltipFormat: "ll HH:mm"
-          },
-          scaleLabel: {
-            display: true,
-            labelString: "Tiempo"
-          }
-        }
-      ],
-      yAxes: [
-        {
-          scaleLabel: {
-            display: true,
-            labelString: "Valor"
-          }
-        }
-      ]
-    };
+    chart.datasets[0].points.forEach(function(point) {
+      point.datasetLabel = "updated label";
+    });
     chart.update();
   }
 
