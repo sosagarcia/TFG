@@ -154,9 +154,7 @@ def openAll(path):
 
 
 def getLogs(path, name, fecha, muestras):
-    fechas = list()
-    valores = list()
-    subresult = list()
+
 
     if (str(fecha) == "*"):
        logLines = openAll(path)
@@ -170,6 +168,9 @@ def getLogs(path, name, fecha, muestras):
     return (fechas, valores)
 
 def determina(logLines,muestras):
+    subresult = list()
+    fechas = list()
+    valores = list()
     saltos = len(logLines) / (int(muestras) - 1)
     if (saltos <= 1):
         saltos = 1
@@ -180,7 +181,7 @@ def determina(logLines,muestras):
             valores.append(valor)
             subresult = [linea[11:13], linea[14:16], linea[17:19],linea[0:2],linea[3:5],linea[6:10]]
             fechas.append(subresult)
-    return (fecha,valores)
+    return (fechas,valores)
 
 def getLogsD(path, name, fecha, muestras):
     fechas = list()
