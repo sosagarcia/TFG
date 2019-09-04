@@ -15,12 +15,10 @@ switcher = {
 
 unidades = {
     "_Distancia": "cm.",
-    "_Humedad": "/var/log/iot/hum/",
-    "_Temperatura": "/var/log/iot/tem/",
-    "_Movimientos": "/var/log/iot/ir/",
-    "_Alarmas": "/var/log/iot/a/",
-    "_TemperaturaCPU": "/var/log/iot/cpuT/",
-    "_UsoCPU": "/var/log/iot/cpu/"
+    "_Humedad": "%",
+    "_Temperatura": "ºC",
+    "_TemperaturaCPU": "ºC",
+    "_UsoCPU": "%"
 }
 
 

@@ -102,7 +102,14 @@
   }
 
   function actualiza(results) {
-    chart.data.datasets[0].data = results.data;
+    chart.data.datasets[0] = {
+      label: results.legend,
+      backgroundColor: color(window.chartColors.blue)
+        .alpha(0.5)
+        .rgbString(),
+      borderColor: window.chartColors.red,
+      data: results.data
+    };
     console.log(results.unidad);
     chart.options.tooltips.callbacks.label = item =>
       `${item.yLabel} ` + results.unidad;
