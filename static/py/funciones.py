@@ -14,7 +14,7 @@ switcher = {
 }
 
 unidades = {
-    "_Distancia": "${item.yLabel} cm.",
+    "_Distancia": "cm.",
     "_Humedad": "/var/log/iot/hum/",
     "_Temperatura": "/var/log/iot/tem/",
     "_Movimientos": "/var/log/iot/ir/",
