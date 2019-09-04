@@ -46,7 +46,7 @@ def logs(path):
     data = ""
     blanco = '\n' + '\n'
     ruta = path + '*.log'
-    files = sorted(glob.glob(ruta), key=os.path.getmtime)
+    files = sorted(glob.glob(ruta))
     for name in files:
         try:
             with open(name) as f:
@@ -127,7 +127,7 @@ def dif(start, end, intervalo):
 def openAll(path):
     logLines = list()
     ruta = path + '*.log'
-    files = sorted(glob.glob(ruta))
+    files = sorted(glob.glob(ruta), key=os.path.getmtime)
     for name in files:
         try:
             with open(name) as f:
