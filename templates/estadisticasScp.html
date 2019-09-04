@@ -110,7 +110,7 @@
     chart.data.datasets[0].label = results.legend;
     switch (results.legend) {
       case "Distancia":
-        myColor = window.chartColors.black;
+        myColor = window.chartColors.orange;
         break;
       case "Temperatura":
         myColor = window.chartColors.red;
@@ -122,7 +122,7 @@
         myColor = window.chartColors.green;
         break;
       default:
-        myColor = window.chartColors.blue;
+        myColor = window.chartColors.yellow;
     }
     chart.data.datasets[0].backgroundColor = color(myColor)
       .alpha(0.5)
