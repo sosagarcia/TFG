@@ -135,6 +135,7 @@
 
   function actualiza(results) {
     chart.data.datasets[0].data = results.data;
+    chart.data.labels = dameFecha(results.labels);
     chart.options.tooltips.callbacks.label = item =>
       `${item.yLabel} ` + results.unidad;
     chart.data.datasets[0].label = results.legend;
@@ -143,10 +144,6 @@
       .alpha(0.5)
       .rgbString();
     chart.data.datasets[0].borderColor = myColor;
-    chart.update();
-    chart.config.options.scales.xAxes[0].type = "time";
-    chart.config.options.scales.xAxes[0].time.parser = timeFormat;
-    chart.config.options.scales.xAxes[0].time.tooltipFormat = "ll HH:mm";
     chart.update();
   }
 
