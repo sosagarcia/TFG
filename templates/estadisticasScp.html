@@ -143,10 +143,10 @@
       .alpha(0.5)
       .rgbString();
     chart.data.datasets[0].borderColor = myColor;
+    chart.update();
     chart.config.options.scales.xAxes[0].type = "time";
     chart.config.options.scales.xAxes[0].time.parser = timeFormat;
     chart.config.options.scales.xAxes[0].time.tooltipFormat = "HH:mm";
-
     chart.update();
   }
 
