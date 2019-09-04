@@ -74,8 +74,8 @@
   }
   function newDateString(hours, minutes, seconds, day, month, year) {
     return moment()
-      .day(day)
-      .month(month)
+      .day(day - 1)
+      .month(month - 1)
       .year(year)
       .hour(hours)
       .minute(minutes)
