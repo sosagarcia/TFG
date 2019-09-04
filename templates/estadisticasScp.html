@@ -14,27 +14,29 @@
 
   periodo.addEventListener("change", function() {
     periodoSelected = this.options[periodo.selectedIndex];
-    if (periodoSelected.value == "dia") {
-      if (periodoSelected.value == "intervalo") {
-        peri.style.display = "block";
-      } else {
-        peri.style.display = "none";
-      }
+    if (periodoSelected.value == "intervalo") {
+      peri.style.display = "block";
+    } else {
+      peri.style.display = "none";
     }
-
-    $(":checkbox")
-      .checkboxpicker({
-        onLabel: "Fecha Exacta",
-        offLabel: "Hasta la actualidad"
-      })
-      .on("change", function() {
-        if (fin.style.display == "none") {
-          fin.style.display = "block";
-        } else {
-          fin.style.display = "none";
-        }
-      });
+    if (periodoSelected.value == "dia") {
+      diaC.style.display = "block";
+    } else {
+      diaC.style.display = "none";
+    }
   });
+  $(":checkbox")
+    .checkboxpicker({
+      onLabel: "Fecha Exacta",
+      offLabel: "Hasta la actualidad"
+    })
+    .on("change", function() {
+      if (fin.style.display == "none") {
+        fin.style.display = "block";
+      } else {
+        fin.style.display = "none";
+      }
+    });
 
   function addZero(i) {
     if (i < 10) {
@@ -119,10 +121,10 @@
         myColor = window.chartColors.purple;
         break;
       case "UsoCPU":
-        myColor = window.chartColors.green;
+        myColor = window.chartColors.yellow;
         break;
       default:
-        myColor = window.chartColors.yellow;
+        myColor = window.chartColors.blue;
     }
     chart.data.datasets[0].backgroundColor = color(myColor)
       .alpha(0.5)
