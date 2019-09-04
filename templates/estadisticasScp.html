@@ -104,7 +104,6 @@
       fec = transforma(diaSelected.value);
     } else if (periodoSelected.value == "intervalo") {
       fec = fecha1.value + fecha2.value;
-      console.log(fec);
     } else {
       fec = periodoSelected.value;
     }
@@ -141,7 +140,7 @@
   }
 
   function actualiza(results) {
-    console.log(dameFecha(results.labels));
+    console.log(results.labels));
     chart.data.datasets[0].data = results.data;
 
     chart.data.labels = dameFecha(results.labels);
