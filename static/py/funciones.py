@@ -123,9 +123,12 @@ def divideFechas(fecha):
     año2 = fecha[16:20]
     hora2 = fecha[27:29]
     minuto2 = fecha[30:32]
-    inicio = datetime(year = int(año1), month = int(mes1), day = int(dia1), hour = int(hora1), minute = int(minuto1))
-    fin = datetime(year = int(año2), month =int( mes2), day = int(dia2), hour = int(hora2), minute = int(minuto2))
-    return (inicio, fin)
+    
+    inicio = datetime(year = int(año1), month = int(mes1), day = int(dia1))
+    horaInicio = datetime(hour = int(hora1), minute = int(minuto1))
+    fin = datetime(year = int(año2), month =int( mes2), day = int(dia2))
+    horaFin = datetime (hour = int(hora2), minute = int(minuto2))
+    return (inicio,horaInicio, fin, horaFin)
 
 
 def dif(start, end, intervalo):
@@ -185,7 +188,7 @@ def determina(logLines, muestras):
 
 def getLogsD(path, name, fecha, muestras):
     subresult = list()
-    inicio, fin = divideFechas (fecha)
+    inicio, horaInicio, fin, horaFin = divideFechas (fecha)
     logLines = openAllBig(path, inicio, fin )
     return (logLines,logLines)
     max =len(logLines)
@@ -214,7 +217,7 @@ def openAllBig(path, inicio, fin):
                 lenName = len(name)
                 nombre = name [lenPath : lenName]
                 fechaTemp = datetime(year = int(nombre[6:10]), month = int(nombre[3:5]), day = int(nombre[0:2]))
-                if (inicio < fechaTemp):
+                if (inicio <= fechaTemp):
                     logLines.append(f.readlines())
         except IOError as exc:
             if exc.errno != errno.EISDIR:
