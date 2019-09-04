@@ -2,6 +2,7 @@
   var fec;
   var muestras;
   var peri = document.getElementById("peri");
+
   peri.style.display = "none";
   var tipoD = document.getElementById("tipoD");
   var tipoDSelected;
@@ -103,7 +104,7 @@
   }
 
   function updateStatistics() {
-    muestras = 50;
+    muestras = document.getElementById("muestras");
     periodoSelected = periodo.options[periodo.selectedIndex];
     if (periodoSelected.value == "hoy") {
       fec = hoy();
@@ -117,7 +118,7 @@
     $.post("/updateStatistics", {
       tipo: tipoDSelected.value,
       fecha: fec,
-      muestras: muestras
+      muestras: muestras.value
     }).done(function(reply) {
       actualiza(reply);
     });
