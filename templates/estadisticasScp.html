@@ -9,7 +9,7 @@
   var periodoSelected;
   var fin = document.getElementById("fin");
   fin.style.display = "none";
-  var diaC = document.getElementById("diaConcreto");
+  var diaC = document.getElementById("diaC");
   diaC.style.display = "none";
 
   periodo.addEventListener("change", function() {
@@ -84,14 +84,22 @@
       crea(reply);
     });
   }
+  function transforma(string) {
+    2019 - 08 - 01;
+    var dd = string.slice(-2);
+    var mm = string.slice(5, 7);
+    var yyyy = string.slice(0, 4);
+    return dd + "-" + mm + "-" + yyyy;
+  }
 
   function updateStatistics() {
     muestras = 50;
     periodoSelected = periodo.options[periodo.selectedIndex];
     if (periodoSelected.value == "hoy") {
       fec = hoy();
-    } else {
-      fec = periodoSelected.value;
+    } else if (periodoSelected.value == "dia") {
+      var diaSelected = document.getElementById("diaConcreto");
+      fec = transforma(diaSelected.value);
     }
 
     tipoDSelected = tipoD.options[tipoD.selectedIndex];
