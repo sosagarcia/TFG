@@ -205,12 +205,14 @@ def getLogsD(path, name, fecha, muestras):
 
 def openAllBig(path, inicio, fin):
     logLines = list()
+    lenPath =  len (path)
     ruta = path + '*.log'
     files = sorted(glob.glob(ruta), key=os.path.getmtime)
     for name in files:
         try:
             with open(name) as f:
-                return name
+                lenName = len(name)
+                nombre = name [lenPath : lenName]
                 fechaTemp = datetime(year = int(name[6:10]), month = int(name[3:5]), day = int(name[0:2]))
                 if (inicio <= fechaTemp <= fin):
                     logLines.append(f.readlines())
