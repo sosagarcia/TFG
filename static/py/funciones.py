@@ -211,7 +211,6 @@ def openAllBig(path, inicio, fin):
     logLines = list()
     lenPath =  len (path)
     ruta = path + '*.log'
-    return inicio
     files = sorted(glob.glob(ruta), key=os.path.getmtime)
     for name in files:
         try:
@@ -219,6 +218,7 @@ def openAllBig(path, inicio, fin):
                 lenName = len(name)
                 nombre = name [lenPath : lenName]
                 fechaTemp = datetime(year = int(nombre[6:10]), month = int(nombre[3:5]), day = int(nombre[0:2]))
+                return fechaTemp
                 if (inicio < fechaTemp):
                     logLines.append(f.readlines())
         except IOError as exc:
