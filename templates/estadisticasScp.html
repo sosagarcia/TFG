@@ -112,13 +112,8 @@
       actualiza(reply);
     });
   }
-
-  function actualiza(results) {
-    chart.data.datasets[0].data = results.data;
-    chart.options.tooltips.callbacks.label = item =>
-      `${item.yLabel} ` + results.unidad;
-    chart.data.datasets[0].label = results.legend;
-    switch (results.legend) {
+  function dameColor(tipo) {
+    switch (tipo) {
       case "Distancia":
         myColor = window.chartColors.orange;
         break;
@@ -134,10 +129,44 @@
       default:
         myColor = window.chartColors.blue;
     }
+
+    return myColor;
+  }
+
+  function actualiza(results) {
+    chart.data.datasets[0].data = results.data;
+    chart.options.tooltips.callbacks.label = item =>
+      `${item.yLabel} ` + results.unidad;
+    chart.data.datasets[0].label = results.legend;
+    myColor = dameColor(results.legend);
     chart.data.datasets[0].backgroundColor = color(myColor)
       .alpha(0.5)
       .rgbString();
     chart.data.datasets[0].borderColor = myColor;
+    chart.options.scales = {
+      xAxes: [
+        {
+          type: "time",
+          time: {
+            parser: timeFormat,
+            // round: 'day'
+            tooltipFormat: "ll HH:mm"
+          },
+          scaleLabel: {
+            display: true,
+            labelString: "Tiempo"
+          }
+        }
+      ],
+      yAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: "Valor"
+          }
+        }
+      ]
+    };
     chart.update();
   }
 
