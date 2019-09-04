@@ -143,7 +143,7 @@
       .alpha(0.5)
       .rgbString();
     chart.data.datasets[0].borderColor = myColor;
-    chart.datasets[0].points.forEach(function(point) {
+    chart.data.datasets[0].points.forEach(function(point) {
       point.datasetLabel = "updated label";
     });
     chart.update();
