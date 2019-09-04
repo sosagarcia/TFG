@@ -2,6 +2,7 @@ from datetime import date, datetime, timedelta
 import datetime as dt
 import glob
 import errno
+import os
 
 switcher = {
     "_Distancia": "/var/log/iot/dis/",
@@ -45,7 +46,7 @@ def logs(path):
     data = ""
     blanco = '\n' + '\n'
     ruta = path + '*.log'
-    files = sorted(glob.glob(ruta))
+    files = sorted(glob.glob(ruta), key=os.path.getmtime)
     for name in files:
         try:
             with open(name) as f:
