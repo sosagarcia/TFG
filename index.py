@@ -375,30 +375,17 @@ def state():
 
 @app.route('/testa')
 def chart():
-    legend = 'Temperatures'
-    temperatures = [73.7, 73.4, 73.8, 72.8, 68.7, 65.2,
-                    61.8, 58.7, 58.2, 58.3, 60.5, 65.7,
-                    70.2, 71.4, 71.2, 70.9, 71.3, 71.1]
-    times = [ [11,14,15],
-              [11,14,30],
-              [11,14,45],
-              [11,15,00],
-              [11,15,15],
-              [11,15,30],
-              [11,15,45],
-              [11,16,00],
-              [11,16,15],
-              [11,16,30],
-              [11,16,45],
-              [11,17,00],
-              [11,17,15],
-              [11,17,30],
-              [11,17,45],
-              [11,18,00],
-              [11,18,15],
-              [11,18,30]]
-    print (times)
-    return render_template('pruebaa.html', values=temperatures, labels=times, legend=legend)
+    fecha = "2019-08-17T12:122019-08-18T11:45"
+    inicio, fin = divideFechas(fecha)
+    subresult = list()
+    logLines = openAll("")
+    for i in range(0, len(logLines)):
+        linea = logLines[i]
+        fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour = int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
+
+        if( inicio < fechaTemp):
+            subresult.append(linea)
+    print(subresult)
  
 
 @app.route('/testb')
