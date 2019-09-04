@@ -124,12 +124,13 @@ def dif(start, end, intervalo):
 
 
 def openAll(path):
+    logLines = list()
     ruta = path + '*.log'
     files = sorted(glob.glob(ruta))
     for name in files:
         try:
             with open(name) as f:
-                logLines = f.readlines()
+                logLines.append(f.readlines())
         except IOError as exc:
             if exc.errno != errno.EISDIR:
                 raise
