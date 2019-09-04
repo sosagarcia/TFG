@@ -211,6 +211,7 @@ def openAllBig(path, inicio, fin):
     logLines = list()
     lenPath =  len (path)
     ruta = path + '*.log'
+    return inicio
     files = sorted(glob.glob(ruta), key=os.path.getmtime)
     for name in files:
         try:
