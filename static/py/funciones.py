@@ -124,12 +124,10 @@ def divideFechas(fecha):
     hora2 = fecha[27:29]
     minuto2 = fecha[30:32]
     
-    inicio = datetime(year = int(año1), month = int(mes1), day = int(dia1))
-    inicioH = datetime(year = int(año1), month = int(mes1), day = int(dia1), hour= int(hora1), minute = int(minuto1))
-    fin = datetime(year = int(año2), month =int( mes2), day = int(dia2))
-    finH = datetime(year = int(año2), month =int( mes2), day = int(dia2), hour= int(hora2), minute = int(minuto2))
+    inicio = datetime(year = int(año1), month = int(mes1), day = int(dia1), hour= int(hora1), minute = int(minuto1))
+    fin = datetime(year = int(año2), month =int( mes2), day = int(dia2), hour= int(hora2), minute = int(minuto2))
 
-    return (inicio,inicioH, fin,finH)
+    return (inicio, fin)
 
 
 def dif(start, end, intervalo):
@@ -189,7 +187,7 @@ def determina(logLines, muestras):
 
 def getLogsD(path, name, fecha, muestras):
     subresult = list()
-    inicio, inicioH, fin, finH = divideFechas (fecha)
+    inicio,fin = divideFechas (fecha)
     logLines = openAllBig(path, inicio, fin )
     return (logLines,logLines)
     max =len(logLines)
@@ -212,15 +210,14 @@ def openAllBig(path, inicio, fin):
     lenPath =  len (path)
     ruta = path + '*.log'
     files = sorted(glob.glob(ruta), key=os.path.getmtime)
+    antes = inicio - timedelta(days=1)
     for name in files:
         try:
             with open(name) as f:
                 lenName = len(name)
                 nombre = name [lenPath : lenName]
-                fechaTemp = datetime(year = int(nombre[6:10]), month = int(nombre[3:5]), day = int(nombre[0:2]))
-                return inicio
-                
-                if (inicio <= fechaTemp):
+                fechaTemp = datetime(year = int(nombre[6:10]), month = int(nombre[3:5]), day = int(nombre[0:2])) 
+                if (inicio < fechaTemp):
                     logLines.append(f.readlines())
         except IOError as exc:
             if exc.errno != errno.EISDIR:
