@@ -13,6 +13,16 @@ switcher = {
     "_UsoCPU": "/var/log/iot/cpu/"
 }
 
+unidades = {
+    "_Distancia": "${item.yLabel} cm.",
+    "_Humedad": "/var/log/iot/hum/",
+    "_Temperatura": "/var/log/iot/tem/",
+    "_Movimientos": "/var/log/iot/ir/",
+    "_Alarmas": "/var/log/iot/a/",
+    "_TemperaturaCPU": "/var/log/iot/cpuT/",
+    "_UsoCPU": "/var/log/iot/cpu/"
+}
+
 
 def statusNow(path, name):
     hoy = dt.datetime.now()
@@ -139,6 +149,11 @@ def getLogs(path, name, fecha, muestras):
 def damePath(tipo):
     path = switcher.get(str(tipo))
     return path
+
+
+def dameUnit(tipo):
+    unit = unidades.get(str(tipo))
+    return unit
 
 
 def separa(fechas):

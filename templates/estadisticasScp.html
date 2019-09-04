@@ -103,7 +103,8 @@
 
   function actualiza(results) {
     chart.data.datasets[0].data = results.data;
-    chart.options.tooltips.callbacks.label = item => `${item.yLabel} K--g.`;
+    console.log(results.unit);
+    chart.options.tooltips.callbacks.label = item => results.unit;
     chart.update();
   }
 
