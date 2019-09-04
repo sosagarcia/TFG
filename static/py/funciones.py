@@ -130,7 +130,7 @@ def openAll(path):
     for name in files:
         try:
             with open(name) as f:
-                logLines.append(f.readlines())
+                logLines += f.readlines()
         except IOError as exc:
             if exc.errno != errno.EISDIR:
                 raise
