@@ -158,6 +158,7 @@ def getLogs(path, name, fecha, muestras):
 
     if (str(fecha) == "*"):
        logLines = openAll(path)
+       return (logLines, "0")
     else :
         log = open(str(path) + str(fecha) + str(name), "r")
         logLines = log.readlines()
