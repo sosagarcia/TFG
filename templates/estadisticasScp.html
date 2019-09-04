@@ -103,8 +103,8 @@
 
   function actualiza(results) {
     chart.data.datasets[0].data = results.data;
-    console.log(results.unit);
-    chart.options.tooltips.callbacks.label = item => results.unit;
+    console.log(results.unidad);
+    chart.options.tooltips.callbacks.label = item => results.unidad;
     chart.update();
   }
 
