@@ -385,7 +385,9 @@ def chart():
 
         if( inicio <= fechaTemp):
             subresult.append(linea)
-    print(subresult)
+    fechas, valores = determina(subresult, 50)
+    print(fechas)
+    print(valores)
  
 
 @app.route('/testb')
