@@ -52,6 +52,7 @@
 
     return dd + "-" + mm + "-" + yyyy;
   }
+  var color = Chart.helpers.color;
   var timeFormat = "HH:mm:ss";
   function dameFecha(labels) {
     var fechas = [];
@@ -102,18 +103,17 @@
   }
 
   function actualiza(results) {
-    chart.data.datasets[0] = {
-      label: results.legend,
-      data: results.data
-    };
+    chart.data.datasets[0].data = results.data;
     console.log(results.unidad);
     chart.options.tooltips.callbacks.label = item =>
       `${item.yLabel} ` + results.unidad;
+    chart.data.datasets[0].label = results.legend;
+    chart.data.datasets[0].backgroundColor = color(window.chartColors.blue);
+    chart.data.datasets[0].borderColor = window.chartColors.blue;
     chart.update();
   }
 
   function crea(results) {
-    var color = Chart.helpers.color;
     var config = {
       type: "line",
       data: {
