@@ -104,8 +104,6 @@
   function actualiza(results) {
     chart.data.datasets[0] = {
       label: results.legend,
-      backgroundColor: color(window.chartColors.blue),
-      borderColor: window.chartColors.red,
       data: results.data
     };
     console.log(results.unidad);
