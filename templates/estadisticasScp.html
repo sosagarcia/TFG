@@ -104,9 +104,7 @@
   function actualiza(results) {
     chart.data.datasets[0] = {
       label: results.legend,
-      backgroundColor: color(window.chartColors.blue)
-        .alpha(0.5)
-        .rgbString(),
+      backgroundColor: color(window.chartColors.blue),
       borderColor: window.chartColors.red,
       data: results.data
     };
