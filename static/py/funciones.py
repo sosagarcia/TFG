@@ -167,7 +167,7 @@ def getLogs(path, name, fecha, muestras):
 
     return (fechas, valores)
 
-def determina(logLines,muestras):
+def determina(logLines, muestras):
     subresult = list()
     fechas = list()
     valores = list()
@@ -184,24 +184,16 @@ def determina(logLines,muestras):
     return (fechas,valores)
 
 def getLogsD(path, name, fecha, muestras):
-    fechas = list()
-    valores = list()
     subresult = list()
     inicio, fin = divideFechas (fecha)
-   # "17-08-2019"
-    if (inicio == fin):
-        log = open(str(path) + str(inicio) + str(name), "r")
-        logLines = log.readlines()
-        log.close()
-    else:
-        logLines = openAll(path)
+    logLines = openAll(path)
     
-    for i in range(0, len(logLines)):
+    for i in range(0, max):
         linea = logLines[i]
         fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour = int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
-        if( inicio < fechaTemp < fin):
+        if( inicio < fechaTemp):
             subresult.append(linea)
-    fechas, valores = determina(subresult,muestras)
+    fechas, valores = determina(subresult, muestras)
     return (fechas, valores)
 
 
