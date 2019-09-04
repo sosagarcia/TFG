@@ -187,7 +187,7 @@ def getLogsD(path, name, fecha, muestras):
     subresult = list()
     inicio, fin = divideFechas (fecha)
     logLines = openAll(path)
-    
+    return(logLines, "0")
     for i in range(0, len(logLines)):
         linea = logLines[i]
         fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour = int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
