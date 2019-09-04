@@ -24,19 +24,19 @@
     } else {
       diaC.style.display = "none";
     }
+    $(":checkbox")
+      .checkboxpicker({
+        onLabel: "Fecha Exacta",
+        offLabel: "Hasta la actualidad"
+      })
+      .on("change", function() {
+        if (fin.style.display == "none") {
+          fin.style.display = "block";
+        } else {
+          fin.style.display = "none";
+        }
+      });
   });
-  $(":checkbox")
-    .checkboxpicker({
-      onLabel: "Fecha Exacta",
-      offLabel: "Hasta la actualidad"
-    })
-    .on("change", function() {
-      if (fin.style.display == "none") {
-        fin.style.display = "block";
-      } else {
-        fin.style.display = "none";
-      }
-    });
 
   function addZero(i) {
     if (i < 10) {
