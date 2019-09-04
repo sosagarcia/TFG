@@ -111,6 +111,8 @@
     } else if (periodoSelected.value == "dia") {
       var diaSelected = document.getElementById("diaConcreto");
       fec = transforma(diaSelected.value);
+    } else {
+      fec = periodoSelected.value;
     }
 
     tipoDSelected = tipoD.options[tipoD.selectedIndex];

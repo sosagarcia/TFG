@@ -123,6 +123,23 @@ def dif(start, end, intervalo):
     return 0
 
 
+
+
+def logsasd(path):
+    data = ""
+    blanco = '\n' + '\n'
+    ruta = path + '*.log'
+    files = sorted(glob.glob(ruta))
+    for name in files:
+        try:
+            with open(name) as f:
+                data += f.read() + blanco
+        except IOError as exc:
+            if exc.errno != errno.EISDIR:
+                raise
+    return data
+
+
 def getLogs(path, name, fecha, muestras):
     "17-08-2019"
     fechas = list()
