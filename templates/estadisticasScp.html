@@ -125,6 +125,11 @@
         ]
       },
       options: {
+        tooltips: {
+          callbacks: {
+            label: item => `${item.yLabel} GB`
+          }
+        },
         title: {
           text: "Chart.js Time Scale"
         },
