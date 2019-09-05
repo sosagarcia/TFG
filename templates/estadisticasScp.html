@@ -1,6 +1,7 @@
 <script>
   var fec;
   var muestras;
+  var actual = 1;
   var peri = document.getElementById("peri");
 
   peri.style.display = "none";
@@ -116,7 +117,7 @@
       diaSelected = document.getElementById("diaConcreto");
       fec = transforma(diaSelected.value);
     } else if (periodoSelected.value == "intervalo") {
-      if ((fin.style.display = "block")) {
+      if (actual == 0) {
         fec = fecha1.value + fecha2.value;
       } else {
         fec = fecha1.value + ahora();
@@ -245,8 +246,10 @@
       .on("change", function() {
         if (fin.style.display == "none") {
           fin.style.display = "block";
+          actual = 0;
         } else {
           fin.style.display = "none";
+          actual = 1;
         }
       });
   });
