@@ -200,7 +200,7 @@ def getLogsD(path, name, fecha, muestras):
         if (inicio < fechaTemp < fin):
             subresult.append(linea)
     
-    if len(logLines) == 2 :
+    #if len(logLines) == 2 :
         
             
 
