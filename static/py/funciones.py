@@ -190,16 +190,17 @@ def getLogsD(path, name, fecha, muestras):
     inicio,fin = divideFechas (fecha)
     logLines = openAllBig(path, inicio, fin )
     dias = len(logLines)
-    return (dias, logLines)
     if dias == 0:
         return ("0","0")
     if dias == 1 :
+        dia = logLines[0]
+        max = len(dia)
         for i in range(0, max):
-            dia = logLines[i]
-        fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour = int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
-        if (inicio < fechaTemp < fin):
-            subresult.append(linea)
-    
+            linea = dia[i]
+            fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour = int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
+            if (inicio < fechaTemp < fin):
+                subresult.append(linea)
+    return (subresult, subresult)
     #if len(logLines) == 2 :
         
             
