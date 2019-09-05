@@ -1,30 +1,31 @@
 <script>
-  $(document).ready(function() {
-    function datosS() {
-      fetch("/state")
-        .then(res => res.json())
-        .then(out => {
-          funciona(out);
-        })
-        .catch(error => console.error("Error al obtener datos del sistema"));
-      function funciona(data) {
-        humedad = data.humedad;
-        temperatura = data.temperatura;
-        distancia = data.distancia;
-        movimiento = data.movimiento;
-        alarma = data.alarma;
-        temperaturaCPU = data.temperaturaCPU;
-        usoCPU = data.usoCPU;
-        document.getElementById("hum").innerHTML = humedad.substr(20);
-        document.getElementById("tem").innerHTML = temperatura.substr(20);
-        document.getElementById("dis").innerHTML = distancia.substr(20);
-        document.getElementById("av").innerHTML = movimiento.substr(0, 19);
-        alarmaText = alarma.substr(20) + " Fecha : " + alarma.substr(0, 19);
-        document.getElementById("al").innerHTML = alarmaText;
-        document.getElementById("cpuT").innerHTML = temperaturaCPU.substr(20);
-        document.getElementById("cpu").innerHTML = usoCPU.substr(20);
-      }
-    }
-    setInterval(datosS, 5000);
-  });
+  function startData() {
+    $.get("/state", function() {})
+      .done(function(out) {
+        funciona(out);
+      })
+      .fail(function() {
+        console.log("fail data");
+        var t = setTimeout(startData, 1000);
+      });
+  }
+  function funciona(data) {
+    humedad = data.humedad;
+    temperatura = data.temperatura;
+    distancia = data.distancia;
+    movimiento = data.movimiento;
+    alarma = data.alarma;
+    temperaturaCPU = data.temperaturaCPU;
+    usoCPU = data.usoCPU;
+    document.getElementById("hum").innerHTML = humedad.substr(20);
+    document.getElementById("tem").innerHTML = temperatura.substr(20);
+    document.getElementById("dis").innerHTML = distancia.substr(20);
+    document.getElementById("av").innerHTML = movimiento.substr(0, 19);
+    alarmaText = alarma.substr(20) + " Fecha : " + alarma.substr(0, 19);
+    document.getElementById("al").innerHTML = alarmaText;
+    document.getElementById("cpuT").innerHTML = temperaturaCPU.substr(20);
+    document.getElementById("cpu").innerHTML = usoCPU.substr(20);
+    var t = setTimeout(startData, 5000);
+  }
+  $(document).ready(startData);
 </script>

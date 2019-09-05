@@ -7,9 +7,14 @@
   var ss;
   var date_string;
   function startTime() {
-    $.get("/ahora", function() {}).done(function(out) {
-      reloj(out);
-    });
+    $.get("/ahora", function() {})
+      .done(function(out) {
+        reloj(out);
+      })
+      .fail(function() {
+        console.log("fail reloj");
+        var t = setTimeout(startTime, 100);
+      });
   }
   function reloj(out) {
     dt = new Date(
