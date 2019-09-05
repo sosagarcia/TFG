@@ -95,7 +95,7 @@
     </nav>
   </header>
 
-  <body onload="startTime()">
+  <body>
     <div id="wrap">
       <div id="main" class=" clear-top">
         <h4 class="d-flex justify-content-end badge-dark">
@@ -115,7 +115,7 @@
     </div>
     {% include "footer.html" %}
   </body>
-  {% include "reloj.html" %}
+
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <!-- Optional JavaScript -->
   {% block script %} {% endblock %}
@@ -165,4 +165,6 @@
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.7/js/mdb.min.js"
   ></script>
+
+  {% include "reloj.html" %}
 </html>
