@@ -1,6 +1,5 @@
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    // {% if session["root"] %}
     var x = document.getElementById("Duration");
     var y = document.getElementById("login-2");
     var horas = document.getElementById("horas");
@@ -24,7 +23,7 @@
           minutos.value = "";
         }
       });
-    // {% endif %}
+
     var calendarEl = document.getElementById("calendar");
     var calendar = new FullCalendar.Calendar(calendarEl, {
       locale: "es",
