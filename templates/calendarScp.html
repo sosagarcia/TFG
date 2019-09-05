@@ -1,6 +1,6 @@
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    {% if session["root"] %}
+    // {% if session["root"] %}
     var x = document.getElementById("Duration");
     var y = document.getElementById("login-2");
     var horas = document.getElementById("horas");
@@ -24,7 +24,7 @@
           minutos.value = "";
         }
       });
-      {% endif %}
+    // {% endif %}
     var calendarEl = document.getElementById("calendar");
     var calendar = new FullCalendar.Calendar(calendarEl, {
       locale: "es",
@@ -104,12 +104,11 @@
           {
             canvas_data: JSON.stringify(id)
           },
-          function(err, req, resp) {
-            window.location.href = "/results/" + resp["responseJSON"];
+          function() {
+            window.location.href = "/calendar";
           }
         );
         window.location.href = "/calendar";
-      } else {
       }
     }
 
@@ -173,7 +172,7 @@
     document.getElementById("autoCerrar").click();
   }
 </script>
-{% if session["root"] %}
+
 <script>
   window.onload = function() {
     refresh();
@@ -353,4 +352,3 @@
     startTime();
   };
 </script>
-{% endif %}
