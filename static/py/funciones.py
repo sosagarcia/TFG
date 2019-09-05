@@ -187,8 +187,6 @@ def determina(logLines, muestras):
 
 def getLogsD(path, name, fecha, muestras):
     subresult = list()
-    valores = list()
-    fechas = list()
     inicio,fin = divideFechas (fecha)
     logLines = openAllBig(path, inicio, fin )
     dias = len(logLines)
@@ -202,20 +200,12 @@ def getLogsD(path, name, fecha, muestras):
                 linea = dia[i]
                 fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour = int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
                 if (inicio < fechaTemp < fin):
-                    valor = linea[20:24]
-                    if not (valor == "Erro") and (linea[10:11] == " "):
-                        subresult = [linea[11:13], linea[14:16], linea[17:19],linea[0:2],linea[3:5],linea[6:10]]
-                        fechas.append(subresult)
-                        valores.append(valor)
-    return (fechas, valores)
-    
-    #if len(logLines) == 2 :
-        
-            
+                    subresult.append(linea)
+     #if dias > 2 : 
 
-    return ("0","subresult")      
     fechas, valores = determina(subresult, muestras)
     return (fechas, valores)
+    
 
 
 
