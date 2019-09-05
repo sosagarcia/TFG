@@ -295,18 +295,18 @@ def deletAlgo():
     
 
 
-@app.route('/manual', methods=['POST'])
+@app.route('/manual')
 def manual():
     session['manual'] = "1"
-    return render_template('calendar.html')
+    return jsonify(estado=session['manual'])
 
     
-@app.route('/auto', methods=['POST'])
+@app.route('/auto')
 def auto():
     print("Auto")
     session['manual'] = "0"
 
-    return redirect(url_for('calendar'))
+    return jsonify(estado=session['manual'])
 
 
 @app.route('/manualdata')
