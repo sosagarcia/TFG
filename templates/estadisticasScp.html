@@ -35,6 +35,19 @@
     }
     return i;
   }
+  function ahora() {
+    var hoy = new Date();
+    var dd = hoy.getDate();
+    var mm = hoy.getMonth() + 1;
+    var yyyy = hoy.getFullYear();
+    var HH = hoy.getHours();
+    var MM = hoy.getMinutes();
+    dd = addZero(dd);
+    mm = addZero(mm);
+    HH = addZero(HH);
+    MM = addZero(MM);
+    return yyyy + "-" + mm + "-" + dd + "T" + HH + ":" + MM;
+  }
   function hoy() {
     var hoy = new Date();
     var dd = hoy.getDate();
@@ -75,7 +88,8 @@
   }
   function primera() {
     muestras = 50;
-    fec = hoy();
+    fec = ahora();
+    //fec = hoy();
 
     $.post("/updateStatistics", {
       tipo: "_Humedad",
@@ -102,7 +116,11 @@
       diaSelected = document.getElementById("diaConcreto");
       fec = transforma(diaSelected.value);
     } else if (periodoSelected.value == "intervalo") {
-      fec = fecha1.value + fecha2.value;
+      if ((fin.style.display = "block")) {
+        fec = fecha1.value + fecha2.value;
+      } else {
+        fec = fecha1.value + ahora();
+      }
     } else {
       fec = periodoSelected.value;
     }
