@@ -188,6 +188,7 @@ def determina(logLines, muestras):
 def getLogsD(path, name, fecha, muestras):
     subresult = list()
     valores = list()
+    fechas = list()
     inicio,fin = divideFechas (fecha)
     logLines = openAllBig(path, inicio, fin )
     dias = len(logLines)
