@@ -127,7 +127,7 @@
     }
 
     tipoDSelected = tipoD.options[tipoD.selectedIndex];
-
+    console.log(fec);
     $.post("/updateStatistics", {
       tipo: tipoDSelected.value,
       fecha: fec,
@@ -136,9 +136,10 @@
       actualiza(reply);
     });
   }
-  function dameColor(tipo) {
+  function dameColor(tipo, unit) {
+    var dist = "Distancia" + " (" + unit + ")";
     switch (tipo) {
-      case "Distancia":
+      case dist:
         myColor = window.chartColors.orange;
         break;
       case "Temperatura":
@@ -164,7 +165,7 @@
     chart.options.tooltips.callbacks.label = item =>
       `${item.yLabel} ` + results.unidad;
     chart.data.datasets[0].label = results.legend;
-    myColor = dameColor(results.legend);
+    myColor = dameColor(results.legend, results.unidad);
     console.log(myColor);
     console.log(results.legend);
 
