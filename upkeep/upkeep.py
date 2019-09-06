@@ -60,7 +60,7 @@ def reWrite(text, path, name, fecha):
 
 
 def dameFecha():
-    hoy = datetime.datetime.now()
+    hoy = dt.datetime.now()
     fecha = hoy - timedelta(days=31)
     fecha = fecha.strftime("%Y-%m-%d")
     return fecha
