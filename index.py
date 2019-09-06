@@ -181,7 +181,7 @@ def login():
 def perfil():
     
     if session.get("name", None) is not None:
-        return render_template('perfil1.html')
+        return render_template('perfil.html')
     else:
         flash("Sesión caducada",'dark')
         return redirect(url_for("login"))
@@ -399,24 +399,7 @@ def chart():
     print(valores)
  
 
-@app.route('/testb')
-def testb():
-    return render_template('prueba1.html') 
-    
-@app.route('/testc')
-def testc():
-    legend = 'Temperaturas'
-    fecha = "17-08-2019"
-    muestra = 50
-    fechas, valores  = getLogs(tPath,tName,fecha, muestra) 
-    #tiempos = separa(fechas)
-    return render_template('prueba.html', values=valores, labels=fechas, legend=legend)
 
-
-@app.route('/testd')
-def testd():
-
-    return render_template('pruebaa.html') 
 
 @app.route('/dataD')
 def dataD():

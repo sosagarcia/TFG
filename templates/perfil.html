@@ -1,42 +1,131 @@
 {% extends "layout.html" %}
 
 
-{% block title %}Profile{% endblock %}
+{% block title %}Perfil{% endblock %}
 
 {% block body %}
 
 
 
+<!------ Include the above in your HEAD tag ---------->
 
-<div class="container fadeInDown">
-  <div class="row">
-    <div class="col">
-
-      <h1>Perfil</h1>
-      <hr>
-
-      <div class="card">
-        <div class="card-body">
-          <h4>{{ session["name"] }}</h4>
-          <hr>
-
-          <p>{{ session["email"] }}</p>
-          <p class="text-muted"></p>
-
-        </div>
-      </div>
+<div class="container">
+  
+    {% include "flash.html" %}
+	<div class="row">
 
 
-    </div>
-  </div>
+		<div class="col-md-3 fadeIn">
+		     <div class="list-group ">
+              <a href="#" class="list-group-item list-group-item-action active">Información Personal</a>
+              <a href="#" class="list-group-item list-group-item-action">Ajustes</a>
+          </div> 
+		</div>
+		<div class="col-md-9 fadeInDown">
+		    <div class="card">
+		        <div class="card-body">
+		            <div class="row">
+		                <div class="col-md-12">
+		                    <h4>Perfil</h4>
+		                    <hr>
+		                </div>
+		            </div>
+		            <div class="row">
+		                <div class="col-md-12">
+		                    <form action="/update/{{session["id"]}}" method="POST">
+                              <div class="form-group row">
+                                <label for="username" class="col-4 col-form-label">Nombre completo*</label> 
+                                <div class="col-8">
+                                  <input id="username" name="fullname" value ="{{ session["name"] }}" class="form-control here" required="required" type="text" placeholder="Introduzca su nombre completo">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="text" class="col-4 col-form-label">Teléfono*</label> 
+                                <div class="col-8">
+                                  <input id="text" name="phone" value="{{ session["phone"] }}" class="form-control here" required="required" type="text" placeholder="Introduzca su número de teléfono">
+                                </div>
+                              </div> 
+                              <div class="form-group row">
+                                <label for="email" class="col-4 col-form-label">Email*</label> 
+                                <div class="col-8">
+                                  <input id="email" name="email" value="{{ session["email"] }}" class="form-control here" required="required" type="text" placeholder="Introduzca su email">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="select" class="col-4 col-form-label">Rol</label> 
+                                <div class="col-8">
+                                  <select id="select" name="admin" class="custom-select">
+                                    <option value="1">Administrador</option>
+                                    <option value="0">Usuario</option>
+                                  </select>
+                                </div>
+                              </div>                        
+                              <div class="form-group row">
+                                <label for="publicinfo" class="col-4 col-form-label">Mensaje de Bienvenida</label> 
+                                <div class="col-8">
+                                  <textarea id="publicinfo" name="message" cols="40" rows="4" class="form-control" placeholder="Introduzca un mensaje para visualizar cada vez que inicie sesión" maxlength="255">{{ session["message"] }}</textarea>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <input type="checkbox" id="con" onclick="myFunction()" > Cambiar contraseña  <br>
+                                <input type="text" id="bool" name="bool" value="0" style="display:none">                                
+                              </div> 
+                            <div id="cont" style="display:none">
+                              <div class="form-group row">
+                                <label for="newpass" class="col-4 col-form-label">Nueva contraseña*</label> 
+                                <div class="col-8">
+                                  <input id="newpass" name="newpass" placeholder="Introduzca la nueva contraseña" value="" class="form-control here" type="password" >
+                                </div>
+                              </div> 
+                              <div class="form-group row">
+                                <label for="repass" class="col-4 col-form-label">Repetir contraseña*</label> 
+                                <div class="col-8">
+                                  <input id="newpass" name="repass" placeholder="Repita la nueva contraseña" value="" class="form-control here" type="password" >
+                                </div>
+                              </div> 
+                            </div>
+                              <div class="form-group row">
+                                <div class="offset-4 col-8">
+                                  <button name="submit" type="submit" class="btn-primary">Actualizar Perfil</button>
+                                </div>
+                              </div>
+                              * Campo obligatorio
+                        </form>
+		                </div>
+		            </div>		            
+		        </div>
+		    </div>
+		</div>
+	</div>
 </div>
-
-
-
+                                                      
 
 {% endblock %}
 {% block script %}
 
+<script>
+
+function myFunction() {
+  // Get the checkbox
+  var checkBox = document.getElementById("con");
+  // Get the output text
+  var text = document.getElementById("cont");
+  
+  var bool = document.getElementById("bool");
+
+
+  // If the checkbox is checked, display the output text
+  if (checkBox.checked == true){
+    text.style.display = "block";
+    bool.value= "1"
+    
+  } else {
+    text.style.display = "none"; 
+    bool.value= "0"
+  }
+}
+
+</script>
 
 
 {% endblock %}
