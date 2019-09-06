@@ -132,7 +132,7 @@
   ></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <!-- Optional JavaScript -->
-  {% block script %} {% endblock %}
+
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
   <script
@@ -179,6 +179,5 @@
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.7/js/mdb.min.js"
   ></script>
-
-  {% include "reloj.html" %}
+  {% include "reloj.html" %} {% block script %} {% endblock %}
 </html>
