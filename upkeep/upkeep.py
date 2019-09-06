@@ -31,10 +31,22 @@ def media(dia, unit):
     subresult = list()
     muestras = len(dia)
     salto = 1 / reduction
-    for i in range(0, muestras - 1, int(salto)):
+    final = muestras - 1
+    fin = int(salto - 1)
+    stop = int(muestras/salto)
+    print(stop)
+    print(fin)
+    print(final)
+    for i in range(0, final, int(salto)):
         conteo = 0
+
         valorMedia = 0
-        for j in range(0, int(salto - 1)):
+        if (i >= stop):
+            restantes = final - i
+            print(i)
+            print(restantes)
+            fin = restantes
+        for j in range(0, fin):
             linea = dia[j + i]
             valor = linea[20:24]
             if not (valor == "Erro") and (linea[10:11] == " "):
