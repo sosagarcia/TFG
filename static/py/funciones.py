@@ -29,7 +29,7 @@ def statusNow(path, name):
     limite = 100
     while i <= limite:
         try:
-            fecha = hoy.strftime("%d-%m-%Y")
+            fecha = hoy.strftime("%Y-%m-%d")
             log = open(path + fecha + name, "r")
             logLines = log.readlines()
             log.close()
