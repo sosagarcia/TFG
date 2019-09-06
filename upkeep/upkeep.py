@@ -51,16 +51,14 @@ def media(dia, unit):
         result = "{0:.2f}".format(valorMedia / conteo)
         newLine = fecha + str(result) + " " + str(unit) + '\n'
         subresult.append(newLine)
-        print(subresult)
     return subresult
 
 
 def reWrite(text, path, name, fecha):
     try:
-        with open(path + fecha + name + "_old" + ".log", "a") as f:
-            f.writelines(text)
-            print("Eliminando archivo viejo")
+        with open(path + fecha + name + ".log", "a") as f:
             remove(path + fecha + name + ".log")
+            f.writelines(text)
 
     finally:
         f.close()
@@ -75,9 +73,7 @@ def dameFecha():
 
 def openFile(path, name):
     fecha = dameFecha()
-    print(fecha)
     ruta = str(path) + str(fecha) + name + ".log"
-    print(ruta)
     try:
         with open(ruta,  "r") as f:
             logLines = f.readlines()
@@ -93,19 +89,19 @@ def openFile(path, name):
 def cpuH():
     fichero, fecha = openFile(cpuPath, cpuName)
     if not (fichero == -1):
-        print("calculando Media")
         newFile = media(fichero, "%")
         reWrite(newFile, cpuPath, cpuName, fecha)
     else:
-        print("Error 1")
+        pass
 
 
 if __name__ == '__main__':
 
-    #t1 = threading.Thread(target=cpuH)
-
-    # t1.setDaemon(True)
-
-    print("iniciando")
-    # t1.start()
-    cpuH()
+    t1 = threading.Thread(target=cpuH)
+    t1.setDaemon(True)
+    try:
+        print("iniciando")
+        t1.start()
+        print("fin")
+    finally:
+        print("finito")
