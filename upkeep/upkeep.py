@@ -69,10 +69,10 @@ def dameFecha():
 def openFile(path, name):
     print("intentando abrir archivo")
     fecha = dameFecha()
-    print("fecha a calcular : " + str(fecha))
+    print(fecha)
 
     ruta = path + fecha + name + ".log"
-    print("ruta " + ruta)
+    print(ruta)
     try:
         with open(ruta,  "r") as f:
             logLines = f.readlines()
