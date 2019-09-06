@@ -442,7 +442,7 @@ def updateStatistics():
     path = damePath(tipo)
     unit = dameUnit(tipo)
     name = str(tipo) + ".log"
-    titulo = str(tipo)[1: len(tipo)]
+    titulo = str(tipo)[1: len(tipo)] + "(" + str(unit) + ")"
     if len(fecha) <= 12 :
         fechas, valores  = getLogs(path,name,fecha, muestra)
     else:
