@@ -4,7 +4,7 @@ from flask.json import JSONEncoder
 import datetime as dt
 from flask import Flask, render_template, request, url_for, redirect, flash, session, Response
 import os
-from random import sample
+import random
 from flaskext.mysql import MySQL
 import bcrypt
 from flask import jsonify, json
@@ -12,12 +12,16 @@ from static.py.mensajes import *
 from static.py.rutas import *
 from static.py.funciones import *
 from static.py.correo import *
+import socket
 
 # from flask.ext.session import Session
 # import mysql
 # import mysql.connector
 
-
+def giveIp():
+    ip1 = socket.gethostbyname(socket.gethostname())
+    ip2 = socket.gethostbyname_ex(socket.gethostname())
+    return (ip1, ip2)
 
 
 class CustomJSONEncoder(JSONEncoder):
@@ -74,13 +78,6 @@ def usuarios():
     data = conn('SELECT fullname, id FROM contacts')
     data = [i for sub in data for i in sub]
     return data
-
-
-def searchUser(email):
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM contacts WHERE email = %s", (email,))
-    user = cur.fetchone()
-    return user
 
 
 def conn(texto):
@@ -375,27 +372,10 @@ def state():
 
 @app.route('/testa')
 def chart():
-    le = ["2019-09-03.log ",  "2019-08-18.log",  "2019-08-24.log", "2019-09-04.log",  "2019-08-21.log",  "2019-08-25.log", "2019-09-05.log",  "2019-08-22.log", "2019-08-17.log ", "2019-08-23.log"]
-    print (le)
-    le.sort(reverse=True)
-    print (le)
+    ip1, ip2 = giveIp()
+    result = str(ip1) + "Este es el segundo result " +str(ip2)
+    return result
 
-
-
-@app.route('/dataD')
-def dataD():
-    legend = 'Temperaturas'
-    datos = sample(range(1,10),5)
-    datos1 = [datos]
-    label = ["Lun", "Tue", "Mierda", "Thu", "Vier"]
-
-
-    fecha = "17-08-2019"
-    muestra = 50
-    #fechas, valores  = getLogs(tPath,tName,fecha, muestra)
-    ## TIene que ser array de array
-    #valores1 = [valores]
-    return jsonify (results = datos1 , labels=label,  legend=legend)
 
 
 @app.route('/updateStatistics', methods=['POST'])
@@ -413,22 +393,7 @@ def updateStatistics():
         fechas, valores  = getLogsD(path,name,fecha, muestra)
 
     return jsonify (labels = fechas, data = valores, legend = titulo, unidad = unit)
-
-
-@app.route('/data1')
-def data1():
-    fecha = "17-08-2019"
-    muestra = 50
-    fechas, valores  = getLogs(tPath,tName,fecha, muestra)
     
-    title = "título"
-    return jsonify(labels=fechas, data=valores, titulo=title)
-
-
-    """labels = ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford']
-    data = [617594, 181045, 153060, 106519, 105162, 95072]"""
-
-            
 
 @app.route('/logout')
 def logout():
@@ -657,4 +622,4 @@ if __name__ == '__main__':
 
 #python hilos https://python-para-impacientes.blogspot.com/2016/12/threading-programacion-con-hilos-i.html
 
-# estadisticas
+# mantenimiento : http://akirasan.net/lanzar-aplicacion-python-tras-iniciar-raspberrypi/ https://docs.oracle.com/cd/E24842_01/html/E23086/sysrescron-1.html
