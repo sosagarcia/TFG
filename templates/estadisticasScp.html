@@ -158,8 +158,6 @@
   }
 
   function actualiza(results) {
-    console.log(results.labels);
-    console.log(results.data);
     chart.data.datasets[0].data = results.data;
 
     chart.data.labels = dameFecha(results.labels);
