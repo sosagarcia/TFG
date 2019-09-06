@@ -600,15 +600,13 @@ def update_contact(id):
 @app.route('/estadisticas')
 def estadisticas():
    
-    """    if session.get("name", None) is not None:
+    if session.get("name", None) is not None:
         listado = users(usuarios())
         return render_template('estadisticas.html', mensaje=esta, listado=listado)
     else:
         flash("Sesión caducada",'dark')
-        return redirect(url_for("login"))"""
+        return redirect(url_for("login"))
 
-    listado = users(usuarios())
-    return render_template('estadisticas.html', mensaje=esta, listado=listado)
 
 
 @app.route('/lista')
