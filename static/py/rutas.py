@@ -22,7 +22,7 @@ outName = "_Out.log"
 
 
 def write_log(text, path, name):
-    log = open(path + datetime.datetime.now().strftime("%d-%m-%Y") + name, "a")
+    log = open(path + datetime.datetime.now().strftime("%Y-%m-%d") + name, "a")
     line = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S") + " " + text + "\n"
     log.write(line)
     log.close()

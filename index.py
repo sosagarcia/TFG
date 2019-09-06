@@ -375,29 +375,10 @@ def state():
 
 @app.route('/testa')
 def chart():
-    fecha = "2019-08-17T12:122019-08-18T11:45"
-    inicio, fin, fin2, fin3 = divideFechas(fecha)
-    print(inicio)
-    print(fin)
-    print(fin2)
-    print(fin3)
-
-    name = openAllBig("", inicio, fin)
-    print (type (name))
-    subresult = list()
-    logLines = openAll("")
-    for i in range(0, len(logLines)):
-        linea = logLines[i]
-        fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour = int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
-        print(type(inicio))
-        print(type(fechaTemp))
-
-        if( inicio <= fechaTemp):
-            subresult.append(linea)
-    fechas, valores = determina(subresult, 50)
-    print(fechas)
-    print(valores)
- 
+    le = ["2019-09-03.log ",  "2019-08-18.log",  "2019-08-24.log", "2019-09-04.log",  "2019-08-21.log",  "2019-08-25.log", "2019-09-05.log",  "2019-08-22.log", "2019-08-17.log ", "2019-08-23.log"]
+    print (le)
+    le.sort(reverse=True)
+    print (le)
 
 
 

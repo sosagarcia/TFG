@@ -45,7 +45,7 @@ def statusNow(path, name):
 def logs(path):
     data = ""
     blanco = '\n' + '\n'
-    ruta = path + '*-*-*.log'
+    ruta = path + '*.log'
     files = sorted(glob.glob(ruta))
     for name in files:
         try:
