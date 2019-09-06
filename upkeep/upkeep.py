@@ -33,17 +33,14 @@ def media(dia, unit):
     salto = 1 / reduction
     final = muestras - 1
     fin = int(salto - 1)
-    stop = int(muestras/salto)
-    print(stop)
     print(fin)
     print(final)
     for i in range(0, final, int(salto)):
         conteo = 0
-
         valorMedia = 0
-        if (i >= stop):
-            restantes = final - i
+        if (i >= (final - int(salto))):
             print(i)
+            restantes = final - i
             print(restantes)
             fin = restantes
         for j in range(0, fin):
