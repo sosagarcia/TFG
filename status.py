@@ -9,8 +9,8 @@ from static.py.rutas import *
 
 # Valores de aviso
 
-tempMax = 25
-humMax = 60
+tempMax = 26
+humMax = 30
 
 # Distance
 GPIO_TRIGGER = 23
