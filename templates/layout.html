@@ -100,11 +100,20 @@
       <div id="main" class=" clear-top">
         <h4 class="d-flex justify-content-end badge-dark">
           <span
-            class=" justify-content-start badge badge-warning mr-3"
-            id="manualmode"
-          ></span>
+            class=" mt-1 d-inline-block"
+            tabindex="0"
+            data-toggle="tooltip"
+            data-placement="top"
+            title='Modo manual activado.
+            Para desactivar, pulse "Modo automático" en el Calendario o reinicie la sesión'
+          >
+            <span
+              class=" justify-content-start badge badge-warning  pointer mr-3"
+              id="manualmode"
+            ></span>
+          </span>
           Hora actual del sistema
-          <span class="badge badge-danger ml-3" id="reloj"></span>
+          <span class=" badge badge-danger ml-3" id="reloj"></span>
         </h4>
         <span class="badge badge-dark"></span>
 
@@ -116,7 +125,7 @@
     {% include "footer.html" %}
   </body>
 
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <!-- Optional JavaScript -->
   {% block script %} {% endblock %}
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
