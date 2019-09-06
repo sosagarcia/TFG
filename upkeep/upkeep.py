@@ -69,9 +69,9 @@ def dameFecha():
 def openFile(path, name):
     print("intentando abrir archivo")
     fecha = dameFecha()
-    print("se tiene fecha")
-    ruta = path + str(fecha) + name + ".log"
-    print("se tiene ruta")
+    print(fecha)
+    ruta = str(path) + str(fecha) + name + ".log"
+    print(ruta)
     try:
         with open(ruta,  "r") as f:
             logLines = f.readlines()
@@ -96,9 +96,10 @@ def cpuH():
 
 if __name__ == '__main__':
 
-    t1 = threading.Thread(target=cpuH)
+    #t1 = threading.Thread(target=cpuH)
 
-    t1.setDaemon(True)
+    # t1.setDaemon(True)
 
     print("iniciando")
-    t1.start()
+    # t1.start()
+    cpuH()
