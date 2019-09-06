@@ -240,7 +240,7 @@ def openAllBig(path, inicio, fin):
             with open(name) as f:
                 lenName = len(name)
                 nombre = name [lenPath : lenName]
-                fechaTemp = datetime(year = int(nombre[6:10]), month = int(nombre[3:5]), day = int(nombre[0:2])) 
+                fechaTemp = datetime(year = int(nombre[0:4]), month = int(nombre[5:7]), day = int(nombre[8:10])) 
                 if (antes < fechaTemp < fin):
                     logLines.append(f.readlines())
         except IOError as exc:

@@ -104,7 +104,7 @@
     var dd = string.slice(-2);
     var mm = string.slice(5, 7);
     var yyyy = string.slice(0, 4);
-    return dd + "-" + mm + "-" + yyyy;
+    return yyyy + "-" + mm + "-" + dd;
   }
 
   function updateStatistics() {
@@ -165,6 +165,9 @@
       `${item.yLabel} ` + results.unidad;
     chart.data.datasets[0].label = results.legend;
     myColor = dameColor(results.legend);
+    console.log(myColor);
+    console.log(results.legend);
+
     chart.data.datasets[0].backgroundColor = color(myColor)
       .alpha(0.5)
       .rgbString();
