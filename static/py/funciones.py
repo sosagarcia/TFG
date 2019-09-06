@@ -2,7 +2,7 @@ from datetime import date, datetime, timedelta
 import datetime as dt
 import glob
 import errno
-import os
+
 
 switcher = {
     "_Distancia": "/var/log/iot/dis/",
@@ -144,7 +144,7 @@ def dif(start, end, intervalo):
 def openAll(path):
     logLines = list()
     ruta = path + '*.log'
-    files = sorted(glob.glob(ruta), key=os.path.getmtime)
+    files = sorted(glob.glob(ruta))
     for name in files:
         try:
             with open(name) as f:
@@ -233,7 +233,7 @@ def openAllBig(path, inicio, fin):
     logLines = list()
     lenPath =  len (path)
     ruta = path + '*.log'
-    files = sorted(glob.glob(ruta), key=os.path.getmtime)
+    files = sorted(glob.glob(ruta))
     antes = inicio - timedelta(days=1)
     for name in files:
         try:

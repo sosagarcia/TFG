@@ -91,7 +91,7 @@
     muestras = 50;
 
     fec = hoy();
-
+    console.log(fec);
     $.post("/updateStatistics", {
       tipo: "_Humedad",
       fecha: fec,
@@ -173,6 +173,7 @@
   }
 
   function crea(results) {
+    console.log(results);
     var config = {
       type: "line",
       data: {
