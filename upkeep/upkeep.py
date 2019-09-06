@@ -67,9 +67,12 @@ def dameFecha():
 
 
 def openFile(path, name):
-
+    print("intentando abrir archivo")
     fecha = dameFecha()
+    print("fecha a calcular : " + str(fecha))
+
     ruta = path + fecha + name + ".log"
+    print("ruta " + ruta)
     try:
         with open(ruta,  "r") as f:
             logLines = f.readlines()
@@ -82,7 +85,7 @@ def openFile(path, name):
     return logLines, fecha
 
 
-def CPU():
+def cpuH():
     fichero, fecha = openFile(cpuPath, cpuName)
     if not (fichero == -1):
         print("calculando Media")
@@ -94,15 +97,9 @@ def CPU():
 
 if __name__ == '__main__':
 
-    t1 = threading.Thread(target=CPU)
+    t1 = threading.Thread(target=cpuH)
 
     t1.setDaemon(True)
 
-    try:
-        print("iniciando")
-        t1.start()
-
-    except IOError as exc:
-        print(exc)
-    finally:
-        pass
+    print("iniciando")
+    t1.start()
