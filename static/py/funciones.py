@@ -46,7 +46,7 @@ def logs(path):
     data = ""
     blanco = '\n' + '\n'
     ruta = path + '*.log'
-    files = sorted(glob.glob(ruta))
+    files = sorted(glob.glob(ruta), key=os.path.getmtime)
     for name in files:
         try:
             with open(name) as f:
