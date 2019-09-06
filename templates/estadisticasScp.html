@@ -47,7 +47,7 @@
     mm = addZero(mm);
     HH = addZero(HH);
     MM = addZero(MM);
-    return dd + "-" + mm + "-" + yyyy + "T" + HH + ":" + MM;
+    return yyyy + "-" + mm + "-" + dd + "T" + HH + ":" + MM;
   }
   function hoy() {
     var hoy = new Date();
@@ -138,17 +138,21 @@
   }
   function dameColor(tipo, unit) {
     var dist = "Distancia" + " (" + unit + ")";
+    var temp = "Temperatura" + " (" + unit + ")";
+    var tCPU = "TemperaturaCPU" + " (" + unit + ")";
+    var CPU = "UsoCPU" + " (" + unit + ")";
+
     switch (tipo) {
       case dist:
         myColor = window.chartColors.orange;
         break;
-      case "Temperatura":
+      case temp:
         myColor = window.chartColors.red;
         break;
-      case "TemperaturaCPU":
+      case tCPU:
         myColor = window.chartColors.purple;
         break;
-      case "UsoCPU":
+      case CPU:
         myColor = window.chartColors.yellow;
         break;
       default:
