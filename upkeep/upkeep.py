@@ -34,7 +34,7 @@ def media(dia, unit):
     for i in range(0, muestras - 1, int(salto)):
         conteo = 0
         valorMedia = 0
-        for j in range(i, int(i + salto - 1)):
+        for j in range(0, int(salto - 1)):
             linea = dia[j + i]
             valor = linea[20:24]
             if not (valor == "Erro") and (linea[10:11] == " "):
@@ -67,7 +67,6 @@ def dameFecha():
 
 
 def openFile(path, name):
-    print("intentando abrir archivo")
     fecha = dameFecha()
     print(fecha)
     ruta = str(path) + str(fecha) + name + ".log"
@@ -76,9 +75,9 @@ def openFile(path, name):
         with open(ruta,  "r") as f:
             logLines = f.readlines()
             f.close()
-            print("Se ha abierto archivo")
+
     except:
-        print("-1")
+
         return (-1, -1)
 
     return logLines, fecha
