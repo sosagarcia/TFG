@@ -19,9 +19,12 @@ import socket
 # import mysql.connector
 
 def giveIp():
-    ip1 = socket.gethostbyname(socket.gethostname())
-    ip2 = socket.gethostbyname_ex(socket.gethostname())
-    return (ip1, ip2)
+    ip_address = ''
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8",80))
+    ip_address = s.getsockname()[0]
+    s.close()
+    return ip_address
 
 
 class CustomJSONEncoder(JSONEncoder):
@@ -372,8 +375,8 @@ def state():
 
 @app.route('/testa')
 def chart():
-    ip1, ip2 = giveIp()
-    result = str(ip1) + "Este es el segundo result " +str(ip2)
+    ip1 = giveIp()
+    result = str(ip1)
     return result
 
 
