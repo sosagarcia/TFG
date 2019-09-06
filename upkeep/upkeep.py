@@ -30,7 +30,6 @@ outName = "_Out"
 def media(dia, unit):
     subresult = list()
     muestras = len(dia)
-    stop = int(muestras * reduction)
     salto = 1 / reduction
     for i in range(0, muestras - 1, int(salto)):
         conteo = 0
@@ -53,6 +52,7 @@ def reWrite(text, path, name, fecha):
     try:
         with open(path + fecha + name + "_old" + ".log", "a") as f:
             f.writelines(text)
+            print("Eliminando archivo viejo")
             remove(path + fecha + name + ".log")
 
     finally:
@@ -74,7 +74,9 @@ def openFile(path, name):
         with open(ruta,  "r") as f:
             logLines = f.readlines()
             f.close()
+            print("Se ha abierto archivo")
     except:
+        print("-1")
         return (-1, -1)
 
     return logLines, fecha
@@ -83,8 +85,11 @@ def openFile(path, name):
 def CPU():
     fichero, fecha = openFile(cpuPath, cpuName)
     if not (fichero == -1):
+        print("calculando Media")
         newFile = media(fichero, "%")
         reWrite(newFile, cpuPath, cpuName, fecha)
+    else:
+        print("Error 1")
 
 
 if __name__ == '__main__':
@@ -94,9 +99,10 @@ if __name__ == '__main__':
     t1.setDaemon(True)
 
     try:
+        print("iniciando")
         t1.start()
 
     except IOError as exc:
-        pass
+        print(exc)
     finally:
         pass
