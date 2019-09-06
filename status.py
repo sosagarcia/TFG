@@ -154,7 +154,7 @@ def tempcpu():
     return (str(temp) + ' ºC', str(cpusan) + ' %')
 
 
-def tempW():
+def sistem():
     while True:
         time.sleep(5)
         temperatura, cpu = tempcpu()
@@ -165,11 +165,11 @@ def tempW():
 if __name__ == '__main__':
     t1 = threading.Thread(target=temphumW)
     t2 = threading.Thread(target=distanceW)
-    t4 = threading.Thread(target=tempW)
+    t4 = threading.Thread(target=sistem)
 
     t1.setDaemon(True)
     t2.setDaemon(True)
-    t4.setDaemon(False)
+    t4.setDaemon(True)
 
     t1.start()
     t2.start()
