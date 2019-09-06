@@ -33,15 +33,12 @@ def media(dia, unit):
     salto = 1 / reduction
     final = muestras - 1
     fin = int(salto - 1)
-    print(fin)
-    print(final)
+
     for i in range(0, final, int(salto)):
         conteo = 0
         valorMedia = 0
         if (i >= (final - int(salto))):
-            print(i)
             restantes = final - i
-            print(restantes)
             fin = restantes
         for j in range(0, fin):
             linea = dia[j + i]
@@ -51,9 +48,10 @@ def media(dia, unit):
                     fecha = linea[0:20]
                 conteo += 1
                 valorMedia += float(valor)
-        result = valorMedia / conteo
-        newLine = fecha + str(result) + " " + str(unit)
+        result = "{0:.2f}".format(valorMedia / conteo)
+        newLine = fecha + str(result) + " " + str(unit) + '\n'
         subresult.append(newLine)
+        print(subresult)
     return subresult
 
 
