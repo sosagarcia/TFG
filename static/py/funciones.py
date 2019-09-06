@@ -46,7 +46,8 @@ def logs(path):
     data = ""
     blanco = '\n' + '\n'
     ruta = path + '*.log'
-    files = glob.glob(ruta).sort()
+    files = glob.glob(ruta)
+    files.sort()
     for name in files:
         try:
             with open(name) as f:
