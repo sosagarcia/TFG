@@ -62,17 +62,16 @@ def reWrite(text, path, name, fecha):
 def dameFecha():
     hoy = dt.datetime.now()
     fecha = hoy - timedelta(days=31)
-    fecha = fecha.strftime("%Y-%m-%d")
-    return fecha
+    result = fecha.strftime("%Y-%m-%d")
+    return result
 
 
 def openFile(path, name):
     print("intentando abrir archivo")
     fecha = dameFecha()
-    print(fecha)
-
-    ruta = path + fecha + name + ".log"
-    print(ruta)
+    print("se tiene fecha")
+    ruta = path + str(fecha) + name + ".log"
+    print("se tiene ruta")
     try:
         with open(ruta,  "r") as f:
             logLines = f.readlines()
