@@ -46,12 +46,4 @@
   {{ agenda | safe }}
 </div>
 {% if session["root"] %} {% include "log.html" %} {% endif %} {% endblock %} {%
-block script %} {% include "estadoScp.html" %}
-
-<script>
-  $(document).ready(function() {
-    $('[data-toggle="tooltip"]').tooltip();
-  });
-</script>
-
-{% endblock %}
+block script %} {% include "estadoScp.html" %} {% endblock %}
