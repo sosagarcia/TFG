@@ -23,22 +23,27 @@ unidades = {
 }
 
 
+
+
+
+
 def statusNow(path, name):
     hoy = dt.datetime.now()
     i = 0
-    limite = 100
+    limite = 31
     while i <= limite:
         try:
             fecha = hoy.strftime("%Y-%m-%d")
-            log = open(path + fecha + name, "r")
-            logLines = log.readlines()
-            log.close()
-            actual = logLines[len(logLines) - 1]
-            return actual
+            with open(path + fecha + name, "r") as log:
+                logLines = log.readlines()
+                log.close()
+                actual = logLines[len(logLines) - 1]
+                return actual
         except:
             ayer = hoy - timedelta(days=1)
             hoy = ayer
             i += 1
+                
     return (-1)
 
 
@@ -49,8 +54,9 @@ def logs(path):
     files = sorted(glob.glob(ruta))
     for name in files:
         try:
-            with open(name) as f:
+            with open(name,  "r") as f:
                 data += f.read() + blanco
+                f.close()
         except IOError as exc:
             if exc.errno != errno.EISDIR:
                 raise
@@ -147,8 +153,9 @@ def openAll(path):
     files = sorted(glob.glob(ruta))
     for name in files:
         try:
-            with open(name) as f:
+            with open(name, "r") as f:
                 logLines += f.readlines()
+                f.close()
         except IOError as exc:
             if exc.errno != errno.EISDIR:
                 raise
@@ -161,10 +168,14 @@ def getLogs(path, name, fecha, muestras):
     if (str(fecha) == "*"):
        logLines = openAll(path)
     else :
-        log = open(str(path) + str(fecha) + str(name), "r")
-        logLines = log.readlines()
-        log.close()
-    
+        try:
+            with open(str(path) + str(fecha) + str(name), "r") as log:
+                logLines = log.readlines()
+                log.close()
+        except IOError as exc:
+            if exc.errno != errno.EISDIR:
+                raise
+        
     fechas, valores = determina(logLines,muestras)
 
     return (fechas, valores)
@@ -237,7 +248,7 @@ def openAllBig(path, inicio, fin):
     antes = inicio - timedelta(days=1)
     for name in files:
         try:
-            with open(name) as f:
+            with open(name, "r") as f:
                 lenName = len(name)
                 nombre = name [lenPath : lenName]
                 fechaTemp = datetime(year = int(nombre[0:4]), month = int(nombre[5:7]), day = int(nombre[8:10])) 

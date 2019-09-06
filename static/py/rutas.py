@@ -29,4 +29,3 @@ def write_log(text, path, name):
 
     finally:
         f.close()
-        pass
