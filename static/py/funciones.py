@@ -204,7 +204,6 @@ def getLogsD(path, name, fecha, muestras):
     if dias == 0:
         return ("0","0")
     if dias <= 2 :
-        return ("2","2")
         for i in range(0, dias):
             dia = logLines[i]
             max = len(dia)
@@ -214,7 +213,6 @@ def getLogsD(path, name, fecha, muestras):
                 if (inicio < fechaTemp < fin):
                     subresult.append(linea)
     if dias >= 3 : 
-        return ("3","3")
         dia = logLines[0]
         max = len(dia)
         for i in range(0, max):
@@ -222,12 +220,16 @@ def getLogsD(path, name, fecha, muestras):
             fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour= int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
             if (inicio < fechaTemp < fin):
                 subresult.append(linea)
+                return ("1", subresult)
+
         for i in range(1, (dias -1)):
             dia = logLines[i]
             max = len(dia)
             for i in range(0, max):
                 linea = dia[i]
                 subresult.append(linea)
+                return ("2", subresult)
+
         dia = logLines[dias -1]
         max = len(dia)
         for i in range(0, max):
@@ -235,6 +237,7 @@ def getLogsD(path, name, fecha, muestras):
             fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour= int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
             if (inicio < fechaTemp < fin):
                 subresult.append(linea)
+                return ("3", subresult)
     fechas, valores = determina(subresult, muestras)
     return (fechas, valores)
     
