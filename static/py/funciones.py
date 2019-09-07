@@ -170,8 +170,8 @@ def getLogs(path, name, fecha, muestras):
             with open(str(path) + str(fecha) + str(name), "r") as log:
                 logLines = log.readlines()
                 log.close()
-        finally :
-            return logLines
+        except:
+            pass        
     if not logLines:
         return ("0","0")
     else:    
