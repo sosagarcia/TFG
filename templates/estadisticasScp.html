@@ -125,22 +125,21 @@
     }
 
     tipoDSelected = tipoD.options[tipoD.selectedIndex];
-      if ((fec.length) ==  0){
-        alert("Rellene todos los campos");
-        break;
-      }
-    $.post("/updateStatistics", {
-
-      tipo: tipoDSelected.value,
-      fecha: fec,
-      muestras: muestras.value
-    }).done(function(reply) {
-      if (reply.labels == 0 || reply.data == 0) {
-        alert("No hay datos registrados para dicha fecha");
-      } else {
-        actualiza(reply);
-      }
-    });
+    if (fec.length == 0) {
+      alert("Rellene todos los campos");
+    } else {
+      $.post("/updateStatistics", {
+        tipo: tipoDSelected.value,
+        fecha: fec,
+        muestras: muestras.value
+      }).done(function(reply) {
+        if (reply.labels == 0 || reply.data == 0) {
+          alert("No hay datos registrados para dicha fecha");
+        } else {
+          actualiza(reply);
+        }
+      });
+    }
   }
   function dameColor(tipo, unit) {
     var dist = "Distancia" + " (" + unit + ")";
