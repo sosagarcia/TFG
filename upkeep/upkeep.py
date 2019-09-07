@@ -58,13 +58,14 @@ def reWrite(text, path, name, fecha):
     try:
         new = path + fecha + name + "_R" + ".log"
         old = path + fecha + name + ".log"
+
         with open(new, "a") as f:
             f.writelines(text)
-            # remove(old)
+            remove(old)
 
     finally:
         f.close()
-        #rename(new, old)
+        rename(new, old)
 
 
 def dameFecha():
@@ -97,7 +98,7 @@ def empieza(path, name):
         print("a calcular media ")
         newFile = media(fichero, "%")
         print("a reescribir")
-        reWrite(newFile, cpuPath, cpuName, fecha)
+        reWrite(newFile, path, name, fecha)
     else:
         print("pochao")
         pass
