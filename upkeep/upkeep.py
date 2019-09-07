@@ -9,22 +9,45 @@ reduction = 0.1
 
 hPath = "/var/log/iot/hum/"
 tPath = "/var/log/iot/tem/"
-irPath = "/var/log/iot/ir/"
 disPath = "/var/log/iot/dis/"
-aPath = "/var/log/iot/a/"
 cpuTPath = "/var/log/iot/cpuT/"
 cpuPath = "/var/log/iot/cpu/"
-outPath = "/var/log/iot/out/"
 
 
 dName = "_Distancia"
 hName = "_Humedad"
 tName = "_Temperatura"
-irName = "_Movimientos"
-aName = "_Alarmas"
 cpuTName = "_TemperaturaCPU"
 cpuName = "_UsoCPU"
-outName = "_Out"
+
+
+unidades = {
+    "_Distancia": "cm.",
+    "_Humedad": "%",
+    "_Temperatura": "ºC",
+    "_TemperaturaCPU": "ºC",
+    "_UsoCPU": "%"
+}
+
+
+def dameUnit(tipo):
+    unit = unidades.get(str(tipo))
+    return unit
+
+
+def reduccion(dia, unit):
+    subresult = list()
+    muestras = len(dia)
+    salto = 1 / reduction
+    final = muestras - 1
+    for i in range(0, final, int(salto)):
+        linea = dia[i]
+        valor = linea[20:24]
+        if not (valor == "Erro") and (linea[10:11] == " "):
+            fecha = linea[0:20]
+            newLine = fecha + valor + " " + unit + '\n'
+            subresult.append(newLine)
+    return subresult
 
 
 def media(dia, unit):
@@ -33,7 +56,6 @@ def media(dia, unit):
     salto = 1 / reduction
     final = muestras - 1
     fin = int(salto - 1)
-    print
     for i in range(0, final, int(salto)):
         conteo = 0
         valorMedia = 0
@@ -44,12 +66,12 @@ def media(dia, unit):
             linea = dia[j + i]
             valor = linea[20:24]
             if not (valor == "Erro") and (linea[10:11] == " "):
-                if conteo == 0:
+                if (j <= int(fin/2)):
                     fecha = linea[0:20]
                 conteo += 1
                 valorMedia += float(valor)
         result = "{0:.2f}".format(valorMedia / conteo)
-        newLine = fecha + str(result) + " " + str(unit) + '\n'
+        newLine = fecha + str(result) + " " + unit + '\n'
         subresult.append(newLine)
     return subresult
 
@@ -95,9 +117,11 @@ def empieza(path, name):
     fichero, fecha = openFile(path, name)
     print(fecha)
     if not (fichero == -1):
-        print("a calcular media ")
-        newFile = media(fichero, "%")
-        print("a reescribir")
+        unit = dameUnit(name)
+        if (name == cpuName):
+            newFile = reduccion(fichero, unit)
+        else:
+            newFile = media(fichero, unit)
         reWrite(newFile, path, name, fecha)
     else:
         print("pochao")
@@ -107,10 +131,13 @@ def empieza(path, name):
 if __name__ == '__main__':
 
     try:
-        print("CPUT")
+
+        empieza(disPath, dName)
+        empieza(hPath, hName)
+        empieza(tPath, tName)
         empieza(cpuTPath, cpuTName)
-        # print("CPU")
-        #empieza(cpuPath, cpuName)
+        empieza(cpuPath, cpuName)
+
     except:
         print("Se ha pochao")
         raise
