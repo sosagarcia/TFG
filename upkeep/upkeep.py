@@ -1,7 +1,7 @@
 
 from datetime import date, datetime, timedelta
 import datetime as dt
-from os import remove
+from os import remove, rename
 import threading
 # Rutas de LOG
 
@@ -56,12 +56,15 @@ def media(dia, unit):
 
 def reWrite(text, path, name, fecha):
     try:
-        with open(path + fecha + name + ".log", "a") as f:
-            remove(path + fecha + name + ".log")
+        new = path + fecha + name + "_R" + ".log"
+        old = path + fecha + name + ".log"
+        with open(new, "a") as f:
             f.writelines(text)
+            remove(old)
 
     finally:
         f.close()
+        rename(new, old)
 
 
 def dameFecha():
@@ -89,7 +92,7 @@ def openFile(path, name):
 
 def empieza(path, name):
     fichero, fecha = openFile(path, name)
-    print(len(fichero))
+    print(fichero)
     print(fecha)
     if not (fichero == -1):
         print("a calcular media ")
