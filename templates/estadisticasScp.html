@@ -125,8 +125,12 @@
     }
 
     tipoDSelected = tipoD.options[tipoD.selectedIndex];
-
+      if ((fec.length) ==  0){
+        alert("Rellene todos los campos");
+        break;
+      }
     $.post("/updateStatistics", {
+
       tipo: tipoDSelected.value,
       fecha: fec,
       muestras: muestras.value

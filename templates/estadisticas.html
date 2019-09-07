@@ -31,19 +31,22 @@
               onsubmit="return validateFormOnSubmit(this);"
             >
               <!--  <input type="text" id="login" class="fadeIn second" name="title" placeholder="Nombre del evento" /> -->
-
+              <label for="tipoD">
+                Seleccione un dato
+              </label>
               <select id="tipoD">
-                <option value="" selected hidden>Seleccione un dato</option>
-                <option value="_Humedad">Humedad</option>
+                <option value="_Humedad" selected>Humedad</option>
                 <option value="_Temperatura">Temperatura exterior</option>
                 <option value="_Distancia">Distancia</option>
                 <option value="_TemperaturaCPU">Temperatura interior</option>
                 <option value="_UsoCPU">Uso de CPU</option>
               </select>
 
+              <label for="periodo">
+                Intervalo de tiempo
+              </label>
               <select id="periodo">
-                <option value="hoy" selected hidden>Intervalo de tiempo</option>
-                <option value="hoy">Hoy</option>
+                <option value="hoy" selected>Hoy</option>
                 <option value="dia">Día concreto</option>
                 <option value="*">Desde siempre</option>
                 <option value="intervalo">Intervalo definido</option> </select
