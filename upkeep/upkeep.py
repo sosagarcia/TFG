@@ -86,7 +86,7 @@ def openFile(path, name):
     return logLines, fecha
 
 
-def cpuH():
+def empieza(path, name):
     fichero, fecha = openFile(cpuPath, cpuName)
     if not (fichero == -1):
         newFile = media(fichero, "%")
@@ -97,11 +97,13 @@ def cpuH():
 
 if __name__ == '__main__':
 
-    t1 = threading.Thread(target=cpuH)
-    t1.setDaemon(True)
     try:
-        print("iniciando")
-        t1.start()
-        print("fin")
+        print("CPUT")
+        empieza (cpuTPath, cpuTName)
+        print("CPU")
+        empieza(cpuPath, cpuName)
+    except:
+        print("Se ha pochao")
+        raise
     finally:
         print("finito")
