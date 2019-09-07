@@ -200,6 +200,7 @@ def getLogsD(path, name, fecha, muestras):
     subresult = list()
     inicio,fin = divideFechas (fecha)
     logLines = openAllBig(path, inicio, fin )
+    return (logLines,logLines)
     dias = len(logLines)
     if dias == 0:
         return ("0","0")
