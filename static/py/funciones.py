@@ -180,12 +180,6 @@ def getLogs(path, name, fecha, muestras):
 
     return (fechas, valores)
 
-def valido(valor):
-    if not (valor == "Erro") and (linea[10:11] == " "):
-        return True
-    else:
-        return False
-
 def determina(logLines, muestras):
     subresult = list()
     fechas = list()
@@ -196,7 +190,7 @@ def determina(logLines, muestras):
     for i in range(0, len(logLines), int(saltos)):
         linea = logLines[i]
         valor = linea[20:24]
-        if valido(valor):
+        if not (valor == "Erro") and (linea[10:11] == " "):
             valores.append(valor)
             subresult = [linea[11:13], linea[14:16], linea[17:19],linea[0:2],linea[3:5],linea[6:10]]
             fechas.append(subresult)
@@ -215,33 +209,38 @@ def getLogsD(path, name, fecha, muestras):
             max = len(dia)
             for i in range(0, max):
                 linea = dia[i]
-                fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour = int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
-                if (inicio < fechaTemp < fin):
-                    subresult.append(linea)
+                if not (linea[20:24] == "Erro") and (linea[10:11] == " "):         
+                    fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour = int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
+                    if (inicio < fechaTemp < fin):
+                        subresult.append(linea)
     if dias >= 3 : 
         dia = logLines[0]
         max = len(dia)
         for i in range(0, max):
             linea = dia[i]
-            fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour= int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
-            if (inicio < fechaTemp < fin):
-                subresult.append(linea)
-
+            if not (linea[20:24] == "Erro") and (linea[10:11] == " "): 
+                fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour= int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
+                if (inicio < fechaTemp < fin):
+                    subresult.append(linea)
+                
+        
         for i in range(1, (dias -1)):
             dia = logLines[i]
             max = len(dia)
             for i in range(0, max):
                 linea = dia[i]
                 subresult.append(linea)
-
+                
+        
         dia = logLines[dias -1]
         max = len(dia)
         for i in range(0, max):
             linea = dia[i]
-            fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour= int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
-            if (inicio < fechaTemp < fin):
-                subresult.append(linea)
-    
+            if not (linea[20:24] == "Erro") and (linea[10:11] == " "):
+                fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour= int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
+                if (inicio < fechaTemp < fin):
+                    subresult.append(linea)
+              
     fechas, valores = determina(subresult, muestras)
     return (fechas, valores)
     
