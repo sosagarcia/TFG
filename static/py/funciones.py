@@ -156,15 +156,13 @@ def openAll(path):
             with open(name, "r") as f:
                 logLines += f.readlines()
                 f.close()
-        except IOError as exc:
-            if exc.errno != errno.EISDIR:
-                raise
-    return logLines
+        finally :
+            return logLines
+    
 
 
 def getLogs(path, name, fecha, muestras):
-
-
+    logLines = list()
     if (str(fecha) == "*"):
        logLines = openAll(path)
     else :
@@ -172,13 +170,13 @@ def getLogs(path, name, fecha, muestras):
             with open(str(path) + str(fecha) + str(name), "r") as log:
                 logLines = log.readlines()
                 log.close()
-        except IOError as exc:
-            if exc.errno != errno.EISDIR:
-                raise
-        
-    fechas, valores = determina(logLines,muestras)
-
-    return (fechas, valores)
+        finally :
+            return logLines
+    if not logLines:
+        return ("0","0")
+    else:    
+        fechas, valores = determina(logLines,muestras)
+        return (fechas, valores)
 
 def determina(logLines, muestras):
     subresult = list()
