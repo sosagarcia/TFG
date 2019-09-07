@@ -216,7 +216,7 @@ def getLogsD(path, name, fecha, muestras):
     if dias >= 3 : 
         for k in range(0, dias):
             dia = logLines[k]
-            if (dia == 0) or (dia == (dias-1)): 
+            if (k == 0) or (k == (dias-1)): 
                 max = len(dia)
                 for i in range(0, max):
                     linea = dia[i]
