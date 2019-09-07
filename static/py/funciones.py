@@ -214,29 +214,22 @@ def getLogsD(path, name, fecha, muestras):
                     if (inicio < fechaTemp < fin):
                         subresult.append(linea)
     if dias >= 3 : 
-        
-        dia = logLines[0]
-        max = len(dia)
-        for i in range(0, max):
-            linea = dia[i]
-            if not (linea[20:24] == "Error") and (linea[10:11] == " "):
-                fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour= int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
-                if (inicio < fechaTemp < fin):
+        for k in range(0, dias):
+            dia = logLines[k]
+            if (dia == 0) or (dia == (dias-1)): 
+                max = len(dia)
+                for i in range(0, max):
+                    linea = dia[i]
+                    if not (linea[20:24] == "Error") and (linea[10:11] == " "):
+                        fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour= int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
+                        if (inicio < fechaTemp < fin):
+                            subresult.append(linea)
+            else :            
+                max = len(dia)
+                for j in range(0, max):
+                    linea = dia[j]
                     subresult.append(linea)
-        for i in range(1, dias -1):
-            dia = logLines[i]
-            max = len(dia)
-            for j in range(0, max):
-                linea = dia[j]
-                subresult.append(linea)
-        dia = logLines[dias -1]
-        max = len(dia)
-        for i in range(0, max):
-            linea = dia[i]
-            if not (linea[20:24] == "Error") and (linea[10:11] == " "):
-                fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour= int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
-                if (inicio < fechaTemp < fin):
-                    subresult.append(linea)
+
     fechas, valores = determina(subresult, muestras)
     return (fechas, valores)
     
