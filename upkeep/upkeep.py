@@ -33,7 +33,7 @@ def media(dia, unit):
     salto = 1 / reduction
     final = muestras - 1
     fin = int(salto - 1)
-
+    print
     for i in range(0, final, int(salto)):
         conteo = 0
         valorMedia = 0
@@ -74,6 +74,7 @@ def dameFecha():
 def openFile(path, name):
     fecha = dameFecha()
     ruta = str(path) + str(fecha) + name + ".log"
+    print(ruta)
     try:
         with open(ruta,  "r") as f:
             logLines = f.readlines()
@@ -87,11 +88,16 @@ def openFile(path, name):
 
 
 def empieza(path, name):
-    fichero, fecha = openFile(cpuPath, cpuName)
+    fichero, fecha = openFile(path, name)
+    print(len(fichero))
+    print(fecha)
     if not (fichero == -1):
+        print("a calcular media ")
         newFile = media(fichero, "%")
+        print("a reescribir")
         reWrite(newFile, cpuPath, cpuName, fecha)
     else:
+        print("pochao")
         pass
 
 
@@ -99,7 +105,7 @@ if __name__ == '__main__':
 
     try:
         print("CPUT")
-        empieza (cpuTPath, cpuTName)
+        empieza(cpuTPath, cpuTName)
         print("CPU")
         empieza(cpuPath, cpuName)
     except:
