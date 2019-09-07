@@ -60,11 +60,11 @@ def reWrite(text, path, name, fecha):
         old = path + fecha + name + ".log"
         with open(new, "a") as f:
             f.writelines(text)
-            remove(old)
+            # remove(old)
 
     finally:
         f.close()
-        rename(new, old)
+        #rename(new, old)
 
 
 def dameFecha():
@@ -92,7 +92,6 @@ def openFile(path, name):
 
 def empieza(path, name):
     fichero, fecha = openFile(path, name)
-    print(fichero)
     print(fecha)
     if not (fichero == -1):
         print("a calcular media ")
@@ -109,8 +108,8 @@ if __name__ == '__main__':
     try:
         print("CPUT")
         empieza(cpuTPath, cpuTName)
-        print("CPU")
-        empieza(cpuPath, cpuName)
+        # print("CPU")
+        #empieza(cpuPath, cpuName)
     except:
         print("Se ha pochao")
         raise
