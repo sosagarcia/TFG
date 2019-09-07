@@ -125,17 +125,17 @@
     }
 
     tipoDSelected = tipoD.options[tipoD.selectedIndex];
-    console.log("Fecha seleccionada");
-    console.log(fec);
-    console.log("tipo");
-    console.log(tipoDSelected.value);
 
     $.post("/updateStatistics", {
       tipo: tipoDSelected.value,
       fecha: fec,
       muestras: muestras.value
     }).done(function(reply) {
-      actualiza(reply);
+      if (reply.labels == 0 || reply.data == 0) {
+        alert("No hay datos registrados para dicha fecha");
+      } else {
+        actualiza(reply);
+      }
     });
   }
   function dameColor(tipo, unit) {
