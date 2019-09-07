@@ -384,7 +384,7 @@ def updateStatistics():
     unit = dameUnit(tipo)
     name = str(tipo) + ".log"
     titulo = str(tipo)[1: len(tipo)] + " (" + str(unit) + ")"
-    if len(fecha) <= 12 :
+    if len(fecha) <= 13 :
         fechas, valores  = getLogs(path,name,fecha, muestra)
     else:
         fechas, valores  = getLogsD(path,name,fecha, muestra)

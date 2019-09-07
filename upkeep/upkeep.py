@@ -86,8 +86,8 @@ def reWrite(text, path, name, fecha):
             remove(old)
 
     finally:
-        f.close()
         rename(new, old)
+        f.close()
 
 
 def dameFecha():

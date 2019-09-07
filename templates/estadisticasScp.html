@@ -89,9 +89,7 @@
   }
   function primera() {
     muestras = 50;
-
     fec = hoy();
-    console.log(fec);
     $.post("/updateStatistics", {
       tipo: "_Humedad",
       fecha: fec,
@@ -127,7 +125,11 @@
     }
 
     tipoDSelected = tipoD.options[tipoD.selectedIndex];
+    console.log("Fecha seleccionada");
     console.log(fec);
+    console.log("tipo");
+    console.log(tipoDSelected.value);
+
     $.post("/updateStatistics", {
       tipo: tipoDSelected.value,
       fecha: fec,
@@ -163,16 +165,13 @@
   }
 
   function actualiza(results) {
+    console.log(results);
     chart.data.datasets[0].data = results.data;
-
     chart.data.labels = dameFecha(results.labels);
     chart.options.tooltips.callbacks.label = item =>
       `${item.yLabel} ` + results.unidad;
     chart.data.datasets[0].label = results.legend;
     myColor = dameColor(results.legend, results.unidad);
-    console.log(myColor);
-    console.log(results.legend);
-
     chart.data.datasets[0].backgroundColor = color(myColor)
       .alpha(0.5)
       .rgbString();
