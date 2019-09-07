@@ -125,7 +125,7 @@
     }
 
     tipoDSelected = tipoD.options[tipoD.selectedIndex];
-    if (fec.length == 0) {
+    if (fec.length <= 1) {
       alert("Rellene todos los campos");
     } else {
       $.post("/updateStatistics", {
