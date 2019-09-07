@@ -208,7 +208,7 @@ def getLogsD(path, name, fecha, muestras):
             dia = logLines[i]
             max = len(dia)
             for j in range(0, max):
-                linea = dia[j]
+                linea = dia[j] 
                 if not (linea[20:24] == "Error") and (linea[10:11] == " "):
                     fechaTemp = datetime(year = int(linea[6:10]), month = int(linea[3:5]), day = int(linea[0:2]), hour = int(linea[11:13]), minute = int(linea[14:16]), second = int(linea[17:19]))
                     if (inicio < fechaTemp < fin):
