@@ -156,8 +156,10 @@ def openAll(path):
             with open(name, "r") as f:
                 logLines += f.readlines()
                 f.close()
-        finally :
-            return logLines
+        except IOError as exc:
+            if exc.errno != errno.EISDIR:
+                raise
+    return logLines
     
 
 
