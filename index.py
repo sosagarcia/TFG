@@ -183,7 +183,7 @@ def perfil():
 
 @app.route('/calendar')
 def calendar():
-    if session['root'] == 1:
+    if session.get("root", None) == 1:
         listado = users(usuarios())
         return render_template('calendar.html', mensaje=cal, lista=listado)
     else :
