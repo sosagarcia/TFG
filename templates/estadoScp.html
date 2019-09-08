@@ -25,16 +25,19 @@
     document.getElementById("al").innerHTML = alarmaText;
     document.getElementById("cpuT").innerHTML = temperaturaCPU.substr(20);
     document.getElementById("cpu").innerHTML = usoCPU.substr(20);
-
     var t = setTimeout(startData, 5000);
   }
+  $(document).ready(startData);
+</script>
+<script>
   $(document).ready(function() {
-    var textarea = document.getElementById("aText");
-    var textarea1 = document.getElementById("mText");
+    var $textarea = $("#aText");
+    $textarea.scrollTop($textarea[0].scrollHeight);
+
     var textarea2 = document.getElementById("outText");
-    textarea.scrollTop = textarea.scrollHeight;
-    textarea1.scrollTop = textarea1.scrollHeight;
     textarea2.scrollTop = textarea2.scrollHeight;
-    startData();
   });
+
+  var textarea1 = document.getElementById("mText");
+  textarea1.scrollTop = textarea1.scrollHeight;
 </script>
