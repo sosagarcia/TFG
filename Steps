@@ -59,10 +59,9 @@ FUTURAS IMPLEMENTACIONES :
 - obviar valores absurdos de las lecturas
 - la recuperación de contraseña en una sola vista
 -Las busquedas sql en el main, hay una función
-- CArgando... hasta qu eaparezcan los valores  y colores 
 - Gestión de alarma a largo plazo
 -Muestreo mediado
--Limpiar scripts importados (hay de mas)
+- Limpiar scripts importados (hay de mas)
 - Separar los datos de los logs por días
-- Mejora en la búsquedas de fichero para estadísticas
+- Que se pueda editar un evento
  

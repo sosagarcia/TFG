@@ -1,0 +1,74 @@
+{% extends "layout.html" %} {% block head %}
+<link href="../static/css/calendar/core.css" rel="stylesheet" />
+<link href="../static/css/calendar/daygrid.css" rel="stylesheet" />
+<link href="../static/css/calendar/timegrid.css" rel="stylesheet" />
+<link href="../static/css/calendar/list.css" rel="stylesheet" />
+
+{% endblock %} {% block body %}
+<div>
+  <div class="container w-50">
+    <div
+      class="col ml-4 mt-3 fadeIn  align-self-start first shadow p-3 mb-5 bg-white rounded"
+      id="calendar"
+    ></div>
+  </div>
+</div>
+
+<!-- Modal de Selección-->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="tituloEvento">Editar Evento</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <label for="inicioEvento">
+          Inicio
+        </label>
+        <br />
+        <input type="text" id="inicioEvento" name="inicioEvento" /> <br />
+        <label for="finEvento">
+          Fin
+        </label>
+        <br />
+        <input type="datetime" id="finEvento" name="finEvento" />
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %} {% block script %}
+
+<script src="../static/js/calendar/vendorRrule.js"></script>
+<script src="../static/js/calendar/core.js"></script>
+<script src="../static/js/calendar/interaction.js"></script>
+<script src="../static/js/calendar/moment.js"></script>
+<script src="../static/js/calendar/daygrid.js"></script>
+<script src="../static/js/calendar/timegrid.js"></script>
+<script src="../static/js/calendar/list.js"></script>
+<script src="../static/js/calendar/rrule.js"></script>
+<script src="../static/js/calendar/es.js"></script>
+
+{% include "calendarScpMortal.html" %} {% endblock %}

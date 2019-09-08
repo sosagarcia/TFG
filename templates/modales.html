@@ -116,12 +116,14 @@
       </div>
 
       <div class="modal-body">
-        ID : <input type="text" id="idEvento" name="idEvento" />
-        <select name='title1' id=''>
-          {{ lista | safe }} <br />
-          Inicio: <input type="text" id="inicioEvento" name="inicioEvento" /> Fin:
-          <input type="datetime" id="finEvento" name="finEvento" /> Color:
-          <input type="color" id="colorEvento" name="colorEvento" /><br />
+        <label for="inicioEvento">
+          Inicio
+        </label> <br />
+          <input type="text" id="inicioEvento" name="inicioEvento" /> <br />
+          <label for="finEvento">
+            Fin
+          </label> <br />
+          <input type="datetime" id="finEvento" name="finEvento" /> 
       </div>
 
       <div class="modal-footer">
@@ -130,9 +132,6 @@
         </button>
         <button type="button" id="btnBorrar" class="btn btn-danger">
           Borrar Evento
-        </button>
-        <button type="button" id="btnGuardar" class="btn btn-success">
-          Guardar cambios
         </button>
       </div>
 
