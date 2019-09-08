@@ -11,39 +11,40 @@
   </div>
   {% endif %}
 </div>
+<div class="container">
+  <div class="row ">
+    <!-- Izquierda -->
 
-<div class="row container">
-  <!-- Izquierda -->
+    <!-- Centro -->
+    <div class=" fadeIn first">
+      <ul class="list-group">
+        <li class="list-group-item">
+          Humedad: <span class=" ml-3" id="hum"></span>
+        </li>
+        <li class="list-group-item">
+          Temperatura exterior: <span class=" ml-3" id="tem"></span>
+        </li>
+        <li class="list-group-item">
+          Distancia: <span class=" ml-3" id="dis"></span>
+        </li>
+        <li class="list-group-item">
+          Último movimiento detectado: <span class=" ml-3" id="av"></span>
+        </li>
+        <li class="list-group-item">
+          Alarma: <span class=" ml-3" id="al"></span>
+        </li>
+        <li class="list-group-item">
+          Temperatura del Sistema: <span class=" ml-3" id="cpuT"></span>
+        </li>
+        <li class="list-group-item">
+          Uso del sistema: <span class=" ml-3" id="cpu"></span>
+        </li>
+      </ul>
+    </div>
+    <!-- Derecha -->
 
-  <!-- Centro -->
-  <div class=" fadeIn first mx-auto">
-    <ul class="list-group">
-      <li class="list-group-item">
-        Humedad: <span class=" ml-3" id="hum"></span>
-      </li>
-      <li class="list-group-item">
-        Temperatura exterior: <span class=" ml-3" id="tem"></span>
-      </li>
-      <li class="list-group-item">
-        Distancia: <span class=" ml-3" id="dis"></span>
-      </li>
-      <li class="list-group-item">
-        Último movimiento detectado: <span class=" ml-3" id="av"></span>
-      </li>
-      <li class="list-group-item">
-        Alarma: <span class=" ml-3" id="al"></span>
-      </li>
-      <li class="list-group-item">
-        Temperatura del Sistema: <span class=" ml-3" id="cpuT"></span>
-      </li>
-      <li class="list-group-item">
-        Uso del sistema: <span class=" ml-3" id="cpu"></span>
-      </li>
-    </ul>
+    {{ agenda | safe }}
   </div>
-  <!-- Derecha -->
-
-  {{ agenda | safe }}
 </div>
 {% if session["root"] %} {% include "log.html" %} {% endif %} {% endblock %} {%
 block script %} {% include "estadoScp.html" %} {% endblock %}
