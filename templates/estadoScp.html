@@ -25,8 +25,8 @@
     document.getElementById("al").innerHTML = alarmaText;
     document.getElementById("cpuT").innerHTML = temperaturaCPU.substr(20);
     document.getElementById("cpu").innerHTML = usoCPU.substr(20);
-    var $textarea = $("#teexampleFormControlTextarea2xtarea_id");
-    $textarea.scrollTop($textarea[0].scrollHeight);
+    var textarea = document.getElementById("mText");
+    textarea.scrollTop = textarea.scrollHeight;
     var t = setTimeout(startData, 5000);
   }
   $(document).ready(startData);
