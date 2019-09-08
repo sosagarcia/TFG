@@ -166,7 +166,7 @@
 
   function actualiza(results) {
     console.log(results.labels);
-    console.log(results.data);
+    console.log(dameFecha(results.labels));
     chart.data.datasets[0].data = results.data;
     chart.data.labels = dameFecha(results.labels);
     chart.options.tooltips.callbacks.label = item =>
