@@ -183,11 +183,12 @@ def perfil():
 
 @app.route('/calendar')
 def calendar():
-    if session.get("root", None) == 1:
+    if session.get("root", None) == 0:
+        return render_template('calendarMortal.html')
+    else :
         listado = users(usuarios())
         return render_template('calendar.html', mensaje=cal, lista=listado)
-    else :
-        return render_template('calendarMortal.html')
+        
 
 
 @app.route('/data')
