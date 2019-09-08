@@ -67,7 +67,7 @@ def conjunto(data):
     # result = '<select>'
 
     result = '<ul class="list-group align-self-start first shadow p-3 mb-5 bg-white rounded mx-auto " >'
-    result += '<label class="bg-warning rounded">Listado de eventos recientes y próximos</label>'
+    result += '<label class="bg-primary text-white rounded ">Listado de eventos recientes y próximos</label>'
     max = len(data)
 
     if max == 0:
