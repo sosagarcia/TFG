@@ -54,9 +54,9 @@
                               <div class="form-group row">
                                 <label for="select" class="col-4 col-form-label">Rol</label> 
                                 <div class="col-8">
-                                  <select id="select" name="admin" class="custom-select">
-                                    <option value="1">Administrador</option>
-                                    <option value="0">Usuario</option>
+                                  <select id="select" name="admin" class="custom-select" disabled>
+                                    <option value="1" {% if session["root"] %}selected {% endif %}>Administrador</option>
+                                    <option value="0"  {% if not session["root"] %} selected {% endif %}>Usuario</option>
                                   </select>
                                 </div>
                               </div>                        
