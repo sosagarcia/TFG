@@ -8,8 +8,6 @@
         console.log("fail data");
         var t = setTimeout(startData, 1000);
       });
-    var $textarea = $("#teexampleFormControlTextarea2xtarea_id");
-    $textarea.scrollTop($textarea[0].scrollHeight);
   }
   function funciona(data) {
     humedad = data.humedad;
@@ -27,6 +25,8 @@
     document.getElementById("al").innerHTML = alarmaText;
     document.getElementById("cpuT").innerHTML = temperaturaCPU.substr(20);
     document.getElementById("cpu").innerHTML = usoCPU.substr(20);
+    var $textarea = $("#teexampleFormControlTextarea2xtarea_id");
+    $textarea.scrollTop($textarea[0].scrollHeight);
     var t = setTimeout(startData, 5000);
   }
   $(document).ready(startData);
