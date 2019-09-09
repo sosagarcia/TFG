@@ -174,7 +174,7 @@ def giveTypes(tipo):
     result = list()
     variables =["_Humedad","_Temperatura","_UsoCPU","_TemperaturaCPU","_Distancia"]
     for i in range(0,5):
-        if tipo[i] :
+        if tipo[i] == "true" :
             result.append(variables[i])
     return result
 
