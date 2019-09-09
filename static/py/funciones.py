@@ -24,10 +24,10 @@ unidades = {
 
 colores ={
     "_Distancia": "#FFFF00",
-    "_Humedad": 'rgba(255, 255, 0)',
-    "_Temperatura": "window.chartColors.red",
-    "_TemperaturaCPU": "window.chartColors.purple",
-    "_UsoCPU": "window.chartColors.orange"
+    "_Humedad": '#1664FF',
+    "_Temperatura": "#FF0C00",
+    "_TemperaturaCPU": "FF00A2",
+    "_UsoCPU": "42FF00"
     
 }
 
@@ -194,7 +194,7 @@ def giveDatasets(tipos, fecha, muestra):
             fechas, valores  = getLogs(path,name,fecha, muestra)
         else:
             fechas, valores  = getLogsD(path,name,fecha, muestra)
-        result.append({'label': titulo, 'backgroundColor': myColor, 'fill': 'false','data':valores , })
+        result.append({'label': titulo, 'backgroundColor': myColor,'borderColor': myColor ,'fill': 'true','data':valores , })
     return (result, fechas, unit)
 
 

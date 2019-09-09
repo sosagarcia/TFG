@@ -177,17 +177,11 @@
   }
 
   function actualiza(results) {
-    console.log(results.labels);
-    chart.data.datasets[0].data = results.data;
+    console.log(results);
+    chart.data.datasets = results.dataset;
     chart.data.labels = dameFecha(results.labels);
     chart.options.tooltips.callbacks.label = item =>
       `${item.yLabel} ` + results.unidad;
-    chart.data.datasets[0].label = results.legend;
-    myColor = dameColor(results.legend, results.unidad);
-    chart.data.datasets[0].backgroundColor = color(myColor)
-      .alpha(0.5)
-      .rgbString();
-    chart.data.datasets[0].borderColor = myColor;
     chart.update();
   }
 
