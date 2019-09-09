@@ -387,7 +387,7 @@ def updateStatistics():
     
     datasets, fechas, unit = giveDatasets(giveTypes(tipo), fecha, muestra)
 
-    return jsonify (labels = fechas, dataset = datasets, , unidad = unit)
+    return jsonify (labels = fechas, dataset = datasets, unidad = unit)
     
 
 @app.route('/logout')
