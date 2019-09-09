@@ -383,16 +383,11 @@ def updateStatistics():
     tipo = request.form.get('tipo')
     fecha = request.form.get('fecha')
     muestra = request.form.get('muestras')
-    path = damePath(tipo)
-    unit = dameUnit(tipo)
-    name = str(tipo) + ".log"
-    titulo = str(tipo)[1: len(tipo)] + " (" + str(unit) + ")"
-    if len(fecha) <= 13 :
-        fechas, valores  = getLogs(path,name,fecha, muestra)
-    else:
-        fechas, valores  = getLogsD(path,name,fecha, muestra)
 
-    return jsonify (labels = fechas, data = valores, legend = titulo, unidad = unit)
+    
+    datasets, fechas, unit = giveDatasets(giveTypes(tipo), fecha, muestra)
+
+    return jsonify (labels = fechas, dataset = datasets, , unidad = unit)
     
 
 @app.route('/logout')

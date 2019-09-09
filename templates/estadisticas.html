@@ -31,19 +31,97 @@
               onsubmit="return validateFormOnSubmit(this);"
             >
               <!--  <input type="text" id="login" class="fadeIn second" name="title" placeholder="Nombre del evento" /> -->
-              <label for="tipoD">
-                Seleccione un dato
-              </label>
-              <select id="tipoD">
-                <option value="_Humedad" selected>Humedad</option>
-                <option value="_Temperatura">Temperatura exterior</option>
-                <option value="_Distancia">Distancia</option>
-                <option value="_TemperaturaCPU">Temperatura interior</option>
-                <option value="_UsoCPU">Uso de CPU</option>
-              </select>
 
-              <label for="periodo">
-                Intervalo de tiempo
+              <div
+                id="Selectables"
+                class=" fadeIn  row"
+                
+              >
+                
+                    <div name="Humedad" class="col" >
+                    <label for="hum">
+                        <h6 class="font-weight-bold">Humedad Exterior</h6>
+                    </label>
+                    
+
+                    <input
+                      id="hum"
+                      type="checkbox" checked
+                      data-off-active-cls="btn-secondary pointer"
+                      data-on-active-cls=" btn-primary pointer"
+                      data-on-cls="pointer"
+                      data-off-cls="pointer"
+                    />
+                  </div>
+
+                  <div name="cpu" class="col">
+                      <label for="cpu">
+                          <h6 class="font-weight-bold">Uso de la CPU</h6>
+                      </label>
+                      
+
+                      <input
+                        id="cpu"
+                        type="checkbox"
+                        data-off-active-cls="btn-secondary pointer"
+                        data-on-active-cls=" btn-success pointer"
+                        data-on-cls="pointer"
+                        data-off-cls="pointer"
+                      />
+                    </div>
+                  <div name="Temperatura" class="col mt-3">
+                    <label for="temp">
+                        <h6 class="font-weight-bold">Temperatura Exterior</h6>
+                    </label>
+                    
+
+                    <input
+                      id="temp"
+                      type="checkbox"
+                      data-off-active-cls="btn-secondary pointer"
+                      data-on-active-cls=" btn-danger pointer"
+                      data-on-cls="pointer"
+                      data-off-cls="pointer"
+                    />
+                  </div>
+                  
+                    <div name="cpuT" class="col  mt-3">
+                      <label for="cpuT">
+                          <h6 class="font-weight-bold">Temperatura Interior</h6>
+                      </label>
+                      
+
+                      <input
+                        id="cpuT"
+                        type="checkbox"
+                        data-off-active-cls="btn-secondary pointer"
+                        data-on-active-cls=" btn-danger pointer"
+                        data-on-cls="pointer"
+                        data-off-cls="pointer"
+                      />
+                    </div>
+
+                    <div name="distancia" class="col mt-3">
+                        <label for="dis">
+                            <h6 class="font-weight-bold">Distancia </h6>
+                        </label>
+                        
+  
+                        <input
+                          id="dis"
+                          type="checkbox"
+                          data-off-active-cls="btn-secondary pointer"
+                          data-on-active-cls=" btn-warning pointer"
+                          data-on-cls="pointer"
+                          data-off-cls="pointer"
+                        />
+                      </div>
+                </div>
+              </div>
+
+
+              <label for="periodo"> 
+                  <h6 class="font-weight-bold">Intervalo de tiempo</h6>
               </label>
               <select id="periodo">
                 <option value="hoy" selected>Hoy</option>
@@ -54,7 +132,7 @@
 
               <div id="diaC">
                 <label for="diaConcreto">
-                  Seleccione día a mostrar
+                    <h6 class="font-weight-bold"> Seleccione día a mostrar </h6>
                 </label>
                 <br />
                 <input type="date" id="diaConcreto" />
@@ -62,7 +140,7 @@
 
               <div id="peri">
                 <label for="login-1">
-                  Inicio
+                    <h6 class="font-weight-bold"> Inicio </h6>
                 </label>
                 <br />
 
@@ -74,20 +152,21 @@
                     name="end"
                   />
                 </div>
+                <div>
+                  <label for="input-3">
+                      <h6 class="font-weight-bold">Fin</h6>
+                  </label>
+                  <br />
 
-                <label for="input-3">
-                  Fin
-                </label>
-                <br />
-
-                <input
-                  id="input-3"
-                  type="checkbox"
-                  data-off-active-cls="btn-warning pointer"
-                  data-on-active-cls="btn-primary pointer"
-                  data-on-cls="pointer"
-                  data-off-cls="pointer"
-                />
+                  <input
+                    id="input-3"
+                    type="checkbox"
+                    data-off-active-cls="btn-warning pointer"
+                    data-on-active-cls="btn-primary pointer"
+                    data-on-cls="pointer"
+                    data-off-cls="pointer"
+                  />
+                </div>
 
                 <div id="fin">
                   <div class="d-flex justify-content-center">
@@ -100,7 +179,7 @@
                   </div>
                 </div>
               </div>
-              <label for="muestras">Número de muestras:</label>
+              <label for="muestras"> <h6 class="font-weight-bold">Número de muestras: </h6> </label>
 
               <input
                 type="number"

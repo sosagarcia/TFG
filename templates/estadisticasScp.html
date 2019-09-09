@@ -3,7 +3,7 @@
   var muestras;
   var actual = 1;
   var peri = document.getElementById("peri");
-
+  var tipos = [true, false, false, false, false];
   peri.style.display = "none";
   var tipoD = document.getElementById("tipoD");
   var tipoDSelected;
@@ -87,11 +87,22 @@
       .second(seconds)
       .format(timeFormat);
   }
+  function getSelectedValues() {
+    var selectedVal = $("#tipoD").val();
+    for (var i = 0; i < selectedVal.length; i++) {
+      function innerFunc(i) {
+        setTimeout(function() {
+          location.href = selectedVal[i];
+        }, i * 2000);
+      }
+      innerFunc(i);
+    }
+  }
   function primera() {
     muestras = 50;
     fec = hoy();
     $.post("/updateStatistics", {
-      tipo: "_Humedad",
+      tipo: tipos,
       fecha: fec,
       muestras: muestras
     }).done(function(reply) {
@@ -127,7 +138,7 @@
     tipoDSelected = tipoD.options[tipoD.selectedIndex];
 
     $.post("/updateStatistics", {
-      tipo: tipoDSelected.value,
+      tipo: tipos,
       fecha: fec,
       muestras: muestras.value
     }).done(function(reply) {
@@ -185,17 +196,7 @@
       type: "line",
       data: {
         labels: dameFecha(results.labels),
-        datasets: [
-          {
-            label: results.legend,
-            backgroundColor: color(window.chartColors.blue)
-              .alpha(0.5)
-              .rgbString(),
-            borderColor: window.chartColors.blue,
-            fill: false,
-            data: results.data
-          }
-        ]
+        datasets: results.dataset
       },
       options: {
         tooltips: {
@@ -243,8 +244,15 @@
   }
   $(document).ready(primera);
 
+  function changeData(position) {
+    console.log(tipos);
+    var actual = tipos[position];
+    tipos[position] = !actual;
+    console.log(tipos);
+  }
+
   document.addEventListener("DOMContentLoaded", function() {
-    $(":checkbox")
+    $("#input-3")
       .checkboxpicker({
         onLabel: "Fecha Exacta",
         offLabel: "Hasta la actualidad"
@@ -257,6 +265,48 @@
           fin.style.display = "none";
           actual = 1;
         }
+      });
+
+    $("#hum")
+      .checkboxpicker({
+        offLabel: "Ocultar",
+        onLabel: "Mostrar"
+      })
+      .on("change", function() {
+        changeData(0);
+      });
+    $("#temp")
+      .checkboxpicker({
+        offLabel: "Ocultar",
+        onLabel: "Mostrar"
+      })
+      .on("change", function() {
+        changeData(1);
+      });
+    $("#cpu")
+      .checkboxpicker({
+        offLabel: "Ocultar",
+        onLabel: "Mostrar"
+      })
+      .on("change", function() {
+        changeData(2);
+      });
+    $("#cpuT")
+      .checkboxpicker({
+        offLabel: "Ocultar",
+        onLabel: "Mostrar"
+      })
+      .on("change", function() {
+        changeData(3);
+      });
+
+    $("#dis")
+      .checkboxpicker({
+        offLabel: "Ocultar",
+        onLabel: "Mostrar"
+      })
+      .on("change", function() {
+        changeData(4);
       });
   });
 </script>

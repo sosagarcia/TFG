@@ -22,6 +22,15 @@ unidades = {
     "_UsoCPU": "%"
 }
 
+colores ={
+    "_Distancia": "window.chartColors.yellow",
+    "_Humedad": "window.chartColors.blue",
+    "_Temperatura": "window.chartColors.red",
+    "_TemperaturaCPU": "window.chartColors.purple",
+    "_UsoCPU": "window.chartColors.orange"
+    
+}
+
 
 
 
@@ -161,6 +170,34 @@ def openAll(path):
                 raise
     return logLines
     
+def giveTypes(tipo, titulo):
+    result = list()
+    variables =["_Humedad","_Temperatura","_UsoCPU","_TemperaturaCPU","_Distancia"]
+    for i in range(0,5):
+        if tipo[i] :
+            result.append(variables[i])
+    return result
+
+def giveDatasets(tipos, fecha, muestra):
+    result = list()
+    max = len(tipos)
+    if max == 0:
+        return result
+    for i in range (0,max):
+        tipo = tipos[i]
+        unit = dameUnit(tipo)
+        titulo = str(tipo)[1: len(tipo)] + " (" + str(unit) + ")"
+        myColor = giveColor(tipo)
+        name = str(tipo) + ".log"
+        path = damePath(tipo)
+        if len(fecha) <= 13 :
+            fechas, valores  = getLogs(path,name,fecha, muestra)
+        else:
+            fechas, valores  = getLogsD(path,name,fecha, muestra)
+        result.append({'label': titulo, 'backgroundColor': myColor, 'fill': 'false','data':valores , })
+    return result, fechas, unit
+
+
 
 
 def getLogs(path, name, fecha, muestras):
@@ -264,6 +301,10 @@ def damePath(tipo):
 def dameUnit(tipo):
     unit = unidades.get(str(tipo))
     return unit
+
+def giveColor(tipo):
+    color = colores.get(str(tipo))
+    return color
 
 
 def separa(fechas):
