@@ -170,7 +170,7 @@ def openAll(path):
                 raise
     return logLines
     
-def giveTypes(tipo, titulo):
+def giveTypes(tipo):
     result = list()
     variables =["_Humedad","_Temperatura","_UsoCPU","_TemperaturaCPU","_Distancia"]
     for i in range(0,5):
