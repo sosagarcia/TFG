@@ -384,7 +384,7 @@ def updateStatistics():
     fecha = request.form.get('fecha')
     muestra = request.form.get('muestras')
 
-    return jsonify (labels = giveTypes(tipo) , dataset = tipo, unidad = "huola") 
+    return jsonify (labels = tipo , dataset = tipo, unidad = "huola") 
     datasets, fechas, unit = giveDatasets(giveTypes(tipo), fecha, muestra)
     
     return jsonify (labels = fechas, dataset = datasets, unidad = unit)
