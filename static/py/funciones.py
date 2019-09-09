@@ -26,8 +26,8 @@ colores ={
     "_Distancia": "#FFFF00",
     "_Humedad": '#1664FF',
     "_Temperatura": "#FF0C00",
-    "_TemperaturaCPU": "FF00A2",
-    "_UsoCPU": "42FF00"
+    "_TemperaturaCPU": "#FF00A2",
+    "_UsoCPU": "#42FF00"
     
 }
 

@@ -256,6 +256,7 @@
       })
       .on("change", function() {
         changeData(0);
+        updateStatistics();
       });
     $("#temp")
       .checkboxpicker({
@@ -264,6 +265,7 @@
       })
       .on("change", function() {
         changeData(1);
+        updateStatistics();
       });
     $("#cpu")
       .checkboxpicker({
@@ -272,6 +274,7 @@
       })
       .on("change", function() {
         changeData(2);
+        updateStatistics();
       });
     $("#cpuT")
       .checkboxpicker({
@@ -280,6 +283,7 @@
       })
       .on("change", function() {
         changeData(3);
+        updateStatistics();
       });
 
     $("#dis")
@@ -289,6 +293,7 @@
       })
       .on("change", function() {
         changeData(4);
+        updateStatistics();
       });
   });
 </script>
