@@ -101,7 +101,7 @@
   function primera() {
     muestras = 50;
     fec = hoy();
-    tipos = [true, false, false, false, false];
+    tipos = [1, 0, 0, 0, 0];
     $.post("/updateStatistics", {
       tipo: tipos,
       fecha: fec,
