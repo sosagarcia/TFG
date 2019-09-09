@@ -386,7 +386,7 @@ def updateStatistics():
 
     
     datasets, fechas, unit = giveDatasets(giveTypes(tipo), fecha, muestra)
-
+    return jsonify (giveTypes(tipo)) 
     return jsonify (labels = fechas, dataset = datasets, unidad = unit)
     
 
