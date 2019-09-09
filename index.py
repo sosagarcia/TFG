@@ -380,7 +380,7 @@ def chart():
 
 @app.route('/updateStatistics', methods=['POST'])
 def updateStatistics():
-    tipo = request.form.get('tipo')
+    tipo = request.form.getlist('tipo')
     fecha = request.form.get('fecha')
     muestra = request.form.get('muestras')
 
