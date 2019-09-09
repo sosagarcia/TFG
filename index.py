@@ -129,7 +129,7 @@ def main():
         movimientos = logs(irPath)
         salidas = logs(outPath)
         agenda = conjunto(titulos())
-        return render_template('main.html', agenda=agenda, alarma=str(alarmas), movimiento=movimientos , salida=salidas)
+        return render_template('main.html', agenda=agenda, alarma=alarmas, movimiento=movimientos , salida=salidas)
     else:
         flash("Sesión caducada",'dark')
         return redirect(url_for("login"))
