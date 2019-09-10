@@ -13,8 +13,5 @@ echo "Reiniciando Apache"
 sudo service apache2 start &
 echo "Copiando scripts"
 sudo cp -R /var/www/html/TFG/upkeep/* /home/pi/Scripts/
-echo "Copiando pys"
-sudo cp -R /var/www/html/TFG/status.py /home/pi/Scripts/
-sudo cp -R /var/www/html/TFG/worker.py /home/pi/Scripts/
 echo "Permisos Scripts"
 sudo chmod -R 777 /home/pi/Scripts/

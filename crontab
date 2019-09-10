@@ -1,0 +1,12 @@
+# m h  dom mon dow   command
+#Update
+00 04 1,11 * * /home/pi/Scripts/Actualizar.sh >> /var/log/iot/crontab/Updates.log 2>&1
+#GitClone
+45 04 1,11 * * /home/pi/Scripts/GitClone.sh >> /var/log/iot/crontab/GitClone.log 2>&1
+#Status y Worker
+@reboot /home/pi/Scripts/iniciar.sh  >> /var/log/iot/crontab/Reboots.log 2>&1
+#Subida de logs a GitHub
+15 03 * * * /home/pi/Scripts/SaveLogs.sh >> /var/log/iot/crontab/GitLogs.log 2>&1
+#Reducción de datos antiguos
+30 03 * * * sudo python3 /home/pi/Scripts/upkeep.py  >> /var/log/iot/crontab/Upkeeps.log 2>&1
+
