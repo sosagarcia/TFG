@@ -15,19 +15,31 @@ GPIO.setup(user1, GPIO.OUT, initial=GPIO.LOW)
 GPIO.setup(user2, GPIO.OUT, initial=GPIO.LOW)
 GPIO.setup(user3, GPIO.OUT, initial=GPIO.LOW)
 
-mydb = mysql.connector.connect(
-    host="localhost",
-    user="renato",
-    passwd="renato12",
-    database="flaskcontacts"
-)
-
-
 switcher = {
     1: 13,
     2: 19,
     3: 26
 }
+
+while True:
+
+    try:
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="renato",
+            passwd="renato12",
+            database="flaskcontacts"
+        )
+        break
+    except:
+        hoy = dt.datetime.now()
+        print("Aun no ha sido posible conectar con la base de datos" +
+              hoy.strftime("%d-%m-%Y %H:%M:%S"))
+        time.sleep(1)
+        continue
+
+
+
 
 
 def start(id):
