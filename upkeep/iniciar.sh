@@ -1,5 +1,5 @@
 #!/bin/bash
 
-sudo python3 /var/www/html/TFG/worker.py &
-sudo python3 /var/www/html/TFG/status.py &
+sudo python3 /home/pi/Scripts/worker.py &
+sudo python3 /home/pi/Scripts/status.py &
  #as
