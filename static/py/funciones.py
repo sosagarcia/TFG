@@ -190,7 +190,7 @@ def giveDatasets(tipos, fecha, muestra):
     unidad = list ()
     max = len(tipos)
     if max == 0:
-        return ("0",""0","0","0","0")
+        return ("0","0","0","0","0")
     for i in range (0,max):
         tipo = tipos[i]
         unit = dameUnit(tipo)
