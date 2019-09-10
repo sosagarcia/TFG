@@ -35,6 +35,7 @@
     }
     return i;
   }
+  /*  Solo funciona si el pc local y el sistema están en la misma zona horaria (obtiene la hora del pc local)
   function ahora() {
     var hoy = new Date();
     var dd = hoy.getDate();
@@ -48,6 +49,7 @@
     MM = addZero(MM);
     return yyyy + "-" + mm + "-" + dd + "T" + HH + ":" + MM;
   }
+  */
   function hoy() {
     var hoy = new Date();
     var dd = hoy.getDate();
@@ -119,7 +121,7 @@
       if (actual == 0) {
         fec = fecha1.value + fecha2.value;
       } else {
-        fec = fecha1.value + ahora();
+        fec = fecha1.value + "ahora";
       }
     } else {
       fec = periodoSelected.value;

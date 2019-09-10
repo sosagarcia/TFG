@@ -23,7 +23,7 @@ unidades = {
 }
 
 colores ={
-    "_Distancia": "#FFFF00",
+    "_Distancia": "#FFCD00",
     "_Humedad": '#1664FF',
     "_Temperatura": "#FF0C00",
     "_TemperaturaCPU": "#FF00A2",
@@ -133,14 +133,14 @@ def divideFechas(fecha):
     año1 = fecha[0:4]
     hora1 = fecha[11:13]
     minuto1 = fecha[14:16]
-    dia2 = fecha[24:26]
-    mes2 = fecha[21:23]
-    año2 = fecha[16:20]
-    hora2 = fecha[27:29]
-    minuto2 = fecha[30:32]
-    
+    #dia2 = fecha[24:26]
+    #mes2 = fecha[21:23]
+    #año2 = fecha[16:20]
+    #hora2 = fecha[27:29]
+    #minuto2 = fecha[30:32]
     inicio = datetime(year = int(año1), month = int(mes1), day = int(dia1), hour= int(hora1), minute = int(minuto1))
-    fin = datetime(year = int(año2), month =int( mes2), day = int(dia2), hour= int(hora2), minute = int(minuto2))
+    #fin = datetime(year = int(año2), month =int( mes2), day = int(dia2), hour= int(hora2), minute = int(minuto2))
+    fin = dt.datetime.now()
 
     return (inicio, fin)
 
@@ -190,7 +190,7 @@ def giveDatasets(tipos, fecha, muestra):
         myColor = giveColor(tipo)
         name = str(tipo) + ".log"
         path = damePath(tipo)
-        if len(fecha) <= 13 :
+        if len(fecha) <= 12 :
             fechas, valores  = getLogs(path,name,fecha, muestra)
         else:
             fechas, valores  = getLogsD(path,name,fecha, muestra)
@@ -202,7 +202,6 @@ def giveDatasets(tipos, fecha, muestra):
 
 def getLogs(path, name, fecha, muestras):
     logLines = list()
-    if (str(fecha) == "*"):
        logLines = openAll(path)
     else :
         try:
