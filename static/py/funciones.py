@@ -128,19 +128,23 @@ def pasaFecha1(fecha):
     return fecha
 
 def divideFechas(fecha):
+
     dia1 = fecha[8:10]
     mes1 = fecha[5:7]
     año1 = fecha[0:4]
     hora1 = fecha[11:13]
     minuto1 = fecha[14:16]
-    #dia2 = fecha[24:26]
-    #mes2 = fecha[21:23]
-    #año2 = fecha[16:20]
-    #hora2 = fecha[27:29]
-    #minuto2 = fecha[30:32]
     inicio = datetime(year = int(año1), month = int(mes1), day = int(dia1), hour= int(hora1), minute = int(minuto1))
-    #fin = datetime(year = int(año2), month =int( mes2), day = int(dia2), hour= int(hora2), minute = int(minuto2))
-    fin = dt.datetime.now()
+    
+    if len(fecha) >= 20 : 
+        dia2 = fecha[24:26]
+        mes2 = fecha[21:23]
+        año2 = fecha[16:20]
+        hora2 = fecha[27:29]
+        minuto2 = fecha[30:32]
+        fin = datetime(year = int(año2), month =int( mes2), day = int(dia2), hour= int(hora2), minute = int(minuto2))
+    else :
+        fin = dt.datetime.now()
 
     return (inicio, fin)
 
@@ -189,7 +193,7 @@ def giveDatasets(tipos, fecha, muestra):
         myColor = giveColor(tipo)
         name = str(tipo) + ".log"
         path = damePath(tipo)
-        if len(fecha) <= 13 :
+        if len(fecha) <= 16 :
             fechas, valores  = getLogs(path,name,fecha, muestra)
         else:
             fechas, valores  = getLogsD(path,name,fecha, muestra)
