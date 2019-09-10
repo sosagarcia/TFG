@@ -88,6 +88,7 @@ def reWrite(text, path, name, fecha):
     finally:
         rename(new, old)
         f.close()
+        print("Se ha reducido correctamente el contenido del archivo")
 
 
 def dameFecha():
@@ -115,7 +116,6 @@ def openFile(path, name):
 
 def empieza(path, name):
     fichero, fecha = openFile(path, name)
-    print(fecha)
     if not (fichero == -1):
         unit = dameUnit(name)
         if (name == cpuName):
@@ -124,14 +124,17 @@ def empieza(path, name):
             newFile = media(fichero, unit)
         reWrite(newFile, path, name, fecha)
     else:
-        print("pochao")
+        print("Error")
         pass
 
 
 if __name__ == '__main__':
 
     try:
+        hoy = dt.datetime.now()
 
+        print("Empieza tarea de mantenimiento, a fecha de : " +
+              hoy.strftime("%d-%m-%Y %H:%M:%S"))
         empieza(disPath, dName)
         empieza(hPath, hName)
         empieza(tPath, tName)
@@ -139,7 +142,9 @@ if __name__ == '__main__':
         empieza(cpuPath, cpuName)
 
     except:
-        print("Se ha pochao")
+        print("Error Fatal")
         raise
     finally:
-        print("finito")
+        hoy = dt.datetime.now()
+        print("Termina la tarea de mantenimiento, a fecha de : " +
+              hoy.strftime("%d-%m-%Y %H:%M:%S") + '\n')
