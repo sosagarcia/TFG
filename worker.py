@@ -15,12 +15,19 @@ GPIO.setup(user1, GPIO.OUT, initial=GPIO.LOW)
 GPIO.setup(user2, GPIO.OUT, initial=GPIO.LOW)
 GPIO.setup(user3, GPIO.OUT, initial=GPIO.LOW)
 
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="renato",
+    passwd="renato12",
+    database="flaskcontacts"
+)
+
+
 switcher = {
     1: 13,
     2: 19,
     3: 26
 }
-
 while True:
 
     try:
@@ -37,9 +44,6 @@ while True:
               hoy.strftime("%d-%m-%Y %H:%M:%S"))
         time.sleep(1)
         continue
-
-
-
 
 
 def start(id):
@@ -59,23 +63,15 @@ def stop(id):
 
 
 def titulos():
-    data = list()
-    try:
-        mycursor = mydb.cursor()
-        mycursor.execute(
-            "SELECT idUser, start, end FROM eventos ORDER BY start ASC")
-        data = mycursor.fetchall()
-        data = [i for sub in data for i in sub]
-        return data
-    except:
-        print("Fallo al obtener información de la base de datos")
-        data.append(-1)
-        return data
+    mycursor = mydb.cursor()
+    mycursor.execute(
+        "SELECT idUser, start, end FROM eventos ORDER BY start ASC")
+    data = mycursor.fetchall()
+    data = [i for sub in data for i in sub]
+    return data
 
 
 def ganador(data):
-    if data[0] == -1:
-        return data
     max = len(data)
     result = list()
     if max == 0:
@@ -97,12 +93,11 @@ if __name__ == '__main__':
                 stop(2)
                 stop(3)
             else:
-                if not user[0] == -1:
-                    for i in [1, 2, 3]:
-                        if i in user:
-                            start(i)
-                        else:
-                            stop(i)
+                for i in [1, 2, 3]:
+                    if i in user:
+                        start(i)
+                    else:
+                        stop(i)
 
             time.sleep(3)
             mydb.commit()

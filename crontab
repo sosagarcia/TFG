@@ -12,19 +12,3 @@
 
 
 
-while True:
-
-    try:
-        mydb = mysql.connector.connect(
-            host="localhost",
-            user="renato",
-            passwd="renato12",
-            database="flaskcontacts"
-        )
-        break
-    except:
-        hoy = dt.datetime.now()
-        print("Aun no ha sido posible conectar con la base de datos" +
-              hoy.strftime("%d-%m-%Y %H:%M:%S"))
-        time.sleep(1)
-        continue
