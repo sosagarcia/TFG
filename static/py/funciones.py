@@ -144,7 +144,6 @@ def divideFechas(fecha):
 
     return (inicio, fin)
 
-
 def dif(start, end, intervalo):
     start = pasaFecha(start)
     end = pasaFecha(end)
@@ -190,7 +189,7 @@ def giveDatasets(tipos, fecha, muestra):
         myColor = giveColor(tipo)
         name = str(tipo) + ".log"
         path = damePath(tipo)
-        if len(fecha) <= 12 :
+        if len(fecha) <= 13 :
             fechas, valores  = getLogs(path,name,fecha, muestra)
         else:
             fechas, valores  = getLogsD(path,name,fecha, muestra)
@@ -202,6 +201,7 @@ def giveDatasets(tipos, fecha, muestra):
 
 def getLogs(path, name, fecha, muestras):
     logLines = list()
+    if (str(fecha) == "*"):
        logLines = openAll(path)
     else :
         try:
