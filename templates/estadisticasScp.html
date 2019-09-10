@@ -1,41 +1,41 @@
 <script>
-    var fec;
-    var muestras;
-    var actual = 1;
-    var peri = document.getElementById("peri");
-    var tipos = [true, false, false, false, false];
-    peri.style.display = "none";
+  var fec;
+  var muestras;
+  var actual = 1;
+  var peri = document.getElementById("peri");
+  var tipos = [true, false, false, false, false];
+  peri.style.display = "none";
 
-    var periodo = document.getElementById("periodo");
-    var periodoSelected;
-    var fin = document.getElementById("fin");
-    fin.style.display = "none";
-    var diaC = document.getElementById("diaC");
-    diaC.style.display = "none";
-    var fecha1 = document.getElementById("login-1");
-    var fecha2 = document.getElementById("login-2");
+  var periodo = document.getElementById("periodo");
+  var periodoSelected;
+  var fin = document.getElementById("fin");
+  fin.style.display = "none";
+  var diaC = document.getElementById("diaC");
+  diaC.style.display = "none";
+  var fecha1 = document.getElementById("login-1");
+  var fecha2 = document.getElementById("login-2");
 
-    periodo.addEventListener("change", function() {
-      periodoSelected = this.options[periodo.selectedIndex];
-      if (periodoSelected.value == "intervalo") {
-        peri.style.display = "block";
-      } else {
-        peri.style.display = "none";
-      }
-      if (periodoSelected.value == "dia") {
-        diaC.style.display = "block";
-      } else {
-        diaC.style.display = "none";
-      }
-    });
-
-    function addZero(i) {
-      if (i < 10) {
-        i = "0" + i;
-      }
-      return i;
+  periodo.addEventListener("change", function() {
+    periodoSelected = this.options[periodo.selectedIndex];
+    if (periodoSelected.value == "intervalo") {
+      peri.style.display = "block";
+    } else {
+      peri.style.display = "none";
     }
-    /*  Solo funciona si el pc local y el sistema están en la misma zona horaria (obtiene la hora del pc local)
+    if (periodoSelected.value == "dia") {
+      diaC.style.display = "block";
+    } else {
+      diaC.style.display = "none";
+    }
+  });
+
+  function addZero(i) {
+    if (i < 10) {
+      i = "0" + i;
+    }
+    return i;
+  }
+  /*  Solo funciona si el pc local y el sistema están en la misma zona horaria (obtiene la hora del pc local)
     function ahora() {
       var hoy = new Date();
       var dd = hoy.getDate();
@@ -50,252 +50,251 @@
       return yyyy + "-" + mm + "-" + dd + "T" + HH + ":" + MM;
     }
     */
-    function hoy() {
-      var hoy = new Date();
-      var dd = hoy.getDate();
-      var mm = hoy.getMonth() + 1;
-      var yyyy = hoy.getFullYear();
-      dd = addZero(dd);
-      mm = addZero(mm);
+  function hoy() {
+    var hoy = new Date();
+    var dd = hoy.getDate();
+    var mm = hoy.getMonth() + 1;
+    var yyyy = hoy.getFullYear();
+    dd = addZero(dd);
+    mm = addZero(mm);
 
-      return yyyy + "-" + mm + "-" + dd;
+    return yyyy + "-" + mm + "-" + dd;
+  }
+  var color = Chart.helpers.color;
+  var timeFormat = "HH:mm:ss DD-MM-YYYY";
+  var myColor;
+  function dameFecha(labels) {
+    var fechas = [];
+
+    for (var i = 0; i < labels.length; i++) {
+      fechas[i] = newDateString(
+        labels[i][0],
+        labels[i][1],
+        labels[i][2],
+        labels[i][3],
+        labels[i][4],
+        labels[i][5]
+      );
     }
-    var color = Chart.helpers.color;
-    var timeFormat = "HH:mm:ss DD-MM-YYYY";
-    var myColor;
-    function dameFecha(labels) {
-      var fechas = [];
+    return fechas;
+  }
+  function newDateString(hours, minutes, seconds, day, month, year) {
+    return moment()
+      .date(day)
+      .month(month - 1)
+      .year(year)
+      .hour(hours)
+      .minute(minutes)
+      .second(seconds)
+      .format(timeFormat);
+  }
 
-      for (var i = 0; i < labels.length; i++) {
-        fechas[i] = newDateString(
-          labels[i][0],
-          labels[i][1],
-          labels[i][2],
-          labels[i][3],
-          labels[i][4],
-          labels[i][5]
-        );
-      }
-      return fechas;
-    }
-    function newDateString(hours, minutes, seconds, day, month, year) {
-      return moment()
-        .date(day)
-        .month(month - 1)
-        .year(year)
-        .hour(hours)
-        .minute(minutes)
-        .second(seconds)
-        .format(timeFormat);
-    }
+  function primera() {
+    muestras = 50;
+    fec = hoy();
 
-    function primera() {
-      muestras = 50;
-      fec = hoy();
-
-      $.post("/updateStatistics", {
-        tipo: tipos,
-        fecha: fec,
-        muestras: muestras
-      }).done(function(reply) {
-        crea(reply);
-      });
-    }
-    function transforma(string) {
-      var dd = string.slice(-2);
-      var mm = string.slice(5, 7);
-      var yyyy = string.slice(0, 4);
-      return yyyy + "-" + mm + "-" + dd;
-    }
-  2019:08:15T12:05
-    function updateStatistics() {
-      var diaSelected;
-      muestras = document.getElementById("muestras");
-      periodoSelected = periodo.options[periodo.selectedIndex];
-      if (periodoSelected.value == "hoy") {
-        fec = hoy();
-      } else if (periodoSelected.value == "dia") {
-        diaSelected = document.getElementById("diaConcreto");
-        fec = transforma(diaSelected.value);
-      } else if (periodoSelected.value == "intervalo") {
-        if (actual == 0) {
-          fec = fecha1.value + fecha2.value;
-        } else {
-          fec = fecha1.value + "now";
-        }
-      } else {
-        fec = periodoSelected.value;
-      }
-
-      $.post("/updateStatistics", {
-        tipo: tipos,
-        fecha: fec,
-        muestras: muestras.value
-      }).done(function(reply) {
-        if (reply.labels == 0 || reply.data == 0) {
-          alert("Fecha incorrecta. No hay datos registrados para dicha fecha");
-        } else {
-          actualiza(reply);
-        }
-      });
-    }
-    function dameColor(tipo, unit) {
-      var dist = "Distancia" + " (" + unit + ")";
-      var temp = "Temperatura" + " (" + unit + ")";
-      var tCPU = "TemperaturaCPU" + " (" + unit + ")";
-      var CPU = "UsoCPU" + " (" + unit + ")";
-
-      switch (tipo) {
-        case dist:
-          myColor = window.chartColors.yellow;
-          break;
-        case temp:
-          myColor = window.chartColors.red;
-          break;
-        case tCPU:
-          myColor = window.chartColors.purple;
-          break;
-        case CPU:
-          myColor = window.chartColors.orange;
-          break;
-        default:
-          myColor = window.chartColors.blue;
-      }
-
-      return myColor;
-    }
-
-    function actualiza(results) {
-      console.log(results);
-      chart.data.datasets = results.dataset;
-      chart.data.labels = dameFecha(results.labels);
-      chart.options.tooltips.callbacks.label = item =>
-        `${item.yLabel} ` + results.unidad;
-      chart.update();
-    }
-
-    function crea(results) {
-      console.log(results);
-      var config = {
-        type: "line",
-        data: {
-          labels: dameFecha(results.labels),
-          datasets: results.dataset
-        },
-        options: {
-          tooltips: {
-            callbacks: {
-              label: item => `${item.yLabel} %`
-            }
-          },
-          title: {
-            text: "Chart.js Time Scale"
-          },
-          scales: {
-            xAxes: [
-              {
-                type: "time",
-                time: {
-                  parser: timeFormat,
-                  //round: "day",
-                  tooltipFormat: "ll HH:mm:ss"
-                },
-                scaleLabel: {
-                  display: true,
-                  labelString: "Tiempo"
-                }
-              }
-            ],
-            yAxes: [
-              {
-                scaleLabel: {
-                  display: true,
-                  labelString: "Valor"
-                }
-              }
-            ]
-          }
-        }
-      };
-      var ctx = document.getElementById("canvas").getContext("2d");
-      chart = new Chart(ctx, config);
-      window.myLine = chart;
-    }
-    $("#act").on("click", updateStatistics);
-    function validateFormOnSubmit(something) {
-      updateStatistics();
-      return false;
-    }
-    $(document).ready(primera);
-
-    function changeData(position) {
-      console.log(tipos);
-      var actual = tipos[position];
-      tipos[position] = !actual;
-      console.log(tipos);
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-      $("#input-3")
-        .checkboxpicker({
-          onLabel: "Fecha Exacta",
-          offLabel: "Hasta la actualidad"
-        })
-        .on("change", function() {
-          if (fin.style.display == "none") {
-            fin.style.display = "block";
-            actual = 0;
-          } else {
-            fin.style.display = "none";
-            actual = 1;
-          }
-        });
-
-      $("#hum")
-        .checkboxpicker({
-          offLabel: "Ocultar",
-          onLabel: "Mostrar"
-        })
-        .on("change", function() {
-          changeData(0);
-          updateStatistics();
-        });
-      $("#temp")
-        .checkboxpicker({
-          offLabel: "Ocultar",
-          onLabel: "Mostrar"
-        })
-        .on("change", function() {
-          changeData(1);
-          updateStatistics();
-        });
-      $("#cpu")
-        .checkboxpicker({
-          offLabel: "Ocultar",
-          onLabel: "Mostrar"
-        })
-        .on("change", function() {
-          changeData(2);
-          updateStatistics();
-        });
-      $("#cpuT")
-        .checkboxpicker({
-          offLabel: "Ocultar",
-          onLabel: "Mostrar"
-        })
-        .on("change", function() {
-          changeData(3);
-          updateStatistics();
-        });
-
-      $("#dis")
-        .checkboxpicker({
-          offLabel: "Ocultar",
-          onLabel: "Mostrar"
-        })
-        .on("change", function() {
-          changeData(4);
-          updateStatistics();
-        });
+    $.post("/updateStatistics", {
+      tipo: tipos,
+      fecha: fec,
+      muestras: muestras
+    }).done(function(reply) {
+      crea(reply);
     });
+  }
+  function transforma(string) {
+    var dd = string.slice(-2);
+    var mm = string.slice(5, 7);
+    var yyyy = string.slice(0, 4);
+    return yyyy + "-" + mm + "-" + dd;
+  }
+  function updateStatistics() {
+    var diaSelected;
+    muestras = document.getElementById("muestras");
+    periodoSelected = periodo.options[periodo.selectedIndex];
+    if (periodoSelected.value == "hoy") {
+      fec = hoy();
+    } else if (periodoSelected.value == "dia") {
+      diaSelected = document.getElementById("diaConcreto");
+      fec = transforma(diaSelected.value);
+    } else if (periodoSelected.value == "intervalo") {
+      if (actual == 0) {
+        fec = fecha1.value + fecha2.value;
+      } else {
+        fec = fecha1.value + "now";
+      }
+    } else {
+      fec = periodoSelected.value;
+    }
+    console.log(fec);
+    $.post("/updateStatistics", {
+      tipo: tipos,
+      fecha: fec,
+      muestras: muestras.value
+    }).done(function(reply) {
+      if (reply.labels == 0 || reply.data == 0) {
+        alert("Fecha incorrecta. No hay datos registrados para dicha fecha");
+      } else {
+        actualiza(reply);
+      }
+    });
+  }
+  function dameColor(tipo, unit) {
+    var dist = "Distancia" + " (" + unit + ")";
+    var temp = "Temperatura" + " (" + unit + ")";
+    var tCPU = "TemperaturaCPU" + " (" + unit + ")";
+    var CPU = "UsoCPU" + " (" + unit + ")";
+
+    switch (tipo) {
+      case dist:
+        myColor = window.chartColors.yellow;
+        break;
+      case temp:
+        myColor = window.chartColors.red;
+        break;
+      case tCPU:
+        myColor = window.chartColors.purple;
+        break;
+      case CPU:
+        myColor = window.chartColors.orange;
+        break;
+      default:
+        myColor = window.chartColors.blue;
+    }
+
+    return myColor;
+  }
+
+  function actualiza(results) {
+    console.log(results);
+    chart.data.datasets = results.dataset;
+    chart.data.labels = dameFecha(results.labels);
+    chart.options.tooltips.callbacks.label = item =>
+      `${item.yLabel} ` + results.unidad;
+    chart.update();
+  }
+
+  function crea(results) {
+    console.log(results);
+    var config = {
+      type: "line",
+      data: {
+        labels: dameFecha(results.labels),
+        datasets: results.dataset
+      },
+      options: {
+        tooltips: {
+          callbacks: {
+            label: item => `${item.yLabel} %`
+          }
+        },
+        title: {
+          text: "Chart.js Time Scale"
+        },
+        scales: {
+          xAxes: [
+            {
+              type: "time",
+              time: {
+                parser: timeFormat,
+                //round: "day",
+                tooltipFormat: "ll HH:mm:ss"
+              },
+              scaleLabel: {
+                display: true,
+                labelString: "Tiempo"
+              }
+            }
+          ],
+          yAxes: [
+            {
+              scaleLabel: {
+                display: true,
+                labelString: "Valor"
+              }
+            }
+          ]
+        }
+      }
+    };
+    var ctx = document.getElementById("canvas").getContext("2d");
+    chart = new Chart(ctx, config);
+    window.myLine = chart;
+  }
+  $("#act").on("click", updateStatistics);
+  function validateFormOnSubmit(something) {
+    updateStatistics();
+    return false;
+  }
+  $(document).ready(primera);
+
+  function changeData(position) {
+    console.log(tipos);
+    var actual = tipos[position];
+    tipos[position] = !actual;
+    console.log(tipos);
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    $("#input-3")
+      .checkboxpicker({
+        onLabel: "Fecha Exacta",
+        offLabel: "Hasta la actualidad"
+      })
+      .on("change", function() {
+        if (fin.style.display == "none") {
+          fin.style.display = "block";
+          actual = 0;
+        } else {
+          fin.style.display = "none";
+          actual = 1;
+        }
+      });
+
+    $("#hum")
+      .checkboxpicker({
+        offLabel: "Ocultar",
+        onLabel: "Mostrar"
+      })
+      .on("change", function() {
+        changeData(0);
+        updateStatistics();
+      });
+    $("#temp")
+      .checkboxpicker({
+        offLabel: "Ocultar",
+        onLabel: "Mostrar"
+      })
+      .on("change", function() {
+        changeData(1);
+        updateStatistics();
+      });
+    $("#cpu")
+      .checkboxpicker({
+        offLabel: "Ocultar",
+        onLabel: "Mostrar"
+      })
+      .on("change", function() {
+        changeData(2);
+        updateStatistics();
+      });
+    $("#cpuT")
+      .checkboxpicker({
+        offLabel: "Ocultar",
+        onLabel: "Mostrar"
+      })
+      .on("change", function() {
+        changeData(3);
+        updateStatistics();
+      });
+
+    $("#dis")
+      .checkboxpicker({
+        offLabel: "Ocultar",
+        onLabel: "Mostrar"
+      })
+      .on("change", function() {
+        changeData(4);
+        updateStatistics();
+      });
+  });
 </script>
