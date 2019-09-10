@@ -189,11 +189,6 @@
   function prepara(result) {
     var tipos = result.unidad.length;
     var dato = [];
-    console.log(result.data[0]);
-    console.log(result.fechas[0]);
-    console.log(result.titulo[0]);
-    console.log(result.colour[0]);
-    console.log(result.unidad.length);
 
     for (var i = 0; i < tipos; i++) {
       var datos = giveData(result.data[i], result.fechas[i]);
@@ -205,6 +200,7 @@
       };
       dato[i] = s;
     }
+    return dato;
   }
   function crea(results) {
     console.log(results);
