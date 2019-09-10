@@ -47,15 +47,23 @@ def stop(id):
 
 
 def titulos():
-    mycursor = mydb.cursor()
-    mycursor.execute(
-        "SELECT idUser, start, end FROM eventos ORDER BY start ASC")
-    data = mycursor.fetchall()
-    data = [i for sub in data for i in sub]
-    return data
+    data = list()
+    try:
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            "SELECT idUser, start, end FROM eventos ORDER BY start ASC")
+        data = mycursor.fetchall()
+        data = [i for sub in data for i in sub]
+        return data
+    except:
+        print("Fallo al obtener información de la base de datos")
+        data.append(-1)
+        return data
 
 
 def ganador(data):
+    if data[0] == -1:
+        return data
     max = len(data)
     result = list()
     if max == 0:
@@ -77,11 +85,12 @@ if __name__ == '__main__':
                 stop(2)
                 stop(3)
             else:
-                for i in [1, 2, 3]:
-                    if i in user:
-                        start(i)
-                    else:
-                        stop(i)
+                if not user[0] == -1:
+                    for i in [1, 2, 3]:
+                        if i in user:
+                            start(i)
+                        else:
+                            stop(i)
 
             time.sleep(3)
             mydb.commit()
