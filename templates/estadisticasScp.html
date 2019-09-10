@@ -173,30 +173,33 @@
     chart.update();
   }
 
-  function giveData(datas, fechas){
+  function giveData(datas, fechas) {
     longitud = datas.length;
     var result = [];
     var fec = dameFecha(fechas);
     for (var i = 0; i < longitud; i++) {
       result[i] = {
-        x : fec[i] , y: datas[i]
-      }
+        x: fec[i],
+        y: datas[i]
+      };
     }
     return result;
+  }
 
-  function prepara(result){
+  function prepara(result) {
     var tipos = result.unidad.length;
     var dato = [];
     for (var i = 0; i < tipos; i++) {
-      var datos  = giveData(result.data[i], result.dechas[i]);
+      var datos = giveData(result.data[i], result.dechas[i]);
       var s = {
-      label: result.titulo[i],
-      borderColor: results.colour[i],
-      backgroundColor: results.colour[i],
-      data: datos
+        label: result.titulo[i],
+        borderColor: results.colour[i],
+        backgroundColor: results.colour[i],
+        data: datos
       };
       dato[i] = s;
     }
+  }
   function crea(results) {
     console.log(results);
     dataset = prepara(results);
@@ -204,7 +207,7 @@
 
     var config = {
       type: "line",
-      data: {datasets : dataset},
+      data: { datasets: dataset },
       options: {
         tooltips: {
           callbacks: {
