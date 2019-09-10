@@ -184,7 +184,7 @@ def giveTypes(tipo):
 def giveDatasets(tipos, fecha, muestra):
     result = list()
     labels = list()
-    data = list()
+    resultado = list()
     max = len(tipos)
     if max == 0:
         return result
@@ -200,7 +200,7 @@ def giveDatasets(tipos, fecha, muestra):
         else:
             fechas, valores  = getLogsD(path,name,fecha, muestra)
         result = ({'label': titulo, 'backgroundColor': myColor,'borderColor': myColor ,'fill': 'true','data':valores , })
-        data.append({'labels':fechas,'datasets': result})
+        resultado.append({'datasets': result,'labels':fechas})
     return (data, unit)
 
 
