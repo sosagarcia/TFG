@@ -15,13 +15,6 @@ GPIO.setup(user1, GPIO.OUT, initial=GPIO.LOW)
 GPIO.setup(user2, GPIO.OUT, initial=GPIO.LOW)
 GPIO.setup(user3, GPIO.OUT, initial=GPIO.LOW)
 
-mydb = mysql.connector.connect(
-    host="localhost",
-    user="renato",
-    passwd="renato12",
-    database="flaskcontacts"
-)
-
 
 switcher = {
     1: 13,
