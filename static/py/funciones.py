@@ -182,9 +182,12 @@ def giveTypes(tipo):
     return result
 
 def giveDatasets(tipos, fecha, muestra):
-    result = list()
+    data = list()
     labels = list()
-    resultado = list()
+    data = list()
+    color = list()
+    title = list()
+    unidad = list ()
     max = len(tipos)
     if max == 0:
         return result
@@ -199,9 +202,12 @@ def giveDatasets(tipos, fecha, muestra):
             fechas, valores  = getLogs(path,name,fecha, muestra)
         else:
             fechas, valores  = getLogsD(path,name,fecha, muestra)
-        result = ({'label': titulo, 'backgroundColor': myColor,'borderColor': myColor ,'fill': 'true','data':valores , })
-        resultado.append({'datasets': result,'labels':fechas})
-    return (resultado, unit)
+        labels.append(fechas)
+        data.append(valores)
+        color.append(myColor)
+        title.append(titulo)
+        unidad.append(unit)
+    return (labels, data, color,title,unidad)
 
 
 
