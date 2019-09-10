@@ -200,7 +200,7 @@ def giveDatasets(tipos, fecha, muestra):
         else:
             fechas, valores  = getLogsD(path,name,fecha, muestra)
         result = ({'label': titulo, 'backgroundColor': myColor,'borderColor': myColor ,'fill': 'true','data':valores , })
-        data.append('labels':fechas,'datasets': result}
+        data.append({'labels':fechas,'datasets': result})
     return (data, unit)
 
 
