@@ -175,9 +175,10 @@
 
   function crea(results) {
     console.log(results);
+    console.log(results.data);
     var config = {
       type: "line",
-      data: results.data[0],
+      data: results.data,
       options: {
         tooltips: {
           callbacks: {
@@ -216,6 +217,7 @@
     var ctx = document.getElementById("canvas").getContext("2d");
     chart = new Chart(ctx, config);
     window.myLine = chart;
+    console.log(results.data[0]);
   }
   $("#act").on("click", updateStatistics);
   function validateFormOnSubmit(something) {
