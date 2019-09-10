@@ -2,7 +2,7 @@
 #Update
 00 04 1,11 * * /home/pi/Scripts/Actualizar.sh >> /var/log/iot/crontab/Updates.log 2>&1
 #GitClone
-45 04 1,11 * * /home/pi/Scripts/GitClone.sh >> /var/log/iot/crontab/GitClone.log 2>&1
+45 04 1,11 * * /home/pi/Scripts/Git.sh >> /var/log/iot/crontab/GitClone.log 2>&1
 #Status y Worker
 @reboot /home/pi/Scripts/iniciar.sh  >> /var/log/iot/crontab/Reboots.log 2>&1
 #Subida de logs a GitHub

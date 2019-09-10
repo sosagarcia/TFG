@@ -1,4 +1,5 @@
 #!/bin/bash
+echo"###########################################################################"
 sudo service apache2 stop &
 cd
 cd /var/www/html/
@@ -15,3 +16,4 @@ echo "Copiando scripts"
 sudo cp -R /var/www/html/TFG/upkeep/* /home/pi/Scripts/
 echo "Permisos Scripts"
 sudo chmod -R 777 /home/pi/Scripts/
+echo"###########################################################################"
