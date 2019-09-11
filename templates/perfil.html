@@ -16,21 +16,24 @@
 
 
 		<div class="col-md-3 fadeIn">
-		     <div class="list-group ">
-              <a href="#" class="list-group-item list-group-item-action active">Información Personal</a>
-              <a href="#" class="list-group-item list-group-item-action">Ajustes</a>
+		     <div class="nav nav-tabs ">
+              <a data-toggle="tab" href="#home" class="list-group-item list-group-item-action active" data-toggle="tab" href="#home">Información Personal</a>
+
+              <a data-toggle="tab" href="#settings" class="list-group-item list-group-item-action {% if not session["root"] %}disabled {% endif %}">Ajustes del dispositivo</a>
           </div> 
 		</div>
 		<div class="col-md-9 fadeInDown">
 		    <div class="card">
 		        <div class="card-body">
-		            <div class="row">
-		                <div class="col-md-12">
-		                    <h4>Perfil</h4>
-		                    <hr>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="home">
+		                  <div class="row">
+                      <div class="col-md-12">
+                          <h4>Ajustes de Cuenta</h4>
+                          <hr>
+                      </div>
 		                </div>
-		            </div>
-		            <div class="row">
+		               <div class="row">
 		                <div class="col-md-12">
 		                    <form action="/update/{{session["id"]}}" method="POST">
                               <div class="form-group row">
@@ -92,7 +95,67 @@
                               * Campo obligatorio
                         </form>
 		                </div>
-		            </div>		            
+                </div>
+              </div>
+              <div class="tab-pane" id="settings">
+                
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <h4>Ajustes del Dispositivo</h4>
+                          <hr>
+                      </div>
+		                </div>
+		               <div class="row">
+		                <div class="col-md-12">
+		                    <form action="/updateDevice" method="POST">
+                              <div class="form-group row">
+                                  <label for="nameD" class="col-4 col-form-label">Nombre del Dispositivo</label> 
+                                  <div class="col-8">
+                                    <input id="nameD" name="nameD" value ="{{ session["deviceName"] }}" class="form-control here" required="required" type="text" placeholder="Introduzca nombre del equipo">
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label for="disA" class="col-4 col-form-label">Distancia máxima de alarma</label> 
+                                  <div class="col-8">
+                                    <input id="disA" name="disA" value="{{ session["disA"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca la distancia en Cm." min="1"
+                                    step=".01">
+                                </div>
+                              </div> 
+                              <div class="form-group row">
+                                <label for="emailR" class="col-4 col-form-label">Email de alarmas</label> 
+                                <div class="col-8">
+                                  <input id="emailR" name="emailR" value="{{ session["emailA"] }}" class="form-control here" required="required" type="text" placeholder="Introduzca email de avisos">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label for="tem" class="col-4 col-form-label">Aviso de temperatura</label> 
+                                  <div class="col-8">
+                                    <input id="tem" name="tem" value="{{ session["tem"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca temperatura de aviso en ºC" 
+                                    >
+                                </div>
+                              </div> 
+                              <div class="form-group row">
+                                  <label for="hum" class="col-4 col-form-label">Aviso de humedad</label> 
+                                  <div class="col-8">
+                                    <input id="hum" name="hum" value="{{ session["hum"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca temperatura de aviso en %" min="1" max="99"
+                                    >
+                                </div>
+                              </div> 
+                              
+                            
+                              <div class="form-group row">
+                                <div class="offset-4 col-8">
+                                  <button name="submit" type="submit" class="btn-primary">Actualizar Ajustes</button>
+                                </div>
+                              </div>
+                              <strong> Todos los campos son obligatorios </strong>
+                        </form>
+		                </div>
+                </div>
+
+              </div>
+            </div>	            
 		        </div>
 		    </div>
 		</div>

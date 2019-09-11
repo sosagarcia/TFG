@@ -34,8 +34,6 @@ colores ={
 
 
 
-
-
 def statusNow(path, name):
     hoy = dt.datetime.now()
     i = 0

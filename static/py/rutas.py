@@ -9,6 +9,7 @@ aPath = "/var/log/iot/a/"
 cpuTPath = "/var/log/iot/cpuT/"
 cpuPath = "/var/log/iot/cpu/"
 outPath = "/var/log/iot/out/"
+config = "/var/log/iot/config/configuracion.conf"
 
 
 dName = "_Distancia.log"
@@ -26,6 +27,23 @@ def write_log(text, path, name):
         with open(path + datetime.datetime.now().strftime("%Y-%m-%d") + name, "a") as f:
             line = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S") + " " + text + "\n"
             f.write(line)
+
+    finally:
+        f.close()
+
+def read_conf():
+    try:
+        with open(config, "r") as f:
+            configuraciones = f.readlines()
+            f.close()
+            result = list ()
+            max = len(configuraciones)
+            for i in range (0, max):
+                linea = configuraciones [i]
+                maxL = len(linea)
+                result [i] = linea[7:maxL]
+            return result
+
 
     finally:
         f.close()
