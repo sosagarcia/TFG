@@ -189,6 +189,8 @@
   function prepara(result) {
     var tipos = result.unidad.length;
     var dato = [];
+    var tooltip = [];
+    var resultado = [];
 
     for (var i = 0; i < tipos; i++) {
       var datos = giveData(result.data[i], result.fechas[i]);
@@ -200,8 +202,16 @@
         fill: "false"
       };
       dato[i] = s;
+      var option = {
+        callbacks: {
+          label: item => `${item.yLabel} ` + results.unidad[i]
+        }
+      };
+      tooltip[i] = option;
     }
-    return dato;
+    resultado[0] = dato;
+    resultado[1] = tooltip;
+    return resultado;
   }
   function crea(results) {
     console.log(results);
@@ -210,13 +220,8 @@
 
     var config = {
       type: "line",
-      data: { datasets: dataset },
-      options: {
-        tooltips: {
-          callbacks: {
-            label: item => `${item.yLabel} %`
-          }
-        },
+      data: { datasets: dataset[0] },
+      options: {  tooltips: dataset[1]  },
         title: {
           text: "Chart.js Time Scale"
         },
