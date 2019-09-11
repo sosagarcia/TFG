@@ -215,8 +215,12 @@
       options: {
         tooltips: {
           callbacks: {
-            label: item =>
-              `${item.yLabel} %` + data.datasets[tooltipItem.datasetIndex].unity
+            label: function(tooltipItem, data) {
+              return (
+                `${item.yLabel} %` +
+                data.datasets[tooltipItem.datasetIndex].unity
+              );
+            }
           }
         },
         title: {
