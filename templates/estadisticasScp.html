@@ -167,8 +167,9 @@
   function actualiza(results) {
     console.log(results);
     var dataset = prepara(results);
-    chart.data.datasets = dataset[0];
-    chart.options.tooltips = dataset[1];
+    chart.data.datasets = dataset;
+    //chart.options.tooltips.callbacks.label = item =>
+    // `${item.yLabel} ` + results.unidad;
     chart.update();
   }
 
@@ -188,8 +189,6 @@
   function prepara(result) {
     var tipos = result.unidad.length;
     var dato = [];
-    var tooltip = [];
-    var resultado = [];
 
     for (var i = 0; i < tipos; i++) {
       var datos = giveData(result.data[i], result.fechas[i]);
@@ -201,65 +200,14 @@
         fill: "false"
       };
       dato[i] = s;
-      var option = {
-        callbacks: {
-          label: item => `${item.yLabel} ` + result.unidad[i]
-        }
-      };
-      tooltip[i] = option;
     }
-    resultado[0] = dato;
-    resultado[1] = tooltip;
-    return resultado;
-  }
-  function crea(results) {
-    var dataset = prepara(results);
-    console.log(dataset[0]);
-    console.log(dataset[1]);
-
-    var config = {
-      type: "line",
-      data: { datasets: dataset[0] },
-      options: {
-        tooltips: dataset[1],
-        title: {
-          text: "Chart.js Time Scale"
-        },
-        scales: {
-          xAxes: [
-            {
-              type: "time",
-              time: {
-                parser: timeFormat,
-                //round: "day",
-                tooltipFormat: "ll HH:mm:ss"
-              },
-              scaleLabel: {
-                display: true,
-                labelString: "Tiempo"
-              }
-            }
-          ],
-          yAxes: [
-            {
-              scaleLabel: {
-                display: true,
-                labelString: "Valor"
-              }
-            }
-          ]
-        }
-      }
-    };
-
-    var ctx = document.getElementById("canvas").getContext("2d");
-    chart = new Chart(ctx, config);
-    window.myLine = chart;
+    return dato;
   }
   function crea(results) {
     console.log(results);
     var dataset = prepara(results);
     console.log(dataset);
+
     var config = {
       type: "line",
       data: { datasets: dataset },
