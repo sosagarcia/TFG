@@ -203,7 +203,7 @@
       dato[i] = s;
       var option = {
         callbacks: {
-          label: item => `${item.yLabel} ` + results.unidad[i]
+          label: item => `${item.yLabel} ` + result.unidad[i]
         }
       };
       tooltip[i] = option;
@@ -213,9 +213,9 @@
     return resultado;
   }
   function crea(results) {
-    console.log(results);
     var dataset = prepara(results);
-    console.log(dataset);
+    console.log(dataset[0]);
+    console.log(dataset[1]);
 
     var config = {
       type: "line",
