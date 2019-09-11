@@ -197,7 +197,8 @@
         borderColor: result.colour[i],
         backgroundColor: result.colour[i],
         data: datos,
-        fill: "false"
+        fill: "false",
+        unity: result.unidad[i]
       };
       dato[i] = s;
     }
@@ -214,7 +215,8 @@
       options: {
         tooltips: {
           callbacks: {
-            label: item => `${item.yLabel} %`
+            label: item =>
+              `${item.yLabel} %` + data.datasets[tooltipItem.datasetIndex].unity
           }
         },
         title: {
