@@ -167,9 +167,8 @@
   function actualiza(results) {
     console.log(results);
     var dataset = prepara(results);
-    chart.data.datasets = dataset;
-    chart.options.tooltips.callbacks.label = item =>
-      `${item.yLabel} ` + results.unidad;
+    chart.data.datasets = dataset[0];
+    chart.options.tooltips = dataset[1];
     chart.update();
   }
 
