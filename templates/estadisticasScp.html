@@ -220,7 +220,55 @@
     var config = {
       type: "line",
       data: { datasets: dataset[0] },
-      options: {  tooltips: dataset[1]  },
+      options: {
+        tooltips: dataset[1],
+        title: {
+          text: "Chart.js Time Scale"
+        },
+        scales: {
+          xAxes: [
+            {
+              type: "time",
+              time: {
+                parser: timeFormat,
+                //round: "day",
+                tooltipFormat: "ll HH:mm:ss"
+              },
+              scaleLabel: {
+                display: true,
+                labelString: "Tiempo"
+              }
+            }
+          ],
+          yAxes: [
+            {
+              scaleLabel: {
+                display: true,
+                labelString: "Valor"
+              }
+            }
+          ]
+        }
+      }
+    };
+
+    var ctx = document.getElementById("canvas").getContext("2d");
+    chart = new Chart(ctx, config);
+    window.myLine = chart;
+  }
+  function crea(results) {
+    console.log(results);
+    var dataset = prepara(results);
+    console.log(dataset);
+    var config = {
+      type: "line",
+      data: { datasets: dataset },
+      options: {
+        tooltips: {
+          callbacks: {
+            label: item => `${item.yLabel} %`
+          }
+        },
         title: {
           text: "Chart.js Time Scale"
         },
