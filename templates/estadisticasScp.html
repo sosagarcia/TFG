@@ -217,7 +217,7 @@
           callbacks: {
             label: function(tooltipItem, data) {
               return (
-                //`${item.yLabel} %` +
+                tooltipItem.yLabel +
                 data.datasets[tooltipItem.datasetIndex].unity
               );
             }
