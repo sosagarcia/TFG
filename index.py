@@ -98,6 +98,7 @@ mysql.init_app(app)
 # Settings
 app.json_encoder = CustomJSONEncoder
 app.secret_key = os.urandom(16)
+#app.config['JSON_AS_ASCII'] = True  # default
 
 
 @app.route('/')
@@ -379,10 +380,19 @@ def state():
 
 @app.route('/testa')
 def chart():
-    ip1 = giveIp()
-    result = str(ip1)
-    return result
-
+        nameD = "hola"
+        disA = "hola"
+        emailR = "hola"
+        tem = "hola"
+        hum = "hola"
+        texto = """##INICIO##
+        name = {}
+        disA = {}
+        mail = {}
+        temA = {}
+        humA = {}
+        ###FIN###"""
+        return(texto.format(nameD, disA, emailR, tem, hum))
 
 
 @app.route('/updateStatistics', methods=['POST'])
@@ -490,6 +500,27 @@ def edit_contact(id):
     cur.execute('SELECT * FROM contacts WHERE id = %s', [id])
     data = cur.fetchall()
     return render_template('edit-contact.html', contact=data[0])
+
+
+
+@app.route('/updateDevice', methods=['POST'])
+def update_device():
+    if request.method == 'POST':
+        nameD = request.form['nameD']
+        disA = request.form['disA']
+        emailR = request.form['emailR']
+        tem = request.form['tem']
+        hum = request.form['hum']
+        texto = """##INICIO##
+        name = {}
+        disA = {}
+        mail = {}
+        temA = {}
+        humA = {}
+        ###FIN###"""
+        save_conf(texto.format(nameD, disA, emailR, tem, hum))
+
+
 
 
 @app.route('/update/<id>', methods=['POST'])

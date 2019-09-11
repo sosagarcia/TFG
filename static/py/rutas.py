@@ -1,4 +1,6 @@
 import datetime
+from os import remove
+
 # Rutas de LOG
 
 hPath = "/var/log/iot/hum/"
@@ -31,19 +33,29 @@ def write_log(text, path, name):
     finally:
         f.close()
 
+
 def read_conf():
     try:
-        with open(config, "r") as f:
-            configuraciones = f.readlines()
-            f.close()
-            result = list ()
+        with open(config, "r") as fconfig:
+            configuraciones = fconfig.readlines()
+            fconfig.close()
+            result = list()
             max = len(configuraciones)
-            for i in range (0, max):
-                linea = configuraciones [i]
+            for i in range(1, max - 1):
+                linea = configuraciones[i]
                 maxL = len(linea)
-                result [i] = linea[7:maxL]
+                result.append(linea[7: maxL - 1])
             return result
 
+    finally:
+        fconfig.close()
+
+
+def save_conf(text):
+    try:
+        with open(config, "a") as f:
+            remove(config)
+            f.write(text)
 
     finally:
         f.close()
