@@ -168,8 +168,8 @@
     console.log(results);
     var dataset = prepara(results);
     chart.data.datasets = dataset;
-    //chart.options.tooltips.callbacks.label = item =>
-    // `${item.yLabel} ` + results.unidad;
+    chart.options.tooltips.callbacks.label = item =>
+      `${item.yLabel} ` + results.unidad;
     chart.update();
   }
 
