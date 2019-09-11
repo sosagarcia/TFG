@@ -11,6 +11,7 @@ from static.py.rutas import *
 
 tempMax = 26
 humMax = 30
+disAlarma = 30.0
 
 # Distance
 GPIO_TRIGGER = 23
@@ -24,7 +25,7 @@ def alarmaCheck():
     maxIterations = 5
     while (iteration < maxIterations):
         distancia = distance()
-        if (30.0 > distancia):
+        if (disAlarma < distancia):
             GPIO.output(ledA, True)
             text = "Se ha registrado una alarma, la distancia es de " + \
                 str(distancia) + " cm."
