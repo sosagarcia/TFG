@@ -519,6 +519,14 @@ def update_device():
         humA = {}
         ###FIN###"""
         save_conf(texto.format(nameD, disA, emailR, tem, hum))
+        session['nameD'] = nameD
+        session['disA'] = disA
+        session['emailR'] = emailR
+        session['tem'] = tem
+        session['hum'] = hum
+
+        flash('La configuración ha sido actualizada correctamente ', 'success')    
+        return redirect(url_for('perfil'))
 
 
 
