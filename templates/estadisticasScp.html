@@ -166,10 +166,10 @@
 
   function actualiza(results) {
     console.log(results);
-    chart.data.datasets = results.dataset;
-    chart.data.labels = dameFecha(results.labels);
-    chart.options.tooltips.callbacks.label = item =>
-      `${item.yLabel} ` + results.unidad;
+    var dataset = prepara(results);
+    chart.data.datasets = dataset;
+    //chart.options.tooltips.callbacks.label = item =>
+    // `${item.yLabel} ` + results.unidad;
     chart.update();
   }
 

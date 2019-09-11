@@ -1,6 +1,6 @@
 #!/bin/bash
 DIA=`date +"%d/%m/%Y"`
-HORA=`date +"%H:%M"`
+HORA=`date +"%H:%M:%S"`
 echo "###########################################################################"
 echo "Hoy es  $DIA y la hora actual es $HORA"
 echo "iniciando Status.py en segundo plano"
