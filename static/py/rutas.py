@@ -12,7 +12,7 @@ cpuTPath = "/var/log/iot/cpuT/"
 cpuPath = "/var/log/iot/cpu/"
 outPath = "/var/log/iot/out/"
 config = "/var/log/iot/config/configuracion.conf"
-confPath = "/var/log/iot/config/
+confPath = "/var/log/iot/config/"
 
 
 dName = "_Distancia.log"
