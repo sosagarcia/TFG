@@ -33,6 +33,15 @@ Para poder verificar su cuenta, introduzca el siguiente código.
 
 Su código de verificación es : """
 
+confText = """###INICIO###
+name = {}
+disA = {}
+mail = {}
+temA = {}
+humA = {}
+###FIN###"""
+
+
 # Diccionario de mensajes
 
 calendario = [

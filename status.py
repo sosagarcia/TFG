@@ -12,6 +12,22 @@ from static.py.rutas import *
 tempMax = 26
 humMax = 30
 disAlarma = 30.0
+email = "monitycont@gmail.com"
+
+linea = {
+    "tem": "3",
+    "hum": "4",
+    "dis": "1",
+    "mail": "2"
+}
+
+data = {
+    "tem": tempMax,
+    "hum": humMax,
+    "dis": disAlarma,
+    "mail": email
+}
+
 
 # Distance
 GPIO_TRIGGER = 23
@@ -20,13 +36,16 @@ GPIO_ECHO = 24
 GPIO.setmode(GPIO.BCM)
 
 
-
 def updateData():
     configs = read_conf()
+    global tempMax
+    global humMax
+    global disAlarma
+    global email
     tempMax = int(configs[3])
     humMax = int(configs[4])
     disAlarma = float(configs[1])
-
+    email = str(configs[2])
 
 
 def alarmaCheck():
@@ -40,7 +59,7 @@ def alarmaCheck():
                 str(distancia) + " cm."
             write_log(text, aPath, aName)
             # feedback = sendEmail(
-            # str(text), "monitycont@gmail.com", "Alarma Registrada")
+            # str(text), email, "Alarma Registrada")
             textD = str(distancia) + " cm."
             write_log(textD, disPath, dName)
             GPIO.output(ledA, False)
@@ -96,7 +115,6 @@ GPIO.output(ledA, False)
 GPIO.output(ledM, False)
 
 
-
 def distance():
     # set Trigger to HIGH
     GPIO.output(GPIO_TRIGGER, True)
@@ -137,6 +155,8 @@ def temphum():
 def temphumW():
 
     while True:
+        tempMax = int(give("tem"))
+        humMax = int(give("hum"))
         time.sleep(15)
         humedad, temperatura = temphum()
         if humedad is not None and temperatura is not None and (humedad <= 100):
@@ -173,6 +193,17 @@ def sistem():
         write_log(cpu, cpuPath, cpuName)
 
 
+def give(tipo):
+    try:
+        configs = read_conf()
+        position = linea.get(str(tipo))
+        dato = configs[int(position)]
+        return dato
+    except:
+        actual = data.get(str(tipo))
+        return actual
+
+
 if __name__ == '__main__':
     t1 = threading.Thread(target=temphumW)
     t2 = threading.Thread(target=distanceW)
@@ -185,7 +216,7 @@ if __name__ == '__main__':
     try:
         updateData()
     except:
-        continue
+        pass
 
     t1.start()
     t2.start()
