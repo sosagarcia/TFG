@@ -39,8 +39,7 @@ disA = {}
 mail = {}
 temA = {}
 humA = {}
-###FIN###
-#CHANGED#"""
+###FIN###"""
 
 
 # Diccionario de mensajes

@@ -14,6 +14,21 @@ humMax = 30
 disAlarma = 30.0
 email = "monitycont@gmail.com"
 
+linea = {
+    "tem": "3",
+    "hum": "4",
+    "dis": "1",
+    "mail": "2"
+}
+
+data = {
+    "tem": tempMax,
+    "hum": humMax,
+    "dis": disAlarma,
+    "mail": email
+}
+
+
 # Distance
 GPIO_TRIGGER = 23
 GPIO_ECHO = 24
@@ -140,6 +155,7 @@ def temphum():
 def temphumW():
 
     while True:
+        tempMax = give("tem")
         time.sleep(15)
         humedad, temperatura = temphum()
         if humedad is not None and temperatura is not None and (humedad <= 100):
@@ -176,43 +192,24 @@ def sistem():
         write_log(cpu, cpuPath, cpuName)
 
 
-def checkChange():
-
+def give(tipo):
     try:
-        with open(config, "r") as f:
-            configuraciones = f.readlines()
-            f.close()
-            size = len(configuraciones)
-            if configuraciones[size - 1] == "#CHANGED#":
-                log = configuraciones[:-1]
-                texto = "".join(log)
-                save_conf(texto)
-                return True
-            else:
-                return False
-    finally:
-        return False
-
-
-def changes():
-    while True:
-        time.sleep(10)
-        changed = checkChange()
-        if changed:
-            updateData()
-        else:
-            continue
+        configs = read_conf()
+        position = linea.get(str(tipo))
+        dato = int(configs[int(position)])
+        return dato
+    except:
+        actual = data.get(str(tipo))
+        return actual
 
 
 if __name__ == '__main__':
     t1 = threading.Thread(target=temphumW)
     t2 = threading.Thread(target=distanceW)
-    t3 = threading.Thread(target=changes)
     t4 = threading.Thread(target=sistem)
 
     t1.setDaemon(True)
     t2.setDaemon(True)
-    t3.setDaemon(True)
     t4.setDaemon(True)
 
     try:
@@ -222,7 +219,6 @@ if __name__ == '__main__':
 
     t1.start()
     t2.start()
-    t3.start()
     t4.start()
 
     try:
