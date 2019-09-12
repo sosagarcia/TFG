@@ -518,7 +518,8 @@ def update_device():
         temA = {}
         humA = {}
         ###FIN###"""
-        save_conf(texto.format(nameD, disA, emailR, tem, hum))
+        log = texto.format(nameD, disA, emailR, tem, hum)
+        save_conf(log)
         session['nameD'] = nameD
         session['disA'] = disA
         session['emailR'] = emailR

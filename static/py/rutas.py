@@ -1,5 +1,5 @@
 import datetime
-from os import remove
+from os import remove, rename
 
 # Rutas de LOG
 
@@ -12,6 +12,7 @@ cpuTPath = "/var/log/iot/cpuT/"
 cpuPath = "/var/log/iot/cpu/"
 outPath = "/var/log/iot/out/"
 config = "/var/log/iot/config/configuracion.conf"
+confPath = "/var/log/iot/config/
 
 
 dName = "_Distancia.log"
@@ -22,6 +23,7 @@ aName = "_Alarmas.log"
 cpuTName = "_TemperaturaCPU.log"
 cpuName = "_UsoCPU.log"
 outName = "_Out.log"
+confName = "_Changes.log"
 
 
 def write_log(text, path, name):
@@ -53,9 +55,13 @@ def read_conf():
 
 def save_conf(text):
     try:
-        with open(config, "a") as f:
-            remove(config)
+        new = "/var/log/iot/config/configuracion" + "_Temp" + ".log"
+        log = "Los ajustes cambiaran a la siguiente confirguación : " + '\n' + text
+        write_log(log, confPath, confName)
+        with open(new, "a") as f:
             f.write(text)
+            remove(config)
 
     finally:
+        rename(new, config)
         f.close()
