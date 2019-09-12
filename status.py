@@ -20,13 +20,11 @@ GPIO_ECHO = 24
 GPIO.setmode(GPIO.BCM)
 
 
-
 def updateData():
     configs = read_conf()
     tempMax = int(configs[3])
     humMax = int(configs[4])
     disAlarma = float(configs[1])
-
 
 
 def alarmaCheck():
@@ -94,7 +92,6 @@ GPIO.output(ledT, False)
 GPIO.output(ledH, False)
 GPIO.output(ledA, False)
 GPIO.output(ledM, False)
-
 
 
 def distance():
@@ -185,7 +182,7 @@ if __name__ == '__main__':
     try:
         updateData()
     except:
-        continue
+        pass
 
     t1.start()
     t2.start()
