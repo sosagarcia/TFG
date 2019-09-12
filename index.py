@@ -18,6 +18,9 @@ from static.py.correo import *
 # import mysql
 # import mysql.connector
 
+
+
+
 class CustomJSONEncoder(JSONEncoder):
 
     def default(self, obj):
@@ -95,7 +98,7 @@ mysql.init_app(app)
 # Settings
 app.json_encoder = CustomJSONEncoder
 app.secret_key = os.urandom(16)
-# app.config['JSON_AS_ASCII'] = True  # default
+#app.config['JSON_AS_ASCII'] = True  # default
 
 
 @app.route('/')
@@ -120,7 +123,6 @@ def ahora():
     estado = session['manual']
     return jsonify(result=hoy, estado=estado)
 
-
 @app.route('/main')
 def main():
     if session.get("name", None) is not None:
@@ -128,9 +130,9 @@ def main():
         movimientos = logs(irPath)
         salidas = logs(outPath)
         agenda = conjunto(titulos())
-        return render_template('main.html', agenda=agenda, alarma=alarmas, movimiento=movimientos, salida=salidas)
+        return render_template('main.html', agenda=agenda, alarma=alarmas, movimiento=movimientos , salida=salidas)
     else:
-        flash("Sesión caducada", 'dark')
+        flash("Sesión caducada",'dark')
         return redirect(url_for("login"))
 
 
@@ -169,7 +171,7 @@ def login():
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
                 agenda = conjunto(titulos())
-                return render_template('main.html', agenda=agenda, primer=1, alarma=str(alarmas), movimiento=movimientos, salida=salidas)
+                return render_template('main.html', agenda=agenda, primer=1, alarma=str(alarmas), movimiento=movimientos , salida=salidas)
             else:
                 return render_template("index.html", mensaje=contra)
 
@@ -179,11 +181,11 @@ def login():
 
 @app.route('/perfil')
 def perfil():
-
+    
     if session.get("name", None) is not None:
         return render_template('perfil.html')
     else:
-        flash("Sesión caducada", 'dark')
+        flash("Sesión caducada",'dark')
         return redirect(url_for("login"))
 
 
@@ -191,9 +193,10 @@ def perfil():
 def calendar():
     if session.get("root", None) == 0:
         return render_template('calendarMortal.html')
-    else:
+    else :
         listado = users(usuarios())
         return render_template('calendar.html', mensaje=cal, lista=listado)
+        
 
 
 @app.route('/data')
@@ -206,6 +209,13 @@ def data():
 
     return Response(json.dumps(callist),  mimetype='application/json')
 
+
+
+# @app.route('/today')
+# def today():
+#    hoy = date.today()
+#
+#   return Response(json.dumps(hoy),  mimetype='application/json')
 
 @app.route('/add_event', methods=['POST'])
 def add_event():
@@ -246,9 +256,10 @@ def add_event():
         if(dif(start, end, 3)):
             return render_template('calendar.html', mensaje=dosmin, lista=listado)
         mesEnMinutos = 44640
-        if(not (dif(start, end, mesEnMinutos))):
+        if(not ( dif(start, end, mesEnMinutos))):
             return render_template('calendar.html', mensaje=unmes, lista=listado)
         # Comprobar si start o end esta entre el start o el end de algun otro evento (comprobación explusiva del modo Auto.)
+        
         if (entre(start, end)) and (session['manual'] == "0"):
             return render_template('calendar.html', mensaje=fechae, lista=listado)
 
@@ -258,13 +269,15 @@ def add_event():
         mysql.get_db().commit()
         return render_template('calendar.html', mensaje=event, lista=listado)
 
+    
     if session.get("name", None) is not None:
         return render_template('index.html')
     else:
-        flash("Sesión caducada", 'dark')
+        flash("Sesión caducada",'dark')
         return redirect(url_for("login"))
-
-
+        
+        
+        
 @app.route('/deletEvent', methods=['POST'])
 def deletEvent():
 
@@ -272,6 +285,7 @@ def deletEvent():
     cur = mysql.get_db().cursor()
     cur.execute('DELETE FROM eventos WHERE id = {0}'.format(id))
     mysql.get_db().commit()
+
 
 
 @app.route('/deletFull', methods=['POST'])
@@ -283,6 +297,7 @@ def deletAlgo():
         cur = mysql.get_db().cursor()
         cur.execute('TRUNCATE TABLE eventos ')
         mysql.get_db().commit()
+    
 
 
 @app.route('/manual')
@@ -290,7 +305,7 @@ def manual():
     session['manual'] = "1"
     return jsonify(estado=session['manual'])
 
-
+    
 @app.route('/auto')
 def auto():
     print("Auto")
@@ -301,7 +316,7 @@ def auto():
 
 @app.route('/manualdata')
 def manualdata():
-    print("el Manualmode actual es ", session['manual'])
+    print("el Manualmode actual es " , session['manual'])
     return jsonify(estado=session['manual'])
 
 
@@ -316,6 +331,7 @@ def deletDay():
     cur.execute(
         'DELETE FROM eventos where (%s < start) and ( start <  %s) ', (algo, finDate))
     mysql.get_db().commit()
+    
 
 
 @app.route('/deletUser', methods=['POST'])
@@ -326,6 +342,7 @@ def deletUser():
     cur.execute(
         'DELETE FROM eventos where  idUser = {0}'.format(algo))
     mysql.get_db().commit()
+    
 
 
 @app.route('/delet2', methods=['POST'])
@@ -343,45 +360,51 @@ def delet2():
     mysql.get_db().commit()
 
 
+
 @app.route('/state')
 def state():
 
-    humedad = statusNow(hPath, hName)
-    temperatura = statusNow(tPath, tName)
-    distancia = statusNow(disPath, dName)
-    movimiento = statusNow(irPath, irName)
-    alarma = statusNow(aPath, aName)
-    temperaturaCPU = statusNow(cpuTPath, cpuTName)
-    usoCPU = statusNow(cpuPath, cpuName)
+    humedad = statusNow(hPath,hName)
+    temperatura = statusNow(tPath,tName)
+    distancia = statusNow(disPath,dName)
+    movimiento = statusNow(irPath,irName)
+    alarma = statusNow(aPath,aName)
+    temperaturaCPU = statusNow(cpuTPath,cpuTName)
+    usoCPU = statusNow(cpuPath,cpuName)
 
-    return jsonify(humedad=humedad, temperatura=temperatura, distancia=distancia, movimiento=movimiento, alarma=alarma, temperaturaCPU=temperaturaCPU, usoCPU=usoCPU)
+    return jsonify ( humedad=humedad, temperatura=temperatura, distancia=distancia, movimiento=movimiento, alarma=alarma, temperaturaCPU=temperaturaCPU, usoCPU=usoCPU)
+ 
+
+
 
 
 @app.route('/testa')
 def chart():
-    with open("configuracion.conf", "r") as f:
-        configuraciones = f.readlines()
-        f.close()
-    size = len(configuraciones)
-    if configuraciones[size - 1] == "#CHANGED#":
-        log = configuraciones[:-1]
-    text = "".join(log)
-    with open("a.conf", "a") as f:
-        f.write(text)
-        
-        
-    
+        nameD = "hola"
+        disA = "hola"
+        emailR = "hola"
+        tem = "hola"
+        hum = "hola"
+        texto = """##INICIO##
+        name = {}
+        disA = {}
+        mail = {}
+        temA = {}
+        humA = {}
+        ###FIN###"""
+        return(texto.format(nameD, disA, emailR, tem, hum))
 
 
-app.route('/updateStatistics', methods=['POST'])
+@app.route('/updateStatistics', methods=['POST'])
 def updateStatistics():
     tipo = request.form.getlist('tipo[]')
     fecha = request.form.get('fecha')
     muestra = request.form.get('muestras')
+ 
     labels, datos, color, title, unit = giveDatasets(giveTypes(tipo), fecha, muestra)
-
-    return jsonify(fechas=labels, data=datos, unidad=unit, colour=color, titulo=title)
-
+    
+    return jsonify (fechas = labels, data = datos, unidad = unit, colour = color, titulo = title)
+    
 
 @app.route('/logout')
 def logout():
@@ -392,12 +415,11 @@ def logout():
 @app.route('/registro')
 def registro():
     return render_template('registro.html', mensaje=reg)
-
+    
 
 @app.route('/forgot')
 def forgot():
     return render_template('forgot.html', mensaje=fgt)
-
 
 @app.route('/pass_email', methods=['POST'])
 def pass_email():
@@ -407,16 +429,19 @@ def pass_email():
         cur.execute("SELECT fullname, id FROM contacts WHERE email = %s", (email,))
         user = cur.fetchone()
         if user is None:
-            return render_template('forgot.html', mensaje=usuF)
+             return render_template('forgot.html', mensaje=usuF)
         codigo = random.randrange(100000, 999999)
         text = cambio_pass + str(codigo)
         asunto = "Recuperación de contraseña - " + user[0]
         feedback = sendEmail(str(text), email, str(asunto))
         cur = mysql.get_db().cursor()
-        cur.execute('UPDATE contacts SET cambio_pass = %s WHERE email = %s', (codigo, email))
+        cur.execute('UPDATE contacts SET cambio_pass = %s WHERE email = %s', (codigo,email))
         mysql.get_db().commit()
         id = user[1]
         return render_template('insert_code.html', mensaje=code, user=str(id))
+
+
+
 
 
 @app.route('/verify/<string:id>', methods=['POST'])
@@ -486,8 +511,14 @@ def update_device():
         emailR = request.form['emailR']
         tem = request.form['tem']
         hum = request.form['hum']
-        log = confText.format(nameD, disA, emailR, tem, hum)
-        save_conf(log)
+        texto = """##INICIO##
+        name = {}
+        disA = {}
+        mail = {}
+        temA = {}
+        humA = {}
+        ###FIN###"""
+        save_conf(texto.format(nameD, disA, emailR, tem, hum))
         session['nameD'] = nameD
         session['disA'] = disA
         session['emailR'] = emailR
