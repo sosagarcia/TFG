@@ -155,7 +155,8 @@ def temphum():
 def temphumW():
 
     while True:
-        tempMax = give("tem")
+        tempMax = int(give("tem"))
+        humMax = int(give("hum"))
         time.sleep(15)
         humedad, temperatura = temphum()
         if humedad is not None and temperatura is not None and (humedad <= 100):
@@ -196,7 +197,7 @@ def give(tipo):
     try:
         configs = read_conf()
         position = linea.get(str(tipo))
-        dato = int(configs[int(position)])
+        dato = configs[int(position)]
         return dato
     except:
         actual = data.get(str(tipo))
