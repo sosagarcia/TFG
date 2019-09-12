@@ -511,14 +511,7 @@ def update_device():
         emailR = request.form['emailR']
         tem = request.form['tem']
         hum = request.form['hum']
-        texto = """##INICIO##
-        name = {}
-        disA = {}
-        mail = {}
-        temA = {}
-        humA = {}
-        ###FIN###"""
-        log = texto.format(nameD, disA, emailR, tem, hum)
+        log = confText.format(nameD, disA, emailR, tem, hum)
         save_conf(log)
         session['nameD'] = nameD
         session['disA'] = disA
