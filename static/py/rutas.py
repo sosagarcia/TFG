@@ -59,9 +59,12 @@ def save_conf(text):
         log = "Los ajustes cambiaran a la siguiente confirguación : " + '\n' + text
         write_log(log, confPath, confName)
         with open(new, "a") as f:
+            
             f.write(text)
             remove(config)
 
     finally:
         rename(new, config)
         f.close()
+
+

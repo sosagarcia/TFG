@@ -359,22 +359,21 @@ def state():
 
 @app.route('/testa')
 def chart():
-        nameD = "hola"
-        disA = "hola"
-        emailR = "hola"
-        tem = "hola"
-        hum = "hola"
-        texto = """##INICIO##
-        name = {}
-        disA = {}
-        mail = {}
-        temA = {}
-        humA = {}
-        ###FIN###"""
-        return(texto.format(nameD, disA, emailR, tem, hum))
+    with open("configuracion.conf", "r") as f:
+        configuraciones = f.readlines()
+        f.close()
+    size = len(configuraciones)
+    if configuraciones[size - 1] == "#CHANGED#":
+        log = configuraciones[:-1]
+    text = "".join(log)
+    with open("a.conf", "a") as f:
+        f.write(text)
+        
+        
+    
 
 
-@app.route('/updateStatistics', methods=['POST'])
+app.route('/updateStatistics', methods=['POST'])
 def updateStatistics():
     tipo = request.form.getlist('tipo[]')
     fecha = request.form.get('fecha')

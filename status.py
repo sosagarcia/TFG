@@ -176,13 +176,43 @@ def sistem():
         write_log(cpu, cpuPath, cpuName)
 
 
+def checkChange():
+
+    try:
+        with open(config, "r") as f:
+            configuraciones = f.readlines()
+            f.close()
+            size = len(configuraciones)
+            if configuraciones[size - 1] == "#CHANGED#":
+                log = configuraciones[:-1]
+                texto = "".join(log)
+                save_conf(texto)
+                return True
+            else:
+                return False
+    finally:
+        return False
+
+
+def changes():
+    while True:
+        time.sleep(10)
+        changed = checkChange()
+        if changed:
+            updateData()
+        else:
+            continue
+
+
 if __name__ == '__main__':
     t1 = threading.Thread(target=temphumW)
     t2 = threading.Thread(target=distanceW)
+    t3 = threading.Thread(target=changes)
     t4 = threading.Thread(target=sistem)
 
     t1.setDaemon(True)
     t2.setDaemon(True)
+    t3.setDaemon(True)
     t4.setDaemon(True)
 
     try:
@@ -192,6 +222,7 @@ if __name__ == '__main__':
 
     t1.start()
     t2.start()
+    t3.start()
     t4.start()
 
     try:
