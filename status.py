@@ -12,6 +12,7 @@ from static.py.rutas import *
 tempMax = 26
 humMax = 30
 disAlarma = 30.0
+email = "monitycont@gmail.com"
 
 # Distance
 GPIO_TRIGGER = 23
@@ -22,10 +23,14 @@ GPIO.setmode(GPIO.BCM)
 
 def updateData():
     configs = read_conf()
+    global tempMax
+    global humMax
+    global disAlarma
+    global email
     tempMax = int(configs[3])
     humMax = int(configs[4])
     disAlarma = float(configs[1])
-    
+    email = str(configs[2])
 
 
 def alarmaCheck():
@@ -39,7 +44,7 @@ def alarmaCheck():
                 str(distancia) + " cm."
             write_log(text, aPath, aName)
             # feedback = sendEmail(
-            # str(text), "monitycont@gmail.com", "Alarma Registrada")
+            # str(text), email, "Alarma Registrada")
             textD = str(distancia) + " cm."
             write_log(textD, disPath, dName)
             GPIO.output(ledA, False)
