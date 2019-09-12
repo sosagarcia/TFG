@@ -25,6 +25,7 @@ def updateData():
     tempMax = int(configs[3])
     humMax = int(configs[4])
     disAlarma = float(configs[1])
+    
 
 
 def alarmaCheck():

@@ -78,7 +78,7 @@ def media(dia, unit):
 
 def reWrite(text, path, name, fecha):
     try:
-        new = path + fecha + name + "_R" + ".log"
+        new = path + fecha + name + "_Temp" + ".log"
         old = path + fecha + name + ".log"
 
         with open(new, "a") as f:
