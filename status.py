@@ -3,6 +3,7 @@ import time
 import Adafruit_DHT
 import RPi.GPIO as GPIO
 import psutil
+from picamera import PiCamera
 from static.py.correo import *
 from static.py.rutas import *
 
@@ -48,7 +49,7 @@ def updateData():
     email = str(configs[2])
 
 
-def alarmaCheck():
+"""def alarmaCheck():
     disAlarma = float(give("dis"))
     iteration = 0
     maxIterations = 5
@@ -70,13 +71,24 @@ def alarmaCheck():
 
         iteration += 1
         time.sleep(1)
+"""
+
+
+def takePicture():
+    camera = PiCamera()
+    camera.rotation = 180
+    camera.start_preview(alpha=200)
 
 
 def alarma(channel):
     GPIO.output(ledM, True)
     text = "Se ha detectado movimiento"
     write_log(text, irPath, irName)
-    alarmaCheck()
+    # alarmaCheck()
+    email = give("mail")
+    # feedback = sendEmail(
+    # str(text), email, "Se ha detectado movimiento")
+    takePicture()
 
     GPIO.output(ledM, False)
 
