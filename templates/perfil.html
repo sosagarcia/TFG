@@ -17,16 +17,20 @@
 
 		<div class="col-md-3 fadeIn">
 		     <div class="nav nav-tabs ">
-              <a data-toggle="tab" href="#home" class="list-group-item list-group-item-action active" data-toggle="tab" href="#home">Información Personal</a>
+              <a data-toggle="tab" href="#home" class="list-group-item list-group-item-action {% if ajustes %}active  {% endif %}" data-toggle="tab" href="#home">Información Personal</a>
 
-              <a data-toggle="tab" href="#settings" class="list-group-item list-group-item-action {% if not session["root"] %}disabled {% endif %}">Ajustes del dispositivo</a>
+              <a data-toggle="tab" href="#settings" class=" {% if dispositivo %}active  {% endif %} list-group-item list-group-item-action {% if not session["root"] %}disabled {% endif %}">Ajustes del dispositivo</a>
+
+              <a data-toggle="tab" href="#personal" class=" {% if registro %}active  {% endif %}list-group-item list-group-item-action {% if not session["root"] %}disabled {% endif %}" >Registrar nuevo usuario</a>
+
+              <a data-toggle="tab" href="#lista" class=" {% if lista %}active  {% endif %}list-group-item list-group-item-action {% if not session["root"] %}disabled {% endif %}" >Ajustes de usuarios</a>
           </div> 
 		</div>
 		<div class="col-md-9 fadeInDown">
 		    <div class="card">
 		        <div class="card-body">
                 <div class="tab-content">
-                    <div class="tab-pane active" id="home">
+                    <div class="tab-pane {% if ajustes%}active  {% endif %}" " id="home">
 		                  <div class="row">
                       <div class="col-md-12">
                           <h4>Ajustes de Cuenta</h4>
@@ -92,12 +96,12 @@
                                   <button name="submit" type="submit" class="btn-primary">Actualizar Perfil</button>
                                 </div>
                               </div>
-                              * Campo obligatorio
+                              <strong>* Campo obligatorio</strong>
                         </form>
 		                </div>
                 </div>
               </div>
-              <div class="tab-pane" id="settings">
+              <div class="tab-pane {% if dispositivo %}active  {% endif %}" id="settings">
                 
 
                   <div class="row">
@@ -155,6 +159,19 @@
                 </div>
 
               </div>
+              <div class="tab-pane {% if registro %} active {% endif %}" id="personal">
+                
+
+                {% include "registro.html" %}
+
+            </div>
+
+            <div class="tab-pane {% if lista %} active {% endif %}" id="lista">
+                
+
+              {% include "lista.html" %}
+
+          </div>
             </div>	            
 		        </div>
 		    </div>

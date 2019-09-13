@@ -1,9 +1,8 @@
-{% extends "layout1.html" %} {% block conten %} {% include "flash.html" %}
 
-<div class="wrapper fadeInDown">
+<div class="wrapper">
   <div id="formContent">
     <!-- Mensaje -->
-    <div class="fadeIn first">
+    <div class="">
       {% for mensaje in mensaje %}
       <div class="card text-white bg-{{ mensaje.tipo }} mb-3 ">
         <div class="card-header">{{ mensaje.titulo }}</div>
@@ -19,41 +18,40 @@
         <input
           type="text"
           id="login"
-          class="fadeIn second"
+          class=""
           name="fullname"
           placeholder="Nombre completo"
         />
         <input
           type="text"
           id="login"
-          class="fadeIn second"
+          class=""
           name="phone"
           placeholder="Nº de teléfono"
         />
         <input
           type="text"
           id="login"
-          class="fadeIn second"
+          class=""
           name="email"
           placeholder="Email"
         />
         <input
           type="password"
           id="password"
-          class="fadeIn third"
+          class=""
           name="pass"
           placeholder="Contraseña"
         />
         <input
           type="password"
           id="password"
-          class="fadeIn third"
+          class=""
           name="repass"
           placeholder="Confirmar Contraseña"
         />
-        <input type="submit" class="fadeIn fourth" value="Guardar" />
+        <input type="submit" class="" value="Registrar" />
       </form>
     </div>
   </div>
 </div>
-{% endblock %}

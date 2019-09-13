@@ -1,8 +1,8 @@
-{% extends "layout1.html" %} {% block conten %}
+
 <div class="d-flex justify-content-center">
   <div class="row">
     <div class="">
-        {% include "flash.html" %}
+
 
       <table class="table table-bordered table-striped bg-white table-sm">
         <thead>
@@ -20,7 +20,7 @@
             <td>{{contact.2}}</td>
             <td>{{contact.3}}</td>
             <td>
-              <a href="/edit/{{contact.0}}" class="btn btn-secondary">Editar</a>
+              <a href="/edit/{{contact.0}}" class="btn btn-secondary disabled">Editar</a>
               <a href="/delete/{{contact.0}}" class="btn-borrar btn btn-danger"
                 >Borrar</a
               >
@@ -32,5 +32,3 @@
     </div>
   </div>
 </div>
-
-{% endblock %}

@@ -158,12 +158,12 @@ def login():
                 session['message'] = user[5]
                 session['root'] = user[8]
                 session['manual'] = "0"
-                ajustes = read_conf()
+                """ajustes = read_conf()
                 session['nameD'] = ajustes[0]
                 session['disA'] = ajustes[1]
                 session['emailA'] = ajustes[2]
                 session['tem'] = ajustes[3]
-                session['hum'] = ajustes[4]
+                session['hum'] = ajustes[4]"""
 
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
@@ -181,7 +181,8 @@ def login():
 def perfil():
 
     if session.get("name", None) is not None:
-        return render_template('perfil.html')
+        data = conn('SELECT * FROM contacts')
+        return render_template('perfil.html', mensaje=reg, ajustes=1, contactos=data)
     else:
         flash("Sesión caducada", 'dark')
         return redirect(url_for("login"))
@@ -465,8 +466,9 @@ def delete_contact(id):
     cur = mysql.get_db().cursor()
     cur.execute('DELETE FROM contacts WHERE id = {0}'.format(id))
     mysql.get_db().commit()
+    data = conn('SELECT * FROM contacts')
     flash('Se ha borrado el contacto correctamente', 'success')
-    return redirect(url_for('lista'))
+    return render_template('perfil.html', mensaje=reg, lista=1, contactos=data)
 
 
 @app.route('/edit/<id>')
@@ -493,9 +495,10 @@ def update_device():
         session['emailR'] = emailR
         session['tem'] = tem
         session['hum'] = hum
-
         flash('La configuración ha sido actualizada correctamente ', 'success')    
-        return redirect(url_for('perfil'))
+        return render_template('perfil.html',dispositivo=1)
+
+        
 
 
 
@@ -579,17 +582,18 @@ def add_contact():
         email = request.form['email']
         password = request.form['pass'].encode('utf-8')
         repassword = request.form['repass'].encode('utf-8')
+        data = conn('SELECT * FROM contacts')
         if len(fullname and phone and email and password and repassword) == 0:
-            return render_template('registro.html', title='Registro', mensaje=vacio)
+            return render_template('perfil.html', title='Registro', mensaje=vacio,registro=1, contactos=data)
         elif password != repassword:
-            return render_template('registro.html', title='Registro', mensaje=coincide)
+            return render_template('perfil.html', title='Registro', mensaje=coincide ,registro=1, contactos=data)
         else:
 
             cur = mysql.get_db().cursor()
             cur.execute("SELECT * FROM contacts WHERE email = %s", (email,))
             user = cur.fetchone()
             if user is not None:
-                return render_template('registro.html', title='Registro', mensaje=usua)
+                return render_template('perfil.html', title='Registro', mensaje=usua ,registro=1, contactos=data)
             else:
                 hash_password = bcrypt.hashpw(password, bcrypt.gensalt())
 
@@ -600,7 +604,7 @@ def add_contact():
                 mysql.get_db().commit()
 
                 flash('El contacto ha sido agregado correctamente ', 'success')
-                return redirect(url_for('lista'))
+                return render_template('perfil.html', lista=1, contactos=data, mensaje=reg)
 
 
 if __name__ == '__main__':
