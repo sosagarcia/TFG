@@ -78,16 +78,18 @@ def takePicture():
     try:
         camera = PiCamera()
         camera.rotation = 180
-        camera.resolution = (2592, 1944)
-        # camera.start_preview()
-        # sleep(2)
+        camera.resolution = (1920, 1080)
         fecha = datetime.datetime.now().strftime("%Y-%m-%d_%H.%M.%S")
         ruta = camara + fecha + ".jpg"
+        camera.start_preview()
+        sleep(2)
         camera.capture(ruta)
-        # camera.stop_preview()
+        camera.stop_preview()
         return ruta
     except:
         return "Non Picture"
+    finally:
+        camera.stop_preview()
 
 
 def alarma(channel):
@@ -95,7 +97,7 @@ def alarma(channel):
     text = "Se ha detectado movimiento"
     write_log(text, irPath, irName)
     # alarmaCheck()
-    ruta = takePicture()
+
     email = give("mail")
     # feedback = sendEmail(
     # str(text), email, "Se ha detectado movimiento")
