@@ -7,9 +7,9 @@ from static.py.rutas import *
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
-user1 = 13
-user2 = 19
-user3 = 26
+user1 = 8
+user2 = 23
+user3 = 24
 
 GPIO.setup(user1, GPIO.OUT, initial=GPIO.LOW)
 GPIO.setup(user2, GPIO.OUT, initial=GPIO.LOW)
@@ -34,7 +34,7 @@ while True:
     except:
         hoy = dt.datetime.now()
         print("Aun no ha sido posible conectar con la base de datos" +
-              hoy.strftime("%d-%m-%Y %H:%M:%S"))
+              hoy.strftime("%d-%m-%Y_%H:%M:%S"))
         time.sleep(1)
         continue
 
