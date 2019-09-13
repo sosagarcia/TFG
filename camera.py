@@ -12,6 +12,7 @@ def takePicture():
     camera.framerate = 15
     camera.annotate_text = "Hello world!"
     camera.start_recording('/home/pi/Desktop/video.h264')
+    camera.brightness = 55
 
     for i in range(100):
         camera.annotate_text = "Contrast: %s" % i
