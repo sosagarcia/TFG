@@ -5,7 +5,8 @@ from picamera import PiCamera
 def takePicture():
     camera = PiCamera()
     camera.rotation = 180
-    camera.resolution = (2592, 1944)
+    # max de fotos: 2592 x 1944, de video : 1920×1080
+    camera.resolution = (1920, 1080)
     camera.framerate = 15
     camera.annotate_text = "Hello world!"
     camera.start_recording('/home/pi/Desktop/video.h264')
