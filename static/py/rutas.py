@@ -1,5 +1,7 @@
 import datetime
 from os import remove, rename
+from picamera import PiCamera
+from time import sleep
 
 # Rutas de LOG
 
@@ -13,6 +15,7 @@ cpuPath = "/var/log/iot/cpu/"
 outPath = "/var/log/iot/out/"
 config = "/var/log/iot/config/configuracion.conf"
 confPath = "/var/log/iot/config/"
+camara = "/var/log/iot/camera/"
 
 
 dName = "_Distancia.log"
@@ -59,7 +62,7 @@ def save_conf(text):
         log = "Los ajustes cambiaran a la siguiente confirguación : " + '\n' + text
         write_log(log, confPath, confName)
         with open(new, "a") as f:
-            
+
             f.write(text)
             remove(config)
 
@@ -68,3 +71,14 @@ def save_conf(text):
         f.close()
 
 
+def takePicture():
+    camera = PiCamera()
+    camera.rotation = 180
+    camera.resolution = (2592, 1944)
+    camera.start_preview()
+    sleep(5)
+    fecha = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    ruta = camara + fecha + ".jpg"
+    camera.capture(ruta)
+    camera.stop_preview()
+    return ruta
