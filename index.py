@@ -159,7 +159,7 @@ def login():
                 session['root'] = user[8]
                 session['manual'] = "0"
                 ajustes = read_conf()
-                session['deviceName'] = ajustes[0]
+                session['nameD'] = ajustes[0]
                 session['disA'] = ajustes[1]
                 session['emailA'] = ajustes[2]
                 session['tem'] = ajustes[3]
