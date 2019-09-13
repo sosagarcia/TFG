@@ -10,7 +10,7 @@ def takePicture():
     camera.resolution = (2592, 1944)
     camera.start_preview()
     sleep(5)
-    fecha = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    fecha = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     ruta = camara + fecha + ".jpg"
     camera.capture(ruta)
     camera.stop_preview()
