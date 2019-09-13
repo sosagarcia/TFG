@@ -74,6 +74,22 @@ def updateData():
 """
 
 
+def takePicture():
+    try:
+        camera = PiCamera()
+        camera.rotation = 180
+        camera.resolution = (2592, 1944)
+        # camera.start_preview()
+        # sleep(2)
+        fecha = datetime.datetime.now().strftime("%Y-%m-%d_%H.%M.%S")
+        ruta = camara + fecha + ".jpg"
+        camera.capture(ruta)
+        # camera.stop_preview()
+        return ruta
+    except:
+        return "Non Picture"
+
+
 def alarma(channel):
     GPIO.output(ledM, True)
     text = "Se ha detectado movimiento"
@@ -83,7 +99,7 @@ def alarma(channel):
     email = give("mail")
     # feedback = sendEmail(
     # str(text), email, "Se ha detectado movimiento")
-    time.sleep(1)
+    time.sleep(2)
     GPIO.output(ledM, False)
 
 

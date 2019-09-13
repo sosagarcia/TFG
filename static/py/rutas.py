@@ -69,19 +69,3 @@ def save_conf(text):
     finally:
         rename(new, config)
         f.close()
-
-
-def takePicture():
-    try:
-        camera = PiCamera()
-        camera.rotation = 180
-        camera.resolution = (2592, 1944)
-        camera.start_preview()
-        sleep(2)
-        fecha = datetime.datetime.now().strftime("%Y-%m-%d_%H.%M.%S")
-        ruta = camara + fecha + ".jpg"
-        camera.capture(ruta)
-        camera.stop_preview()
-        return ruta
-    except:
-        return "Non Picture"
