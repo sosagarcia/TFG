@@ -49,15 +49,17 @@ def updateData():
 
 
 def alarmaCheck():
+    disAlarma = float(give("dis"))
     iteration = 0
     maxIterations = 5
     while (iteration < maxIterations):
         distancia = distance()
-        if (disAlarma < distancia):
+        if (disAlarma > distancia):
             GPIO.output(ledA, True)
             text = "Se ha registrado una alarma, la distancia es de " + \
                 str(distancia) + " cm."
             write_log(text, aPath, aName)
+            email = give("mail")
             # feedback = sendEmail(
             # str(text), email, "Alarma Registrada")
             textD = str(distancia) + " cm."
