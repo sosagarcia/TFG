@@ -30,8 +30,8 @@ data = {
 
 
 # Distance
-GPIO_TRIGGER = 23
-GPIO_ECHO = 24
+GPIO_TRIGGER = 26
+GPIO_ECHO = 25
 
 GPIO.setmode(GPIO.BCM)
 
@@ -88,7 +88,7 @@ GPIO.setup(GPIO_ECHO, GPIO.IN)
 
 # Mouvement
 
-pir = 25
+pir = 22
 
 GPIO.setup(pir, GPIO.IN)
 # Interrupción
@@ -98,14 +98,14 @@ GPIO.add_event_detect(pir, GPIO.RISING, callback=alarma)
 # Humedad y Temperatura
 
 sensor = Adafruit_DHT.DHT11
-pin = 4
+pin = 17
 GPIO.setup(pin, GPIO.IN)
 
 # Leds de aviso
-ledM = 18
-ledH = 16
-ledT = 20
-ledA = 21
+ledM = 16
+ledH = 20
+ledT = 21
+ledA = 5
 
 GPIO.setup(ledM, GPIO.OUT)
 GPIO.setup(ledH, GPIO.OUT)

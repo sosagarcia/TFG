@@ -17,9 +17,9 @@ GPIO.setup(user3, GPIO.OUT, initial=GPIO.LOW)
 
 
 switcher = {
-    1: 13,
-    2: 19,
-    3: 26
+    1: 8,
+    2: 23,
+    3: 24
 }
 while True:
 

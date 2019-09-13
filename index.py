@@ -495,8 +495,9 @@ def update_device():
         session['emailR'] = emailR
         session['tem'] = tem
         session['hum'] = hum
+        data = conn('SELECT * FROM contacts')
         flash('La configuración ha sido actualizada correctamente ', 'success')    
-        return render_template('perfil.html',dispositivo=1)
+        return render_template('perfil.html',dispositivo=1,contactos=data, mensaje=reg)
 
         
 
@@ -602,7 +603,7 @@ def add_contact():
                     'INSERT INTO contacts (fullname, phone, email, password) VALUES(%s, %s, %s, %s)', (fullname, phone, email, hash_password))
 
                 mysql.get_db().commit()
-
+                data = conn('SELECT * FROM contacts')
                 flash('El contacto ha sido agregado correctamente ', 'success')
                 return render_template('perfil.html', lista=1, contactos=data, mensaje=reg)
 
