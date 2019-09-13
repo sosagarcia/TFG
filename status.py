@@ -83,6 +83,7 @@ def alarma(channel):
     email = give("mail")
     # feedback = sendEmail(
     # str(text), email, "Se ha detectado movimiento")
+    time.sleep(1)
     GPIO.output(ledM, False)
 
 
