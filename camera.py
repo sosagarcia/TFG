@@ -5,11 +5,9 @@ from picamera import PiCamera
 def takePicture():
     camera = PiCamera()
     camera.rotation = 180
-    camera.start_preview()
-    sleep(2)
-    camera.capture('/home/pi/Desktop/image.jpg')
-    camera.stop_preview()
-    # camera.start_preview(alpha=200) es la trasmparencia
+    camera.start_recording('/home/pi/Desktop/video.h264')
+    sleep(5)
+    camera.stop_recording()
 
 
 if __name__ == '__main__':
