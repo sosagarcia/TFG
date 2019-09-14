@@ -337,3 +337,4 @@ def reiniciar():
 
 def actualizacion():
     os.system('/home/pi/Scripts/Git.sh')
+    return "algo"
