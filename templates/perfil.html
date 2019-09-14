@@ -199,6 +199,9 @@
                               <div class="form-group row">
                                 <div class="offset-4 col-8">
                                   <button name="submit" type="submit" class="btn-primary">Actualizar Ajustes</button>
+                                  <button type="button" class="btn-danger" data-toggle="modal" id="reboot" data-target="#rebootModal" >
+                                    Reiniciar del Sistema
+                                  </button>
                                 </div>
                               </div>
                               <strong> Todos los campos son obligatorios </strong>
@@ -232,11 +235,27 @@
 	</div>
 </div>
                                                       
-
+{% include "reboot.html" %}
 {% endblock %}
 {% block script %}
 
 <script>
+document
+    .getElementById("rebootBTN")
+    .addEventListener("click", reinicio);
+
+function reinicio() {
+    $.get("/reinicio", function() {})
+      .done(function(out) {
+        
+      })
+      .fail(function() {
+        console.log("fail reinicio");
+        var t = setTimeout(reinicio, 100);
+      });
+    
+    document.getElementById("Cerrar").click();
+  }
 
 function myFunction() {
   // Get the checkbox
