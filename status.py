@@ -62,16 +62,6 @@ GPIO.setwarnings(False)
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
 
-
-# Mouvement
-
-pir = 22
-
-GPIO.setup(pir, GPIO.IN)
-# Interrupción
-GPIO.add_event_detect(pir, GPIO.RISING, callback=alarma)
-
-
 # Humedad y Temperatura
 
 sensor = Adafruit_DHT.DHT11
@@ -289,6 +279,17 @@ def give(tipo):
 
 
 if __name__ == '__main__':
+
+
+    # Mouvement
+    pir = 22
+
+    GPIO.setup(pir, GPIO.IN)
+    # Interrupción
+    GPIO.add_event_detect(pir, GPIO.RISING, callback=alarma)
+
+
+    
     t1 = threading.Thread(target=temphumW)
     t2 = threading.Thread(target=distanceW)
     t4 = threading.Thread(target=sistem)
