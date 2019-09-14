@@ -335,4 +335,7 @@ def reiniciar():
 
 
 def actualizacion():
-    subprocess.call(['bash', '/home/pi/Scripts/Git.sh'])
+    command = "bash /home/pi/Scripts/Git.sh"
+    process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
+    output = process.communicate()[0]
+    return output
