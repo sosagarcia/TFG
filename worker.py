@@ -50,7 +50,9 @@ def updateTaps():
     mycursor.execute(
         "SELECT idPropietario, pin FROM tap")
     tap = mycursor.fetchall()
+    print(tap)
     tap = [i for sub in tap for i in sub]
+    print(tap)
     user1 = tap[0]
     pinA = tap[1]
     user2 = tap[2]
