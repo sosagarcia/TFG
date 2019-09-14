@@ -175,7 +175,7 @@ def openAll(path):
     
 def giveTypes(tipo):
     result = list()
-    variables =["_Humedad","_Temperatura","_UsoCPU","_TemperaturaCPU","_Distancia"]
+    variables =["_Humedad","_Temperatura","_UsoCPU","_TemperaturaCPU","_Nivel"]
     for i in range(0,5):
         if tipo[i] == "true" :
             result.append(variables[i])
