@@ -248,7 +248,7 @@ barra.style.display = "none";
     boton.addEventListener("click", reinicio);
 
 function reinicio() {
-
+    move();
     $.get("/reinicio", function() {})
       .done(function(out) {
         
@@ -259,7 +259,6 @@ function reinicio() {
         console.log("fail reinicio");
         var t = setTimeout(reinicio, 100);
       });
-      move();
     //document.getElementById("Cerrar").click();
   }
 
