@@ -50,13 +50,10 @@ def updateTaps():
     global pinA
     global pinB
     global pinC
-    user = switcher.get(1)
-    print(user)
     mycursor = mydb.cursor()
     mycursor.execute(
         "SELECT idPropietario, pin FROM tap")
     tap = mycursor.fetchall()
-    print(tap)
     tap = [i for sub in tap for i in sub]
     user1 = tap[0]
     pinA = tap[1]
@@ -64,7 +61,6 @@ def updateTaps():
     pinB = tap[3]
     user3 = tap[4]
     pinC = tap[5]
-    user = switcher.get(1)
     switcher = {
         user1: pinA,
         user2: pinB,

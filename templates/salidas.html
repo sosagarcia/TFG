@@ -1,0 +1,39 @@
+<div class="d-flex justify-content-center">
+  <div class="row">
+    <div class="">
+      <table class="table table-bordered table-striped bg-white table-sm">
+        <thead>
+          <tr>
+            <td>Nombre</td>
+            <td>Usuario asignado</td>
+            <td>Salida</td>
+            <td>Nueva asignación</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for tap in taps %}
+          <tr>
+            <td>{{tap.0}}</td>
+
+            <td>
+              {% for contact in contactos %} {%if tap.1 == contact.0 %}
+              {{contact.1}}
+              {% endif %} {% endfor %}
+            </td>
+            <td>{{tap.2}}</td>
+            <td>
+              <select name="neva{{tap.2}}">
+                <option value="" selected hidden>Nuevo usuario</option>
+                <option value="0">Ninguno</option>
+                {% for contact in contactos %}
+                <option value="{{contact.0}}">{{contact.1}}</option>
+                {% endfor %}
+              </select>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

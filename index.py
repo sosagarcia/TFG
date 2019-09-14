@@ -173,7 +173,7 @@ def login():
                 session['message'] = user[5]
                 session['root'] = user[8]
                 session['manual'] = "0"
-                ajustes()
+                #ajustes()
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
@@ -191,7 +191,8 @@ def perfil():
 
     if session.get("name", None) is not None:
         data = conn('SELECT * FROM contacts')
-        return render_template('perfil.html', mensaje=reg, ajustes=1, contactos=data)
+        tap = conn('SELECT * FROM tap')
+        return render_template('perfil.html', mensaje=reg, ajustes=1, contactos=data, taps=tap)
     else:
         flash("Sesión caducada", 'dark')
         return redirect(url_for("login"))
@@ -488,12 +489,33 @@ def delete_contact(id):
     return render_template('perfil.html', mensaje=reg, lista=1, contactos=data)
 
 
-@app.route('/edit/<id>')
+@app.route('/rol/<id>')
 def edit_contact(id):
-    cur = mysql.get_db().cursor()
-    cur.execute('SELECT * FROM contacts WHERE id = %s', [id])
-    data = cur.fetchall()
-    return render_template('edit-contact.html', contact=data[0])
+    if session.get("root", None) == 1:
+        cur = mysql.get_db().cursor()
+        cur.execute('SELECT root FROM contacts WHERE id = %s', [id])
+        data = cur.fetchall()
+        rol= data[0][0]
+        if rol == 0:
+            rol = 1
+        else:
+            rol = 0
+        texto = """
+    
+            UPDATE contacts
+            SET root=% s
+            WHERE ID= % s
+        """
+        variables = (rol, int(id))
+        cur = mysql.get_db().cursor()
+        cur.execute( texto, variables)
+        mysql.get_db().commit()
+        data = conn('SELECT * FROM contacts')
+        flash('Se ha modificado el Rol del contacto correctamente', 'warning')
+        return render_template('perfil.html', mensaje=reg, lista=1, contactos=data)
+    else:
+        flash("Sesión caducada",'dark')
+        return redirect(url_for("login"))
 
 
 

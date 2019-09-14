@@ -14,13 +14,17 @@
           {% for contact in contactos %}
           <tr>
             <td>{{contact.1}}</td>
-            <td>{{ if contact.8}} Sí {{ endif }} {{else}} No {{ endelse }}</td>
+            <strong></strong>
+            <td class="text-center">
+              {%if contact.8 == 1 %}<strong class="bg-warning">Sí</strong> {%
+              else %} No {% endif %}
+            </td>
             <td>{{contact.9}}</td>
             <td>
-              <a href="/edit/{{contact.0}}" class="btn btn-secondary disabled"
-                >Editar</a
+              <a href="/rol/{{contact.0}}" class="btn btn-warning {%if contact.0 == session['id'] %} disabled {% endif %}"
+                >Cambiar Rol</a
               >
-              <a href="/delete/{{contact.0}}" class="btn-borrar btn btn-danger"
+              <a href="/delete/{{contact.0}}" class="btn-borrar btn btn-danger {%if contact.0 == session['id'] %} disabled {% endif %}"
                 >Borrar</a
               >
             </td>
