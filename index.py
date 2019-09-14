@@ -311,7 +311,7 @@ def reinicio():
 
 @app.route('/actualiza')
 def actualiza():
-    actualizacion()
+   algo =  actualizacion()
     
 
 
@@ -383,7 +383,7 @@ def state():
 
 @app.route('/testa')
 def chart():
-    actualizacion()
+    algo = actualizacion()
         
         
     
