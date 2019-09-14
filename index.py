@@ -173,7 +173,7 @@ def login():
                 session['message'] = user[5]
                 session['root'] = user[8]
                 session['manual'] = "0"
-                ajustes()
+                #ajustes()
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
@@ -524,7 +524,7 @@ def update_device():
         session['disT'] = disT
         session['cpusT'] = cpusT
         data = conn('SELECT * FROM contacts')
-        flash('La configuración ha sido actualizada correctamente, Recuerde que algunos ajustes como los de Intervalo de muetsreo o "Altura de estanque" no serán actualizados hasta que se reinicie el sistemanivel', 'success')    
+        flash('Configuración actualizada correctamente. Recuerde que algunos ajustes como los de Intervalo de muetsreo o "Altura de estanque" no serán actualizados hasta que se reinicie el sistemanivel', 'success')    
         return render_template('perfil.html',dispositivo=1,contactos=data, mensaje=reg)
 
         

@@ -240,20 +240,25 @@
 {% block script %}
 
 <script>
-document
-    .getElementById("rebootBTN")
-    .addEventListener("click", reinicio);
+var barra = document.getElementById("myBar"); 
+boton = document.getElementById("rebootBTN");                      
+cerrar = document.getElementById("cerrar");                      
+barra.style.display = "none";
+
+    boton.addEventListener("click", reinicio);
 
 function reinicio() {
+   
     $.get("/reinicio", function() {})
       .done(function(out) {
+        move()
         console.log(out);
       })
       .fail(function() {
+        
         console.log("fail reinicio");
         var t = setTimeout(reinicio, 100);
       });
-    
     document.getElementById("Cerrar").click();
   }
 
@@ -277,6 +282,25 @@ function myFunction() {
   }
 }
 
+function move() {
+  barra.style.display = "block";
+  boton.disabled=true;
+  cerrar.disabled=true;
+
+  var width = 1;
+  var id = setInterval(frame, 300);
+  function frame() {
+    if (width >= 100) {
+      clearInterval(id);
+      window.location.href = "/";
+    } else {
+      width++; 
+      barra.style.width = width + '%'; 
+      barra.innerHTML = width * 1  + '%';
+    }
+  }
+  
+}
 </script>
 
 
