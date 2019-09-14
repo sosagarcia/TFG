@@ -311,8 +311,8 @@ def reinicio():
 
 @app.route('/actualiza')
 def actualiza():
-    output = actualizacion()
-    return jsonify(output)
+    actualizacion()
+    
 
 
 @app.route('/auto')
