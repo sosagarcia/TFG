@@ -164,7 +164,7 @@ def alarma(channel):
     text = "Se ha detectado movimiento"
     write_log(text, irPath, irName)
     # alarmaCheck()
-    takePicture()
+    # takePicture()
     email = give("mail")
     # feedback = sendEmail(
     # str(text), email, "Se ha detectado movimiento")
