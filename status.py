@@ -198,13 +198,13 @@ def distanceW():
 
 
 def avisos(actual):
-    actual = "{0:.2f}".format(actual)
     disA = int(give("disA"))
     disB = int(give("disB"))
     if disB > actual:
         GPIO.output(ledA, True)
+        actualStr = "{0:.2f}".format(actual)
         text = "Nivel del Agua :" + \
-            str(actual) + " %"
+            actualStr + " %"
         write_log(text, aPath, aName)
         email = give("mail")
         # feedback = sendEmail(
@@ -212,8 +212,9 @@ def avisos(actual):
         GPIO.output(ledA, False)
     if disA < actual:
         GPIO.output(ledA, True)
+        actualStr = "{0:.2f}".format(actual)
         text = "Nivel del Agua :" + \
-            str(actual) + " %"
+            actualStr + " %"
         write_log(text, aPath, aName)
         email = give("mail")
         # feedback = sendEmail(
