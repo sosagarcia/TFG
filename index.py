@@ -383,15 +383,7 @@ def state():
 
 @app.route('/testa')
 def chart():
-    with open("configuracion.conf", "r") as f:
-        configuraciones = f.readlines()
-        f.close()
-    size = len(configuraciones)
-    if configuraciones[size - 1] == "#CHANGED#":
-        log = configuraciones[:-1]
-    text = "".join(log)
-    with open("a.conf", "a") as f:
-        f.write(text)
+    actualizacion()
         
         
     
