@@ -173,7 +173,7 @@ def login():
                 session['message'] = user[5]
                 session['root'] = user[8]
                 session['manual'] = "0"
-                ajustes()
+                #ajustes()
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
@@ -397,17 +397,28 @@ def asigna():
 
     max = len(datos)
     for i in range (0,max,2):
-
         pin = datos[i]
         user = datos[i + 1]
         if not user == "":
             pins.append(pin)
             users.append(user)
+    sublist = list()
     for i in users:
-        if i in users:
-            return "Hay usuarios repetidos"
-
-    return jsonify(datos)
+        if i not in sublist:
+            sublist.append(i)
+    if not users == sublist:
+                return "Hay usuarios repetidos"
+    fin = len(pins)
+    for i in range (0,fin):
+        pin = int(pins[i])
+        user = int(users[i])
+        cur = mysql.get_db().cursor()
+        cur.execute('UPDATE contacts SET pin = %s WHERE id = %s', (pin, user))
+        mysql.get_db().commit()
+        cur = mysql.get_db().cursor()
+        cur.execute('UPDATE tap SET idPropietario = %s WHERE pin = %s', (user, pin))
+        mysql.get_db().commit()
+    return jsonify("Done")
 
    
 
