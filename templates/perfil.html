@@ -374,7 +374,11 @@ function move(theBarra, tiempo) {
   }
 
   function toDo(algo){
-    console.log(algo)
+    alert(algo.mensaje)
+    if (algo.result == 1){
+      console.log("Cambiar los valores de la tabla y limpiar el array")
+      result = [];
+    }
   }
 </script>
 

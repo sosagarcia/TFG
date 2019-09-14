@@ -338,3 +338,5 @@ def reiniciar():
 def actualizacion():
     #subprocess.call(["bash", "/home/pi/Scripts/Git.sh"])
     return "algo"
+
+    

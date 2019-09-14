@@ -394,7 +394,7 @@ def asigna():
     datos = request.form.getlist('data[]')
     pins= list()
     users = list()
-
+    mensaje = ""
     max = len(datos)
     for i in range (0,max,2):
         pin = datos[i]
@@ -407,7 +407,8 @@ def asigna():
         if i not in sublist:
             sublist.append(i)
     if not users == sublist:
-                return "Hay usuarios repetidos"
+        mensaje = "Hay usuarios repetidos"
+        return jsonify(result= -1, msj = mensaje)
     fin = len(pins)
     for i in range (0,fin):
         pin = int(pins[i])
@@ -418,7 +419,8 @@ def asigna():
         cur = mysql.get_db().cursor()
         cur.execute('UPDATE tap SET idPropietario = %s WHERE pin = %s', (user, pin))
         mysql.get_db().commit()
-    return jsonify("Done")
+    mensaje = "Hecho"
+    return jsonify(result= 1, msj = mensaje)
 
    
 
@@ -515,9 +517,10 @@ def delete_contact(id):
     cur = mysql.get_db().cursor()
     cur.execute('DELETE FROM contacts WHERE id = {0}'.format(id))
     mysql.get_db().commit()
+    tap = conn('SELECT * FROM tap')
     data = conn('SELECT * FROM contacts')
     flash('Se ha borrado el contacto correctamente', 'success')
-    return render_template('perfil.html', mensaje=reg, lista=1, contactos=data)
+    return render_template('perfil.html', mensaje=reg, lista=1, contactos=data, taps=tap)
 
 
 @app.route('/rol/<id>')
@@ -542,8 +545,9 @@ def edit_contact(id):
         cur.execute( texto, variables)
         mysql.get_db().commit()
         data = conn('SELECT * FROM contacts')
+        tap = conn('SELECT * FROM tap')
         flash('Se ha modificado el Rol del contacto correctamente', 'warning')
-        return render_template('perfil.html', mensaje=reg, lista=1, contactos=data)
+        return render_template('perfil.html', mensaje=reg, lista=1, contactos=data, taps=tap)
     else:
         flash("Sesión caducada",'dark')
         return redirect(url_for("login"))
@@ -576,8 +580,9 @@ def update_device():
         session['disT'] = disT
         session['cpusT'] = cpusT
         data = conn('SELECT * FROM contacts')
+        tap = conn('SELECT * FROM tap')
         flash('Configuración actualizada correctamente. Recuerde que algunos ajustes como los de Intervalo de muetsreo o "Altura de estanque" no serán actualizados hasta que se reinicie el sistemanivel', 'success')    
-        return render_template('perfil.html',dispositivo=1,contactos=data, mensaje=reg)
+        return render_template('perfil.html',dispositivo=1,contactos=data, mensaje=reg, taps=tap)
 
         
 
@@ -660,17 +665,18 @@ def add_contact():
         password = request.form['pass'].encode('utf-8')
         repassword = request.form['repass'].encode('utf-8')
         data = conn('SELECT * FROM contacts')
+        tap = conn('SELECT * FROM tap')
         if len(fullname and phone and email and password and repassword) == 0:
-            return render_template('perfil.html', title='Registro', mensaje=vacio,registro=1, contactos=data)
+            return render_template('perfil.html', title='Registro', mensaje=vacio,registro=1, contactos=data, taps=tap)
         elif password != repassword:
-            return render_template('perfil.html', title='Registro', mensaje=coincide ,registro=1, contactos=data)
+            return render_template('perfil.html', title='Registro', mensaje=coincide ,registro=1, contactos=data, taps=tap)
         else:
 
             cur = mysql.get_db().cursor()
             cur.execute("SELECT * FROM contacts WHERE email = %s", (email,))
             user = cur.fetchone()
             if user is not None:
-                return render_template('perfil.html', title='Registro', mensaje=usua ,registro=1, contactos=data)
+                return render_template('perfil.html', title='Registro', mensaje=usua ,registro=1, contactos=data, taps=tap)
             else:
                 hash_password = bcrypt.hashpw(password, bcrypt.gensalt())
 
@@ -680,8 +686,9 @@ def add_contact():
 
                 mysql.get_db().commit()
                 data = conn('SELECT * FROM contacts')
+                tap = conn('SELECT * FROM tap')
                 flash('El contacto ha sido agregado correctamente ', 'success')
-                return render_template('perfil.html', lista=1, contactos=data, mensaje=reg)
+                return render_template('perfil.html', lista=1, contactos=data, mensaje=reg, taps=tap)
 
 
 if __name__ == '__main__':
