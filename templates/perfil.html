@@ -247,7 +247,7 @@ document
 function reinicio() {
     $.get("/reinicio", function() {})
       .done(function(out) {
-        
+        console.log(out);
       })
       .fail(function() {
         console.log("fail reinicio");

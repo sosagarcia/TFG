@@ -173,7 +173,7 @@ def login():
                 session['message'] = user[5]
                 session['root'] = user[8]
                 session['manual'] = "0"
-                #ajustes()
+                ajustes()
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
@@ -307,7 +307,7 @@ def manual():
 @app.route('/reinicio')
 def reinicio():
     output = reiniciar()
-    return output
+    return jsonify(output)
 
 
 @app.route('/auto')
