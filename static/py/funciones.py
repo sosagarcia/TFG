@@ -336,5 +336,7 @@ def reiniciar():
 
 
 def actualizacion():
-    proc = subprocess.Popen(['sudo','/usr/sbin/apache2ctl','stop'])
-    return proc
+    command = "/usr/bin/sudo /home/pi/Scripts/Git.sh"
+    process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
+    output = process.communicate()[0]
+    return output
