@@ -1,15 +1,12 @@
-
 <div class="d-flex justify-content-center">
   <div class="row">
     <div class="">
-
-
       <table class="table table-bordered table-striped bg-white table-sm">
         <thead>
           <tr>
             <td>Nombre</td>
-            <td>Teléfono</td>
-            <td>Email</td>
+            <td>Administrador</td>
+            <td>Salida</td>
             <td>Acciones</td>
           </tr>
         </thead>
@@ -17,10 +14,12 @@
           {% for contact in contactos %}
           <tr>
             <td>{{contact.1}}</td>
-            <td>{{contact.2}}</td>
-            <td>{{contact.3}}</td>
+            <td>{{ if contact.8}} Sí {{ endif }} {{else}} No {{ endelse }}</td>
+            <td>{{contact.9}}</td>
             <td>
-              <a href="/edit/{{contact.0}}" class="btn btn-secondary disabled">Editar</a>
+              <a href="/edit/{{contact.0}}" class="btn btn-secondary disabled"
+                >Editar</a
+              >
               <a href="/delete/{{contact.0}}" class="btn-borrar btn btn-danger"
                 >Borrar</a
               >

@@ -7,19 +7,19 @@ from static.py.rutas import *
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
-user1 = 8
-user2 = 23
-user3 = 24
+user1 = 1
+user2 = 2
+user3 = 3
 
-GPIO.setup(user1, GPIO.OUT, initial=GPIO.LOW)
-GPIO.setup(user2, GPIO.OUT, initial=GPIO.LOW)
-GPIO.setup(user3, GPIO.OUT, initial=GPIO.LOW)
+pinA = 8
+pinB = 23
+pinC = 24
 
 
 switcher = {
-    1: 8,
-    2: 23,
-    3: 24
+    user1: pinA,
+    user2: pinB,
+    user3: pinC
 }
 while True:
 
@@ -37,6 +37,33 @@ while True:
               hoy.strftime("%d-%m-%Y_%H:%M:%S"))
         time.sleep(1)
         continue
+
+
+def updateTaps():
+
+    try:
+        global user1
+        global user2
+        global user3
+        global pinA
+        global pinB
+        global pinC
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            "SELECT idPropietario, pin FROM tap")
+        tap = mycursor.fetchall()
+        tap = [i for sub in tap for i in sub]
+        user1 = tap[0]
+        pinA = tap[1]
+        user2 = tap[2]
+        pinB = tap[3]
+        user3 = tap[4]
+        pinC = tap[5]
+
+    finally:
+        GPIO.setup(pinA, GPIO.OUT, initial=GPIO.LOW)
+        GPIO.setup(pinB, GPIO.OUT, initial=GPIO.LOW)
+        GPIO.setup(pinC, GPIO.OUT, initial=GPIO.LOW)
 
 
 def start(id):
@@ -78,15 +105,17 @@ def ganador(data):
 
 if __name__ == '__main__':
     try:
+        updateTaps()
         while True:
+
             user = ganador(titulos())
             # No hay ningún evento guardado aún
             if len(user) == 0:
-                stop(1)
-                stop(2)
-                stop(3)
+                stop(user1)
+                stop(user2)
+                stop(user3)
             else:
-                for i in [1, 2, 3]:
+                for i in [user1, user2, user3]:
                     if i in user:
                         start(i)
                     else:
