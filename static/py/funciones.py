@@ -6,7 +6,7 @@ import subprocess
 
 
 switcher = {
-    "_Distancia": "/var/log/iot/dis/",
+    "_Nivel": "/var/log/iot/dis/",
     "_Humedad": "/var/log/iot/hum/",
     "_Temperatura": "/var/log/iot/tem/",
     "_Movimientos": "/var/log/iot/ir/",
@@ -16,7 +16,7 @@ switcher = {
 }
 
 unidades = {
-    "_Distancia": "cm.",
+    "_Nivel": "%",
     "_Humedad": "%",
     "_Temperatura": "ºC",
     "_TemperaturaCPU": "ºC",
@@ -24,7 +24,7 @@ unidades = {
 }
 
 colores ={
-    "_Distancia": "#FFCD00",
+    "_Nivel": "#FFCD00",
     "_Humedad": '#1664FF',
     "_Temperatura": "#FF0C00",
     "_TemperaturaCPU": "#FF00A2",

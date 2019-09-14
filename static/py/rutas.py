@@ -16,7 +16,7 @@ confPath = "/var/log/iot/config/"
 camara = "/var/log/iot/camera/"
 
 
-dName = "_Distancia.log"
+dName = "_Nivel.log"
 hName = "_Humedad.log"
 tName = "_Temperatura.log"
 irName = "_Movimientos.log"
