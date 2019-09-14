@@ -40,30 +40,26 @@ while True:
 
 
 def updateTaps():
-
-    try:
-        global user1
-        global user2
-        global user3
-        global pinA
-        global pinB
-        global pinC
-        mycursor = mydb.cursor()
-        mycursor.execute(
-            "SELECT idPropietario, pin FROM tap")
-        tap = mycursor.fetchall()
-        tap = [i for sub in tap for i in sub]
-        user1 = tap[0]
-        pinA = tap[1]
-        user2 = tap[2]
-        pinB = tap[3]
-        user3 = tap[4]
-        pinC = tap[5]
-
-    finally:
-        GPIO.setup(pinA, GPIO.OUT, initial=GPIO.LOW)
-        GPIO.setup(pinB, GPIO.OUT, initial=GPIO.LOW)
-        GPIO.setup(pinC, GPIO.OUT, initial=GPIO.LOW)
+    global user1
+    global user2
+    global user3
+    global pinA
+    global pinB
+    global pinC
+    mycursor = mydb.cursor()
+    mycursor.execute(
+        "SELECT idPropietario, pin FROM tap")
+    tap = mycursor.fetchall()
+    tap = [i for sub in tap for i in sub]
+    user1 = tap[0]
+    pinA = tap[1]
+    user2 = tap[2]
+    pinB = tap[3]
+    user3 = tap[4]
+    pinC = tap[5]
+    GPIO.setup(pinA, GPIO.OUT, initial=GPIO.LOW)
+    GPIO.setup(pinB, GPIO.OUT, initial=GPIO.LOW)
+    GPIO.setup(pinC, GPIO.OUT, initial=GPIO.LOW)
 
 
 def start(id):
