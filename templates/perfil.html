@@ -244,8 +244,29 @@ var barra = document.getElementById("myBar");
 boton = document.getElementById("rebootBTN");                      
 cerrar = document.getElementById("cerrar");                      
 barra.style.display = "none";
+var barra2 = document.getElementById("myBar2"); 
+boton2 = document.getElementById("updateBTN");                      
+cerrar2 = document.getElementById("cerrar2");                      
+barra2.style.display = "none";
 
-    boton.addEventListener("click", reinicio);
+boton.addEventListener("click", reinicio);
+boton2.addEventListener("click", actualizacion);
+
+function actualizacion() {
+    
+    $.get("/actualiza", function() {})
+      .done(function(out) {
+        
+        console.log(out);
+      })
+      .fail(function() {
+        
+        console.log("fail actualiza");
+      });
+      move(barra2, 15);
+    //document.getElementById("Cerrar").click();
+  }
+
 
 function reinicio() {
     
@@ -258,7 +279,7 @@ function reinicio() {
         
         console.log("fail reinicio");
       });
-      move();
+      move(barra, 35);
     //document.getElementById("Cerrar").click();
   }
 
@@ -282,21 +303,23 @@ function myFunction() {
   }
 }
 
-function move() {
-  barra.style.display = "block";
+function move(theBarra, tiempo) {
+  theBarra.style.display = "block";
   boton.disabled=true;
   cerrar.disabled=true;
-
+  boton2.disabled=true;
+  cerrar2.disabled=true;
+  var final = tiempo * 10
   var width = 1;
-  var id = setInterval(frame, 350);
+  var id = setInterval(frame, final);
   function frame() {
     if (width >= 100) {
       clearInterval(id);
       window.location.href = "/";
     } else {
       width++; 
-      barra.style.width = width + '%'; 
-      barra.innerHTML = width * 1  + '%';
+      theBarra.style.width = width + '%'; 
+      theBarra.innerHTML = width * 1  + '%';
     }
   }
   

@@ -31,7 +31,7 @@
       </div>
       <div class="progress">
         <div
-          class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+          class="progress-bar bg-danger progress-bar-striped progress-bar-animated"
           role="progressbar"
           aria-valuemin="0"
           aria-valuemax="100"
@@ -50,6 +50,69 @@
           Cancelar
         </button>
         <button type="button" id="rebootBTN" class="btn btn-danger">
+          Reiniciar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Modo Manual -->
+<div
+  class="modal fade"
+  id="updateModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="borradoTitulo">
+          Actualización del Sistema
+        </h3>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <h6>
+          El dispositivo se actualizará y se quedará inoperativo durante unos
+          segundos <br />
+          Una vez actualizado, el dispositivo cargará la última versión del
+          Software y tendrá que iniciar sesión nuevamente.<br /><br />
+          Se recomienda no actualizar el dispositivo a no ser que el
+          desarollador se lo indique.
+        </h6>
+      </div>
+      <div class="progress">
+        <div
+          class="progress-bar bg-warning progress-bar-striped progress-bar-animated"
+          role="progressbar"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          style="width:1%"
+          id="myBar2"
+        ></div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          id="cerrar2"
+          data-dismiss="modal"
+        >
+          Cancelar
+        </button>
+        <button type="button" id="updateBTN" class="btn btn-warning">
           Reiniciar
         </button>
       </div>
