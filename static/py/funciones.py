@@ -3,6 +3,7 @@ import datetime as dt
 import glob
 import errno   
 import subprocess
+import os
 
 
 switcher = {
@@ -335,7 +336,4 @@ def reiniciar():
 
 
 def actualizacion():
-    command = "bash /home/pi/Scripts/Git.sh"
-    process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
-    output = process.communicate()[0]
-    return output
+    os.system('/home/pi/Scripts/Git.sh')
