@@ -40,8 +40,7 @@ while True:
 
 
 def updateTaps():
-    user = switcher.get(1)
-    print(user)
+
     global switcher
     global user1
     global user2
@@ -49,6 +48,8 @@ def updateTaps():
     global pinA
     global pinB
     global pinC
+    user = switcher.get(1)
+    print(user)
     mycursor = mydb.cursor()
     mycursor.execute(
         "SELECT idPropietario, pin FROM tap")
