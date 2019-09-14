@@ -11,10 +11,12 @@ user1 = 1
 user2 = 2
 user3 = 3
 
-pinA = 23
-pinB = 18
+pinA = 18
+pinB = 23
 pinC = 24
-
+GPIO.setup(pinA, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(pinB, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(pinC, GPIO.OUT, initial=GPIO.LOW)
 
 switcher = {
     user1: pinA,
@@ -68,9 +70,6 @@ def updateTaps():
         user2: pinB,
         user3: pinC
     }
-    GPIO.setup(pinA, GPIO.OUT, initial=GPIO.LOW)
-    GPIO.setup(pinB, GPIO.OUT, initial=GPIO.LOW)
-    GPIO.setup(pinC, GPIO.OUT, initial=GPIO.LOW)
 
 
 def start(id):
