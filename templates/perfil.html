@@ -19,11 +19,11 @@
 		     <div class="nav nav-tabs ">
               <a data-toggle="tab" href="#home" class="list-group-item list-group-item-action {% if ajustes %}active  {% endif %}" data-toggle="tab" href="#home">Información Personal</a>
 
-              <a data-toggle="tab" href="#settings" class=" {% if dispositivo %}active  {% endif %} list-group-item list-group-item-action {% if not session["root"] %}disabled {% endif %}">Ajustes del dispositivo</a>
+              <a data-toggle="tab" href="#settings" class=" {% if dispositivo %}active  {% endif %} list-group-item list-group-item-action {% if not session["root"] %}disabled {% endif %}">Hardware</a>
 
               <a data-toggle="tab" href="#personal" class=" {% if registro %}active  {% endif %}list-group-item list-group-item-action {% if not session["root"] %}disabled {% endif %}" >Registrar nuevo usuario</a>
 
-              <a data-toggle="tab" href="#lista" class=" {% if lista %}active  {% endif %}list-group-item list-group-item-action {% if not session["root"] %}disabled {% endif %}" >Ajustes de usuarios</a>
+              <a data-toggle="tab" href="#lista" class=" {% if lista %}active  {% endif %}list-group-item list-group-item-action {% if not session["root"] %}disabled {% endif %}" >Usuarios</a>
           </div> 
 		</div>
 		<div class="col-md-9 fadeInDown">
@@ -43,7 +43,7 @@
                               <div class="form-group row">
                                 <label for="username" class="col-4 col-form-label">Nombre completo*</label> 
                                 <div class="col-8">
-                                  <input id="username" name="fullname" value ="{{ session["name"] }}" class="form-control here" required="required" type="text" placeholder="Introduzca su nombre completo">
+                                  <input id="username" name="fullname" value ="{{ session["name"] }}" class="form-control here" required="required" type="text" placeholder="Introduzca su nombre completo" disabled>
                                 </div>
                               </div>
                               <div class="form-group row">
@@ -73,6 +73,10 @@
                                   <textarea id="publicinfo" name="message" cols="40" rows="4" class="form-control" placeholder="Introduzca un mensaje para visualizar cada vez que inicie sesión" maxlength="255">{{ session["message"] }}</textarea>
                                 </div>
                               </div>
+                              <div class="col-md-12">
+                                <h4>Cambio de contraseña</h4>
+                                <hr>
+                            </div>
                               <div class="form-group row">
                                 <input type="checkbox" id="con" onclick="myFunction()" > Cambiar contraseña  <br>
                                 <input type="text" id="bool" name="bool" value="0" style="display:none">                                
@@ -106,7 +110,7 @@
 
                   <div class="row">
                       <div class="col-md-12">
-                          <h4>Ajustes del Dispositivo</h4>
+                          <h4>Ajustes del Aplicativo</h4>
                           <hr>
                       </div>
 		                </div>
@@ -120,18 +124,37 @@
                                   </div>
                                 </div>
                                 <div class="form-group row">
-                                  <label for="disA" class="col-4 col-form-label">Distancia máxima de alarma</label> 
+                                  <label for="emailR" class="col-4 col-form-label">Email de alarmas</label> 
                                   <div class="col-8">
-                                    <input id="disA" name="disA" value="{{ session["disA"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca la distancia en Cm." min="1"
+                                    <input id="emailR" name="emailR" value="{{ session["emailA"] }}" class="form-control here" required="required" type="text" placeholder="Introduzca email de avisos">
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label for="tam" class="col-4 col-form-label">Altura del estanque</label> 
+                                  <div class="col-8">
+                                    <input id="tam" name="tam" value="{{ session["tam"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca el tamaño en Cm." min="1"
                                     step=".01">
+                                  </div>
                                 </div>
-                              </div> 
-                              <div class="form-group row">
-                                <label for="emailR" class="col-4 col-form-label">Email de alarmas</label> 
-                                <div class="col-8">
-                                  <input id="emailR" name="emailR" value="{{ session["emailA"] }}" class="form-control here" required="required" type="text" placeholder="Introduzca email de avisos">
-                                </div>
+                                <div class="col-md-12">
+                                  <h4>Parámetros de avisos</h4>
+                                  <hr>
                               </div>
+                                <div class="form-group row">
+                                  <label for="disB" class="col-4 col-form-label">Nivel mínimo del agua</label> 
+                                  <div class="col-8">
+                                    <input id="disB" name="disB" value="{{ session["disB"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca la distancia en %" min="1" max ="98"
+                                    >
+                                  </div>
+                                </div>
+                              <div class="form-group row">
+                                <label for="disA" class="col-4 col-form-label">Nivel máximo del agua</label> 
+                                <div class="col-8">
+                                  <input id="disA" name="disA" value="{{ session["disA"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca la distancia en %" min="2" max ="99"
+                                  >
+                              </div>
+                            </div> 
+                              
                               <div class="form-group row">
                                   <label for="tem" class="col-4 col-form-label">Aviso de temperatura</label> 
                                   <div class="col-8">
@@ -145,7 +168,32 @@
                                     <input id="hum" name="hum" value="{{ session["hum"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca temperatura de aviso en %" min="1" max="99"
                                     >
                                 </div>
-                              </div> 
+                              </div>
+                              <div class="col-md-12">
+                                <h4>Intervalo de muestreos</h4>
+                                <hr>
+                            </div>
+                            <div class="form-group row">
+                              <label for="humTem" class="col-4 col-form-label">Humedad y Temperatura</label> 
+                              <div class="col-8">
+                                <input id="humTem" name="humTem" value="{{ session["humTem"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca intervalo de toma de muestras en segundos" min="1"
+                                >
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label for="disT" class="col-4 col-form-label">Nivel del agua</label> 
+                              <div class="col-8">
+                                <input id="disT" name="disT" value="{{ session["disT"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca intervalo de toma de muestras en segundos" min="1"
+                                >
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label for="cpusT" class="col-4 col-form-label">Uso y temperatura interna de la de CPU</label> 
+                              <div class="col-8">
+                                <input id="cpusT" name="cpusT" value="{{ session["cpusT"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca intervalo de toma de muestras en segundos" min="1"
+                                >
+                              </div>
+                            </div>
                               
                             
                               <div class="form-group row">
@@ -167,7 +215,12 @@
             </div>
 
             <div class="tab-pane {% if lista %} active {% endif %}" id="lista">
-                
+              <div class="row">
+                <div class="col-md-12">
+                    <h4>Listado de usuarios</h4>
+                    <hr>
+                </div>
+              </div>
 
               {% include "lista.html" %}
 

@@ -35,11 +35,17 @@ Su código de verificación es : """
 
 confText = """###INICIO###
 name = {}
-disA = {}
 mail = {}
+altu = {}
+disB = {}
+disA = {}
 temA = {}
 humA = {}
+htTm = {}
+disT = {}
+cpuS = {}
 ###FIN###"""
+
 
 
 # Diccionario de mensajes

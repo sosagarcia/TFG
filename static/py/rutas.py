@@ -1,7 +1,5 @@
 import datetime
 from os import remove, rename
-from picamera import PiCamera
-from time import sleep
 
 # Rutas de LOG
 

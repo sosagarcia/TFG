@@ -12,21 +12,42 @@ from static.py.rutas import *
 
 tempMax = 26
 humMax = 30
-disAlarma = 30.0
+disB = 30
+disA = 85
+alt = 100
 email = "monitycont@gmail.com"
 
+
+# Intervalo de muestreo
+
+htTm = 15
+disT = 60
+cpuS = 5
+
 linea = {
-    "tem": "3",
-    "hum": "4",
-    "dis": "1",
-    "mail": "2"
+    "mail": "1",
+    "tam": "2",
+    "disB": "3",
+    "disA": "4",
+    "tem": "5",
+    "hum": "6",
+    "htTm": "7",
+    "disT": "8",
+    "cpuS": "9"
+
 }
 
 data = {
     "tem": tempMax,
     "hum": humMax,
-    "dis": disAlarma,
-    "mail": email
+    "disB": disB,
+    "disA": disA,
+    "tam": alt,
+    "mail": email,
+    "htTm": htTm,
+    "disT": disT,
+    "cpuS": cpuS
+
 }
 
 
@@ -37,16 +58,62 @@ GPIO_ECHO = 25
 GPIO.setmode(GPIO.BCM)
 
 
+GPIO.setwarnings(False)
+GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
+GPIO.setup(GPIO_ECHO, GPIO.IN)
+
+
+# Mouvement
+
+pir = 22
+
+GPIO.setup(pir, GPIO.IN)
+# Interrupción
+GPIO.add_event_detect(pir, GPIO.RISING, callback=alarma)
+
+
+# Humedad y Temperatura
+
+sensor = Adafruit_DHT.DHT11
+pin = 17
+GPIO.setup(pin, GPIO.IN)
+
+# Leds de aviso
+ledM = 16
+ledH = 20
+ledT = 21
+ledA = 5
+
+GPIO.setup(ledM, GPIO.OUT)
+GPIO.setup(ledH, GPIO.OUT)
+GPIO.setup(ledT, GPIO.OUT)
+GPIO.setup(ledA, GPIO.OUT)
+GPIO.output(ledT, False)
+GPIO.output(ledH, False)
+GPIO.output(ledA, False)
+GPIO.output(ledM, False)
+
+
 def updateData():
     configs = read_conf()
     global tempMax
     global humMax
-    global disAlarma
+    global disB
+    global disA
+    global alt
     global email
-    tempMax = int(configs[3])
-    humMax = int(configs[4])
-    disAlarma = float(configs[1])
-    email = str(configs[2])
+    global htTm
+    global disT
+    global cpuS
+    email = str(configs[1])
+    alt = int(configs[2])
+    disB = int(configs[3])
+    disA = int(configs[4])
+    tempMax = str(configs[5])
+    humMax = str(configs[6])
+    htTm = str(configs[7])
+    disT = str(configs[8])
+    cpuS = str(configs[9])
 
 
 """def alarmaCheck():
@@ -105,42 +172,6 @@ def alarma(channel):
     GPIO.output(ledM, False)
 
 
-GPIO.setwarnings(False)
-GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
-GPIO.setup(GPIO_ECHO, GPIO.IN)
-
-
-# Mouvement
-
-pir = 22
-
-GPIO.setup(pir, GPIO.IN)
-# Interrupción
-GPIO.add_event_detect(pir, GPIO.RISING, callback=alarma)
-
-
-# Humedad y Temperatura
-
-sensor = Adafruit_DHT.DHT11
-pin = 17
-GPIO.setup(pin, GPIO.IN)
-
-# Leds de aviso
-ledM = 16
-ledH = 20
-ledT = 21
-ledA = 5
-
-GPIO.setup(ledM, GPIO.OUT)
-GPIO.setup(ledH, GPIO.OUT)
-GPIO.setup(ledT, GPIO.OUT)
-GPIO.setup(ledA, GPIO.OUT)
-GPIO.output(ledT, False)
-GPIO.output(ledH, False)
-GPIO.output(ledA, False)
-GPIO.output(ledM, False)
-
-
 def distance():
     # set Trigger to HIGH
     GPIO.output(GPIO_TRIGGER, True)
@@ -167,10 +198,37 @@ def distance():
 def distanceW():
 
     while True:
-        time.sleep(60)
+        time.sleep(disT)
         distancia = distance()
-        text = str(distancia) + " cm."
+        actual = alt - distancia
+        nivel = 1 / (alt / actual) * 100
+        text = str(nivel) + " %"
         write_log(text, disPath, dName)
+        avisos(nivel)
+
+
+def avisos(actual):
+    actual = "{0:.2f}".format(actual)
+    disA = int(give("disA"))
+    disB = int(give("disB"))
+    if disB > actual:
+        GPIO.output(ledA, True)
+        text = "Nivel del Agua :" + \
+            str(actual) + " %"
+        write_log(text, aPath, aName)
+        email = give("mail")
+        # feedback = sendEmail(
+        # str(text), email, "El nivel del agua es muy BAJO")
+        GPIO.output(ledA, False)
+    if disA < actual:
+        GPIO.output(ledA, True)
+        text = "Nivel del Agua :" + \
+            str(actual) + " %"
+        write_log(text, aPath, aName)
+        email = give("mail")
+        # feedback = sendEmail(
+        # str(text), email, "El nivel del agua es muy ALTO")
+        GPIO.output(ledA, False)
 
 
 def temphum():
@@ -183,7 +241,7 @@ def temphumW():
     while True:
         tempMax = int(give("tem"))
         humMax = int(give("hum"))
-        time.sleep(15)
+        time.sleep(htTm)
         humedad, temperatura = temphum()
         if humedad is not None and temperatura is not None and (humedad <= 100):
             textoT = str(temperatura) + " ºC"
@@ -213,7 +271,7 @@ def tempcpu():
 
 def sistem():
     while True:
-        time.sleep(5)
+        time.sleep(cpuS)
         temperatura, cpu = tempcpu()
         write_log(temperatura, cpuTPath, cpuTName)
         write_log(cpu, cpuPath, cpuName)

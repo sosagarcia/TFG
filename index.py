@@ -81,6 +81,20 @@ def conn(texto):
     return data
 
 
+def ajustes():
+    datos = read_conf()
+    session['nameD'] = datos[0]
+    session['emailA'] = datos[1]
+    session['tam'] = datos[2]
+    session['disB'] = datos[3]
+    session['disA'] = datos[4]
+    session['tem'] = datos[5]
+    session['hum'] = datos[6]
+    session['humTem'] = datos[7]
+    session['disT'] = datos[8]
+    session['cpusT'] = datos[9]
+
+
 mysql = MySQL()
 app = Flask(__name__)
 
@@ -137,6 +151,7 @@ def main():
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
+        session.clear()
         email = request.form['email']
         password = request.form['password'].encode('utf-8')
         cur = mysql.get_db().cursor()
@@ -158,13 +173,7 @@ def login():
                 session['message'] = user[5]
                 session['root'] = user[8]
                 session['manual'] = "0"
-                ajustes = read_conf()
-                session['nameD'] = ajustes[0]
-                session['disA'] = ajustes[1]
-                session['emailA'] = ajustes[2]
-                session['tem'] = ajustes[3]
-                session['hum'] = ajustes[4]
-
+                ajustes()
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
@@ -190,11 +199,15 @@ def perfil():
 
 @app.route('/calendar')
 def calendar():
-    if session.get("root", None) == 0:
-        return render_template('calendarMortal.html')
+    if session.get("name", None) is not None:
+        if session.get("root", None) == 0:
+            return render_template('calendarMortal.html')
+        else:
+            listado = users(usuarios())
+            return render_template('calendar.html', mensaje=cal, lista=listado)
     else:
-        listado = users(usuarios())
-        return render_template('calendar.html', mensaje=cal, lista=listado)
+        flash("Sesión caducada", 'dark')
+        return redirect(url_for("login"))
 
 
 @app.route('/data')
@@ -386,7 +399,7 @@ def updateStatistics():
 
 @app.route('/logout')
 def logout():
-    session.pop("name", None)
+    session.clear()
     return render_template('index.html', mensaje=adios)
 
 
@@ -484,17 +497,27 @@ def edit_contact(id):
 def update_device():
     if request.method == 'POST':
         nameD = request.form['nameD']
-        disA = request.form['disA']
         emailR = request.form['emailR']
+        tam =request.form['tam']
+        disB = request.form['disB']
+        disA = request.form['disA']
         tem = request.form['tem']
         hum = request.form['hum']
-        log = confText.format(nameD, disA, emailR, tem, hum)
+        humTem = request.form['humTem']
+        disT = request.form['disT']
+        cpusT = request.form['cpusT']
+        log = confText.format(nameD, emailR,tam, disB, disA, tem, hum, humTem, disT,cpusT)
         save_conf(log)
         session['nameD'] = nameD
-        session['disA'] = disA
         session['emailR'] = emailR
+        session['tam'] = tam
+        session['disB'] = disB
+        session['disA'] = disA
         session['tem'] = tem
         session['hum'] = hum
+        session['humTem'] = humTem
+        session['disT'] = disT
+        session['cpusT'] = cpusT
         data = conn('SELECT * FROM contacts')
         flash('La configuración ha sido actualizada correctamente ', 'success')    
         return render_template('perfil.html',dispositivo=1,contactos=data, mensaje=reg)
@@ -507,7 +530,6 @@ def update_device():
 @app.route('/update/<id>', methods=['POST'])
 def update_contact(id):
     if request.method == 'POST':
-        fullname = request.form['fullname']
         phone = request.form['phone']
         email = request.form['email']
         message = request.form['message']
@@ -515,13 +537,12 @@ def update_contact(id):
         texto = """
  
         UPDATE contacts
-        SET fullname=% s,
-            phone=% s,
+        SET phone=% s,
             email=% s,
             message=% s
         WHERE ID= % s
     """
-        variables = (fullname, phone, email, message, id)
+        variables = (phone, email, message, id)
         if cambia == "1":
             password = request.form['newpass'].encode('utf-8')
             repassword = request.form['repass'].encode('utf-8')
@@ -536,19 +557,17 @@ def update_contact(id):
                 texto = """
 
         UPDATE contacts
-        SET fullname=% s,
-            phone=% s,
+        SET phone=% s,
             email=% s,
             message=% s,
             password=% s
         WHERE ID= % s
     """
-                variables =(fullname, phone, email, message, hash_password, id)
+                variables =(phone, email, message, hash_password, id)
 
         cur = mysql.get_db().cursor()
         cur.execute( texto, variables)
         mysql.get_db().commit()
-        session['name'] = fullname
         session['phone'] = phone
         session['email'] = email
         session['message'] = message
