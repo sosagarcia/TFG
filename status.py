@@ -96,14 +96,14 @@ def updateData():
     global disT
     global cpuS
     email = str(configs[1])
-    alt = int(configs[2])
+    alt = float(configs[2])
     disB = int(configs[3])
     disA = int(configs[4])
-    tempMax = str(configs[5])
-    humMax = str(configs[6])
-    htTm = str(configs[7])
-    disT = str(configs[8])
-    cpuS = str(configs[9])
+    tempMax = int(configs[5])
+    humMax = int(configs[6])
+    htTm = int(configs[7])
+    disT = int(configs[8])
+    cpuS = int(configs[9])
 
 
 """def alarmaCheck():
@@ -289,7 +289,7 @@ if __name__ == '__main__':
     GPIO.add_event_detect(pir, GPIO.RISING, callback=alarma)
 
 
-    
+
     t1 = threading.Thread(target=temphumW)
     t2 = threading.Thread(target=distanceW)
     t4 = threading.Thread(target=sistem)
