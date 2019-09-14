@@ -309,6 +309,11 @@ def reinicio():
     output = reiniciar()
     return jsonify(output)
 
+@app.route('/actualiza')
+def reinicio():
+    output = actualiza()
+    return jsonify(output)
+
 
 @app.route('/auto')
 def auto():
