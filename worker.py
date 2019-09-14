@@ -56,7 +56,6 @@ def updateTaps():
     tap = mycursor.fetchall()
     print(tap)
     tap = [i for sub in tap for i in sub]
-    print(tap)
     user1 = tap[0]
     pinA = tap[1]
     user2 = tap[2]
@@ -64,14 +63,11 @@ def updateTaps():
     user3 = tap[4]
     pinC = tap[5]
     user = switcher.get(1)
-    print(user)
     switcher = {
         user1: pinA,
         user2: pinB,
         user3: pinC
     }
-    user = switcher.get(1)
-    print(user)
     GPIO.setup(pinA, GPIO.OUT, initial=GPIO.LOW)
     GPIO.setup(pinB, GPIO.OUT, initial=GPIO.LOW)
     GPIO.setup(pinC, GPIO.OUT, initial=GPIO.LOW)
@@ -115,10 +111,9 @@ def ganador(data):
 
 
 if __name__ == '__main__':
-    updateTaps()
     try:
         while True:
-
+            updateTaps()
             user = ganador(titulos())
             # No hay ningún evento guardado aún
             if len(user) == 0:
