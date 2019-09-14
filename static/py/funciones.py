@@ -334,7 +334,7 @@ def reiniciar():
     return output
 
 
-def actualiza():
+def actualizacion():
     command = "/usr/bin/sudo /cd /home/pi/Scripts/Git.sh"
     process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
     output = process.communicate()[0]
