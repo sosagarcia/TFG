@@ -349,11 +349,32 @@ function move(theBarra, tiempo) {
 </script>
 
 <script>
-  boton = document.getElementById("asigBTN");
+  var boton = document.getElementById("asigBTN");
   boton.addEventListener("click", asignacion);
-  function asignacion(){
+  var result = [];
+  {% for tap in taps %}
+  var tapV{{tap.2}} = document.getElementById("tapName{{tap.2}}");
+  var selected{{tap.2}};
+  {% endfor %}
 
-    alert("hola")
+  
+  function asignacion(){
+    {% for tap in taps %}
+    selected{{tap.2}} = tapV{{tap.2}}.options[tapV{{tap.2}}.selectedIndex];
+    result.push({{tap.2}});
+    result.push (selected{{tap.2}}.value );
+    console.log (result)
+    {% endfor %}
+
+    $.post("/asigna", {
+      data: result,
+    }).done(function(reply) {
+      toDo(reply);
+    });    
+  }
+
+  function toDo(algo){
+    console.log(algo)
   }
 </script>
 

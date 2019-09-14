@@ -173,7 +173,7 @@ def login():
                 session['message'] = user[5]
                 session['root'] = user[8]
                 session['manual'] = "0"
-                #ajustes()
+                ajustes()
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
@@ -389,7 +389,27 @@ def chart():
     return str(algo)
         
         
-    
+@app.route('/asigna', methods=['POST'])
+def asigna():
+    datos = request.form.getlist('data[]')
+    pins= list()
+    users = list()
+
+    max = len(datos)
+    for i in range (0,max,2):
+
+        pin = datos[i]
+        user = datos[i + 1]
+        if not user == "":
+            pins.append(pin)
+            users.append(user)
+    for i in users:
+        if i in users:
+            return "Hay usuarios repetidos"
+
+    return jsonify(datos)
+
+   
 
 
 @app.route('/updateStatistics', methods=['POST'])
