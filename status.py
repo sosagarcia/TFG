@@ -84,7 +84,8 @@ GPIO.output(ledA, False)
 GPIO.output(ledM, False)
 
 
- 
+def updateData():
+    configs = read_conf()
     global tempMax
     global humMax
     global disB

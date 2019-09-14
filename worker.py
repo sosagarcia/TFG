@@ -11,7 +11,7 @@ user1 = 1
 user2 = 2
 user3 = 3
 
-pinA = 8
+pinA = 18
 pinB = 23
 pinC = 24
 
@@ -104,8 +104,8 @@ def ganador(data):
 
 
 if __name__ == '__main__':
+    updateTaps()
     try:
-        updateTaps()
         while True:
 
             user = ganador(titulos())
