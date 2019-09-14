@@ -11,8 +11,8 @@ user1 = 1
 user2 = 2
 user3 = 3
 
-pinA = 18
-pinB = 23
+pinA = 23
+pinB = 18
 pinC = 24
 
 
@@ -40,6 +40,9 @@ while True:
 
 
 def updateTaps():
+    user = switcher.get(1)
+    print(user)
+    global switcher
     global user1
     global user2
     global user3
@@ -59,6 +62,15 @@ def updateTaps():
     pinB = tap[3]
     user3 = tap[4]
     pinC = tap[5]
+    user = switcher.get(1)
+    print(user)
+    switcher = {
+        user1: pinA,
+        user2: pinB,
+        user3: pinC
+    }
+    user = switcher.get(1)
+    print(user)
     GPIO.setup(pinA, GPIO.OUT, initial=GPIO.LOW)
     GPIO.setup(pinB, GPIO.OUT, initial=GPIO.LOW)
     GPIO.setup(pinC, GPIO.OUT, initial=GPIO.LOW)
