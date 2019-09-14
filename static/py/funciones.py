@@ -338,4 +338,4 @@ def reiniciar():
 def actualizacion():
     command = "/usr/bin/sudo /home/pi/Scripts/Git.sh"
     process = subprocess.Popen(command.split())
-    return 
+    return process

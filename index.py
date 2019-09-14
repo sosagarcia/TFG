@@ -384,7 +384,7 @@ def state():
 @app.route('/testa')
 def chart():
     algo = actualizacion()
-    return algo
+    return str(algo)
         
         
     
