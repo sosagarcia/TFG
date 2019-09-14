@@ -312,6 +312,7 @@ def reinicio():
 @app.route('/actualiza')
 def actualiza():
    algo =  actualizacion()
+   return jsonify(algo)
     
 
 
