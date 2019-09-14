@@ -192,7 +192,7 @@ def distanceW():
         distancia = distance()
         actual = alt - distancia
         nivel = 1 / (alt / actual) * 100
-        text = str(nivel) + " %"
+        text =  "{0:.2f}".format(nivel) + " %"
         write_log(text, disPath, dName)
         avisos(nivel)
 
