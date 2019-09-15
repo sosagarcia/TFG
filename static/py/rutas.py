@@ -14,7 +14,7 @@ outPath = "/var/log/iot/out/"
 config = "/var/log/iot/config/configuracion.conf"
 confPath = "/var/log/iot/config/"
 camara = "/var/log/iot/camera/"
-images = "/var/www/html/TFG/static/img/camara"
+images = "/var/www/html/TFG/static/img/camara/"
 
 
 dName = "_Nivel.log"
