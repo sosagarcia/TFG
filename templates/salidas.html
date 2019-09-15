@@ -13,11 +13,13 @@
         <tbody>
           {% for tap in taps %}
           <tr>
-            <td>{{tap.0}}</td>
+            <td class="bg-{{tap.3}}">
+              <strong>{{tap.0}}</strong>
+            </td>
 
             <td>
               {% for contact in contactos %} {%if tap.1 == contact.0 %}
-              {{contact.1}}
+              <strong>{{contact.1}}</strong>
               {% endif %} {% endfor %}
             </td>
             <td>{{tap.2}}</td>

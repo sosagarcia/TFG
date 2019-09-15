@@ -4,10 +4,10 @@
       <table class="table table-bordered table-striped bg-white table-sm">
         <thead>
           <tr>
-            <td>Nombre</td>
-            <td>Administrador</td>
-            <td>Salida</td>
-            <td>Acciones</td>
+            <td><strong>Nombre</strong></td>
+            <td><strong>Administrador</strong></td>
+            <td><strong>Salida</strong></td>
+            <td><strong>Acciones</strong></td>
           </tr>
         </thead>
         <tbody>
@@ -21,10 +21,14 @@
             </td>
             <td>{{contact.9}}</td>
             <td>
-              <a href="/rol/{{contact.0}}" class="btn btn-warning {%if contact.0 == session['id'] %} disabled {% endif %}"
+              <a
+                href="/rol/{{contact.0}}"
+                class="btn btn-warning {%if contact.0 == session['id'] %} disabled {% endif %}"
                 >Cambiar Rol</a
               >
-              <a href="/delete/{{contact.0}}" class="btn-borrar btn btn-danger {%if contact.0 == session['id'] %} disabled {% endif %}"
+              <a
+                href="/delete/{{contact.0}}"
+                class="btn-borrar btn btn-danger {%if contact.0 == session['id'] %} disabled {% endif %}"
                 >Borrar</a
               >
             </td>
