@@ -9,16 +9,15 @@
   <!-- Trigger the Modal -->
   <img
     id="2019-09-15_10.30.15.jpg"
-    src="{{url_for('static', filename='img/camera/2019-09-15_10.30.15.jpg')}}"
+    src="\var\log\iot\camera\2019-09-15_10.30.15.jpg"
     alt="2019-09-15_10.30.15.jpg"
     style="width:100%;max-width:150px"
   />
-
   {% for ruta in rutas %}
 
   <img
     id="{{ ruta }}"
-    src="/var/log/iot/camera/{{ ruta }}"
+    src="\var\log\iot\camera\{{ ruta }}"
     alt="{{ ruta }}"
     style="width:100%;max-width:150px"
   />
