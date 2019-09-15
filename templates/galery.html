@@ -11,9 +11,9 @@
   {% for ruta in rutas %}
 
   <img
-    id="{{ ruta[:-4] }}"
+    id="{{ ruta }}"
     src="{{url_for('static', filename='img/camara/' + ruta)}}"
-    alt="{{ ruta[:-4] }}"
+    alt="{{ ruta }}"
     style="width:100%;max-width:150px"
   />
   {% endfor %}
@@ -29,7 +29,7 @@
 {% block script %}
 <script>
   var modal = document.getElementById("myModal");
-  {% for ruta[:-4] in rutas %}
+  {% for ruta in rutas %}
 
   var img{{ ruta[:-4] }} = document.getElementById("{{ ruta }}");
 
