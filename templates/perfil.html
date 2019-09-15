@@ -240,6 +240,16 @@
               </div>
 
               {% include "salidas.html" %}
+              <div class="progress">
+                  <div
+                    class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                    role="progressbar"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    style="width:1%"
+                    id="asignaBar"
+                  ></div>
+                </div>
               <div class="form-group row">
                   <div class="offset-4 col-8">
                     <button type="button" class="btn-success"id="asigBTN" >
@@ -347,13 +357,13 @@ function move(theBarra, tiempo) {
   
 }
 </script>
-
 <script>
   
     var boton = document.getElementById("asigBTN");
     boton.addEventListener("click", asignacion);
     var result = [];
-    
+    var barra3 = document.getElementById("asignaBar"); 
+    barra3.style.display = "none";
     var tapV18 = document.getElementById("tapName18");
     var nombre18 = document.getElementById("Nombre18");
     var selected18; 
@@ -373,6 +383,7 @@ function move(theBarra, tiempo) {
     
     {% endfor %}
     console.log (result)
+    barra(barra3, 10);
     $.post("/asigna", {
       data: result,
     }).done(function(reply) {
@@ -388,6 +399,26 @@ function move(theBarra, tiempo) {
     nombre24.innerHTML = algo.tap[2];
     result = [];
   }
+
+  function barra(theBarra, tiempo) {
+  theBarra.style.display = "block";
+  boton.disabled=true;
+  var final = tiempo * 10
+  var width = 1;
+  var id = setInterval(frame, final);
+  function frame() {
+    if (width >= 100) {
+      clearInterval(id);
+      boton.disabled=false;
+      theBarra.style.display = "none";
+    } else {
+      width++; 
+      theBarra.style.width = width + '%'; 
+      theBarra.innerHTML = width * 1  + '%';
+    }
+  }
+  
+}
 
 </script>
 
