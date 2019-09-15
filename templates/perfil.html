@@ -286,7 +286,7 @@ boton2.addEventListener("click", actualizacion);
 
 function actualizacion() {
     
-    /*$.get("/actualiza", function() {})
+    $.get("/actualiza", function() {})
       .done(function(out) {
         
         console.log(out);
@@ -295,7 +295,7 @@ function actualizacion() {
         
         console.log("fail actualiza");
       });
-      */
+      
       move(barra2, 15);
     //document.getElementById("Cerrar").click();
   }
@@ -303,7 +303,7 @@ function actualizacion() {
 
 function reinicio() {
     
-    $.get("/reinicio", function() {})
+    /*$.get("/reinicio", function() {})
       .done(function(out) {
         
         console.log(out);
@@ -312,6 +312,7 @@ function reinicio() {
         
         console.log("fail reinicio");
       });
+      */
       move(barra1, 35);
     //document.getElementById("Cerrar").click();
   }
@@ -338,7 +339,7 @@ function myFunction() {
 
 function move(theBarra, tiempo) {
   theBarra.style.display = "block";
-  boton.disabled=true;
+  boton1.disabled=true;
   cerrar.disabled=true;
   boton2.disabled=true;
   cerrar2.disabled=true;
