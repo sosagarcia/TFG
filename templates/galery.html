@@ -11,7 +11,7 @@
   {% for ruta in rutas %}
 
   <img
-    id="{{ ruta }}"
+    id="{{ ruta[:-4] }}"
     src="{{url_for('static', filename='img/camara/' + ruta)}}"
     alt="{{ ruta }}"
     style="width:100%;max-width:150px"
