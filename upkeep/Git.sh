@@ -20,5 +20,5 @@ sudo cp -R /var/www/html/TFG/upkeep/* /home/pi/Scripts/
 echo "Permisos Scripts"
 sudo chmod -R 777 /home/pi/Scripts/
 echo "copiando fotos"
-sudo cp -R /var/log/iot/camera/* /var/www/html/TFG/static/img/camara
+sudo cp -R /var/log/iot/camera/* /var/www/html/TFG/static/img/camera
 echo "###########################################################################"
