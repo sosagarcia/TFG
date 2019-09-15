@@ -7,20 +7,16 @@
 
 <div class="container mt-2">
   <!-- Trigger the Modal -->
-  <img
-    id="myImg"
-    src="https://unsplash.it/600.jpg?image=251"
-    alt="Snow"
-    style="width:100%;max-width:150px"
-  />
+
+  {% for ruta in rutas %}
 
   <img
-    id="myImg2"
-    src="https://unsplash.it/600.jpg?image=252"
-    alt="fecha"
+    id="{{ruta[20:39]}}"
+    src="{{ ruta }}"
+    alt="{{ruta[20:39]}}"
     style="width:100%;max-width:150px"
   />
-
+  {% endfor %}
   <!-- The Modal -->
   <div id="myModal" class="modal">
     <span class="close">&times;</span>
