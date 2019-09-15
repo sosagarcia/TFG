@@ -137,9 +137,7 @@ def takePicture():
         camera.resolution = (1920, 1080)
         fecha = datetime.datetime.now().strftime("%Y_%m_%d_at_%H_%M_%S")
         ruta = camara + fecha + ".jpg"
-        ruta2 = images + fecha + ".jpg"
         time.sleep(2)
-        camera.capture(ruta2)
         camera.capture(ruta)
 
 
