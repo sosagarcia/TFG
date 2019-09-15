@@ -139,8 +139,8 @@ def takePicture():
         ruta = camara + fecha + ".jpg"
         ruta2 = images + fecha + ".jpg"
         time.sleep(2)
-        camera.capture(ruta)
         camera.capture(ruta2)
+        camera.capture(ruta)
 
 
 def alarma(channel):
