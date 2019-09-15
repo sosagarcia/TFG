@@ -142,7 +142,7 @@ def main():
         movimientos = logs(irPath)
         salidas = logs(outPath)
         agenda = conjunto(titulos())
-        imagenes = sorted(ls(camara))
+        imagenes = sorted(ls(images))
         imagenes.pop(0)
         return render_template('main.html', agenda=agenda, alarma=alarmas, movimiento=movimientos, salida=salidas, rutas=imagenes)
     else:
@@ -180,7 +180,7 @@ def login():
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
                 agenda = conjunto(titulos())
-                imagenes = sorted(ls(camara))
+                imagenes = sorted(ls(images))
                 imagenes.pop(0) 
                 return render_template('main.html', agenda=agenda, primer=1, alarma=str(alarmas), movimiento=movimientos, salida=salidas, rutas=imagenes)
             else:
