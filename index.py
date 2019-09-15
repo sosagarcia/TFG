@@ -142,7 +142,7 @@ def main():
         movimientos = logs(irPath)
         salidas = logs(outPath)
         agenda = conjunto(titulos())
-        imagenes = sorted(ls(camara))
+        imagenes = sorted(ls(images))
         return render_template('main.html', agenda=agenda, alarma=alarmas, movimiento=movimientos, salida=salidas, rutas=imagenes)
     else:
         flash("Sesión caducada", 'dark')
