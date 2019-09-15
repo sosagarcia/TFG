@@ -179,7 +179,8 @@ def login():
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
                 agenda = conjunto(titulos())
-                imagenes = sorted(ls(camara))
+                imagenes = list()
+                #imagenes = sorted(ls(camara))
                 return render_template('main.html', agenda=agenda, primer=1, alarma=str(alarmas), movimiento=movimientos, salida=salidas, rutas=imagenes)
             else:
                 return render_template("index.html", mensaje=contra)
@@ -388,7 +389,7 @@ def state():
 @app.route('/testa')
 def chart():
         
-        imagenes = sorted(ls(camara))
+        imagenes = list()
         return render_template('galery.html', rutas=imagenes)
         
 @app.route('/asigna', methods=['POST'])
