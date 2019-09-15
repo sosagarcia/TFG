@@ -21,5 +21,4 @@ echo "Permisos Scripts"
 sudo chmod -R 777 /home/pi/Scripts/
 echo "copiando fotos"
 sudo cp -R /var/log/iot/camera/* /var/www/html/TFG/static/img/camara
-ra
 echo "###########################################################################"
