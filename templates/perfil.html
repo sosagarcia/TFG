@@ -275,7 +275,7 @@
 var barra1 = document.getElementById("myBar"); 
 boton1 = document.getElementById("rebootBTN");                      
 cerrar = document.getElementById("cerrar");                      
-barra.style.display = "none";
+barra1.style.display = "none";
 var barra2 = document.getElementById("myBar2"); 
 boton2 = document.getElementById("updateBTN");                      
 cerrar2 = document.getElementById("cerrar2");                      
@@ -286,7 +286,7 @@ boton2.addEventListener("click", actualizacion);
 
 function actualizacion() {
     
-    $.get("/actualiza", function() {})
+    /*$.get("/actualiza", function() {})
       .done(function(out) {
         
         console.log(out);
@@ -295,6 +295,7 @@ function actualizacion() {
         
         console.log("fail actualiza");
       });
+      */
       move(barra2, 15);
     //document.getElementById("Cerrar").click();
   }
