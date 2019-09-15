@@ -51,15 +51,6 @@
     <!-- Derecha -->
 
     {{ agenda | safe }}
-    {% for ruta in rutas %}
-
-    <img
-      id="{{ ruta }}"
-      src="/var/log/iot/camera/{{ ruta }}"
-      alt="{{ ruta }}"
-      style="width:100%;max-width:150px"
-    />
-    {% endfor %}
   </div>
 </div>
 {% if session["root"] %} {% include "log.html" %} {% endif %} {% endblock %} {%
