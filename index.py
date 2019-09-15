@@ -198,7 +198,9 @@ def perfil():
     if session.get("name", None) is not None:
         data = conn('SELECT * FROM contacts')
         tap = conn('SELECT * FROM tap')
-        return render_template('perfil.html', mensaje=reg, ajustes=1, contactos=data, taps=tap)
+        datos = tabla(data,tap)
+        print (datos)
+        return render_template('perfil.html', mensaje=reg, ajustes=1, contactos=data, taps=datos)
     else:
         flash("Sesión caducada", 'dark')
         return redirect(url_for("login"))
@@ -426,7 +428,10 @@ def asigna():
         cur.execute('UPDATE tap SET idPropietario = %s WHERE pin = %s', (user, pin))
         mysql.get_db().commit()
     mensaje = "Salidas actualizadas correctamente"
-    return jsonify(result= 1, msj=mensaje)
+    data = conn('SELECT * FROM contacts')
+    tap = conn('SELECT * FROM tap')
+    datos = minitabla(data,tap)
+    return jsonify(result= 1, msj=mensaje, tap= datos)
 
    
 
