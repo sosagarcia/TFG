@@ -4,7 +4,7 @@ from flask.json import JSONEncoder
 import datetime as dt
 from flask import Flask, render_template, request, url_for, redirect, flash, session, Response
 import os
-import time
+
 import random
 from flaskext.mysql import MySQL
 import bcrypt
@@ -143,9 +143,9 @@ def main():
         movimientos = logs(irPath)
         salidas = logs(outPath)
         agenda = conjunto(titulos())
-        #imagenes = sorted(ls(images))
-        #imagenes.pop(0)
-        imagenes = list()
+        imagenes = sorted(ls(images))
+        imagenes.pop(0)
+        #imagenes = list()
         return render_template('main.html', agenda=agenda, alarma=alarmas, movimiento=movimientos, salida=salidas, rutas=imagenes)
     else:
         flash("Sesión caducada", 'dark')
@@ -177,14 +177,14 @@ def login():
                 session['message'] = user[5]
                 session['root'] = user[8]
                 session['manual'] = "0"
-                #ajustes()
+                ajustes()
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
                 agenda = conjunto(titulos())
-                #imagenes = sorted(ls(images))
-                #imagenes.pop(0)
-                imagenes = list()
+                imagenes = sorted(ls(images))
+                imagenes.pop(0)
+                #imagenes = list()
                 return render_template('main.html', agenda=agenda, primer=1, alarma=str(alarmas), movimiento=movimientos, salida=salidas, rutas=imagenes)
             else:
                 return render_template("index.html", mensaje=contra)
@@ -200,7 +200,6 @@ def perfil():
         data = conn('SELECT * FROM contacts')
         tap = conn('SELECT * FROM tap')
         datos = tabla(data,tap)
-        print (datos)
         return render_template('perfil.html', mensaje=reg, ajustes=1, contactos=data, taps=datos)
     else:
         flash("Sesión caducada", 'dark')
@@ -432,7 +431,6 @@ def asigna():
     data = conn('SELECT * FROM contacts')
     tap = conn('SELECT * FROM tap')
     datos = minitabla(data,tap)
-    time.sleep(12)
     return jsonify(result= 1, msj=mensaje, tap= datos)
 
    
@@ -532,8 +530,9 @@ def delete_contact(id):
     mysql.get_db().commit()
     tap = conn('SELECT * FROM tap')
     data = conn('SELECT * FROM contacts')
+    datos = tabla(data,tap)
     flash('Se ha borrado el contacto correctamente', 'success')
-    return render_template('perfil.html', mensaje=reg, lista=1, contactos=data, taps=tap)
+    return render_template('perfil.html', mensaje=reg, lista=1, contactos=data, taps=datos)
 
 
 @app.route('/rol/<id>')
@@ -559,8 +558,9 @@ def edit_contact(id):
         mysql.get_db().commit()
         data = conn('SELECT * FROM contacts')
         tap = conn('SELECT * FROM tap')
+        datos = tabla(data,tap)
         flash('Se ha modificado el Rol del contacto correctamente', 'warning')
-        return render_template('perfil.html', mensaje=reg, lista=1, contactos=data, taps=tap)
+        return render_template('perfil.html', mensaje=reg, lista=1, contactos=data, taps=datos)
     else:
         flash("Sesión caducada",'dark')
         return redirect(url_for("login"))
@@ -594,8 +594,9 @@ def update_device():
         session['cpusT'] = cpusT
         data = conn('SELECT * FROM contacts')
         tap = conn('SELECT * FROM tap')
+        datos = tabla(data,tap)
         flash('Configuración actualizada correctamente. Recuerde que algunos ajustes como los de Intervalo de muetsreo o "Altura de estanque" no serán actualizados hasta que se reinicie el sistemanivel', 'success')    
-        return render_template('perfil.html',dispositivo=1,contactos=data, mensaje=reg, taps=tap)
+        return render_template('perfil.html',dispositivo=1,contactos=data, mensaje=reg, taps=datos)
 
         
 
@@ -679,17 +680,18 @@ def add_contact():
         repassword = request.form['repass'].encode('utf-8')
         data = conn('SELECT * FROM contacts')
         tap = conn('SELECT * FROM tap')
+        datos = tabla(data,tap)
         if len(fullname and phone and email and password and repassword) == 0:
-            return render_template('perfil.html', title='Registro', mensaje=vacio,registro=1, contactos=data, taps=tap)
+            return render_template('perfil.html', title='Registro', mensaje=vacio,registro=1, contactos=data, taps=datos)
         elif password != repassword:
-            return render_template('perfil.html', title='Registro', mensaje=coincide ,registro=1, contactos=data, taps=tap)
+            return render_template('perfil.html', title='Registro', mensaje=coincide ,registro=1, contactos=data, taps=datos)
         else:
 
             cur = mysql.get_db().cursor()
             cur.execute("SELECT * FROM contacts WHERE email = %s", (email,))
             user = cur.fetchone()
             if user is not None:
-                return render_template('perfil.html', title='Registro', mensaje=usua ,registro=1, contactos=data, taps=tap)
+                return render_template('perfil.html', title='Registro', mensaje=usua ,registro=1, contactos=data, taps=datos)
             else:
                 hash_password = bcrypt.hashpw(password, bcrypt.gensalt())
 
@@ -700,8 +702,9 @@ def add_contact():
                 mysql.get_db().commit()
                 data = conn('SELECT * FROM contacts')
                 tap = conn('SELECT * FROM tap')
+                datos = tabla(data,tap)
                 flash('El contacto ha sido agregado correctamente ', 'success')
-                return render_template('perfil.html', lista=1, contactos=data, mensaje=reg, taps=tap)
+                return render_template('perfil.html', lista=1, contactos=data, mensaje=reg, taps=datos)
 
 
 if __name__ == '__main__':
