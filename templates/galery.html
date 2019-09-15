@@ -7,18 +7,7 @@
 
 <div class="container mt-2">
   <!-- Trigger the Modal -->
-  <img
-    id="2019-09-15_10.30.15.jpg"
-    src="{{url_for('static', filename='img/Fondo.jpeg')}}"
-    alt="2019-09-15_10.30.15.jpg"
-    style="width:100%;max-width:150px"
-  />
-  <img
-    id="2019-09-15_10.30.15.jpg"
-    src="{{url_for('static', filename='img/camara/2019-09-15_10.30.15.jpg')}}"
-    alt="2019-09-15_10.30.15.jpg"
-    style="width:100%;max-width:150px"
-  />
+
   {% for ruta in rutas %}
 
   <img
@@ -40,23 +29,23 @@
 {% block script %}
 <script>
   var modal = document.getElementById("myModal");
-  var img = document.getElementById("myImg");
-  var img2 = document.getElementById("myImg2");
+  {% for ruta in rutas %}
+
+  var img{{ ruta }} = document.getElementById("{{ ruta }}");
+
+  {% endfor %}
   var modalImg = document.getElementById("img01");
   var captionText = document.getElementById("caption");
-  img.onclick = function() {
+  {% for ruta in rutas %}
+  img{{ ruta }}.onclick = function() {
     modal.style.display = "block";
     modalImg.src = this.src;
     captionText.innerHTML = this.alt;
   };
+  {% endfor %}
   var span = document.getElementsByClassName("close")[0];
   span.onclick = function() {
     modal.style.display = "none";
-  };
-  img2.onclick = function() {
-    modal.style.display = "block";
-    modalImg.src = this.src;
-    captionText.innerHTML = this.alt;
   };
 </script>
 
