@@ -413,7 +413,7 @@ def asigna():
         if i not in sublist:
             sublist.append(i)
     if not users == sublist:
-        mensaje = "Hay usuarios repetidos"
+        mensaje = "Hay usuarios repetidos / Hay mas de una salida sin asignar"
         return jsonify(result= -1, msj=mensaje)
     fin = len(pins)
     for i in range (0,fin):

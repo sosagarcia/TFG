@@ -377,15 +377,16 @@ function move(theBarra, tiempo) {
   function toDo(algo){
     alert(algo.msj)
     if (algo.result == 1){
+    {% for tap in taps %}
+    nombre{{tap.2}}.innerHTML ="";
+    {% endfor %}
+
       for (i = 0; i < result.length; i = i +2) {
       {% for tap in taps %}
         if (result[i] == {{tap.2}}){
           {% for contact in contactos %}
             if (result[i+1] == {{contact.0}}){
               nombre{{tap.2}}.innerHTML = "{{contact.1}}";
-            }
-            if (result[i+1] == "0"){
-              nombre{{tap.2}}.innerHTML = "";
             }
           {% endfor %}
         }
