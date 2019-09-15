@@ -3,8 +3,8 @@ import datetime as dt
 import glob
 import errno   
 import subprocess
-import os
-from os.path import abspath
+from os import listdir
+
 
 
 switcher = {
@@ -341,5 +341,5 @@ def actualizacion():
     return "algo"
 
     
-def ls(ruta = os.getcwd()):
-    return [abspath(arch.path) for arch in os.scandir(ruta) if arch.is_file()]
+def ls(ruta = '.'):
+    return listdir(ruta)
