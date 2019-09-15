@@ -142,7 +142,8 @@ def main():
         movimientos = logs(irPath)
         salidas = logs(outPath)
         agenda = conjunto(titulos())
-        return render_template('main.html', agenda=agenda, alarma=alarmas, movimiento=movimientos, salida=salidas)
+        imagenes = ls(camara)
+        return render_template('main.html', agenda=agenda, alarma=alarmas, movimiento=movimientos, salida=salidas, rutas=imagenes)
     else:
         flash("Sesión caducada", 'dark')
         return redirect(url_for("login"))
@@ -173,7 +174,7 @@ def login():
                 session['message'] = user[5]
                 session['root'] = user[8]
                 session['manual'] = "0"
-                ajustes()
+                #ajustes()
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
@@ -385,9 +386,8 @@ def state():
 
 @app.route('/testa')
 def chart():
-    algo = actualizacion()
-    return str(algo)
-        
+    imagenes = ls(camara)
+    return str(imagenes[0])
         
 @app.route('/asigna', methods=['POST'])
 def asigna():

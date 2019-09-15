@@ -1,0 +1,56 @@
+{% block head %}
+<link
+  rel="stylesheet"
+  href="{{url_for('static', filename='css/modal-images.css')}}"
+/>
+{% endblock %}
+
+<div class="container mt-2">
+  <!-- Trigger the Modal -->
+  <img
+    id="myImg"
+    src="https://unsplash.it/600.jpg?image=251"
+    alt="Snow"
+    style="width:100%;max-width:150px"
+  />
+
+  <img
+    id="myImg2"
+    src="https://unsplash.it/600.jpg?image=252"
+    alt="fecha"
+    style="width:100%;max-width:150px"
+  />
+
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="img01" />
+    <!-- Modal Caption (Image Text) -->
+    <div id="caption"></div>
+  </div>
+</div>
+
+{% block script %}
+<script>
+  var modal = document.getElementById("myModal");
+  var img = document.getElementById("myImg");
+  var img2 = document.getElementById("myImg2");
+  var modalImg = document.getElementById("img01");
+  var captionText = document.getElementById("caption");
+  img.onclick = function() {
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+  };
+  var span = document.getElementsByClassName("close")[0];
+  span.onclick = function() {
+    modal.style.display = "none";
+  };
+  img2.onclick = function() {
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+  };
+</script>
+
+{% endblock %}
