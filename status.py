@@ -2,6 +2,7 @@ import threading
 import time
 import Adafruit_DHT
 import RPi.GPIO as GPIO
+import psutil
 import picamera
 from static.py.correo import *
 from static.py.rutas import *
@@ -131,19 +132,13 @@ def updateData():
 
 
 def takePicture():
-    try:
-        camera = picamera.PiCamera()
+    with picamera.PiCamera() as camera
         camera.rotation = 180
         camera.resolution = (1920, 1080)
         fecha = datetime.datetime.now().strftime("%Y-%m-%d_%H.%M.%S")
         ruta = camara + fecha + ".jpg"
         sleep(2)
         camera.capture(ruta)
-        return ruta
-    except:
-        return "Non Picture"
-    finally:
-        camera.close()
 
 
 def alarma(channel):
