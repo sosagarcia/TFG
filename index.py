@@ -452,7 +452,7 @@ def pictures():
     imagenes = sorted(ls(images))
     imagenes.pop(0)
     #imagenes = list()
-    return render_template('pictures.html', rutas=imagenes)
+    return render_template('galery.html', rutas=imagenes)
 
 
 @app.route('/registro')
