@@ -31,7 +31,7 @@
   var modal = document.getElementById("myModal");
   {% for ruta in rutas %}
 
-  var img{{ ruta[:-4] }} = document.getElementById("{{ ruta }}");
+  var img{{ ruta[:-4] }} = document.getElementById("{{ ruta[:-4] }}");
 
   {% endfor %}
   var modalImg = document.getElementById("img01");
