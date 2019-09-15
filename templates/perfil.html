@@ -373,6 +373,7 @@ function move(theBarra, tiempo) {
     var tapV24 = document.getElementById("tapName24");
     var nombre24 = document.getElementById("Nombre24");
     var selected24; 
+    var running;
     
 
     function asignacion(){
@@ -383,7 +384,10 @@ function move(theBarra, tiempo) {
     
     {% endfor %}
     console.log (result)
-    barra(barra3, 10);
+
+    
+    barra(barra3, 10)
+    running = true;
     $.post("/asigna", {
       data: result,
     }).done(function(reply) {
@@ -392,8 +396,12 @@ function move(theBarra, tiempo) {
   }
 
   function toDo(algo){
+    running = false;
     alert(algo.msj)
-    console.log(algo.tap)
+    boton.disabled=false;
+    barra3.style.width = 0 + '%'; 
+    barra3.innerHTML = 0 * 1  + '%';
+    barra3.style.display = "none";
     nombre18.innerHTML = algo.tap[0];
     nombre23.innerHTML = algo.tap[1];
     nombre24.innerHTML = algo.tap[2];
@@ -407,15 +415,19 @@ function move(theBarra, tiempo) {
   var width = 1;
   var id = setInterval(frame, final);
   function frame() {
-    if (width >= 100) {
+    if (width >= 100){
       clearInterval(id);
-      boton.disabled=false;
-      theBarra.style.display = "none";
-    } else {
-      width++; 
-      theBarra.style.width = width + '%'; 
-      theBarra.innerHTML = width * 1  + '%';
+    }else{
+      if (running){
+        width++; 
+        theBarra.style.width = width + '%'; 
+        theBarra.innerHTML = width * 1  + '%';
+      } else { 
+        clearInterval(id);
+      }
     }
+    
+
   }
   
 }

@@ -4,6 +4,7 @@ from flask.json import JSONEncoder
 import datetime as dt
 from flask import Flask, render_template, request, url_for, redirect, flash, session, Response
 import os
+import time
 import random
 from flaskext.mysql import MySQL
 import bcrypt
@@ -431,6 +432,7 @@ def asigna():
     data = conn('SELECT * FROM contacts')
     tap = conn('SELECT * FROM tap')
     datos = minitabla(data,tap)
+    time.sleep(12)
     return jsonify(result= 1, msj=mensaje, tap= datos)
 
    
