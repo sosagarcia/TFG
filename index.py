@@ -387,7 +387,7 @@ def state():
 @app.route('/testa')
 def chart():
     imagenes = sorted(ls(camara))
-    result = (type(imagenes)) + (type(imagenes[0]))
+    result = str((type(imagenes))) + str((type(imagenes[0])))
     return result
         
 @app.route('/asigna', methods=['POST'])
