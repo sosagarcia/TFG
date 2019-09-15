@@ -354,7 +354,8 @@ function move(theBarra, tiempo) {
   var result = [];
   {% for tap in taps %}
   var tapV{{tap.2}} = document.getElementById("tapName{{tap.2}}");
-  var selected{{tap.2}};
+  var nombre{{tap.2}} = document.getElementById("Nombre{{tap.2}}");
+  var selected{{tap.2}}; 
   {% endfor %}
 
   
@@ -363,9 +364,9 @@ function move(theBarra, tiempo) {
     selected{{tap.2}} = tapV{{tap.2}}.options[tapV{{tap.2}}.selectedIndex];
     result.push({{tap.2}});
     result.push (selected{{tap.2}}.value );
-    console.log (result)
+    
     {% endfor %}
-
+    console.log (result)
     $.post("/asigna", {
       data: result,
     }).done(function(reply) {
@@ -374,8 +375,22 @@ function move(theBarra, tiempo) {
   }
 
   function toDo(algo){
-    alert(algo.mensaje)
+    alert(algo.msj)
     if (algo.result == 1){
+      for (i = 0; i < result.length; i = i +2) {
+      {% for tap in taps %}
+        if (result[i] == {{tap.2}}){
+          {% for contact in contactos %}
+            if (result[i+1] == {{contact.0}}){
+              nombre{{tap.2}}.innerHTML = "{{contact.1}}";
+            }
+            if (result[i+1] == "0"){
+              nombre{{tap.2}}.innerHTML = "";
+            }
+          {% endfor %}
+        }
+      {% endfor %}
+      }
       console.log("Cambiar los valores de la tabla y limpiar el array")
       result = [];
     }

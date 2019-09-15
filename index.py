@@ -142,9 +142,9 @@ def main():
         movimientos = logs(irPath)
         salidas = logs(outPath)
         agenda = conjunto(titulos())
-        imagenes = sorted(ls(images))
-        imagenes.pop(0)
-        #imagenes = list()
+        #imagenes = sorted(ls(images))
+        #imagenes.pop(0)
+        imagenes = list()
         return render_template('main.html', agenda=agenda, alarma=alarmas, movimiento=movimientos, salida=salidas, rutas=imagenes)
     else:
         flash("Sesión caducada", 'dark')
@@ -181,9 +181,9 @@ def login():
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
                 agenda = conjunto(titulos())
-                imagenes = sorted(ls(images))
-                imagenes.pop(0)
-                #imagenes = list()
+                #imagenes = sorted(ls(images))
+                #imagenes.pop(0)
+                imagenes = list()
                 return render_template('main.html', agenda=agenda, primer=1, alarma=str(alarmas), movimiento=movimientos, salida=salidas, rutas=imagenes)
             else:
                 return render_template("index.html", mensaje=contra)
@@ -414,7 +414,7 @@ def asigna():
             sublist.append(i)
     if not users == sublist:
         mensaje = "Hay usuarios repetidos"
-        return jsonify(result= -1, msj = mensaje)
+        return jsonify(result= -1, msj=mensaje)
     fin = len(pins)
     for i in range (0,fin):
         pin = int(pins[i])
@@ -425,8 +425,8 @@ def asigna():
         cur = mysql.get_db().cursor()
         cur.execute('UPDATE tap SET idPropietario = %s WHERE pin = %s', (user, pin))
         mysql.get_db().commit()
-    mensaje = "Hecho"
-    return jsonify(result= 1, msj = mensaje)
+    mensaje = "Salidas actualizadas correctamente"
+    return jsonify(result= 1, msj=mensaje)
 
    
 
