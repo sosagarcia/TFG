@@ -387,12 +387,9 @@ def state():
 
 @app.route('/testa')
 def chart():
-        alarmas = logs(aPath)
-        movimientos = logs(irPath)
-        salidas = logs(outPath)
-        agenda = conjunto(titulos())
+        
         imagenes = sorted(ls(camara))
-        return render_template('main.html', agenda=agenda, alarma=alarmas, movimiento=movimientos, salida=salidas, rutas=imagenes)
+        return render_template('galery.html', rutas=imagenes)
         
 @app.route('/asigna', methods=['POST'])
 def asigna():
