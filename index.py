@@ -143,10 +143,7 @@ def main():
         movimientos = logs(irPath)
         salidas = logs(outPath)
         agenda = conjunto(titulos())
-        imagenes = sorted(ls(images))
-        imagenes.pop(0)
-        #imagenes = list()
-        return render_template('main.html', agenda=agenda, alarma=alarmas, movimiento=movimientos, salida=salidas, rutas=imagenes)
+        return render_template('main.html', agenda=agenda, alarma=alarmas, movimiento=movimientos, salida=salidas)
     else:
         flash("Sesión caducada", 'dark')
         return redirect(url_for("login"))
@@ -182,10 +179,8 @@ def login():
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
                 agenda = conjunto(titulos())
-                imagenes = sorted(ls(images))
-                imagenes.pop(0)
-                #imagenes = list()
-                return render_template('main.html', agenda=agenda, primer=1, alarma=str(alarmas), movimiento=movimientos, salida=salidas, rutas=imagenes)
+
+                return render_template('main.html', agenda=agenda, primer=1, alarma=str(alarmas), movimiento=movimientos, salida=salidas)
             else:
                 return render_template("index.html", mensaje=contra)
 
@@ -452,6 +447,14 @@ def logout():
     return render_template('index.html', mensaje=adios)
 
 
+@app.route('/pictures')
+def pictures():
+    imagenes = sorted(ls(images))
+    imagenes.pop(0)
+    #imagenes = list()
+    return render_template('pictures.html', rutas=imagenes)
+
+
 @app.route('/registro')
 def registro():
     return render_template('registro.html', mensaje=reg)
@@ -597,10 +600,6 @@ def update_device():
         datos = tabla(data,tap)
         flash('Configuración actualizada correctamente. Recuerde que algunos ajustes como los de Intervalo de muetsreo o "Altura de estanque" no serán actualizados hasta que se reinicie el sistemanivel', 'success')    
         return render_template('perfil.html',dispositivo=1,contactos=data, mensaje=reg, taps=datos)
-
-        
-
-
 
 
 @app.route('/update/<id>', methods=['POST'])

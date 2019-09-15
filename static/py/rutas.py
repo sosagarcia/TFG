@@ -26,6 +26,7 @@ cpuTName = "_TemperaturaCPU.log"
 cpuName = "_UsoCPU.log"
 outName = "_Out.log"
 confName = "_Changes.log"
+confName = "_Changes.log"
 
 
 def write_log(text, path, name):

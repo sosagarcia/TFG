@@ -1,9 +1,10 @@
-{% block head %}
+{% extends "layout.html" %} {% block title %}Perfil{% endblock %} {% block head
+%}
 <link
   rel="stylesheet"
   href="{{url_for('static', filename='css/modal-images.css')}}"
 />
-{% endblock %}
+{% endblock %} {% block body %}
 
 <div class="container mt-2">
   <!-- Trigger the Modal -->
@@ -25,8 +26,7 @@
     <div id="caption"></div>
   </div>
 </div>
-
-{% block script %}
+{% endblock %} {% block script %}
 <script>
   var modal = document.getElementById("myModal");
   {% for ruta in rutas %}

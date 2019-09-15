@@ -145,10 +145,10 @@ def takePicture():
 
 def alarma(channel):
     GPIO.output(ledM, True)
-    text = "Se ha detectado movimiento"
+    takePicture()
+    text = "Se ha detectado movimiento, Una foto ha sido tomada"
     write_log(text, irPath, irName)
     # alarmaCheck()
-    takePicture()
     email = give("mail")
     # feedback = sendEmail(
     # str(text), email, "Se ha detectado movimiento")
