@@ -134,7 +134,8 @@ def updateData():
 def takePicture():
     with picamera.PiCamera() as camera:
         camera.rotation = 180
-        camera.resolution = (2592, 1944)
+        # max resolution = (2592, 1944)
+        camera.resolution = (1280, 720)
         fecha = datetime.datetime.now().strftime("%Y_%m_%d_at_%H_%M_%S")
         ruta = camara + fecha + ".jpg"
         ruta2 = images + fecha + ".jpg"

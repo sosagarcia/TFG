@@ -272,8 +272,8 @@
 {% block script %}
 
 <script>
-var barra = document.getElementById("myBar"); 
-boton = document.getElementById("rebootBTN");                      
+var barra1 = document.getElementById("myBar"); 
+boton1 = document.getElementById("rebootBTN");                      
 cerrar = document.getElementById("cerrar");                      
 barra.style.display = "none";
 var barra2 = document.getElementById("myBar2"); 
@@ -311,7 +311,7 @@ function reinicio() {
         
         console.log("fail reinicio");
       });
-      move(barra, 35);
+      move(barra1, 35);
     //document.getElementById("Cerrar").click();
   }
 
@@ -359,8 +359,8 @@ function move(theBarra, tiempo) {
 </script>
 <script>
   
-    var boton = document.getElementById("asigBTN");
-    boton.addEventListener("click", asignacion);
+    var botonA = document.getElementById("asigBTN");
+    botonA.addEventListener("click", asignacion);
     var result = [];
     var barra3 = document.getElementById("asignaBar"); 
     barra3.style.display = "none";
@@ -398,7 +398,7 @@ function move(theBarra, tiempo) {
   function toDo(algo){
     running = false;
     alert(algo.msj)
-    boton.disabled=false;
+    botonA.disabled=false;
     barra3.style.width = 0 + '%'; 
     barra3.innerHTML = 0 * 1  + '%';
     barra3.style.display = "none";
@@ -410,7 +410,7 @@ function move(theBarra, tiempo) {
 
   function barra(theBarra, tiempo) {
   theBarra.style.display = "block";
-  boton.disabled=true;
+  botonA.disabled=true;
   var final = tiempo * 10
   var width = 1;
   var id = setInterval(frame, final);
