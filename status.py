@@ -132,12 +132,12 @@ def updateData():
 
 
 def takePicture():
-    with picamera.PiCamera() as camera
+    with picamera.PiCamera() as camera:
         camera.rotation = 180
         camera.resolution = (1920, 1080)
         fecha = datetime.datetime.now().strftime("%Y-%m-%d_%H.%M.%S")
         ruta = camara + fecha + ".jpg"
-        sleep(2)
+        time.sleep(2)
         camera.capture(ruta)
 
 
