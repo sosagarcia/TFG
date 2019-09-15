@@ -23,7 +23,7 @@
 
   <img
     id="{{ ruta }}"
-    src="\var\log\iot\camera\{{ ruta }}"
+    src="{{url_for('static', filename='img/camera/{{ruta}}')}}"
     alt="{{ ruta }}"
     style="width:100%;max-width:150px"
   />

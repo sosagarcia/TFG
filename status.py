@@ -137,8 +137,10 @@ def takePicture():
         camera.resolution = (1920, 1080)
         fecha = datetime.datetime.now().strftime("%Y-%m-%d_%H.%M.%S")
         ruta = camara + fecha + ".jpg"
+        ruta2 = images + fecha + ".jpg"
         time.sleep(2)
         camera.capture(ruta)
+        camera.capture(ruta2)
 
 
 def alarma(channel):
