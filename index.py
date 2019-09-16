@@ -267,7 +267,8 @@ def add_event():
         if(not (dif(start, end, mesEnMinutos))):
             return render_template('calendar.html', mensaje=unmes, lista=listado)
         # Comprobar si start o end esta entre el start o el end de algun otro evento (comprobación explusiva del modo Auto.)
-        if (entre(start, end)) and (session['manual'] == "0"):
+        state = session.get("manual", "0")
+        if (entre(start, end)) and (state == "0"):
             return render_template('calendar.html', mensaje=fechae, lista=listado)
 
         cur = mysql.get_db().cursor()
@@ -306,7 +307,7 @@ def deletAlgo():
 @app.route('/manual',methods=["GET", "POST"])
 def manual():
     session['manual'] = "1"
-    return jsonify(estado=session['manual'])
+    return jsonify(estado="1")
 
 @app.route('/reinicio',methods=["GET", "POST"])
 def reinicio():
@@ -324,14 +325,14 @@ def actualiza():
 def auto():
     print("Auto")
     session['manual'] = "0"
-
-    return jsonify(estado=session['manual'])
+    
+    return jsonify(estado="0")
 
 
 @app.route('/manualdata',methods=["GET", "POST"])
 def manualdata():
-    print("el Manualmode actual es ", session['manual'])
-    return jsonify(estado=session['manual'])
+    state = session.get("manual", "0")
+    return jsonify(estado=state)
 
 
 @app.route('/deletDay', methods=["GET", "POST"])
