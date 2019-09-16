@@ -69,10 +69,10 @@ pin = 17
 GPIO.setup(pin, GPIO.IN)
 
 # Leds de aviso
-ledM = 16
+ledM = 5
 ledH = 20
 ledT = 21
-ledA = 5
+ledA = 16
 
 GPIO.setup(ledM, GPIO.OUT)
 GPIO.setup(ledH, GPIO.OUT)
