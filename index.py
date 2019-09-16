@@ -125,15 +125,12 @@ def ahora():
 
 @app.route('/main')
 def main():
-    if session.get("name", None) is not None:
-        alarmas = logs(aPath)
-        movimientos = logs(irPath)
-        salidas = logs(outPath)
-        agenda = conjunto(titulos())
-        return render_template('main.html', agenda=agenda, alarma=alarmas, movimiento=movimientos, salida=salidas)
-    else:
-        flash("Sesión caducada", 'dark')
-        return redirect(url_for("login"))
+
+    alarmas = logs(aPath)
+    movimientos = logs(irPath)
+    salidas = logs(outPath)
+    agenda = conjunto(titulos())
+    return render_template('main.html', agenda=agenda, alarma=alarmas, movimiento=movimientos, salida=salidas)
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -176,27 +173,22 @@ def login():
 @app.route('/perfil')
 def perfil():
 
-    if session.get("name", None) is not None:
-        data = conn('SELECT * FROM contacts')
-        tap = conn('SELECT * FROM tap')
-        datos = tabla(data,tap)
-        return render_template('perfil.html', mensaje=reg, ajustes=1, contactos=data, taps=datos)
-    else:
-        flash("Sesión caducada", 'dark')
-        return redirect(url_for("login"))
+ 
+    data = conn('SELECT * FROM contacts')
+    tap = conn('SELECT * FROM tap')
+    datos = tabla(data,tap)
+    return render_template('perfil.html', mensaje=reg, ajustes=1, contactos=data, taps=datos)
+
 
 
 @app.route('/calendar')
 def calendar():
-    #if session.get("name", None) is not None:
     if session.get("root", None) == 0:
         return render_template('calendarMortal.html')
     else:
         listado = users(usuarios())
         return render_template('calendar.html', mensaje=cal, lista=listado)
-    """else:
-        flash("Sesión caducada", 'dark')
-        return redirect(url_for("login"))"""
+
 
 
 @app.route('/data')
