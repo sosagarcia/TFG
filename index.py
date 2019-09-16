@@ -82,18 +82,6 @@ def conn(texto):
     return data
 
 
-def ajustes():
-    datos = read_conf()
-    session['nameD'] = datos[0]
-    session['emailA'] = datos[1]
-    session['tam'] = datos[2]
-    session['disB'] = datos[3]
-    session['disA'] = datos[4]
-    session['tem'] = datos[5]
-    session['hum'] = datos[6]
-    session['humTem'] = datos[7]
-    session['disT'] = datos[8]
-    session['cpusT'] = datos[9]
 
 
 mysql = MySQL()
@@ -172,8 +160,6 @@ def login():
                 session['email'] = user[3]
                 session['message'] = user[5]
                 session['root'] = user[8]
-                
-                ajustes()
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
@@ -222,6 +208,26 @@ def data():
             {'id': row[0], 'title': row[1], 'color': row[2], 'start': row[3], 'end': row[4], 'idUser': row[5], })
 
     return Response(json.dumps(callist),  mimetype='application/json')
+
+
+
+@app.route('/ajustes')
+def ajustes():
+    datos = read_conf()
+    nameD = datos[0]
+    emailA = datos[1]
+    tam = datos[2]
+    disB = datos[3]
+    disA = datos[4]
+    tem = datos[5]
+    hum = datos[6]
+    humTem = datos[7]
+    disT = datos[8]
+    cpusT = datos[9]
+
+    result = [nameD, emailA, tam, disB, disA, tem, hum, humTem, disT, cpusT]
+
+    return Response(result)
 
 
 @app.route('/add_event', methods=['POST'])

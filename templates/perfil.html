@@ -122,19 +122,19 @@
                               <div class="form-group row">
                                   <label for="nameD" class="col-4 col-form-label">Nombre del Dispositivo</label> 
                                   <div class="col-8">
-                                    <input id="nameD" name="nameD" value ="{{ session["nameD"] }}" class="form-control here" required="required" type="text" placeholder="Introduzca nombre del equipo">
+                                    <input id="nameD" name="nameD" value ="" class="form-control here" required="required" type="text" placeholder="Introduzca nombre del equipo">
                                   </div>
                                 </div>
                                 <div class="form-group row">
                                   <label for="emailR" class="col-4 col-form-label">Email de alarmas</label> 
                                   <div class="col-8">
-                                    <input id="emailR" name="emailR" value="{{ session["emailA"] }}" class="form-control here" required="required" type="text" placeholder="Introduzca email de avisos">
+                                    <input id="emailR" name="emailR" value="" class="form-control here" required="required" type="text" placeholder="Introduzca email de avisos">
                                   </div>
                                 </div>
                                 <div class="form-group row">
                                   <label for="tam" class="col-4 col-form-label">Altura del estanque</label> 
                                   <div class="col-8">
-                                    <input id="tam" name="tam" value="{{ session["tam"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca el tamaño en Cm." min="1"
+                                    <input id="tam" name="tam" value="" class="form-control here" required="required" type="number" placeholder="Introduzca el tamaño en Cm." min="1"
                                     step=".01">
                                   </div>
                                 </div>
@@ -145,14 +145,14 @@
                                 <div class="form-group row">
                                   <label for="disB" class="col-4 col-form-label">Nivel mínimo del agua</label> 
                                   <div class="col-8">
-                                    <input id="disB" name="disB" value="{{ session["disB"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca la distancia en %" min="1" max ="98"
+                                    <input id="disB" name="disB" value="" class="form-control here" required="required" type="number" placeholder="Introduzca la distancia en %" min="1" max ="98"
                                     >
                                   </div>
                                 </div>
                               <div class="form-group row">
                                 <label for="disA" class="col-4 col-form-label">Nivel máximo del agua</label> 
                                 <div class="col-8">
-                                  <input id="disA" name="disA" value="{{ session["disA"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca la distancia en %" min="2" max ="99"
+                                  <input id="disA" name="disA" value="" class="form-control here" required="required" type="number" placeholder="Introduzca la distancia en %" min="2" max ="99"
                                   >
                               </div>
                             </div> 
@@ -160,14 +160,14 @@
                               <div class="form-group row">
                                   <label for="tem" class="col-4 col-form-label">Aviso de temperatura</label> 
                                   <div class="col-8">
-                                    <input id="tem" name="tem" value="{{ session["tem"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca temperatura de aviso en ºC" 
+                                    <input id="tem" name="tem" value="" class="form-control here" required="required" type="number" placeholder="Introduzca temperatura de aviso en ºC" 
                                     >
                                 </div>
                               </div> 
                               <div class="form-group row">
                                   <label for="hum" class="col-4 col-form-label">Aviso de humedad</label> 
                                   <div class="col-8">
-                                    <input id="hum" name="hum" value="{{ session["hum"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca temperatura de aviso en %" min="1" max="99"
+                                    <input id="hum" name="hum" value="" class="form-control here" required="required" type="number" placeholder="Introduzca temperatura de aviso en %" min="1" max="99"
                                     >
                                 </div>
                               </div>
@@ -178,21 +178,21 @@
                             <div class="form-group row">
                               <label for="humTem" class="col-4 col-form-label">Humedad y Temperatura</label> 
                               <div class="col-8">
-                                <input id="humTem" name="humTem" value="{{ session["humTem"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca intervalo de toma de muestras en segundos" min="1"
+                                <input id="humTem" name="humTem" value="" class="form-control here" required="required" type="number" placeholder="Introduzca intervalo de toma de muestras en segundos" min="1"
                                 >
                               </div>
                             </div>
                             <div class="form-group row">
                               <label for="disT" class="col-4 col-form-label">Nivel del agua</label> 
                               <div class="col-8">
-                                <input id="disT" name="disT" value="{{ session["disT"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca intervalo de toma de muestras en segundos" min="1"
+                                <input id="disT" name="disT" value="" class="form-control here" required="required" type="number" placeholder="Introduzca intervalo de toma de muestras en segundos" min="1"
                                 >
                               </div>
                             </div>
                             <div class="form-group row">
                               <label for="cpusT" class="col-4 col-form-label">Uso y temperatura interna de la de CPU</label> 
                               <div class="col-8">
-                                <input id="cpusT" name="cpusT" value="{{ session["cpusT"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca intervalo de toma de muestras en segundos" min="1"
+                                <input id="cpusT" name="cpusT" value="" class="form-control here" required="required" type="number" placeholder="Introduzca intervalo de toma de muestras en segundos" min="1"
                                 >
                               </div>
                             </div>
@@ -265,11 +265,52 @@
 		    </div>
 		</div>
 	</div>
-</div>
-                                                      
+</div> 
+                              
 {% include "reboot.html" %}
 {% endblock %}
 {% block script %}
+
+
+<script>
+var nameD = document.getElementById("nameD"); 
+var emailR = document.getElementById("emailR"); 
+var tam = document.getElementById("tam"); 
+var disB = document.getElementById("disB"); 
+var disA = document.getElementById("disA"); 
+var tem = document.getElementById("tem"); 
+var hum = document.getElementById("hum"); 
+var disT = document.getElementById("disT"); 
+var cpusT = document.getElementById("cpusT"); 
+var humTem = document.getElementById("humTem"); 
+
+$.post("/ajustes", function() {})
+      .done(function(out) {
+        
+        console.log(out);
+        cambiaAjustes (out)
+      })
+      .fail(function() {
+        
+        console.log("fail ajustes");
+      });
+
+function cambiaAjustes(valores) {
+
+nameD.innerHTML = valores[0] 
+emailR.innerHTML = valores[1] 
+tam.innerHTML = valores[2]  
+disB.innerHTML = valores[3]  
+disA.innerHTML = valores[4] 
+tem.innerHTML = valores[5] 
+hum.innerHTML = valores[6]  
+disT.innerHTML = valores[7] 
+cpusT.innerHTML = valores[8] 
+humTem.innerHTML = valores[9] 
+}
+
+
+</script>
 
 <script>
 var barra1 = document.getElementById("myBar"); 
