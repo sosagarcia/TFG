@@ -132,15 +132,6 @@ def main():
     return render_template('main.html', agenda=agenda, alarma=alarmas, movimiento=movimientos, salida=salidas)
 
 
-@app.before_request
-def logado():
-    print (request.endpoint)
-    permitidas = ['/','forgot','home','login']
-    print (session)
-    if request.endpoint not in permitidas and 'email' not in session:
-        return render_template('index.html', mensaje=inicio)
-
-
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
