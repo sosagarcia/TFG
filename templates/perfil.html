@@ -273,6 +273,7 @@
 
 
 <script>
+  $(document).ready(primera);
 var nameD = document.getElementById("nameD"); 
 var emailR = document.getElementById("emailR"); 
 var tam = document.getElementById("tam"); 
@@ -283,17 +284,20 @@ var hum = document.getElementById("hum");
 var disT = document.getElementById("disT"); 
 var cpusT = document.getElementById("cpusT"); 
 var humTem = document.getElementById("humTem"); 
-
-$.post("/ajustes", function() {})
+function primera(){
+  $.get("/ajustes", function() {})
       .done(function(out) {
         
         console.log(out);
         cambiaAjustes (out)
       })
       .fail(function() {
-        
+        var t = setTimeout(startTime, 100);
         console.log("fail ajustes");
       });
+
+}
+
 
 function cambiaAjustes(valores) {
 
