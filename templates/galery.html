@@ -17,6 +17,7 @@
     alt="{{ ruta }}"
     style="width:100%;max-width:150px"
     class=" foto mt-3 mb-3 ml-4"
+    onerror="standby()"
   />
   {% endfor %}
   <!-- The Modal -->
@@ -29,25 +30,29 @@
 </div>
 {% endblock %} {% block script %}
 <script>
-  var modal = document.getElementById("myModal");
-  {% for ruta in rutas %}
+    var modal = document.getElementById("myModal");
+    {% for ruta in rutas %}
 
-  var img{{ ruta[:-4] }} = document.getElementById("{{ ruta[:-4] }}");
+    var img{{ ruta[:-4] }} = document.getElementById("{{ ruta[:-4] }}");
 
-  {% endfor %}
-  var modalImg = document.getElementById("img01");
-  var captionText = document.getElementById("caption");
-  {% for ruta in rutas %}
-  img{{ ruta[:-4] }}.onclick = function() {
-    modal.style.display = "block";
-    modalImg.src = this.src;
-    captionText.innerHTML = this.alt;
-  };
-  {% endfor %}
-  var span = document.getElementsByClassName("close")[0];
-  span.onclick = function() {
-    modal.style.display = "none";
-  };
+    {% endfor %}
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    {% for ruta in rutas %}
+    img{{ ruta[:-4] }}.onclick = function() {
+      modal.style.display = "block";
+      modalImg.src = this.src;
+      captionText.innerHTML = this.alt;
+    };
+    {% endfor %}
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {
+      modal.style.display = "none";
+    };
+
+    function standby() {
+      this.src = 'https://www.google.com/images/srpr/logo11w.png'
+  }
 </script>
 
 {% endblock %}
