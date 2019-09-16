@@ -4,7 +4,6 @@ from flask.json import JSONEncoder
 import datetime as dt
 from flask import Flask, render_template, request, url_for, redirect, flash, session, Response
 import os
-
 import random
 from flaskext.mysql import MySQL
 import bcrypt
@@ -133,6 +132,15 @@ def main():
     return render_template('main.html', agenda=agenda, alarma=alarmas, movimiento=movimientos, salida=salidas)
 
 
+@app.before_request
+def logado():
+    print (request.endpoint)
+    permitidas = ['/','forgot','home','login']
+    print (session)
+    if request.endpoint not in permitidas and 'email' not in session:
+        return render_template('index.html', mensaje=inicio)
+
+
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
@@ -150,12 +158,7 @@ def login():
             return render_template("index.html", mensaje=usu)
         else:
             if bcrypt.checkpw(password, user[4].encode('utf-8')):
-                
-                session['id'] = user[0]
-                session['name'] = user[1]
-                session['phone'] = user[2]
                 session['email'] = user[3]
-                session['message'] = user[5]
                 session['root'] = user[8]
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
