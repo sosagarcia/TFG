@@ -290,6 +290,7 @@ def deletEvent():
     cur = mysql.get_db().cursor()
     cur.execute('DELETE FROM eventos WHERE id = {0}'.format(id))
     mysql.get_db().commit()
+    return Response("Done")
 
 
 @app.route('/deletFull', methods=['POST'])
@@ -301,12 +302,8 @@ def deletAlgo():
         cur = mysql.get_db().cursor()
         cur.execute('TRUNCATE TABLE eventos ')
         mysql.get_db().commit()
+        return Response("Done")
 
-
-@app.route('/manual')
-def manual():
-    session['manual'] = "1"
-    return jsonify(estado=session['manual'])
 
 @app.route('/reinicio')
 def reinicio():
@@ -320,18 +317,7 @@ def actualiza():
     
 
 
-@app.route('/auto')
-def auto():
-    print("Auto")
-    session['manual'] = "0"
 
-    return jsonify(estado=session['manual'])
-
-
-@app.route('/manualdata')
-def manualdata():
-    print("el Manualmode actual es ", session['manual'])
-    return jsonify(estado=session['manual'])
 
 
 @app.route('/deletDay', methods=['POST'])
@@ -345,6 +331,7 @@ def deletDay():
     cur.execute(
         'DELETE FROM eventos where (%s < start) and ( start <  %s) ', (algo, finDate))
     mysql.get_db().commit()
+    return Response("Done")
 
 
 @app.route('/deletUser', methods=['POST'])
@@ -355,6 +342,7 @@ def deletUser():
     cur.execute(
         'DELETE FROM eventos where  idUser = {0}'.format(algo))
     mysql.get_db().commit()
+    return Response("Done")
 
 
 @app.route('/delet2', methods=['POST'])
@@ -370,6 +358,7 @@ def delet2():
     cur.execute(
         'DELETE FROM eventos where (%s < start) and ( start <  %s) and idUser = {0}'.format(obj), (date, finDay))
     mysql.get_db().commit()
+    return Response("Done")
 
 
 @app.route('/state')
