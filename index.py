@@ -14,6 +14,8 @@ from static.py.rutas import *
 from static.py.funciones import *
 from static.py.correo import *
 
+iniciado = 0
+
 
 # from flask.ext.session import Session
 # import mysql
@@ -137,7 +139,8 @@ def ahora():
 
 @app.route('/main')
 def main():
-    if session.get("name", None) is not None:
+    global iniciado
+    if iniciado:
         alarmas = logs(aPath)
         movimientos = logs(irPath)
         salidas = logs(outPath)
@@ -174,6 +177,8 @@ def login():
                 session['root'] = user[8]
                 session['manual'] = "0"
                 #ajustes()
+                global iniciado
+                iniciado = 1
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
@@ -190,7 +195,8 @@ def login():
 @app.route('/perfil')
 def perfil():
 
-    if session.get("name", None) is not None:
+    global iniciado
+    if iniciado:
         data = conn('SELECT * FROM contacts')
         tap = conn('SELECT * FROM tap')
         datos = tabla(data,tap)
@@ -202,7 +208,8 @@ def perfil():
 
 @app.route('/calendar')
 def calendar():
-    if session.get("name", None) is not None:
+    global iniciado
+    if iniciado:
         if session.get("root", None) == 0:
             return render_template('calendarMortal.html')
         else:
@@ -443,6 +450,8 @@ def updateStatistics():
 
 @app.route('/logout')
 def logout():
+    global iniciado
+    iniciado = 0
     session.clear()
     return render_template('index.html', mensaje=adios)
 
@@ -653,7 +662,8 @@ def update_contact(id):
 @app.route('/estadisticas')
 def estadisticas():
    
-    if session.get("name", None) is not None:
+    global iniciado
+    if iniciado:
         listado = users(usuarios())
         return render_template('estadisticas.html', mensaje=esta, listado=listado)
     else:
