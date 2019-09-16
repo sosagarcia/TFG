@@ -1,6 +1,4 @@
 <script>
-  var calendar;
-  var calendarEl;
   document.addEventListener("DOMContentLoaded", function() {
     var x = document.getElementById("Duration");
     var y = document.getElementById("login-2");
@@ -26,8 +24,8 @@
         }
       });
 
-    calendarEl = document.getElementById("calendar");
-    calendar = new FullCalendar.Calendar(calendarEl, {
+    var calendarEl = document.getElementById("calendar");
+    var calendar = new FullCalendar.Calendar(calendarEl, {
       locale: "es",
 
       plugins: ["dayGrid", "timeGrid", "list", "interaction"],
@@ -98,56 +96,87 @@
         //info.el.style.borderColor = "red";
       }
     });
+    function borrar(id) {
+      var mensaje;
+      var opcion = confirm("¿Está Seguro de querer eliminar el evento?");
+      if (opcion == true) {
+        $.post(
+          "/deletEvent",
+          {
+            canvas_data: JSON.stringify(id)
+          },
+          function() {
+            window.location.href = "/calendar";
+          }
+        );
+        window.location.href = "/calendar";
+      }
+    }
+
     calendar.render();
   });
-
-  function borrar(id) {
-    var mensaje;
-    var opcion = confirm("¿Está Seguro de querer eliminar el evento?");
-    if (opcion == true) {
-      $.post("/deletEvent", {
-        canvas_data: JSON.stringify(id)
-      }).done(function(reply) {
-        console.log(reply);
-
-        calendar.refetchEvents();
-      });
-    }
-  }
 </script>
 
 <script>
-  var confirmaManual = document.getElementById("manualBTN");
-  var manualBTN = document.getElementById("manual");
+  document
+    .getElementById("manualBTN")
+    .addEventListener("click", myFunctionManual);
+  document.getElementById("autoBTN").addEventListener("click", myFunctionAuto);
 
-  var confirmaAuto = document.getElementById("autoBTN");
-  var autoBTN = document.getElementById("auto");
-  autoBTN.style.display = "none";
-
-  var confirmaBorrado = document.getElementById("borradoBTN");
-  var borraBTN = document.getElementById("borra");
-  borraBTN.style.display = "none";
-
-  confirmaManual.addEventListener("click", myFunctionManual);
-  confirmaAuto.addEventListener("click", myFunctionAuto);
+  function refresh() {
+    $.get("/manualdata", function() {})
+      .done(function(out) {
+        toDo(out);
+      })
+      .fail(function() {
+        console.log("fail manualData");
+        var t = setTimeout(refresh, 100);
+      });
+  }
+  function toDo(data) {
+    if (data.estado == "0") {
+      document.getElementById("borra").style.visibility = "hidden";
+      document.getElementById("auto").style.visibility = "hidden";
+      document.getElementById("manual").style.visibility = "visible";
+    } else {
+      document.getElementById("manual").style.visibility = "hidden";
+      document.getElementById("borra").style.visibility = "visible";
+      document.getElementById("auto").style.visibility = "visible";
+    }
+  }
 
   function myFunctionManual() {
-    autoBTN.style.display = "block";
-    borraBTN.style.display = "block";
-    manualBTN.style.display = "none";
+    $.get("/manual", function() {})
+      .done(function(out) {
+        refresh();
+      })
+      .fail(function() {
+        console.log("fail manual");
+        var t = setTimeout(myFunctionManual, 100);
+      });
+    refresh();
     document.getElementById("manualCerrar").click();
   }
 
   function myFunctionAuto() {
-    autoBTN.style.display = "none";
-    borraBTN.style.display = "none";
-    manualBTN.style.display = "block";
+    console.log("Hola ");
+
+    $.get("/auto", function() {})
+      .done(function(out) {
+        refresh();
+      })
+      .fail(function() {
+        console.log("fail auto");
+        var t = setTimeout(myFunctionAuto, 100);
+      });
+    refresh();
     document.getElementById("autoCerrar").click();
   }
 </script>
 
 <script>
   window.onload = function() {
+    refresh();
     /*
     var repe = document.getElementById("repe");
     var repeSelected;
@@ -221,9 +250,11 @@
 
     usr.addEventListener("change", function() {
       usrSelected = this.options[usr.selectedIndex];
+      console.log("El usuario seleccionado a borrar es" + usrSelected);
     });
     function myFunction() {
       borradoItem();
+      console.log("Hola " + selectedOption.value + "Fin");
     }
 
     function borradoItem() {
@@ -255,12 +286,15 @@
             "Se borrará TODOS los eventos, ¿Está seguro/a de querer continuar?"
           );
           if (men == true) {
-            $.post("/deletFull", {
-              canvas_data: JSON.stringify(valor)
-            }).done(function(reply) {
-              console.log(reply);
-              calendar.refetchEvents();
-            });
+            $.post(
+              "/deletFull",
+              {
+                canvas_data: JSON.stringify(valor)
+              },
+              function(err, req, resp) {
+                window.location.href = "/results/" + resp["responseJSON"];
+              }
+            );
           }
         }
         if (valor == 1) {
@@ -268,12 +302,15 @@
             "Se borrará TODOS los eventos que comiecen en el día seleccionado ¿Está seguro/a de querer continuar?"
           );
           if (men == true) {
-            $.post("/deletDay", {
-              canvas_data: JSON.stringify(date)
-            }).done(function(reply) {
-              console.log(reply);
-              calendar.refetchEvents();
-            });
+            $.post(
+              "/deletDay",
+              {
+                canvas_data: JSON.stringify(date)
+              },
+              function(err, req, resp) {
+                window.location.href = "/results/" + resp["responseJSON"];
+              }
+            );
           }
         }
         if (valor == 2) {
@@ -281,12 +318,15 @@
             "Se borrará TODOS los eventos del usuario seleccionado ¿Está seguro/a de querer continuar?"
           );
           if (men == true) {
-            $.post("/deletUser", {
-              canvas_data: JSON.stringify(obj)
-            }).done(function(reply) {
-              console.log(reply);
-              calendar.refetchEvents();
-            });
+            $.post(
+              "/deletUser",
+              {
+                canvas_data: JSON.stringify(obj)
+              },
+              function(err, req, resp) {
+                window.location.href = "/results/" + resp["responseJSON"];
+              }
+            );
           }
         }
         if (valor == 3) {
@@ -294,17 +334,23 @@
             "Se borrará TODOS los eventos del usuario que empiecen en la fecha seleccionada ¿Está seguro/a de querer continuar?"
           );
           if (men == true) {
-            $.post("/delet2", {
-              canvas_data: JSON.stringify(obj),
-              canvas_data_date: JSON.stringify(date)
-            }).done(function(reply) {
-              console.log(reply);
-              calendar.refetchEvents();
-            });
+            $.post(
+              "/delet2",
+              {
+                canvas_data: JSON.stringify(obj),
+                canvas_data_date: JSON.stringify(date)
+              },
+              function(err, req, resp) {
+                window.location.href = "/results/" + resp["responseJSON"];
+              }
+            );
           }
         }
+
+        window.location.href = "/calendar";
       } else {
       }
     }
+    startTime();
   };
 </script>

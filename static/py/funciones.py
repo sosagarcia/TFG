@@ -3,8 +3,7 @@ import datetime as dt
 import glob
 import errno   
 import subprocess
-from os import listdir
-
+import os
 
 
 switcher = {
@@ -341,33 +340,3 @@ def actualizacion():
     return "algo"
 
     
-def ls(ruta = '.'):
-    return listdir(ruta)
-
-def tabla (contactos, taps):
-    result = list()
-    subresult = list()
-    for tap in taps:
-        nombre = tap[0]
-        salida = tap[2]
-        color = tap[3]
-        for contacto in contactos:
-            if tap[1] == 0:
-                asignacion = "Nadie"
-            elif contacto[0] == tap[1]:
-                asignacion = contacto[1]
-        subresult = [nombre, asignacion, salida,color]
-        result.append(subresult)
-    return result
-        
-
-def minitabla (contactos, taps):
-    result = list()
-    for tap in taps:
-        for contacto in contactos:
-            if tap[1] == 0:
-                asignacion = "Nadie"
-            elif contacto[0] == tap[1]:
-                asignacion = contacto[1]
-        result.append(asignacion)
-    return result

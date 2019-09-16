@@ -3,7 +3,7 @@ import time
 import Adafruit_DHT
 import RPi.GPIO as GPIO
 import psutil
-import picamera
+
 from static.py.correo import *
 from static.py.rutas import *
 
@@ -132,24 +132,29 @@ def updateData():
 
 
 def takePicture():
-    with picamera.PiCamera() as camera:
+    try:
+        camera = PiCamera()
         camera.rotation = 180
-        # max resolution = (2592, 1944)
-        camera.resolution = (1280, 720)
-        fecha = datetime.datetime.now().strftime("%Y_%m_%d_at_%H_%M_%S")
+        camera.resolution = (1920, 1080)
+        fecha = datetime.datetime.now().strftime("%Y-%m-%d_%H.%M.%S")
         ruta = camara + fecha + ".jpg"
-        ruta2 = images + fecha + ".jpg"
-        time.sleep(2)
-        camera.capture(ruta2)
+        camera.start_preview()
+        sleep(2)
         camera.capture(ruta)
+        camera.stop_preview()
+        return ruta
+    except:
+        return "Non Picture"
+    finally:
+        camera.stop_preview()
 
 
 def alarma(channel):
     GPIO.output(ledM, True)
-    takePicture()
-    text = "Se ha detectado movimiento, Una foto ha sido tomada"
+    text = "Se ha detectado movimiento"
     write_log(text, irPath, irName)
     # alarmaCheck()
+    # takePicture()
     email = give("mail")
     # feedback = sendEmail(
     # str(text), email, "Se ha detectado movimiento")
@@ -187,9 +192,7 @@ def distanceW():
         distancia = distance()
         actual = alt - distancia
         nivel = 1 / (alt / actual) * 100
-        text = "{0:.2f}".format(nivel) + " %"
-        if (nivel > 100) or (nivel < 0):
-            text = text + "(Error de Calibración)"
+        text =  "{0:.2f}".format(nivel) + " %"
         write_log(text, disPath, dName)
         avisos(nivel)
 
@@ -278,12 +281,15 @@ def give(tipo):
 
 if __name__ == '__main__':
 
+
     # Mouvement
     pir = 22
 
     GPIO.setup(pir, GPIO.IN)
     # Interrupción
     GPIO.add_event_detect(pir, GPIO.RISING, callback=alarma)
+
+
 
     t1 = threading.Thread(target=temphumW)
     t2 = threading.Thread(target=distanceW)

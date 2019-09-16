@@ -58,11 +58,10 @@ FUTURAS IMPLEMENTACIONES :
 - Correo de confirmación al crear usuario
 - obviar valores absurdos de las lecturas
 - la recuperación de contraseña en una sola vista
-- Las busquedas sql en el main, hay una función
+-Las busquedas sql en el main, hay una función
 - Gestión de alarma a largo plazo
-- Muestreo mediado
+-Muestreo mediado
 - Limpiar scripts importados (hay de mas)
 - Separar los datos de los logs por días
 - Que se pueda editar un evento
-- Que se pueda eliminar imagenes
  

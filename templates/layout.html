@@ -79,17 +79,9 @@
       </div>
       <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
-          {% if session["root"] %}
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('pictures') }}"
-              >Imágenes tomadas</a
-            >
-          </li>
-          {% endif %}
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('perfil') }}">Ajustes</a>
           </li>
-
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('logout') }}">Cerrar Sesión</a>
           </li>
