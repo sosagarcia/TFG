@@ -132,7 +132,7 @@ def main():
     return render_template('main.html', agenda=agenda, alarma=alarmas, movimiento=movimientos, salida=salidas)
 
 
-@app.route('/login', methods=["GET", "POST"])
+@app.route('/login', methods=["POST"])
 def login():
     if request.method == 'POST':
         session.clear()
