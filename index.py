@@ -4,6 +4,7 @@ from flask.json import JSONEncoder
 import datetime as dt
 from flask import Flask, render_template, request, url_for, redirect, flash, session, Response
 import os
+
 import random
 from flaskext.mysql import MySQL
 import bcrypt
@@ -178,6 +179,7 @@ def login():
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
                 agenda = conjunto(titulos())
+
                 return render_template('main.html', agenda=agenda, primer=1, alarma=str(alarmas), movimiento=movimientos, salida=salidas)
             else:
                 return render_template("index.html", mensaje=contra)
@@ -192,7 +194,8 @@ def perfil():
     if session.get("name", None) is not None:
         data = conn('SELECT * FROM contacts')
         tap = conn('SELECT * FROM tap')
-        return render_template('perfil.html', mensaje=reg, ajustes=1, contactos=data, taps=tap)
+        datos = tabla(data,tap)
+        return render_template('perfil.html', mensaje=reg, ajustes=1, contactos=data, taps=datos)
     else:
         flash("Sesión caducada", 'dark')
         return redirect(url_for("login"))
@@ -385,9 +388,9 @@ def state():
 
 @app.route('/testa')
 def chart():
-    algo = actualizacion()
-    return str(algo)
         
+        imagenes = list()
+        return render_template('galery.html', rutas=imagenes)
         
 @app.route('/asigna', methods=['POST'])
 def asigna():
@@ -407,8 +410,8 @@ def asigna():
         if i not in sublist:
             sublist.append(i)
     if not users == sublist:
-        mensaje = "Hay usuarios repetidos"
-        return jsonify(result= -1, msj = mensaje)
+        mensaje = "Hay usuarios repetidos / Hay mas de una salida sin asignar"
+        return jsonify(result= -1, msj=mensaje)
     fin = len(pins)
     for i in range (0,fin):
         pin = int(pins[i])
@@ -419,8 +422,11 @@ def asigna():
         cur = mysql.get_db().cursor()
         cur.execute('UPDATE tap SET idPropietario = %s WHERE pin = %s', (user, pin))
         mysql.get_db().commit()
-    mensaje = "Hecho"
-    return jsonify(result= 1, msj = mensaje)
+    mensaje = "Salidas actualizadas correctamente"
+    data = conn('SELECT * FROM contacts')
+    tap = conn('SELECT * FROM tap')
+    datos = minitabla(data,tap)
+    return jsonify(result= 1, msj=mensaje, tap= datos)
 
    
 
@@ -439,6 +445,14 @@ def updateStatistics():
 def logout():
     session.clear()
     return render_template('index.html', mensaje=adios)
+
+
+@app.route('/pictures')
+def pictures():
+    imagenes = sorted(ls(images))
+    imagenes.pop(0)
+    #imagenes = list()
+    return render_template('galery.html', rutas=imagenes)
 
 
 @app.route('/registro')
@@ -519,8 +533,9 @@ def delete_contact(id):
     mysql.get_db().commit()
     tap = conn('SELECT * FROM tap')
     data = conn('SELECT * FROM contacts')
+    datos = tabla(data,tap)
     flash('Se ha borrado el contacto correctamente', 'success')
-    return render_template('perfil.html', mensaje=reg, lista=1, contactos=data, taps=tap)
+    return render_template('perfil.html', mensaje=reg, lista=1, contactos=data, taps=datos)
 
 
 @app.route('/rol/<id>')
@@ -546,8 +561,9 @@ def edit_contact(id):
         mysql.get_db().commit()
         data = conn('SELECT * FROM contacts')
         tap = conn('SELECT * FROM tap')
+        datos = tabla(data,tap)
         flash('Se ha modificado el Rol del contacto correctamente', 'warning')
-        return render_template('perfil.html', mensaje=reg, lista=1, contactos=data, taps=tap)
+        return render_template('perfil.html', mensaje=reg, lista=1, contactos=data, taps=datos)
     else:
         flash("Sesión caducada",'dark')
         return redirect(url_for("login"))
@@ -581,12 +597,9 @@ def update_device():
         session['cpusT'] = cpusT
         data = conn('SELECT * FROM contacts')
         tap = conn('SELECT * FROM tap')
+        datos = tabla(data,tap)
         flash('Configuración actualizada correctamente. Recuerde que algunos ajustes como los de Intervalo de muetsreo o "Altura de estanque" no serán actualizados hasta que se reinicie el sistemanivel', 'success')    
-        return render_template('perfil.html',dispositivo=1,contactos=data, mensaje=reg, taps=tap)
-
-        
-
-
+        return render_template('perfil.html',dispositivo=1,contactos=data, mensaje=reg, taps=datos)
 
 
 @app.route('/update/<id>', methods=['POST'])
@@ -666,17 +679,18 @@ def add_contact():
         repassword = request.form['repass'].encode('utf-8')
         data = conn('SELECT * FROM contacts')
         tap = conn('SELECT * FROM tap')
+        datos = tabla(data,tap)
         if len(fullname and phone and email and password and repassword) == 0:
-            return render_template('perfil.html', title='Registro', mensaje=vacio,registro=1, contactos=data, taps=tap)
+            return render_template('perfil.html', title='Registro', mensaje=vacio,registro=1, contactos=data, taps=datos)
         elif password != repassword:
-            return render_template('perfil.html', title='Registro', mensaje=coincide ,registro=1, contactos=data, taps=tap)
+            return render_template('perfil.html', title='Registro', mensaje=coincide ,registro=1, contactos=data, taps=datos)
         else:
 
             cur = mysql.get_db().cursor()
             cur.execute("SELECT * FROM contacts WHERE email = %s", (email,))
             user = cur.fetchone()
             if user is not None:
-                return render_template('perfil.html', title='Registro', mensaje=usua ,registro=1, contactos=data, taps=tap)
+                return render_template('perfil.html', title='Registro', mensaje=usua ,registro=1, contactos=data, taps=datos)
             else:
                 hash_password = bcrypt.hashpw(password, bcrypt.gensalt())
 
@@ -687,8 +701,9 @@ def add_contact():
                 mysql.get_db().commit()
                 data = conn('SELECT * FROM contacts')
                 tap = conn('SELECT * FROM tap')
+                datos = tabla(data,tap)
                 flash('El contacto ha sido agregado correctamente ', 'success')
-                return render_template('perfil.html', lista=1, contactos=data, mensaje=reg, taps=tap)
+                return render_template('perfil.html', lista=1, contactos=data, mensaje=reg, taps=datos)
 
 
 if __name__ == '__main__':

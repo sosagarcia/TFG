@@ -240,6 +240,16 @@
               </div>
 
               {% include "salidas.html" %}
+              <div class="progress">
+                  <div
+                    class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                    role="progressbar"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    style="width:1%"
+                    id="asignaBar"
+                  ></div>
+                </div>
               <div class="form-group row">
                   <div class="offset-4 col-8">
                     <button type="button" class="btn-success"id="asigBTN" >
@@ -262,16 +272,16 @@
 {% block script %}
 
 <script>
-var barra = document.getElementById("myBar"); 
-boton = document.getElementById("rebootBTN");                      
+var barra1 = document.getElementById("myBar"); 
+boton1 = document.getElementById("rebootBTN");                      
 cerrar = document.getElementById("cerrar");                      
-barra.style.display = "none";
+barra1.style.display = "none";
 var barra2 = document.getElementById("myBar2"); 
 boton2 = document.getElementById("updateBTN");                      
 cerrar2 = document.getElementById("cerrar2");                      
 barra2.style.display = "none";
 
-boton.addEventListener("click", reinicio);
+boton1.addEventListener("click", reinicio);
 boton2.addEventListener("click", actualizacion);
 
 function actualizacion() {
@@ -285,6 +295,7 @@ function actualizacion() {
         
         console.log("fail actualiza");
       });
+      
       move(barra2, 15);
     //document.getElementById("Cerrar").click();
   }
@@ -301,7 +312,8 @@ function reinicio() {
         
         console.log("fail reinicio");
       });
-      move(barra, 35);
+      
+      move(barra1, 35);
     //document.getElementById("Cerrar").click();
   }
 
@@ -327,7 +339,7 @@ function myFunction() {
 
 function move(theBarra, tiempo) {
   theBarra.style.display = "block";
-  boton.disabled=true;
+  boton1.disabled=true;
   cerrar.disabled=true;
   boton2.disabled=true;
   cerrar2.disabled=true;
@@ -347,25 +359,37 @@ function move(theBarra, tiempo) {
   
 }
 </script>
-
 <script>
-  var boton = document.getElementById("asigBTN");
-  boton.addEventListener("click", asignacion);
-  var result = [];
-  {% for tap in taps %}
-  var tapV{{tap.2}} = document.getElementById("tapName{{tap.2}}");
-  var selected{{tap.2}};
-  {% endfor %}
-
   
-  function asignacion(){
+    var botonA = document.getElementById("asigBTN");
+    botonA.addEventListener("click", asignacion);
+    var result = [];
+    var barra3 = document.getElementById("asignaBar"); 
+    barra3.style.display = "none";
+    var tapV18 = document.getElementById("tapName18");
+    var nombre18 = document.getElementById("Nombre18");
+    var selected18; 
+    var tapV23 = document.getElementById("tapName23");
+    var nombre23 = document.getElementById("Nombre23");
+    var selected23; 
+    var tapV24 = document.getElementById("tapName24");
+    var nombre24 = document.getElementById("Nombre24");
+    var selected24; 
+    var running;
+    
+
+    function asignacion(){
     {% for tap in taps %}
     selected{{tap.2}} = tapV{{tap.2}}.options[tapV{{tap.2}}.selectedIndex];
     result.push({{tap.2}});
     result.push (selected{{tap.2}}.value );
-    console.log (result)
+    
     {% endfor %}
+    console.log (result)
 
+    
+    barra(barra3, 3)
+    running = true;
     $.post("/asigna", {
       data: result,
     }).done(function(reply) {
@@ -374,12 +398,42 @@ function move(theBarra, tiempo) {
   }
 
   function toDo(algo){
-    alert(algo.mensaje)
-    if (algo.result == 1){
-      console.log("Cambiar los valores de la tabla y limpiar el array")
-      result = [];
-    }
+    running = false;
+    alert(algo.msj)
+    botonA.disabled=false;
+    barra3.style.width = 0 + '%'; 
+    barra3.innerHTML = 0 * 1  + '%';
+    barra3.style.display = "none";
+    nombre18.innerHTML = algo.tap[0];
+    nombre23.innerHTML = algo.tap[1];
+    nombre24.innerHTML = algo.tap[2];
+    result = [];
   }
+
+  function barra(theBarra, tiempo) {
+  theBarra.style.display = "block";
+  botonA.disabled=true;
+  var final = tiempo * 10
+  var width = 1;
+  var id = setInterval(frame, final);
+  function frame() {
+    if (width >= 100){
+      clearInterval(id);
+    }else{
+      if (running){
+        width++; 
+        theBarra.style.width = width + '%'; 
+        theBarra.innerHTML = width * 1  + '%';
+      } else { 
+        clearInterval(id);
+      }
+    }
+    
+
+  }
+  
+}
+
 </script>
 
 
