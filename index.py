@@ -107,7 +107,7 @@ def home():
     return render_template('index.html', mensaje=inicio)
 
 
-@app.route('/ahora',methods=["GET", "POST"])
+@app.route('/ahora',methods=["GET"])
 def ahora():
     now = datetime.now()
     d = now.strftime("%d")
@@ -203,7 +203,7 @@ def data():
 
 
 
-@app.route('/ajustes')
+@app.route('/ajustes', methods=["GET"])
 def ajustes():
     datos = read_conf()
     nameD = datos[0]
@@ -219,7 +219,7 @@ def ajustes():
 
     result = [nameD, emailA, tam, disB, disA, tem, hum, humTem, disT, cpusT]
 
-    return Response(result)
+    return jsonify(result)
 
 
 @app.route('/add_event', methods=['POST'])
@@ -273,11 +273,9 @@ def add_event():
         mysql.get_db().commit()
         return render_template('calendar.html', mensaje=event, lista=listado)
 
-    if session.get("name", None) is not None:
-        return render_template('index.html')
-    else:
-        flash("Sesión caducada", 'dark')
-        return redirect(url_for("login"))
+    
+    return render_template('index.html')
+    
 
 
 @app.route('/deletEvent', methods=['POST'])
@@ -636,13 +634,10 @@ def update_contact(id):
 
 @app.route('/estadisticas')
 def estadisticas():
-   
-    if session.get("name", None) is not None:
-        listado = users(usuarios())
-        return render_template('estadisticas.html', mensaje=esta, listado=listado)
-    else:
-        flash("Sesión caducada",'dark')
-        return redirect(url_for("login"))
+    
+    listado = users(usuarios())
+    return render_template('estadisticas.html', mensaje=esta, listado=listado)
+    
 
 
 
