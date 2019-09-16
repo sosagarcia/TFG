@@ -132,7 +132,7 @@ def ahora():
     hoy = [a, M, d, h, m, s]
 
     # need to be (year, month, day, hours, minutes, seconds, milliseconds)
-    estado = session['manual']
+    estado = session.get("manual", "0")
     return jsonify(result=hoy, estado=estado)
 
 
