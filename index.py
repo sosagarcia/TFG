@@ -132,8 +132,7 @@ def ahora():
     hoy = [a, M, d, h, m, s]
 
     # need to be (year, month, day, hours, minutes, seconds, milliseconds)
-    estado = session.get("manual", "0")
-    return jsonify(result=hoy, estado=estado)
+    return jsonify(hoy)
 
 
 @app.route('/main')
@@ -174,7 +173,7 @@ def login():
                 session['message'] = user[5]
                 session['root'] = user[8]
                 session['manual'] = "0"
-                ajustes()
+                #ajustes()
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
