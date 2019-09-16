@@ -119,7 +119,7 @@ def home():
     return render_template('index.html', mensaje=inicio)
 
 
-@app.route('/ahora')
+@app.route('/ahora', methods=["GET", "POST"])
 def ahora():
     now = datetime.now()
     d = now.strftime("%d")
@@ -225,7 +225,7 @@ def data():
     return Response(json.dumps(callist),  mimetype='application/json')
 
 
-@app.route('/add_event', methods=['POST'])
+@app.route('/add_event',methods=["GET", "POST"])
 def add_event():
     if request.method == 'POST':
         idUser = request.form['title']
@@ -283,7 +283,7 @@ def add_event():
         return redirect(url_for("login"))
 
 
-@app.route('/deletEvent', methods=['POST'])
+@app.route('/deletEvent',methods=["GET", "POST"])
 def deletEvent():
 
     id = request.form['canvas_data']
@@ -292,7 +292,7 @@ def deletEvent():
     mysql.get_db().commit()
 
 
-@app.route('/deletFull', methods=['POST'])
+@app.route('/deletFull',methods=["GET", "POST"])
 def deletAlgo():
 
     algo = request.form['canvas_data']
@@ -303,24 +303,24 @@ def deletAlgo():
         mysql.get_db().commit()
 
 
-@app.route('/manual')
+@app.route('/manual',methods=["GET", "POST"])
 def manual():
     session['manual'] = "1"
     return jsonify(estado=session['manual'])
 
-@app.route('/reinicio')
+@app.route('/reinicio',methods=["GET", "POST"])
 def reinicio():
     output = reiniciar()
     return jsonify(output)
 
-@app.route('/actualiza')
+@app.route('/actualiza',methods=["GET", "POST"])
 def actualiza():
    algo =  actualizacion()
    return jsonify(algo)
     
 
 
-@app.route('/auto')
+@app.route('/auto',methods=["GET", "POST"])
 def auto():
     print("Auto")
     session['manual'] = "0"
@@ -328,13 +328,13 @@ def auto():
     return jsonify(estado=session['manual'])
 
 
-@app.route('/manualdata')
+@app.route('/manualdata',methods=["GET", "POST"])
 def manualdata():
     print("el Manualmode actual es ", session['manual'])
     return jsonify(estado=session['manual'])
 
 
-@app.route('/deletDay', methods=['POST'])
+@app.route('/deletDay', methods=["GET", "POST"])
 def deletDay():
     algo = request.form['canvas_data']
     algo = pasaFecha1(algo)
@@ -347,7 +347,7 @@ def deletDay():
     mysql.get_db().commit()
 
 
-@app.route('/deletUser', methods=['POST'])
+@app.route('/deletUser', methods=["GET", "POST"])
 def deletUser():
 
     algo = request.form['canvas_data']
@@ -357,7 +357,7 @@ def deletUser():
     mysql.get_db().commit()
 
 
-@app.route('/delet2', methods=['POST'])
+@app.route('/delet2', methods=["GET", "POST"])
 def delet2():
 
     obj = request.form['canvas_data']
@@ -372,7 +372,7 @@ def delet2():
     mysql.get_db().commit()
 
 
-@app.route('/state')
+@app.route('/state',methods=["GET", "POST"])
 def state():
 
     humedad = statusNow(hPath, hName)
@@ -392,7 +392,7 @@ def chart():
         imagenes = list()
         return render_template('galery.html', rutas=imagenes)
         
-@app.route('/asigna', methods=['POST'])
+@app.route('/asigna', methods=["GET", "POST"])
 def asigna():
     datos = request.form.getlist('data[]')
     pins= list()
@@ -431,7 +431,7 @@ def asigna():
    
 
 
-@app.route('/updateStatistics', methods=['POST'])
+@app.route('/updateStatistics', methods=["GET", "POST"])
 def updateStatistics():
     tipo = request.form.getlist('tipo[]')
     fecha = request.form.get('fecha')
@@ -465,7 +465,7 @@ def forgot():
     return render_template('forgot.html', mensaje=fgt)
 
 
-@app.route('/pass_email', methods=['POST'])
+@app.route('/pass_email', methods=["GET", "POST"])
 def pass_email():
     if request.method == 'POST':
         email = request.form['email']
@@ -485,7 +485,7 @@ def pass_email():
         return render_template('insert_code.html', mensaje=code, user=str(id))
 
 
-@app.route('/verify/<string:id>', methods=['POST'])
+@app.route('/verify/<string:id>', methods=["GET", "POST"])
 def verify(id):
     if request.method == 'POST':
         code = request.form['code']
@@ -501,7 +501,7 @@ def verify(id):
         return render_template('change_pass.html', mensaje=cambio, user=id)
 
 
-@app.route('/update_pass/<string:id>', methods=['POST'])
+@app.route('/update_pass/<string:id>', methods=["GET", "POST"])
 def update_pass(id):
     if request.method == 'POST':
         print (id)
@@ -570,7 +570,7 @@ def edit_contact(id):
 
 
 
-@app.route('/updateDevice', methods=['POST'])
+@app.route('/updateDevice', methods=["GET", "POST"])
 def update_device():
     if request.method == 'POST':
         nameD = request.form['nameD']
@@ -602,7 +602,7 @@ def update_device():
         return render_template('perfil.html',dispositivo=1,contactos=data, mensaje=reg, taps=datos)
 
 
-@app.route('/update/<id>', methods=['POST'])
+@app.route('/update/<id>', methods=["GET", "POST"])
 def update_contact(id):
     if request.method == 'POST':
         phone = request.form['phone']
@@ -669,7 +669,7 @@ def lista():
     return render_template('lista.html', contactos=data, title='Lista')
 
 
-@app.route('/add_contact', methods=['POST'])
+@app.route('/add_contact', methods=["GET", "POST"])
 def add_contact():
     if request.method == 'POST':
         fullname = request.form['fullname']
