@@ -176,7 +176,7 @@ def login():
                 session['message'] = user[5]
                 session['root'] = user[8]
                 session['manual'] = "0"
-                #ajustes()
+                ajustes()
                 global iniciado
                 global administrador
                 iniciado = 1
