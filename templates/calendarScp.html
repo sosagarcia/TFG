@@ -96,6 +96,7 @@
         canvas_data: JSON.stringify(id)
       }).done(function(reply) {
         console.log(reply);
+        document.getElementById("modalClose").click();
         calendar.refetchEvents();
       });
     }
@@ -232,6 +233,7 @@
               canvas_data: JSON.stringify(valor)
             }).done(function(reply) {
               console.log(reply);
+              document.getElementById("masivoCerrar").click();
               calendar.refetchEvents();
             });
           }
@@ -245,6 +247,7 @@
               canvas_data: JSON.stringify(date)
             }).done(function(reply) {
               console.log(reply);
+              document.getElementById("masivoCerrar").click();
               calendar.refetchEvents();
             });
           }
@@ -258,6 +261,7 @@
               canvas_data: JSON.stringify(obj)
             }).done(function(reply) {
               console.log(reply);
+              document.getElementById("masivoCerrar").click();
               calendar.refetchEvents();
             });
           }
@@ -272,6 +276,7 @@
               canvas_data_date: JSON.stringify(date)
             }).done(function(reply) {
               console.log(reply);
+              document.getElementById("masivoCerrar").click();
               calendar.refetchEvents();
             });
           }
