@@ -14,8 +14,7 @@ from static.py.rutas import *
 from static.py.funciones import *
 from static.py.correo import *
 
-iniciado = 0
-administrador = 0
+
 
 # from flask.ext.session import Session
 # import mysql
@@ -111,7 +110,7 @@ mysql.init_app(app)
 
 # Settings
 app.json_encoder = CustomJSONEncoder
-app.secret_key = os.urandom(16)
+app.secret_key = os.urandom(8)
 # app.config['JSON_AS_ASCII'] = True  # default
 
 
@@ -139,8 +138,7 @@ def ahora():
 
 @app.route('/main')
 def main():
-    global iniciado
-    if iniciado:
+    if session.get("name", None) is not None:
         alarmas = logs(aPath)
         movimientos = logs(irPath)
         salidas = logs(outPath)
@@ -177,10 +175,6 @@ def login():
                 session['root'] = user[8]
                 session['manual'] = "0"
                 ajustes()
-                global iniciado
-                global administrador
-                iniciado = 1
-                administrador = user[8]
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
@@ -197,8 +191,7 @@ def login():
 @app.route('/perfil')
 def perfil():
 
-    global iniciado
-    if iniciado:
+    if session.get("name", None) is not None:
         data = conn('SELECT * FROM contacts')
         tap = conn('SELECT * FROM tap')
         datos = tabla(data,tap)
@@ -210,10 +203,8 @@ def perfil():
 
 @app.route('/calendar')
 def calendar():
-    global iniciado
-    global administrador
-    if iniciado:
-        if administrador == 0:
+    if session.get("name", None) is not None:
+        if session.get("root", None) == 0:
             return render_template('calendarMortal.html')
         else:
             listado = users(usuarios())
@@ -453,8 +444,6 @@ def updateStatistics():
 
 @app.route('/logout')
 def logout():
-    global iniciado
-    iniciado = 0
     session.clear()
     return render_template('index.html', mensaje=adios)
 
@@ -552,8 +541,7 @@ def delete_contact(id):
 
 @app.route('/rol/<id>')
 def edit_contact(id):
-    global administrador
-    if administrador == 1:
+    if session.get("root", None) == 1:
         cur = mysql.get_db().cursor()
         cur.execute('SELECT root FROM contacts WHERE id = %s', [id])
         data = cur.fetchall()
@@ -666,8 +654,7 @@ def update_contact(id):
 @app.route('/estadisticas')
 def estadisticas():
    
-    global iniciado
-    if iniciado:
+    if session.get("name", None) is not None:
         listado = users(usuarios())
         return render_template('estadisticas.html', mensaje=esta, listado=listado)
     else:
