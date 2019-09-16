@@ -119,7 +119,7 @@ def home():
     return render_template('index.html', mensaje=inicio)
 
 
-@app.route('/ahora', methods=["GET", "POST"])
+@app.route('/ahora', methods=["GET"])
 def ahora():
     now = datetime.now()
     d = now.strftime("%d")
