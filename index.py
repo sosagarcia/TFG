@@ -15,7 +15,7 @@ from static.py.funciones import *
 from static.py.correo import *
 
 iniciado = 0
-
+administrador = 0
 
 # from flask.ext.session import Session
 # import mysql
@@ -178,7 +178,9 @@ def login():
                 session['manual'] = "0"
                 #ajustes()
                 global iniciado
+                global administrador
                 iniciado = 1
+                administrador = user[8]
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
@@ -209,8 +211,9 @@ def perfil():
 @app.route('/calendar')
 def calendar():
     global iniciado
+    global administrador
     if iniciado:
-        if session.get("root", None) == 0:
+        if administrador == 0:
             return render_template('calendarMortal.html')
         else:
             listado = users(usuarios())
@@ -549,7 +552,8 @@ def delete_contact(id):
 
 @app.route('/rol/<id>')
 def edit_contact(id):
-    if session.get("root", None) == 1:
+    global administrador
+    if administrador == 1:
         cur = mysql.get_db().cursor()
         cur.execute('SELECT root FROM contacts WHERE id = %s', [id])
         data = cur.fetchall()
