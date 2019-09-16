@@ -24,23 +24,6 @@ DocumentRoot /var/www/html/TFG
    # Allow from all
 </Directory>
 </VirtualHost>
-ultimo copiado
-<VirtualHost *:80>
-     # Add machine's IP address (use ifconfig command)
-     ServerName 192.168.137.90
-     # Give an alias to to start your website url with
-     WSGIScriptAlias / /var/www/html/TFG/iniciar.wsgi
-     <Directory /var/www/html/TFG/>
-                # set permissions as per apache2.conf file
-            Options FollowSymLinks
-            AllowOverride None
-            Require all granted
-     </Directory>
-     ErrorLog ${APACHE_LOG_DIR}/error.log
-     LogLevel warn
-     CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
-
 
 
 
