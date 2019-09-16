@@ -17,7 +17,7 @@
     alt="{{ ruta }}"
     style="width:100%;max-width:150px"
     class=" foto mt-3 mb-3 ml-4"
-    onerror="standby()"
+    onerror="standby(id)"
   />
   {% endfor %}
   <!-- The Modal -->
@@ -50,8 +50,8 @@
       modal.style.display = "none";
     };
 
-    function standby() {
-      this.src = 'https://www.google.com/images/srpr/logo11w.png'
+    function standby(id) {
+      document.getElementById(id).src = 'https://www.google.com/images/srpr/logo11w.png'
   }
 </script>
 
