@@ -4,7 +4,7 @@ from flask.json import JSONEncoder
 import datetime as dt
 from flask import Flask, render_template, request, url_for, redirect, flash, session, Response
 import os
-from flask_session import Session
+
 import random
 from flaskext.mysql import MySQL
 import bcrypt
@@ -108,17 +108,8 @@ mysql.init_app(app)
 
 
 # Settings
-app.config['SESSION_PERMANENT'] = True
-app.config['SESSION_TYPE'] = 'filesystem'
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=5)
-
-# The maximum number of items the session stores 
-# before it starts deleting some, default 500
-app.config['SESSION_FILE_THRESHOLD'] = 500  
-
-app.config['SECRET_KEY'] = os.urandom(16)
-sess = Session()
-sess.init_app(app)
+app.json_encoder = CustomJSONEncoder
+app.secret_key = b'}\xbe$ClA;\x87\xca,\x8d<\x8c\xbf\xf9\xed\x94G8K6\x0cL5'
 # app.config['JSON_AS_ASCII'] = True  # default
 
 
@@ -183,7 +174,7 @@ def login():
                 session['message'] = user[5]
                 session['root'] = user[8]
                 session['manual'] = "0"
-                #ajustes()
+                ajustes()
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
