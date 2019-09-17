@@ -104,8 +104,6 @@
 </script>
 
 <script>
-  var manualBool = document.getElementById("manualid");
-  manualBool.style.display = "block";
   var confirmaManual = document.getElementById("manualBTN");
   var manualBTN = document.getElementById("manual");
   var confirmaAuto = document.getElementById("autoBTN");
@@ -116,21 +114,16 @@
   borraBTN.style.display = "none";
   confirmaManual.addEventListener("click", myFunctionManual);
   confirmaAuto.addEventListener("click", myFunctionAuto);
-  if (manualBool.value == 1) {
-    myFunctionManual();
-  }
   function myFunctionManual() {
     autoBTN.style.display = "block";
     borraBTN.style.display = "block";
     manualBTN.style.display = "none";
-    manualBool.value = 1;
     document.getElementById("manualCerrar").click();
   }
   function myFunctionAuto() {
     autoBTN.style.display = "none";
     borraBTN.style.display = "none";
     manualBTN.style.display = "block";
-    manualBool.value = 0;
     document.getElementById("autoCerrar").click();
   }
 </script>
