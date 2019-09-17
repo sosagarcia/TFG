@@ -17,6 +17,10 @@ pinC = 24
 GPIO.setup(pinA, GPIO.OUT, initial=GPIO.LOW)
 GPIO.setup(pinB, GPIO.OUT, initial=GPIO.LOW)
 GPIO.setup(pinC, GPIO.OUT, initial=GPIO.LOW)
+GPIO.output(pinA, False)
+GPIO.output(pinB, False)
+GPIO.output(pinC, False)
+
 
 switcher = {
     user1: pinA,
