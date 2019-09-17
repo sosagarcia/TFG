@@ -9,8 +9,7 @@ from static.py.rutas import *
 
 
 # Valores de aviso
-fanMin = 40
-fanMax = 50
+
 tempMax = 26
 humMax = 30
 disB = 30
@@ -73,21 +72,16 @@ GPIO.setup(pin, GPIO.IN)
 ledM = 5
 ledH = 20
 ledT = 21
-fan = 4
-realfan = 13
-
+ledA = 16
 
 GPIO.setup(ledM, GPIO.OUT)
 GPIO.setup(ledH, GPIO.OUT)
 GPIO.setup(ledT, GPIO.OUT)
-GPIO.setup(fan, GPIO.OUT)
-GPIO.setup(realfan, GPIO.OUT)
+GPIO.setup(ledA, GPIO.OUT)
 GPIO.output(ledT, False)
 GPIO.output(ledH, False)
-GPIO.output(fan, False)
-GPIO.output(realfan, False)
+GPIO.output(ledA, False)
 GPIO.output(ledM, False)
-potencia = GPIO.PWM(fan, 100)
 
 
 def updateData():
@@ -204,6 +198,7 @@ def avisos(actual):
     disA = int(give("disA"))
     disB = int(give("disB"))
     if disB > actual:
+        GPIO.output(ledA, True)
         actualStr = "{0:.2f}".format(actual)
         text = "Nivel del Agua :" + \
             actualStr + " %"
@@ -211,7 +206,9 @@ def avisos(actual):
         email = give("mail")
         # feedback = sendEmail(
         # str(text), email, "El nivel del agua es muy BAJO")
+        GPIO.output(ledA, False)
     if disA < actual:
+        GPIO.output(ledA, True)
         actualStr = "{0:.2f}".format(actual)
         text = "Nivel del Agua :" + \
             actualStr + " %"
@@ -219,6 +216,7 @@ def avisos(actual):
         email = give("mail")
         # feedback = sendEmail(
         # str(text), email, "El nivel del agua es muy ALTO")
+        GPIO.output(ledA, False)
 
 
 def temphum():
@@ -256,35 +254,15 @@ def temphumW():
 def tempcpu():
     temp = int(open('/sys/class/thermal/thermal_zone0/temp').read()) / 1e3
     cpusan = psutil.cpu_percent(interval=1, percpu=False)
-    return (str(temp), str(cpusan) + ' %')
+    return (str(temp) + ' ºC', str(cpusan) + ' %')
 
 
 def sistem():
     while True:
         time.sleep(cpuS)
         temperatura, cpu = tempcpu()
-        ventilador(temperatura)
-        write_log(temperatura + ' ºC', cpuTPath, cpuTName)
+        write_log(temperatura, cpuTPath, cpuTName)
         write_log(cpu, cpuPath, cpuName)
-
-
-def ventilador(temperatura):
-    if float(temperatura) > fanMin:
-        actual = float(temperatura) - fanMin
-        max = fanMax-fanMin
-        valor = actual / max * 100
-        if valor > 100:
-            valor = 100
-        if valor < 0:
-            valor = 0
-        print("potencia del ventilador al " + str(valor) + " %")
-        potencia.ChangeDutyCycle(int(valor))
-        if valor > 50:
-            GPIO.output(realfan, True)
-        else:
-            GPIO.output(realfan, False)
-    else:
-        potencia.ChangeDutyCycle(0)
 
 
 def give(tipo):
@@ -299,7 +277,7 @@ def give(tipo):
 
 
 if __name__ == '__main__':
-    potencia.start(0)
+
     # Mouvement
     pir = 22
 
@@ -329,7 +307,6 @@ if __name__ == '__main__':
     finally:
         GPIO.output(ledT, False)
         GPIO.output(ledH, False)
-        GPIO.output(fan, False)
-        GPIO.output(realfan, False)
+        GPIO.output(ledA, False)
         GPIO.output(ledM, False)
         GPIO.cleanup()  # reset all GPIO
