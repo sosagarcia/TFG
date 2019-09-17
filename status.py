@@ -267,12 +267,14 @@ def sistem():
 
 
 def ventilador(temperatura):
-    if int(temperatura) > fanMin:
-        actual = int(temperatura) - fanMin
+    if float(temperatura) > fanMin:
+        actual = float(temperatura) - fanMin
         max = fanMax-fanMin
         valor = actual / max * 100
         print("potencia del ventilador al " + str(valor) + " %")
         potencia.ChangeDutyCycle(int(valor))
+    else:
+        potencia.ChangeDutyCycle(0)
 
 
 def give(tipo):
