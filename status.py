@@ -74,15 +74,18 @@ ledM = 5
 ledH = 20
 ledT = 21
 fan = 4
+realfan = 13
 
 
 GPIO.setup(ledM, GPIO.OUT)
 GPIO.setup(ledH, GPIO.OUT)
 GPIO.setup(ledT, GPIO.OUT)
 GPIO.setup(fan, GPIO.OUT)
+GPIO.setup(realfan, GPIO.OUT)
 GPIO.output(ledT, False)
 GPIO.output(ledH, False)
 GPIO.output(fan, False)
+GPIO.output(realfan, False)
 GPIO.output(ledM, False)
 potencia = GPIO.PWM(fan, 100)
 
@@ -276,8 +279,15 @@ def ventilador(temperatura):
             valor = 0
         print("potencia del ventilador al " + str(valor) + " %")
         potencia.ChangeDutyCycle(int(valor))
+        if valor > 50:
+            GPIO.output(realfan, True)
+        else:
+            GPIO.output(realfan, False)
     else:
         potencia.ChangeDutyCycle(0)
+
+
+def realfan(estado):
 
 
 def give(tipo):
@@ -323,5 +333,6 @@ if __name__ == '__main__':
         GPIO.output(ledT, False)
         GPIO.output(ledH, False)
         GPIO.output(fan, False)
+        GPIO.output(realfan, False)
         GPIO.output(ledM, False)
         GPIO.cleanup()  # reset all GPIO
