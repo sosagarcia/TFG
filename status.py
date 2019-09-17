@@ -253,21 +253,22 @@ def temphumW():
 def tempcpu():
     temp = int(open('/sys/class/thermal/thermal_zone0/temp').read()) / 1e3
     cpusan = psutil.cpu_percent(interval=1, percpu=False)
-    return (str(temp) + ' ºC', str(cpusan) + ' %')
+    return (str(temp), str(cpusan) + ' %')
 
 
 def sistem():
     while True:
         time.sleep(cpuS)
         temperatura, cpu = tempcpu()
-        write_log(temperatura, cpuTPath, cpuTName)
-        write_log(cpu, cpuPath, cpuName)
         ventilador(temperatura)
+        write_log(temperatura  + ' ºC', cpuTPath, cpuTName)
+        write_log(cpu, cpuPath, cpuName)
+        
 
 
 def ventilador(temperatura):
-    if temperatura > fanMin:
-        actual = temperatura - fanMin
+    if int(temperatura) > fanMin:
+        actual = int(temperatura) - fanMin
         max = fanMax-fanMin
         valor = actual / max * 100
         print("potencia del ventilador al " + str(valor) + " %")
