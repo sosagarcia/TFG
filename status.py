@@ -287,9 +287,6 @@ def ventilador(temperatura):
         potencia.ChangeDutyCycle(0)
 
 
-def realfan(estado):
-
-
 def give(tipo):
     try:
         configs = read_conf()
