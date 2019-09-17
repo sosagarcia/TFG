@@ -16,14 +16,14 @@
         var t = setTimeout(startTime, 100);
       });
   }
-  function reloj(out) {
+  function reloj(result) {
     dt = new Date(
-      out.result[0],
-      out.result[1],
-      out.result[2],
-      out.result[3],
-      out.result[4],
-      out.result[5]
+      result[0],
+      result[1],
+      result[2],
+      result[3],
+      result[4],
+      result[5]
     );
 
     // ensure date comes as 01, 09 etc
@@ -37,11 +37,6 @@
     date_string = YYYY + "-" + MM + "-" + DD + " " + hh + ":" + mm + ":" + ss;
 
     // will output something like "2019-02-14 11:04:42"
-    if (out.estado == "0") {
-      document.getElementById("manualmode").innerHTML = "";
-    } else {
-      document.getElementById("manualmode").innerHTML = "Modo Manual";
-    }
     document.getElementById("reloj").innerHTML = date_string;
 
     var t = setTimeout(startTime, 1000);
