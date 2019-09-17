@@ -18,11 +18,29 @@ GPIO.setup(pinA, GPIO.OUT, initial=GPIO.LOW)
 GPIO.setup(pinB, GPIO.OUT, initial=GPIO.LOW)
 GPIO.setup(pinC, GPIO.OUT, initial=GPIO.LOW)
 
+
 def inicializa():
-    
+
     GPIO.output(pinA, False)
     GPIO.output(pinB, False)
     GPIO.output(pinC, False)
+
+    while True:
+
+        try:
+            mydb = mysql.connector.connect(
+                host="localhost",
+                user="renato",
+                passwd="renato12",
+                database="flaskcontacts"
+            )
+            break
+        except:
+            hoy = dt.datetime.now()
+            print("Aun no ha sido posible conectar con la base de datos" +
+                  hoy.strftime("%d-%m-%Y_%H:%M:%S"))
+            time.sleep(1)
+            continue
 
 
 switcher = {
@@ -30,22 +48,6 @@ switcher = {
     user2: pinB,
     user3: pinC
 }
-while True:
-
-    try:
-        mydb = mysql.connector.connect(
-            host="localhost",
-            user="renato",
-            passwd="renato12",
-            database="flaskcontacts"
-        )
-        break
-    except:
-        hoy = dt.datetime.now()
-        print("Aun no ha sido posible conectar con la base de datos" +
-              hoy.strftime("%d-%m-%Y_%H:%M:%S"))
-        time.sleep(1)
-        continue
 
 
 def updateTaps():
