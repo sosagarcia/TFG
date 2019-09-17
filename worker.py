@@ -18,9 +18,11 @@ GPIO.setup(pinA, GPIO.OUT, initial=GPIO.LOW)
 GPIO.setup(pinB, GPIO.OUT, initial=GPIO.LOW)
 GPIO.setup(pinC, GPIO.OUT, initial=GPIO.LOW)
 
+mydb
+
 
 def inicializa():
-
+    global mydb
     GPIO.output(pinA, False)
     GPIO.output(pinB, False)
     GPIO.output(pinC, False)
