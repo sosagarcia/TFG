@@ -261,9 +261,8 @@ def sistem():
         time.sleep(cpuS)
         temperatura, cpu = tempcpu()
         ventilador(temperatura)
-        write_log(temperatura  + ' ºC', cpuTPath, cpuTName)
+        write_log(temperatura + ' ºC', cpuTPath, cpuTName)
         write_log(cpu, cpuPath, cpuName)
-        
 
 
 def ventilador(temperatura):
@@ -271,6 +270,10 @@ def ventilador(temperatura):
         actual = float(temperatura) - fanMin
         max = fanMax-fanMin
         valor = actual / max * 100
+        if valor > 100:
+            valor = 100
+        if valor < 0:
+            valor = 0
         print("potencia del ventilador al " + str(valor) + " %")
         potencia.ChangeDutyCycle(int(valor))
     else:
