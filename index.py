@@ -174,7 +174,7 @@ def login():
                 session['message'] = user[5]
                 session['root'] = user[8]
                 session['manual'] = "0"
-                ajustes()
+                #ajustes()
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
@@ -228,6 +228,8 @@ def data():
 @app.route('/add_event', methods=['POST'])
 def add_event():
     if request.method == 'POST':
+        manualmode = request.form['manualid']
+        session['manual'] = manualmode
         idUser = request.form['title']
         color = request.form['color']
         start = request.form['start']
@@ -267,7 +269,7 @@ def add_event():
         if(not (dif(start, end, mesEnMinutos))):
             return render_template('calendar.html', mensaje=unmes, lista=listado)
         # Comprobar si start o end esta entre el start o el end de algun otro evento (comprobación explusiva del modo Auto.)
-        if (entre(start, end)) and (session['manual'] == "0"):
+        if (entre(start, end)) and (manualmode == "0"):
             return render_template('calendar.html', mensaje=fechae, lista=listado)
 
         cur = mysql.get_db().cursor()

@@ -116,6 +116,9 @@
   borraBTN.style.display = "none";
   confirmaManual.addEventListener("click", myFunctionManual);
   confirmaAuto.addEventListener("click", myFunctionAuto);
+  if (manualBool.value == 1) {
+    myFunctionManual();
+  }
   function myFunctionManual() {
     autoBTN.style.display = "block";
     borraBTN.style.display = "block";
