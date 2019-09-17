@@ -9,7 +9,8 @@ from static.py.rutas import *
 
 
 # Valores de aviso
-
+fanMin = 40
+fanMax = 50
 tempMax = 26
 humMax = 30
 disB = 30
@@ -72,16 +73,18 @@ GPIO.setup(pin, GPIO.IN)
 ledM = 5
 ledH = 20
 ledT = 21
-ledA = 16
+fan = 4
+
 
 GPIO.setup(ledM, GPIO.OUT)
 GPIO.setup(ledH, GPIO.OUT)
 GPIO.setup(ledT, GPIO.OUT)
-GPIO.setup(ledA, GPIO.OUT)
+GPIO.setup(fan, GPIO.OUT)
 GPIO.output(ledT, False)
 GPIO.output(ledH, False)
-GPIO.output(ledA, False)
+GPIO.output(fan, False)
 GPIO.output(ledM, False)
+potencia = GPIO.PWM(fan, 100)
 
 
 def updateData():
@@ -198,7 +201,6 @@ def avisos(actual):
     disA = int(give("disA"))
     disB = int(give("disB"))
     if disB > actual:
-        GPIO.output(ledA, True)
         actualStr = "{0:.2f}".format(actual)
         text = "Nivel del Agua :" + \
             actualStr + " %"
@@ -206,9 +208,7 @@ def avisos(actual):
         email = give("mail")
         # feedback = sendEmail(
         # str(text), email, "El nivel del agua es muy BAJO")
-        GPIO.output(ledA, False)
     if disA < actual:
-        GPIO.output(ledA, True)
         actualStr = "{0:.2f}".format(actual)
         text = "Nivel del Agua :" + \
             actualStr + " %"
@@ -216,7 +216,6 @@ def avisos(actual):
         email = give("mail")
         # feedback = sendEmail(
         # str(text), email, "El nivel del agua es muy ALTO")
-        GPIO.output(ledA, False)
 
 
 def temphum():
@@ -263,6 +262,16 @@ def sistem():
         temperatura, cpu = tempcpu()
         write_log(temperatura, cpuTPath, cpuTName)
         write_log(cpu, cpuPath, cpuName)
+        ventilador(temperatura)
+
+
+def ventilador(temperatura):
+    if temperatura > fanMin:
+        actual = temperatura - fanMin
+        max = fanMax-fanMin
+        valor = actual / max * 100
+        print("potencia del ventilador al " + str(valor) + " %")
+        potencia.ChangeDutyCycle(int(valor))
 
 
 def give(tipo):
@@ -277,7 +286,7 @@ def give(tipo):
 
 
 if __name__ == '__main__':
-
+    potencia.start(0)
     # Mouvement
     pir = 22
 
@@ -307,6 +316,6 @@ if __name__ == '__main__':
     finally:
         GPIO.output(ledT, False)
         GPIO.output(ledH, False)
-        GPIO.output(ledA, False)
+        GPIO.output(fan, False)
         GPIO.output(ledM, False)
         GPIO.cleanup()  # reset all GPIO
