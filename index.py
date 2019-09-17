@@ -132,7 +132,7 @@ def ahora():
     hoy = [a, M, d, h, m, s]
 
     # need to be (year, month, day, hours, minutes, seconds, milliseconds)
-    estado = session.get("manualmode", "0")
+    estado = "0"
     return jsonify(result=hoy, estado=estado)
 
 
@@ -166,14 +166,13 @@ def login():
             return render_template("index.html", mensaje=usu)
         else:
             if bcrypt.checkpw(password, user[4].encode('utf-8')):
-                session['manualmode'] = "0"
+                
                 session['id'] = user[0]
                 session['name'] = user[1]
                 session['phone'] = user[2]
                 session['email'] = user[3]
                 session['message'] = user[5]
                 session['root'] = user[8]
-                
                 ajustes()
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
@@ -208,7 +207,7 @@ def calendar():
             return render_template('calendarMortal.html')
         else:
             listado = users(usuarios())
-            return render_template('calendar.html', mensaje=cal, lista=listado)
+            return render_template('calendar.html', mensaje=cal, lista=listado, manualmode = "0")
     else:
         flash("Sesión caducada", 'dark')
         return redirect(url_for("login"))
@@ -259,23 +258,23 @@ def add_event():
 
         listado = users(usuarios())
         if len(idUser and start and end) == 0:
-            return render_template('calendar.html', mensaje=vacioE, lista=listado)
+            return render_template('calendar.html', mensaje=vacioE, lista=listado, manualmode = manualmode)
         if (end < start):
-            return render_template('calendar.html', mensaje=menor, lista=listado)
+            return render_template('calendar.html', mensaje=menor, lista=listado, manualmode = manualmode)
         if(dif(start, end, 3)):
-            return render_template('calendar.html', mensaje=dosmin, lista=listado)
+            return render_template('calendar.html', mensaje=dosmin, lista=listado, manualmode = manualmode)
         mesEnMinutos = 44640
         if(not (dif(start, end, mesEnMinutos))):
-            return render_template('calendar.html', mensaje=unmes, lista=listado)
+            return render_template('calendar.html', mensaje=unmes, lista=listado, manualmode = manualmode)
         # Comprobar si start o end esta entre el start o el end de algun otro evento (comprobación explusiva del modo Auto.)
         if (entre(start, end)) and (manualmode == "0"):
-            return render_template('calendar.html', mensaje=fechae, lista=listado)
+            return render_template('calendar.html', mensaje=fechae, lista=listado, manualmode = manualmode)
 
         cur = mysql.get_db().cursor()
         cur.execute(
             'INSERT INTO eventos (title, color, start, end, idUser) VALUES(%s, %s, %s, %s, %s)', (title, color, start, end, idUser))
         mysql.get_db().commit()
-        return render_template('calendar.html', mensaje=event, lista=listado)
+        return render_template('calendar.html', mensaje=event, lista=listado, manualmode = manualmode)
 
     if session.get("name", None) is not None:
         return render_template('index.html')
