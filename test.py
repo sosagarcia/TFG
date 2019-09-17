@@ -11,3 +11,7 @@ while True:
     for i in range(0, 100, 10):
         led.ChangeDutyCycle(i)
         time.sleep(0.5)
+
+
+fanMin = 40
+fanMax = 50
