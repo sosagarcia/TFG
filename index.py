@@ -132,7 +132,7 @@ def ahora():
     hoy = [a, M, d, h, m, s]
 
     # need to be (year, month, day, hours, minutes, seconds, milliseconds)
-    estado = "0"
+    estado = session.get("manualmode", "0")
     return jsonify(result=hoy, estado=estado)
 
 
@@ -166,13 +166,14 @@ def login():
             return render_template("index.html", mensaje=usu)
         else:
             if bcrypt.checkpw(password, user[4].encode('utf-8')):
-                
+                session['manualmode'] = "0"
                 session['id'] = user[0]
                 session['name'] = user[1]
                 session['phone'] = user[2]
                 session['email'] = user[3]
                 session['message'] = user[5]
                 session['root'] = user[8]
+                
                 ajustes()
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
