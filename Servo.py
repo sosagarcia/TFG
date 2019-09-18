@@ -4,15 +4,14 @@ import time  # Importamos time para poder usar time.sleep
 GPIO.setmode(GPIO.BCM)  # Ponemos la Raspberry en modo BOARD
 GPIO.setup(13, GPIO.OUT)  # Ponemos el pin 21 como salida
 # Ponemos el 13 en modo PWM y enviamos 50 pulsos por segundo
-p = GPIO.PWM(13, 50)
-p.start(7.5)  # Enviamos un pulso del 7.5% para centrar el servo
+p = GPIO.PWM(13, 50)  # Enviamos un pulso del 7.5% para centrar el servo
 
 try:
       # iniciamos un loop infinito
     p.start(2)
     # Enviamos un pulso del 4.5% para girar el servo hacia la izquierda
     time.sleep(2)
-     p.ChangeDutyCycle(7.5)
+    p.ChangeDutyCycle(7.5)
     time.sleep(2)  # pausa de medio segundo
     # Enviamos un pulso del 10.5% para girar el servo hacia la derecha
     p.ChangeDutyCycle(14)
