@@ -145,10 +145,10 @@ def takePicture():
         servo.ChangeDutyCycle(0)
         # max resolution = (2592, 1944)
 
-        #ruta2 = images + fecha + ".jpg"
+        #ruta2 = camara + fecha + ".jpg"
         time.sleep(0.5)
         # camera.capture(ruta2)
-        ruta = camara + fecha + "A"+".jpg"
+        ruta = images + fecha + "A"+".jpg"
 
         # SEGUNDA FOTO
         camera.capture(ruta)
@@ -157,7 +157,7 @@ def takePicture():
         servo.ChangeDutyCycle(0)
         time.sleep(0.5)
         # camera.capture(ruta2)
-        ruta = camara + fecha + "B"+".jpg"
+        ruta = images + fecha + "B"+".jpg"
         camera.capture(ruta)
         # TERCERA FOTO
         servo.ChangeDutyCycle(12.5)
@@ -165,7 +165,7 @@ def takePicture():
         servo.ChangeDutyCycle(0)
         time.sleep(0.5)
         # camera.capture(ruta2)
-        ruta = camara + fecha + "C"+".jpg"
+        ruta = images + fecha + "C"+".jpg"
         camera.capture(ruta)
         # servo.stop()
 
