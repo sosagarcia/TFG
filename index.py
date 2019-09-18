@@ -174,7 +174,7 @@ def login():
                 session['message'] = user[5]
                 session['root'] = user[8]
                 session['manual'] = "0"
-                ajustes()
+                #ajustes()
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
@@ -229,7 +229,6 @@ def data():
 def add_event():
     if request.method == 'POST':
         manualmode =request.form['manualmodeid']
-        session['manual'] = manualmode
         idUser = request.form['title']
         color = request.form['color']
         start = request.form['start']
@@ -253,7 +252,6 @@ def add_event():
             end = end + timedelta(hours=horas)
             end = end + timedelta(minutes=minutos)
             end = str(end)
-
             temp = len(end)
             end = end.replace(" ", "T")
             end = end[:temp - 3]
@@ -419,8 +417,15 @@ def asigna():
     datos = minitabla(data,tap)
     return jsonify(result= 1, msj=mensaje, tap= datos)
 
-   
 
+@app.route('/manualChange', methods=['POST'])
+def manualChange():
+    tipo = request.form.get('tipo')
+    if tipo == "1":
+        session['manual'] = "1"
+    else:
+        session['manual'] = "0"
+    return ("Done")
 
 @app.route('/updateStatistics', methods=['POST'])
 def updateStatistics():

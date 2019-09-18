@@ -105,7 +105,7 @@
 
 <script>
   var manualBool = document.getElementById("manualmodeid");
-  manualBool.style.display = "block";
+  manualBool.style.display = "none";
   var confirmaManual = document.getElementById("manualBTN");
   var manualBTN = document.getElementById("manual");
   var confirmaAuto = document.getElementById("autoBTN");
@@ -124,6 +124,7 @@
     borraBTN.style.display = "block";
     manualBTN.style.display = "none";
     manualBool.value = 1;
+    manualServer(manualBool.value);
     document.getElementById("manualCerrar").click();
   }
   function myFunctionAuto() {
@@ -131,7 +132,21 @@
     borraBTN.style.display = "none";
     manualBTN.style.display = "block";
     manualBool.value = 0;
+    manualServer(manualBool.value);
     document.getElementById("autoCerrar").click();
+  }
+
+  function manualServer(valor) {
+    $.post("/manualChange", {
+      tipo: valor
+    })
+      .done(function(reply) {
+        console.log(reply);
+      })
+      .fail(function() {
+        console.log("fail manual");
+        var t = setTimeout(manualServer, 1000);
+      });
   }
 </script>
 
