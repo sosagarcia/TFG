@@ -141,7 +141,7 @@ def takePicture():
         camera.rotation = 180
         camera.resolution = (1280, 720)
         servo.ChangeDutyCycle(1)
-        sleep(1)
+        time.sleep(1)
         servo.ChangeDutyCycle(0)
         # max resolution = (2592, 1944)
 
@@ -167,7 +167,7 @@ def takePicture():
         # camera.capture(ruta2)
         ruta = camara + fecha + "C"+".jpg"
         camera.capture(ruta)
-        servo.stop()
+        # servo.stop()
 
 
 def alarma(channel):
