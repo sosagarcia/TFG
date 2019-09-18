@@ -84,6 +84,7 @@ GPIO.output(ledT, False)
 GPIO.output(ledH, False)
 GPIO.output(ledA, False)
 GPIO.output(ledM, False)
+servo = GPIO.PWM(PIN, 50)
 
 
 def updateData():
@@ -134,17 +135,39 @@ def updateData():
 
 
 def takePicture():
+    servo.start(0)
+    fecha = datetime.datetime.now().strftime("%Y_%m_%d_at_%H_%M_%S")
     with picamera.PiCamera() as camera:
         camera.rotation = 180
-        # max resolution = (2592, 1944)
         camera.resolution = (1280, 720)
-        fecha = datetime.datetime.now().strftime("%Y_%m_%d_at_%H_%M_%S")
-        ruta = camara + fecha + ".jpg"
-        ruta2 = images + fecha + ".jpg"
-        time.sleep(2)
-        camera.capture(ruta2)
-        camera.capture(ruta)
+        servo.ChangeDutyCycle(1)
+        sleep(1)
+        servo.ChangeDutyCycle(0)
+        # max resolution = (2592, 1944)
+        
+        #ruta2 = images + fecha + ".jpg"
+        time.sleep(0.5)
+        #camera.capture(ruta2)
+        ruta = camara + fecha +"A"+".jpg"
 
+        #SEGUNDA FOTO
+        camera.capture(ruta)
+        servo.ChangeDutyCycle(7.5)
+        sleep(1)
+        servo.ChangeDutyCycle(0)
+        time.sleep(0.5)
+        #camera.capture(ruta2)
+        ruta = camara + fecha +"B"+".jpg"
+        camera.capture(ruta)
+        #TERCERA FOTO
+        servo.ChangeDutyCycle(12.5)
+        sleep(1)
+        servo.ChangeDutyCycle(0)
+        time.sleep(0.5)
+        #camera.capture(ruta2)
+        ruta = camara + fecha +"C"+".jpg"
+        camera.capture(ruta)
+        servo.stop()
 
 def alarma(channel):
     GPIO.output(ledM, True)

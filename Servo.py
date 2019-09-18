@@ -32,7 +32,7 @@ servo.ChangeDutyCycle(7.5)
 sleep(1)
 servo.ChangeDutyCycle(0)
 
-servo.ChangeDutyCycle(12, 5)
+servo.ChangeDutyCycle(12.5)
 sleep(1)
 servo.ChangeDutyCycle(0)
 
