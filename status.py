@@ -73,11 +73,13 @@ ledM = 5
 ledH = 20
 ledT = 21
 ledA = 4
+motor = 13
 
 GPIO.setup(ledM, GPIO.OUT)
 GPIO.setup(ledH, GPIO.OUT)
 GPIO.setup(ledT, GPIO.OUT)
 GPIO.setup(ledA, GPIO.OUT)
+GPIO.setup(motor, GPIO.OUT)
 GPIO.output(ledT, False)
 GPIO.output(ledH, False)
 GPIO.output(ledA, False)
