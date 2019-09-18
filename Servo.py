@@ -17,21 +17,25 @@ servo = GPIO.PWM(PIN, 50)
 # un pulso de 1.5ms de ancho. La librería de Python requiere especificar el
 # 'duty cycle' ('ciclo de trabajo', el tiempo que el pulso estará en 1) en
 # porcentaje del ciclo. 1.5ms de 20ms es el 7.5%
-servo.start(7.5)
+servo.start(0)
 
 # Le damos un segundo para que se mueva
-sleep(1)
+
 
 # Cambiamos el duty cycle para mover el servo completamente a la derecha, -90º.
 # Para ello, el SG90 espera un pulso de 2ms = 10%. Cambiamos el duty cycle.
-servo.ChangeDutyCycle(10)
-
-# Esperamos un segundo
+servo.ChangeDutyCycle(1)
 sleep(1)
+servo.ChangeDutyCycle(0)
 
-# Ahora, completamente a la izquierda, 90º, cambiamos el DC a 1ms = 5%
-servo.ChangeDutyCycle(5)
+servo.ChangeDutyCycle(7.5)
 sleep(1)
+servo.ChangeDutyCycle(0)
+
+servo.ChangeDutyCycle(12, 5)
+sleep(1)
+servo.ChangeDutyCycle(0)
+
 
 # Detenemos el PWM y reseteamos los pins del RPi
 servo.stop()
