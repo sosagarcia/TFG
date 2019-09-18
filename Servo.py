@@ -1,25 +1,38 @@
-import RPi.GPIO as GPIO  # Importamos la libreria RPi.GPIO
-import time  # Importamos time para poder usar time.sleep
+from RPi import GPIO
+from time import sleep
 
-GPIO.setmode(GPIO.BOARD)  # Ponemos la Raspberry en modo BOARD
-GPIO.setup(13, GPIO.OUT)  # Ponemos el pin 21 como salida
-# Ponemos el pin 21 en modo PWM y enviamos 50 pulsos por segundo
-p = GPIO.PWM(21, 50)
-p.start(7.5)  # Enviamos un pulso del 7.5% para centrar el servo
+# El pin del GPIO que estará conectado al pin de PWM del servo.
+PIN = 13
 
-try:
-    while True:  # iniciamos un loop infinito
+# Configuramos el pin del RPi
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(PIN, GPIO.OUT)
 
-        # Enviamos un pulso del 4.5% para girar el servo hacia la izquierda
-        p.ChangeDutyCycle(4.5)
-        time.sleep(2)  # pausa de medio segundo
-        # Enviamos un pulso del 10.5% para girar el servo hacia la derecha
-        p.ChangeDutyCycle(10.5)
-        time.sleep(2)  # pausa de medio segundo
-        # Enviamos un pulso del 7.5% para centrar el servo de nuevo
-        p.ChangeDutyCycle(7.5)
-        time.sleep(2)  # pausa de medio segundo
+# El 2do parámetro es la frecuencia del ciclo en Hertz. El manual del SG90
+# indica un periodo del ciclo de 20ms (0,02s), entonce la frecuencia es
+# 1/0,02 = 50 Hz
+servo = GPIO.PWM(PIN, 50)
 
-except KeyboardInterrupt:  # Si el usuario pulsa CONTROL+C entonces...
-    p.stop()  # Detenemos el servo
-    GPIO.cleanup()  # Limpiamos los pines GPIO de la Raspberry y cerramos el script
+# Iniciamos el PWM, colocando el servo en 0º. Para ello, debemos enviarle
+# un pulso de 1.5ms de ancho. La librería de Python requiere especificar el
+# 'duty cycle' ('ciclo de trabajo', el tiempo que el pulso estará en 1) en
+# porcentaje del ciclo. 1.5ms de 20ms es el 7.5%
+servo.start(7.5)
+
+# Le damos un segundo para que se mueva
+sleep(1)
+
+# Cambiamos el duty cycle para mover el servo completamente a la derecha, -90º.
+# Para ello, el SG90 espera un pulso de 2ms = 10%. Cambiamos el duty cycle.
+servo.ChangeDutyCycle(10)
+
+# Esperamos un segundo
+sleep(1)
+
+# Ahora, completamente a la izquierda, 90º, cambiamos el DC a 1ms = 5%
+servo.ChangeDutyCycle(5)
+sleep(1)
+
+# Detenemos el PWM y reseteamos los pins del RPi
+servo.stop()
+GPIO.cleanup()
