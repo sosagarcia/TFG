@@ -18,14 +18,15 @@
 		<div class="col-md-3 fadeIn">
 		     <div class="nav nav-tabs ">
               <a data-toggle="tab" href="#home" class="list-group-item list-group-item-action {% if ajustes %}active  {% endif %}" data-toggle="tab" href="#home">Información Personal</a>
+              {% if session["root"] %}
+              <a data-toggle="tab" href="#settings" class=" {% if dispositivo %}active  {% endif %} list-group-item list-group-item-action ">Hardware</a>
 
-              <a data-toggle="tab" href="#settings" class=" {% if dispositivo %}active  {% endif %} list-group-item list-group-item-action {% if not session["root"] %}disabled {% endif %}">Hardware</a>
+              <a data-toggle="tab" href="#personal" class=" {% if registro %}active  {% endif %}list-group-item list-group-item-action " >Registrar nuevo usuario</a>
 
-              <a data-toggle="tab" href="#personal" class=" {% if registro %}active  {% endif %}list-group-item list-group-item-action {% if not session["root"] %}disabled {% endif %}" >Registrar nuevo usuario</a>
+              <a data-toggle="tab" href="#lista" class=" {% if lista %}active  {% endif %}list-group-item list-group-item-action " >Usuarios</a>
 
-              <a data-toggle="tab" href="#lista" class=" {% if lista %}active  {% endif %}list-group-item list-group-item-action {% if not session["root"] %}disabled {% endif %}" >Usuarios</a>
-
-              <a data-toggle="tab" href="#asignacion" class=" {% if asignacion %}active  {% endif %}list-group-item list-group-item-action {% if not session["root"] %}disabled {% endif %}" >Salidas</a>
+              <a data-toggle="tab" href="#asignacion" class=" {% if asignacion %}active  {% endif %}list-group-item list-group-item-action " >Salidas</a>
+              {% endif %}
           </div> 
 		</div>
 		<div class="col-md-9 fadeInDown">

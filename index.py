@@ -294,15 +294,15 @@ def deletEvent():
 
 
 @app.route('/deletFull', methods=['POST'])
-def deletAlgo():
+def deletFull():
 
-    algo = request.form['canvas_data']
-    algoInt = int(algo)
-    if algoInt == 0:
-        cur = mysql.get_db().cursor()
-        cur.execute('TRUNCATE TABLE eventos ')
-        mysql.get_db().commit()
-        return Response("Done")
+    #algo = request.form['canvas_data']
+    #algoInt = int(algo)
+    #if algoInt == 0:
+    cur = mysql.get_db().cursor()
+    cur.execute('TRUNCATE TABLE eventos ')
+    mysql.get_db().commit()
+    return Response("Done")
 
 
 @app.route('/reinicio')
