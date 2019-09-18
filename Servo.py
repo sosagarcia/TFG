@@ -1,64 +1,25 @@
-import sys
-import time
-import random
-import pigpio
+import RPi.GPIO as GPIO  # Importamos la libreria RPi.GPIO
+import time  # Importamos time para poder usar time.sleep
 
-NUM_GPIO = 32
+GPIO.setmode(GPIO.BOARD)  # Ponemos la Raspberry en modo BOARD
+GPIO.setup(13, GPIO.OUT)  # Ponemos el pin 21 como salida
+# Ponemos el pin 21 en modo PWM y enviamos 50 pulsos por segundo
+p = GPIO.PWM(21, 50)
+p.start(7.5)  # Enviamos un pulso del 7.5% para centrar el servo
 
-MIN_WIDTH = 1000
-MAX_WIDTH = 2000
+try:
+    while True:  # iniciamos un loop infinito
 
-step = [0]*NUM_GPIO
-width = [0]*NUM_GPIO
-used = [False]*NUM_GPIO
+        # Enviamos un pulso del 4.5% para girar el servo hacia la izquierda
+        p.ChangeDutyCycle(4.5)
+        time.sleep(2)  # pausa de medio segundo
+        # Enviamos un pulso del 10.5% para girar el servo hacia la derecha
+        p.ChangeDutyCycle(10.5)
+        time.sleep(2)  # pausa de medio segundo
+        # Enviamos un pulso del 7.5% para centrar el servo de nuevo
+        p.ChangeDutyCycle(7.5)
+        time.sleep(2)  # pausa de medio segundo
 
-pi = pigpio.pi()
-
-if not pi.connected:
-    exit()
-
-if len(sys.argv) == 1:
-    G = [4]
-else:
-    G = []
-    for a in sys.argv[1:]:
-        G.append(int(a))
-
-for g in G:
-    used[g] = True
-    step[g] = random.randrange(5, 25)
-    if step[g] % 2 == 0:
-        step[g] = -step[g]
-    width[g] = random.randrange(MIN_WIDTH, MAX_WIDTH+1)
-
-print("Sending servos pulses to GPIO {}, control C to stop.".
-      format(' '.join(str(g) for g in G)))
-
-while True:
-
-    try:
-
-        for g in G:
-
-            pi.set_servo_pulsewidth(g, width[g])
-            actual = pi.get_servo_pulsewidth(g)
-
-            #print(g, width[g], actual)
-
-            width[g] += step[g]
-
-            if width[g] < MIN_WIDTH or width[g] > MAX_WIDTH:
-                step[g] = -step[g]
-                width[g] += step[g]
-
-        time.sleep(0.1)
-
-    except KeyboardInterrupt:
-        break
-
-print("\nTidying up")
-
-for g in G:
-    pi.set_servo_pulsewidth(g, 0)
-
-pi.stop()
+except KeyboardInterrupt:  # Si el usuario pulsa CONTROL+C entonces...
+    p.stop()  # Detenemos el servo
+    GPIO.cleanup()  # Limpiamos los pines GPIO de la Raspberry y cerramos el script
