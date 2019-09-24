@@ -21,7 +21,7 @@ servo = GPIO.PWM(PIN, 50)
 # un pulso de 1.5ms de ancho. La librería de Python requiere especificar el
 # 'duty cycle' ('ciclo de trabajo', el tiempo que el pulso estará en 1) en
 # porcentaje del ciclo. 1.5ms de 20ms es el 7.5%
-servo.start(0)
+"""servo.start(0)
 
 # Le damos un segundo para que se mueva
 
@@ -29,27 +29,27 @@ servo.start(0)
 # Cambiamos el duty cycle para mover el servo completamente a la derecha, -90º.
 # Para ello, el SG90 espera un pulso de 2ms = 10%. Cambiamos el duty cycle.
 servo.ChangeDutyCycle(1)
-sleep(1)
+time.sleep(1)
 servo.ChangeDutyCycle(0)
 
 servo.ChangeDutyCycle(7.5)
-sleep(1)
+time.sleep(1)
 servo.ChangeDutyCycle(0)
 
 servo.ChangeDutyCycle(12.5)
-sleep(1)
+time.sleep(1)
 servo.ChangeDutyCycle(0)
 
 
-# Detenemos el PWM y reseteamos los pins del RPi
-servo.stop()
+# Detenemos el PWM y reseteamos los pins del RPi"""
+
 
 servo.start(0)
 fecha = datetime.datetime.now().strftime("%Y_%m_%d_at_%H_%M_%S")
 with picamera.PiCamera() as camera:
     #camera.rotation = 180
     camera.resolution = (1280, 720)
-    servo.ChangeDutyCycle(1)
+    servo.ChangeDutyCycle(2)
     time.sleep(1)
     servo.ChangeDutyCycle(0)
     # max resolution = (2592, 1944)
@@ -76,4 +76,4 @@ with picamera.PiCamera() as camera:
     # camera.capture(ruta2)
     ruta = images + fecha + "C"+".jpg"
     camera.capture(ruta)
-    # servo.stop()
+    servo.stop()
