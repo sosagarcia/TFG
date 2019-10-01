@@ -321,7 +321,9 @@ if __name__ == '__main__':
         updateData()
     except:
         pass
-    servo.start(0)
+    servo.start(7.5)
+    time.sleep(0.5)
+    servo.ChangeDutyCycle(0)
     t1.start()
     t2.start()
     t4.start()
