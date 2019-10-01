@@ -165,7 +165,7 @@ def takePicture():
         # camera.capture(ruta2)
         ruta = images + fecha + "C"+".jpg"
         camera.capture(ruta)
-        servo.stop()
+        #servo.stop()
 
 
 def alarma(channel):
