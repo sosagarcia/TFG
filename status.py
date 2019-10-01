@@ -176,7 +176,7 @@ def alarma(channel):
     # alarmaCheck()
     email = give("mail")
     feedback = sendEmail(
-    str(text), email, "Se ha detectado movimiento")
+        str(text), str(email), "Se ha detectado movimiento")
     time.sleep(2)
     GPIO.output(ledM, False)
 
@@ -228,8 +228,8 @@ def avisos(actual):
             actualStr + " %"
         write_log(text, aPath, aName)
         email = give("mail")
-        # feedback = sendEmail(
-        # str(text), email, "El nivel del agua es muy BAJO")
+        feedback = sendEmail(
+            str(text), email, "El nivel del agua es muy BAJO")
         GPIO.output(ledA, False)
     if disA < actual:
         GPIO.output(ledA, True)
@@ -238,8 +238,8 @@ def avisos(actual):
             actualStr + " %"
         write_log(text, aPath, aName)
         email = give("mail")
-        # feedback = sendEmail(
-        # str(text), email, "El nivel del agua es muy ALTO")
+        feedback = sendEmail(
+            str(text), email, "El nivel del agua es muy ALTO")
         GPIO.output(ledA, False)
 
 

@@ -10,5 +10,5 @@ echo "Pid actual de status.py:  $statusPID"
 echo "iniciando worker.py en segundo plano"
 sudo python3 /var/www/html/TFG/worker.py &
 workerPID=$!
-echo "Pid actual de status.py:  $workerPID"
+echo "Pid actual de worker.py:  $workerPID"
  echo "###########################################################################"
