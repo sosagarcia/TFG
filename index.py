@@ -571,7 +571,7 @@ def update_device():
         log = confText.format(nameD, emailR, tam, disB, disA, tem, hum, humTem, disT, cpusT)
         save_conf(log)
         session['nameD'] = nameD
-        session['emailR'] = emailR
+        session['emailA'] = emailR
         session['tam'] = tam
         session['disB'] = disB
         session['disA'] = disA

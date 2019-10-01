@@ -148,7 +148,6 @@ def takePicture():
         time.sleep(0.5)
         # camera.capture(ruta2)
         ruta = images + fecha + "A"+".jpg"
-
         # SEGUNDA FOTO
         camera.capture(ruta)
         servo.ChangeDutyCycle(7.5)
@@ -176,8 +175,8 @@ def alarma(channel):
     write_log(text, irPath, irName)
     # alarmaCheck()
     email = give("mail")
-    # feedback = sendEmail(
-    # str(text), email, "Se ha detectado movimiento")
+    feedback = sendEmail(
+    str(text), email, "Se ha detectado movimiento")
     time.sleep(2)
     GPIO.output(ledM, False)
 
