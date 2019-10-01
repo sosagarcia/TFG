@@ -135,7 +135,7 @@ def updateData():
 
 
 def takePicture():
-    servo.start(0)
+
     fecha = datetime.datetime.now().strftime("%Y_%m_%d_at_%H_%M_%S")
     with picamera.PiCamera() as camera:
         # camera.rotation = 180
@@ -165,7 +165,7 @@ def takePicture():
         # camera.capture(ruta2)
         ruta = images + fecha + "C"+".jpg"
         camera.capture(ruta)
-        #servo.stop()
+        # servo.stop()
 
 
 def alarma(channel):
@@ -321,7 +321,7 @@ if __name__ == '__main__':
         updateData()
     except:
         pass
-
+    servo.start(0)
     t1.start()
     t2.start()
     t4.start()
