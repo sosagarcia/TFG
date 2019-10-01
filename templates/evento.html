@@ -6,19 +6,13 @@
 {% endblock %}
 {% block body %}
 <div class="modal-body">
-
-
   <!-- Login Form -->
   <form action="/add_event" method="POST">
     <input type="text" id="login" class="form-control" name="title" placeholder="titulo" />
     <input type="color" id="login" class="form-control" name="color" placeholder="color" />
     <input type="datetime-local" class="form-control" name="start">
     <input type="datetime-local" class="form-control" name="end">
-
     <input type="submit" class="fadeIn fourth" value="Guardar" />
-
-
-
     <div class="wrapper fadeInDown">
       <div id="formContent">
         <!-- Mensaje -->
@@ -30,10 +24,8 @@
               <h4 class="card-title">{{ mensaje.author }}</h4>
               <p class="card-text">{{ mensaje.mensaje }}</p>
             </div>
-
             {% endfor %}
           </div>
-
           <!-- Login Form -->
           <form action="/add_event" method="POST" id="event">
             <input type="text" id="login" class="fadeIn second" name="title" placeholder="Nombre del evento" />
@@ -52,6 +44,4 @@
       </div>
     </div>
 </div>
-
-
 {% endblock %}

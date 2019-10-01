@@ -47,14 +47,13 @@ servo.ChangeDutyCycle(0)
 servo.start(0)
 fecha = datetime.datetime.now().strftime("%Y_%m_%d_at_%H_%M_%S")
 with picamera.PiCamera() as camera:
-    #camera.rotation = 180
+    # camera.rotation = 180
     camera.resolution = (1280, 720)
     servo.ChangeDutyCycle(2)
     time.sleep(1)
     servo.ChangeDutyCycle(0)
     # max resolution = (2592, 1944)
-
-    #ruta2 = camara + fecha + ".jpg"
+    # ruta2 = camara + fecha + ".jpg"
     time.sleep(0.5)
     # camera.capture(ruta2)
     ruta = images + fecha + "A"+".jpg"

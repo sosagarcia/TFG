@@ -4,7 +4,6 @@ DIA=`date +"%d/%m/%Y"`
 HORA=`date +"%H:%M:%S"`
 echo "###########################################################################"
 echo "Hoy es  $DIA y la hora actual es $HORA"
-
 echo "Empieza el commit"
 cd /var/log/iot/
 sudo git add .

@@ -5,12 +5,9 @@
   href="{{url_for('static', filename='css/modal-images.css')}}"
 />
 {% endblock %} {% block body %}
-
 <div class="container mt-2 shadow bg-white rounded mx-auto" id="fotos">
   <!-- Trigger the Modal -->
-
   {% for ruta in rutas %}
-
   <img
     id="{{ ruta[:-4] }}"
     src="{{url_for('static', filename='img/camara/' + ruta)}}"
@@ -28,6 +25,7 @@
     <div id="caption"></div>
   </div>
 </div>
+
 {% endblock %} {% block script %}
 <script>
     var modal = document.getElementById("myModal");
@@ -54,5 +52,4 @@
       document.getElementById(id).src = '{{url_for('static', filename='img/camara/' + "000.jpg")}}';
   }
 </script>
-
 {% endblock %}

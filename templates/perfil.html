@@ -1,20 +1,9 @@
 {% extends "layout.html" %}
-
-
 {% block title %}Perfil{% endblock %}
-
 {% block body %}
-
-
-
-<!------ Include the above in your HEAD tag ---------->
-
 <div class="container">
-  
     {% include "flash.html" %}
 	<div class="row">
-
-
 		<div class="col-md-3 fadeIn">
 		     <div class="nav nav-tabs ">
               <a data-toggle="tab" href="#home" class="list-group-item list-group-item-action {% if ajustes %}active  {% endif %}" data-toggle="tab" href="#home">Información Personal</a>
@@ -109,8 +98,6 @@
                 </div>
               </div>
               <div class="tab-pane {% if dispositivo %}active  {% endif %}" id="settings">
-                
-
                   <div class="row">
                       <div class="col-md-12">
                           <h4>Ajustes del Aplicativo</h4>
@@ -156,8 +143,7 @@
                                   <input id="disA" name="disA" value="{{ session["disA"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca la distancia en %" min="2" max ="99"
                                   >
                               </div>
-                            </div> 
-                              
+                            </div>
                               <div class="form-group row">
                                   <label for="tem" class="col-4 col-form-label">Aviso de temperatura</label> 
                                   <div class="col-8">
@@ -197,8 +183,6 @@
                                 >
                               </div>
                             </div>
-                              
-                            
                               <div class="form-group row">
                                 <div class="offset-4 col-8">
                                   <button name="submit" type="submit" class="btn-primary">Actualizar Ajustes</button>
@@ -212,15 +196,10 @@
                         </form>
 		                </div>
                 </div>
-
               </div>
               <div class="tab-pane {% if registro %} active {% endif %}" id="personal">
-                
-
                 {% include "registro.html" %}
-
             </div>
-
             <div class="tab-pane {% if lista %} active {% endif %}" id="lista">
               <div class="row">
                 <div class="col-md-12">
@@ -228,9 +207,7 @@
                     <hr>
                 </div>
               </div>
-
               {% include "lista.html" %}
-
           </div>
           <div class="tab-pane {% if asignacion %} active {% endif %}" id="asignacion">
               <div class="row">
@@ -239,7 +216,6 @@
                     <hr>
                 </div>
               </div>
-
               {% include "salidas.html" %}
               <div class="progress">
                   <div
@@ -256,7 +232,6 @@
                     <button type="button" class="btn-success"id="asigBTN" >
                       Actualizar Asignación
                     </button>
-                    
                   </div>
                 </div>
                 <strong> Todos los campos son obligatorios </strong>
@@ -266,8 +241,7 @@
 		    </div>
 		</div>
 	</div>
-</div>
-                                                      
+</div>                                                
 {% include "reboot.html" %}
 {% endblock %}
 {% block script %}
@@ -281,52 +255,37 @@ var barra2 = document.getElementById("myBar2");
 boton2 = document.getElementById("updateBTN");                      
 cerrar2 = document.getElementById("cerrar2");                      
 barra2.style.display = "none";
-
 boton1.addEventListener("click", reinicio);
 boton2.addEventListener("click", actualizacion);
 
 function actualizacion() {
-    
     $.get("/actualiza", function() {})
       .done(function(out) {
-        
-        console.log(out);
+        // console.log(out);
       })
       .fail(function() {
-        
         console.log("fail actualiza");
       });
-      
       move(barra2, 15);
     //document.getElementById("Cerrar").click();
   }
 
-
 function reinicio() {
-    
     $.get("/reinicio", function() {})
       .done(function(out) {
-        
-        console.log(out);
+        // console.log(out);
       })
       .fail(function() {
-        
         console.log("fail reinicio");
       });
-      
       move(barra1, 35);
     //document.getElementById("Cerrar").click();
   }
 
 function myFunction() {
-  // Get the checkbox
   var checkBox = document.getElementById("con");
-  // Get the output text
   var text = document.getElementById("cont");
-  
   var bool = document.getElementById("bool");
-
-
   // If the checkbox is checked, display the output text
   if (checkBox.checked == true){
     text.style.display = "block";
@@ -337,7 +296,6 @@ function myFunction() {
     bool.value= "0"
   }
 }
-
 function move(theBarra, tiempo) {
   theBarra.style.display = "block";
   boton1.disabled=true;
@@ -357,11 +315,9 @@ function move(theBarra, tiempo) {
       theBarra.innerHTML = width * 1  + '%';
     }
   }
-  
 }
 </script>
 <script>
-  
     var botonA = document.getElementById("asigBTN");
     botonA.addEventListener("click", asignacion);
     var result = [];
@@ -378,17 +334,13 @@ function move(theBarra, tiempo) {
     var selected24; 
     var running;
     
-
     function asignacion(){
     {% for tap in taps %}
     selected{{tap.2}} = tapV{{tap.2}}.options[tapV{{tap.2}}.selectedIndex];
     result.push({{tap.2}});
     result.push (selected{{tap.2}}.value );
-    
     {% endfor %}
-    console.log (result)
-
-    
+    // console.log (result)
     barra(barra3, 3)
     running = true;
     $.post("/asigna", {
@@ -429,13 +381,8 @@ function move(theBarra, tiempo) {
         clearInterval(id);
       }
     }
-    
-
   }
-  
 }
-
 </script>
-
 
 {% endblock %}

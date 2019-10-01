@@ -18,7 +18,7 @@ cpuName = "_UsoCPU.log"
 
 
 # Texto de Recuperación de contraseña
-cambio_pass = """El siguiente correo se ha generado automáticamente para ayudarle a cambiar su contraseña del aplicativo de Sistema de gestión de control de aguas .
+cambio_pass = """El siguiente correo se ha generado automáticamente para ayudarle a cambiar su contraseña del aplicativo de Sistema de gestión de control de aguas.
 Si usted no ha solicitado la recuperación de la contraseña, ignore este correo.
 
 Para realizar el cambio de contraseña, introduzca el siguiente código de recuperación:
@@ -26,7 +26,7 @@ Para realizar el cambio de contraseña, introduzca el siguiente código de recup
 Su código de recuperación es : """
 
 # Texto de verificación de cuenta
-cambio_pass = """El siguiente correo se ha generado automáticamente para verificar su cuenta del  aplicativo de Sistema de gestión de control de aguas .
+cambio_pass = """El siguiente correo se ha generado automáticamente para verificar su cuenta del  aplicativo de Sistema de gestión de control de aguas.
 
 
 Para poder verificar su cuenta, introduzca el siguiente código.
@@ -45,7 +45,6 @@ htTm = {}
 disT = {}
 cpuS = {}
 ###FIN###"""
-
 
 
 # Diccionario de mensajes

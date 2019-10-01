@@ -1,5 +1,4 @@
 {% extends "layout.html" %} {% block body %}
-
 <div>
   <div class="row ">
     <div
@@ -21,7 +20,6 @@
                 <h4 class="card-title">{{ mensaje.author }}</h4>
                 <p class="card-text">{{ mensaje.mensaje }}</p>
               </div>
-
               {% endfor %}
             </div>
             <!-- Login Form -->
@@ -31,19 +29,15 @@
               onsubmit="return validateFormOnSubmit(this);"
             >
               <!--  <input type="text" id="login" class="fadeIn second" name="title" placeholder="Nombre del evento" /> -->
-
               <div
                 id="Selectables"
                 class=" fadeIn  row"
                 
               >
-                
                     <div name="Humedad" class="col" >
                     <label for="hum">
                         <h6 class="font-weight-bold">Humedad Exterior</h6>
                     </label>
-                    
-
                     <input
                       id="hum"
                       type="checkbox" checked
@@ -53,13 +47,10 @@
                       data-off-cls="pointer"
                     />
                   </div>
-
                   <div name="cpu" class="col">
                       <label for="cpu">
                           <h6 class="font-weight-bold">Uso de la CPU</h6>
                       </label>
-                      
-
                       <input
                         id="cpu"
                         type="checkbox"
@@ -73,8 +64,6 @@
                     <label for="temp">
                         <h6 class="font-weight-bold">Temperatura Exterior</h6>
                     </label>
-                    
-
                     <input
                       id="temp"
                       type="checkbox"
@@ -84,13 +73,10 @@
                       data-off-cls="pointer"
                     />
                   </div>
-                  
                     <div name="cpuT" class="col  mt-3">
                       <label for="cpuT">
                           <h6 class="font-weight-bold">Temperatura Interior</h6>
                       </label>
-                      
-
                       <input
                         id="cpuT"
                         type="checkbox"
@@ -100,13 +86,10 @@
                         data-off-cls="pointer"
                       />
                     </div>
-
                     <div name="distancia" class="col mt-3">
                         <label for="dis">
                             <h6 class="font-weight-bold">Nivel del Agua </h6>
                         </label>
-                        
-  
                         <input
                           id="dis"
                           type="checkbox"
@@ -118,8 +101,6 @@
                       </div>
                 </div>
               </div>
-
-
               <label for="periodo"> 
                   <h6 class="font-weight-bold">Intervalo de tiempo</h6>
               </label>
@@ -129,7 +110,6 @@
                 <option value="*">Desde siempre</option>
                 <option value="intervalo">Intervalo definido</option> </select
               ><br />
-
               <div id="diaC">
                 <label for="diaConcreto">
                     <h6 class="font-weight-bold"> Seleccione día a mostrar </h6>
@@ -137,13 +117,11 @@
                 <br />
                 <input type="date" id="diaConcreto" />
               </div>
-
               <div id="peri">
                 <label for="login-1">
                     <h6 class="font-weight-bold"> Inicio </h6>
                 </label>
                 <br />
-
                 <div class="d-flex justify-content-center">
                   <input
                     type="datetime-local"
@@ -157,7 +135,6 @@
                       <h6 class="font-weight-bold">Fin</h6>
                   </label>
                   <br />
-
                   <input
                     id="input-3"
                     type="checkbox"
@@ -167,7 +144,6 @@
                     data-off-cls="pointer"
                   />
                 </div>
-
                 <div id="fin">
                   <div class="d-flex justify-content-center">
                     <input
@@ -180,7 +156,6 @@
                 </div>
               </div>
               <label for="muestras"> <h6 class="font-weight-bold">Número de muestras: </h6> </label>
-
               <input
                 type="number"
                 id="muestras"
@@ -202,16 +177,12 @@
     </div>
   </div>
 </div>
-
 {% endblock %} {% block script %}
-
 <script
   src="../static/js/bootstrap-checkbox-1.5.0/dist/js/bootstrap-checkbox.js"
   defer
 ></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
 <script src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
 <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
-
 {% include "estadisticasScp.html" %} {% endblock %}

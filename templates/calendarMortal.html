@@ -3,7 +3,6 @@
 <link href="../static/css/calendar/daygrid.css" rel="stylesheet" />
 <link href="../static/css/calendar/timegrid.css" rel="stylesheet" />
 <link href="../static/css/calendar/list.css" rel="stylesheet" />
-
 {% endblock %} {% block body %}
 <div>
   <div class="container w-50">
@@ -13,7 +12,6 @@
     ></div>
   </div>
 </div>
-
 <!-- Modal de Selección-->
 <div
   class="modal fade"
@@ -36,7 +34,6 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-
       <div class="modal-body">
         <label for="inicioEvento">
           Inicio
@@ -49,7 +46,6 @@
         <br />
         <input type="datetime" id="finEvento" name="finEvento" />
       </div>
-
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Cerrar
@@ -58,9 +54,7 @@
     </div>
   </div>
 </div>
-
 {% endblock %} {% block script %}
-
 <script src="../static/js/calendar/vendorRrule.js"></script>
 <script src="../static/js/calendar/core.js"></script>
 <script src="../static/js/calendar/interaction.js"></script>
@@ -70,5 +64,4 @@
 <script src="../static/js/calendar/list.js"></script>
 <script src="../static/js/calendar/rrule.js"></script>
 <script src="../static/js/calendar/es.js"></script>
-
 {% include "calendarScpMortal.html" %} {% endblock %}

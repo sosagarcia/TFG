@@ -11,7 +11,6 @@
       sizes=" 64x64"
     />
     <title>{% block title %} {% endblock %}</title>
-    <!-- css -->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -35,15 +34,10 @@
       rel="stylesheet"
       href="{{url_for('static', filename='css/footer.css')}}"
     />
-
-    <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
     />
-    <!-- Bootstrap core CSS -->
-
-    <!-- Material Design Bootstrap -->
   </head>
 
   <body>
@@ -73,8 +67,6 @@
             </div>
           </div>
         </nav>
-
-        <!-- Centro -->
         <div class="mt-4 ml-4 mr-4">
           {% block conten %} {% endblock %}
         </div>
@@ -82,9 +74,6 @@
     </div>
     {% include "footer.html" %}
   </body>
-
-  <!-- JavaScript -->
-
   <script
     src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -100,23 +89,14 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"
   ></script>
-
-  <!-- JQuery -->
   <script
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
   ></script>
-  <!-- Bootstrap tooltips -->
-
-  <!-- Bootstrap core JavaScript -->
-
-  <!-- MDB core JavaScript -->
   <script
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.7/js/mdb.min.js"
   ></script>
-
-  <!-- jQuery -->
   <script
     src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="

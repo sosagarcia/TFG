@@ -4,7 +4,6 @@ from flask.json import JSONEncoder
 import datetime as dt
 from flask import Flask, render_template, request, url_for, redirect, flash, session, Response
 import os
-
 import random
 from flaskext.mysql import MySQL
 import bcrypt
@@ -166,7 +165,6 @@ def login():
             return render_template("index.html", mensaje=usu)
         else:
             if bcrypt.checkpw(password, user[4].encode('utf-8')):
-                
                 session['id'] = user[0]
                 session['name'] = user[1]
                 session['phone'] = user[2]
@@ -174,12 +172,11 @@ def login():
                 session['message'] = user[5]
                 session['root'] = user[8]
                 session['manual'] = "0"
-                ajustes()
+                #ajustes()
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
                 agenda = conjunto(titulos())
-
                 return render_template('main.html', agenda=agenda, primer=1, alarma=str(alarmas), movimiento=movimientos, salida=salidas)
             else:
                 return render_template("index.html", mensaje=contra)
@@ -194,7 +191,7 @@ def perfil():
     if session.get("name", None) is not None:
         data = conn('SELECT * FROM contacts')
         tap = conn('SELECT * FROM tap')
-        datos = tabla(data,tap)
+        datos = tabla(data, tap)
         return render_template('perfil.html', mensaje=reg, ajustes=1, contactos=data, taps=datos)
     else:
         flash("Sesión caducada", 'dark')
@@ -228,7 +225,7 @@ def data():
 @app.route('/add_event', methods=['POST'])
 def add_event():
     if request.method == 'POST':
-        manualmode =request.form['manualmodeid']
+        manualmode = request.form['manualmodeid']
         idUser = request.form['title']
         color = request.form['color']
         start = request.form['start']
@@ -238,7 +235,7 @@ def add_event():
         horas = request.form['horas']
         minutos = request.form['minutos']
         if len(minutos or horas) == 0:
-            end = request.form['end']       
+            end = request.form['end']
         else:
             end = pasaFecha(start)
             if (horas == ''):
@@ -248,7 +245,7 @@ def add_event():
             if (minutos == ''):
                 minutos = 0
             else:
-                minutos = int(minutos)                
+                minutos = int(minutos)
             end = end + timedelta(hours=horas)
             end = end + timedelta(minutes=minutos)
             end = str(end)
@@ -266,16 +263,15 @@ def add_event():
         mesEnMinutos = 44640
         if(not (dif(start, end, mesEnMinutos))):
             return render_template('calendar.html', mensaje=unmes, lista=listado)
-        # Comprobar si start o end esta entre el start o el end de algun otro evento (comprobación explusiva del modo Auto.)
+        # Comprobar si start o end esta entre el start o el end de algun otro
+        # evento (comprobación explusiva del modo Auto.)
         if (entre(start, end)) and (manualmode == "0"):
             return render_template('calendar.html', mensaje=fechae, lista=listado)
-
         cur = mysql.get_db().cursor()
         cur.execute(
             'INSERT INTO eventos (title, color, start, end, idUser) VALUES(%s, %s, %s, %s, %s)', (title, color, start, end, idUser))
         mysql.get_db().commit()
         return render_template('calendar.html', mensaje=event, lista=listado)
-
     if session.get("name", None) is not None:
         return render_template('index.html')
     else:
@@ -310,14 +306,11 @@ def reinicio():
     output = reiniciar()
     return jsonify(output)
 
+
 @app.route('/actualiza')
 def actualiza():
-   algo =  actualizacion()
-   return jsonify(algo)
-    
-
-
-
+    algo = actualizacion()
+    return jsonify(algo)
 
 
 @app.route('/deletDay', methods=['POST'])
@@ -377,18 +370,18 @@ def state():
 
 @app.route('/testa')
 def chart():
-        
         imagenes = list()
         return render_template('galery.html', rutas=imagenes)
-        
+
+
 @app.route('/asigna', methods=['POST'])
 def asigna():
     datos = request.form.getlist('data[]')
-    pins= list()
+    pins = list()
     users = list()
     mensaje = ""
     max = len(datos)
-    for i in range (0,max,2):
+    for i in range(0, max, 2):
         pin = datos[i]
         user = datos[i + 1]
         if not user == "":
@@ -400,9 +393,9 @@ def asigna():
             sublist.append(i)
     if not users == sublist:
         mensaje = "Hay usuarios repetidos / Hay mas de una salida sin asignar"
-        return jsonify(result= -1, msj=mensaje)
+        return jsonify(result=-1, msj=mensaje)
     fin = len(pins)
-    for i in range (0,fin):
+    for i in range(0, fin):
         pin = int(pins[i])
         user = int(users[i])
         cur = mysql.get_db().cursor()
@@ -414,8 +407,8 @@ def asigna():
     mensaje = "Salidas actualizadas correctamente"
     data = conn('SELECT * FROM contacts')
     tap = conn('SELECT * FROM tap')
-    datos = minitabla(data,tap)
-    return jsonify(result= 1, msj=mensaje, tap= datos)
+    datos = minitabla(data, tap)
+    return jsonify(result=1, msj=mensaje, tap=datos)
 
 
 @app.route('/manualChange', methods=['POST'])
@@ -433,7 +426,6 @@ def updateStatistics():
     fecha = request.form.get('fecha')
     muestra = request.form.get('muestras')
     labels, datos, color, title, unit = giveDatasets(giveTypes(tipo), fecha, muestra)
-
     return jsonify(fechas=labels, data=datos, unidad=unit, colour=color, titulo=title)
 
 
@@ -447,7 +439,7 @@ def logout():
 def pictures():
     imagenes = sorted(ls(images))
     imagenes.pop(0)
-    #imagenes = list()
+    # imagenes = list()
     return render_template('galery.html', rutas=imagenes)
 
 
@@ -492,7 +484,7 @@ def verify(id):
             return render_template('insert_code.html', mensaje=codeI, user=id)
         now = dt.datetime.now()
         cur = mysql.get_db().cursor()
-        cur.execute('UPDATE contacts SET pass_allow = %s WHERE id = %s', (str(now),id))
+        cur.execute('UPDATE contacts SET pass_allow = %s WHERE id = %s', (str(now), id))
         mysql.get_db().commit()
         return render_template('change_pass.html', mensaje=cambio, user=id)
 
@@ -500,27 +492,25 @@ def verify(id):
 @app.route('/update_pass/<string:id>', methods=['POST'])
 def update_pass(id):
     if request.method == 'POST':
-        print (id)
+        # print(id)
         cur = mysql.get_db().cursor()
         cur.execute("SELECT pass_allow FROM contacts WHERE id = %s", (id,))
         check = cur.fetchone()
         if not(check == 0):
             password = request.form['pass'].encode('utf-8')
             repassword = request.form['repass'].encode('utf-8')
-            if password != repassword:             
+            if password != repassword:
                 return render_template('change_pass.html', mensaje=coincideC, user=id)
-            if len(password and repassword) == 0:               
+            if len(password and repassword) == 0:
                 return render_template('change_pass.html', mensaje=vacioC, user=id)
             else:
                 hash_password = bcrypt.hashpw(password, bcrypt.gensalt())
                 cur = mysql.get_db().cursor()
-                cur.execute('UPDATE contacts SET password = %s, pass_allow = 0, cambio_pass = 0  WHERE id = %s', (hash_password,id))  
-                mysql.get_db().commit()  
+                cur.execute('UPDATE contacts SET password = %s, pass_allow = 0, cambio_pass = 0  WHERE id = %s', (hash_password, id))
+                mysql.get_db().commit()
                 return render_template('index.html', mensaje=cambioS)
         return render_template('forgot.html', mensaje=fgt)
-        
-               
-        
+
 
 @app.route('/delete/<string:id>')
 def delete_contact(id):
@@ -529,7 +519,7 @@ def delete_contact(id):
     mysql.get_db().commit()
     tap = conn('SELECT * FROM tap')
     data = conn('SELECT * FROM contacts')
-    datos = tabla(data,tap)
+    datos = tabla(data, tap)
     flash('Se ha borrado el contacto correctamente', 'success')
     return render_template('perfil.html', mensaje=reg, lista=1, contactos=data, taps=datos)
 
@@ -540,13 +530,13 @@ def edit_contact(id):
         cur = mysql.get_db().cursor()
         cur.execute('SELECT root FROM contacts WHERE id = %s', [id])
         data = cur.fetchall()
-        rol= data[0][0]
+        rol = data[0][0]
         if rol == 0:
             rol = 1
         else:
             rol = 0
         texto = """
-    
+
             UPDATE contacts
             SET root=% s
             WHERE ID= % s
@@ -557,13 +547,12 @@ def edit_contact(id):
         mysql.get_db().commit()
         data = conn('SELECT * FROM contacts')
         tap = conn('SELECT * FROM tap')
-        datos = tabla(data,tap)
+        datos = tabla(data, tap)
         flash('Se ha modificado el Rol del contacto correctamente', 'warning')
         return render_template('perfil.html', mensaje=reg, lista=1, contactos=data, taps=datos)
     else:
-        flash("Sesión caducada",'dark')
+        flash("Sesión caducada", 'dark')
         return redirect(url_for("login"))
-
 
 
 @app.route('/updateDevice', methods=['POST'])
@@ -571,7 +560,7 @@ def update_device():
     if request.method == 'POST':
         nameD = request.form['nameD']
         emailR = request.form['emailR']
-        tam =request.form['tam']
+        tam = request.form['tam']
         disB = request.form['disB']
         disA = request.form['disA']
         tem = request.form['tem']
@@ -579,7 +568,7 @@ def update_device():
         humTem = request.form['humTem']
         disT = request.form['disT']
         cpusT = request.form['cpusT']
-        log = confText.format(nameD, emailR,tam, disB, disA, tem, hum, humTem, disT,cpusT)
+        log = confText.format(nameD, emailR, tam, disB, disA, tem, hum, humTem, disT, cpusT)
         save_conf(log)
         session['nameD'] = nameD
         session['emailR'] = emailR
@@ -593,9 +582,9 @@ def update_device():
         session['cpusT'] = cpusT
         data = conn('SELECT * FROM contacts')
         tap = conn('SELECT * FROM tap')
-        datos = tabla(data,tap)
-        flash('Configuración actualizada correctamente. Recuerde que algunos ajustes como los de Intervalo de muetsreo o "Altura de estanque" no serán actualizados hasta que se reinicie el sistemanivel', 'success')    
-        return render_template('perfil.html',dispositivo=1,contactos=data, mensaje=reg, taps=datos)
+        datos = tabla(data, tap)
+        flash('Configuración actualizada correctamente. Recuerde que algunos ajustes como los de Intervalo de muetsreo o "Altura de estanque" no serán actualizados hasta que se reinicie el sistemanivel', 'success')
+        return render_template('perfil.html', dispositivo=1, contactos=data, mensaje=reg, taps=datos)
 
 
 @app.route('/update/<id>', methods=['POST'])
@@ -606,7 +595,7 @@ def update_contact(id):
         message = request.form['message']
         cambia = request.form['bool']
         texto = """
- 
+
         UPDATE contacts
         SET phone=% s,
             email=% s,
@@ -617,10 +606,10 @@ def update_contact(id):
         if cambia == "1":
             password = request.form['newpass'].encode('utf-8')
             repassword = request.form['repass'].encode('utf-8')
-            if password != repassword:             
+            if password != repassword:
                 flash('Las contraseñas no coinciden', 'danger')
                 return redirect(url_for('perfil'))
-            if len(password and repassword) == 0:               
+            if len(password and repassword) == 0:
                 flash('Las contraseñas no pueden estar vacías', 'danger')
                 return redirect(url_for('perfil'))
             else:
@@ -634,28 +623,26 @@ def update_contact(id):
             password=% s
         WHERE ID= % s
     """
-                variables =(phone, email, message, hash_password, id)
+                variables = (phone, email, message, hash_password, id)
 
         cur = mysql.get_db().cursor()
-        cur.execute( texto, variables)
+        cur.execute(texto, variables)
         mysql.get_db().commit()
         session['phone'] = phone
         session['email'] = email
         session['message'] = message
-        flash('El contacto ha sido actualizado correctamente ', 'success')    
+        flash('El contacto ha sido actualizado correctamente ', 'success')
         return redirect(url_for('perfil'))
 
 
 @app.route('/estadisticas')
 def estadisticas():
-   
     if session.get("name", None) is not None:
         listado = users(usuarios())
         return render_template('estadisticas.html', mensaje=esta, listado=listado)
     else:
-        flash("Sesión caducada",'dark')
+        flash("Sesión caducada", 'dark')
         return redirect(url_for("login"))
-
 
 
 @app.route('/lista')
@@ -675,18 +662,18 @@ def add_contact():
         repassword = request.form['repass'].encode('utf-8')
         data = conn('SELECT * FROM contacts')
         tap = conn('SELECT * FROM tap')
-        datos = tabla(data,tap)
+        datos = tabla(data, tap)
         if len(fullname and phone and email and password and repassword) == 0:
             return render_template('perfil.html', title='Registro', mensaje=vacio,registro=1, contactos=data, taps=datos)
         elif password != repassword:
-            return render_template('perfil.html', title='Registro', mensaje=coincide ,registro=1, contactos=data, taps=datos)
+            return render_template('perfil.html', title='Registro', mensaje=coincide , registro=1, contactos=data, taps=datos)
         else:
 
             cur = mysql.get_db().cursor()
             cur.execute("SELECT * FROM contacts WHERE email = %s", (email,))
             user = cur.fetchone()
             if user is not None:
-                return render_template('perfil.html', title='Registro', mensaje=usua ,registro=1, contactos=data, taps=datos)
+                return render_template('perfil.html', title='Registro', mensaje=usua, registro=1, contactos=data, taps=datos)
             else:
                 hash_password = bcrypt.hashpw(password, bcrypt.gensalt())
 
@@ -697,13 +684,13 @@ def add_contact():
                 mysql.get_db().commit()
                 data = conn('SELECT * FROM contacts')
                 tap = conn('SELECT * FROM tap')
-                datos = tabla(data,tap)
+                datos = tabla(data, tap)
                 flash('El contacto ha sido agregado correctamente ', 'success')
                 return render_template('perfil.html', lista=1, contactos=data, mensaje=reg, taps=datos)
 
 
 if __name__ == '__main__':
-   
+
     app.run(debug=True)
     # app.run()
 
@@ -726,6 +713,6 @@ if __name__ == '__main__':
 
 # Flas Session :https://pythonise.com/feed/flask/flask-session-object
 
-#python hilos https://python-para-impacientes.blogspot.com/2016/12/threading-programacion-con-hilos-i.html
-
-# mantenimiento : http://akirasan.net/lanzar-aplicacion-python-tras-iniciar-raspberrypi/ https://docs.oracle.com/cd/E24842_01/html/E23086/sysrescron-1.html
+# python hilos https://python-para-impacientes.blogspot.com/2016/12/threading-programacion-con-hilos-i.html
+# mantenimiento : http://akirasan.net/lanzar-aplicacion-python-tras-iniciar-raspberrypi/
+#  https://docs.oracle.com/cd/E24842_01/html/E23086/sysrescron-1.html

@@ -3,7 +3,6 @@
 <link href="../static/css/calendar/daygrid.css" rel="stylesheet" />
 <link href="../static/css/calendar/timegrid.css" rel="stylesheet" />
 <link href="../static/css/calendar/list.css" rel="stylesheet" />
-
 {% endblock %} {% block body %}
 <div>
   <div class="row ">
@@ -18,10 +17,7 @@
       <button type="button" class="btn-danger" data-toggle="modal" id="borra" data-target="#borradoModal" >
         Borrado masivo
       </button>
-    
     </div>
-    
-    
     <div class="col align-self-start">
       <div class="wrapper fadeInDown">
         <div id="formContent">
@@ -39,7 +35,6 @@
             </div>
             <!-- Login Form -->
             <form action="/add_event" method="POST" id="myForm">
-              <!--  <input type="text" id="login" class="fadeIn second" name="title" placeholder="Nombre del evento" /> -->
               <select name='title'>
                 {{ lista | safe }}
                 <select name="color">
@@ -57,7 +52,6 @@
                 <label for="input-2">
                   Seleccione Método de fin
                 </label> <br />
-
                 <input id="input-2" type="checkbox"  data-off-active-cls="btn-warning pointer"
                   data-on-active-cls="btn-primary  pointer"  data-on-cls="pointer" data-off-cls="pointer"/>
 
@@ -95,24 +89,17 @@
                     <input type="number" id="meses" name="meses" min="1">
                   </div>
                 </div> -->
-
                 <input type="submit" class="fadeIn fourth" value="Guardar" />
             </form>
           </div>
         </div>
-        
       </div>
     </div>
-    
   </div>
 </div>
 
-
 {% include "modales.html" %}
-
-
 {% endblock %} {% block script %}
-
 <script src="../static/js/calendar/vendorRrule.js"></script>
 <script src="../static/js/calendar/core.js"></script>
 <script src="../static/js/calendar/interaction.js"></script>
@@ -123,7 +110,5 @@
 <script src="../static/js/calendar/rrule.js"></script>
 <script src="../static/js/calendar/es.js"></script>
 <script src="../static/js/bootstrap-checkbox-1.5.0/dist/js/bootstrap-checkbox.js" defer></script>
-
 {% include "calendarScp.html" %}
-
 {% endblock %}

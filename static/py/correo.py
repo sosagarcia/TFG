@@ -1,5 +1,3 @@
-# import necessary packages
-
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
@@ -8,9 +6,7 @@ import smtplib
 def sendEmail(msge, destinatario, asunto):
     # create message object instance
     msg = MIMEMultipart()
-
     message = msge
-
     # setup the parameters of the message
     password = "EmeyCe.123"
     msg['From'] = "monitycont@gmail.com"

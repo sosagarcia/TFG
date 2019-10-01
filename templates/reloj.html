@@ -25,7 +25,6 @@
       out.result[4],
       out.result[5]
     );
-
     // ensure date comes as 01, 09 etc
     DD = ("0" + dt.getDate()).slice(-2);
     // getMonth returns month from 0
@@ -35,7 +34,6 @@
     mm = ("0" + dt.getMinutes()).slice(-2);
     ss = ("0" + dt.getSeconds()).slice(-2);
     date_string = YYYY + "-" + MM + "-" + DD + " " + hh + ":" + mm + ":" + ss;
-
     // will output something like "2019-02-14 11:04:42"
     if (out.estado == "0") {
       document.getElementById("manualmode").innerHTML = "";
@@ -43,7 +41,6 @@
       document.getElementById("manualmode").innerHTML = "Modo Manual";
     }
     document.getElementById("reloj").innerHTML = date_string;
-
     var t = setTimeout(startTime, 1000);
   }
   $(document).ready(startTime);
