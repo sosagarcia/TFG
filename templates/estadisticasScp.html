@@ -35,21 +35,7 @@
     }
     return i;
   }
-  /*  Solo funciona si el pc local y el sistema están en la misma zona horaria (obtiene la hora del pc local)
-    function ahora() {
-      var hoy = new Date();
-      var dd = hoy.getDate();
-      var mm = hoy.getMonth() + 1;
-      var yyyy = hoy.getFullYear();
-      var HH = hoy.getHours();
-      var MM = hoy.getMinutes();
-      dd = addZero(dd);
-      mm = addZero(mm);
-      HH = addZero(HH);
-      MM = addZero(MM);
-      return yyyy + "-" + mm + "-" + dd + "T" + HH + ":" + MM;
-    }
-    */
+
   function hoy() {
     var hoy = new Date();
     var dd = hoy.getDate();
@@ -60,12 +46,13 @@
 
     return yyyy + "-" + mm + "-" + dd;
   }
+
   var color = Chart.helpers.color;
   var timeFormat = "HH:mm:ss DD-MM-YYYY";
   var myColor;
+
   function dameFecha(labels) {
     var fechas = [];
-
     for (var i = 0; i < labels.length; i++) {
       fechas[i] = newDateString(
         labels[i][0],
@@ -78,6 +65,7 @@
     }
     return fechas;
   }
+
   function newDateString(hours, minutes, seconds, day, month, year) {
     return moment()
       .date(day)
@@ -92,7 +80,6 @@
   function primera() {
     muestras = 50;
     fec = hoy();
-
     $.post("/updateStatistics", {
       tipo: tipos,
       fecha: fec,
@@ -101,12 +88,14 @@
       crea(reply);
     });
   }
+
   function transforma(string) {
     var dd = string.slice(-2);
     var mm = string.slice(5, 7);
     var yyyy = string.slice(0, 4);
     return yyyy + "-" + mm + "-" + dd;
   }
+
   function updateStatistics() {
     var diaSelected;
     muestras = document.getElementById("muestras");
@@ -125,7 +114,7 @@
     } else {
       fec = periodoSelected.value;
     }
-    console.log(fec);
+    // console.log(fec);
     $.post("/updateStatistics", {
       tipo: tipos,
       fecha: fec,
@@ -138,12 +127,12 @@
       }
     });
   }
+
   function dameColor(tipo, unit) {
     var dist = "Distancia" + " (" + unit + ")";
     var temp = "Temperatura" + " (" + unit + ")";
     var tCPU = "TemperaturaCPU" + " (" + unit + ")";
     var CPU = "UsoCPU" + " (" + unit + ")";
-
     switch (tipo) {
       case dist:
         myColor = window.chartColors.yellow;
@@ -165,7 +154,7 @@
   }
 
   function actualiza(results) {
-    console.log(results);
+    // console.log(results);
     var dataset = prepara(results);
     chart.data.datasets = dataset;
     //chart.options.tooltips.callbacks.label = item =>
@@ -189,7 +178,6 @@
   function prepara(result) {
     var tipos = result.unidad.length;
     var dato = [];
-
     for (var i = 0; i < tipos; i++) {
       var datos = giveData(result.data[i], result.fechas[i]);
       var s = {
@@ -205,10 +193,9 @@
     return dato;
   }
   function crea(results) {
-    console.log(results);
+    // console.log(results);
     var dataset = prepara(results);
-    console.log(dataset);
-
+    // console.log(dataset);
     var config = {
       type: "line",
       data: { datasets: dataset },
@@ -263,14 +250,12 @@
     return false;
   }
   $(document).ready(primera);
-
   function changeData(position) {
-    console.log(tipos);
+    // console.log(tipos);
     var actual = tipos[position];
     tipos[position] = !actual;
-    console.log(tipos);
+    // console.log(tipos);
   }
-
   document.addEventListener("DOMContentLoaded", function() {
     $("#input-3")
       .checkboxpicker({
@@ -286,7 +271,6 @@
           actual = 1;
         }
       });
-
     $("#hum")
       .checkboxpicker({
         offLabel: "Ocultar",
@@ -323,7 +307,6 @@
         changeData(3);
         updateStatistics();
       });
-
     $("#dis")
       .checkboxpicker({
         offLabel: "Ocultar",

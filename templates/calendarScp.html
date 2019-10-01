@@ -38,14 +38,12 @@
       editable: false,
       eventLimit: true, // allow "more" link when too many events
       eventTimeFormat: {
-        // like '14:30:00'
         hour: "2-digit",
         minute: "2-digit",
         meridiem: true
       },
       events: { url: "data" },
       eventClick: function(info, jsEvent, view) {
-        //H
         $("#tituloEvento").html(info.event.title);
         // Mostrar información de evento en los inputs
         $("#finEvento").val(info.event.end);
@@ -56,34 +54,14 @@
         var end = event.end;
         var start = event.start;
         var id = info.event.id;
-        console.log(start);
-        console.log(typeof start);
+        // console.log(start);
+        // console.log(typeof start);
         $("#finEvento").val(end);
         $("#inicioEvento").val(start);
         $("#exampleModal").modal();
         $("#btnBorrar").click(function() {
           borrar(id);
         });
-        /*
-                  var idE = info.event.id;
-                  document.getElementById("btnBorrar").onclick = function() {
-                    doWork();
-                  };
-                  function doWork() {
-                    // ajax the JSON to the server
-                    $.post("deletEvent", idE, function() {});
-                    // stop link reloading the page
-                    event.preventDefault();
-                  }
-                  */
-        //$("#txtFechaI").val(typeof (info.start));
-        //$("#txtHoraI").val(FechaHora[1]);
-        //document.getElementById("txtFechaI").value = info.event.start
-        //lert("Event: " + info.event.title);
-        //alert("Coordinates: " + info.jsEvent.pageX + "," + info.jsEvent.pageY);
-        //alert("View: " + info.view.type);
-        // change the border color just for fun
-        //info.el.style.borderColor = "red";
       }
     });
     calendar.render();
@@ -95,7 +73,7 @@
       $.post("/deletEvent", {
         canvas_data: JSON.stringify(id)
       }).done(function(reply) {
-        console.log(reply);
+        // console.log(reply);
         document.getElementById("modalClose").click();
         calendar.refetchEvents();
       });
@@ -141,7 +119,7 @@
       tipo: valor
     })
       .done(function(reply) {
-        console.log(reply);
+        // console.log(reply);
       })
       .fail(function() {
         console.log("fail manual");
@@ -152,40 +130,6 @@
 
 <script>
   window.onload = function() {
-    /*
-      var repe = document.getElementById("repe");
-      var repeSelected;
-      var showD = document.getElementById("ShowD");
-      var showS = document.getElementById("ShowS");
-      var showM = document.getElementById("ShowM");
-      showD.style.display = "none";
-      showS.style.display = "none";
-      showM.style.display = "none";
-      repe.addEventListener("change", function() {
-        repeSelected = this.options[repe.selectedIndex];
-        console.log(repeSelected.value);
-        if (repeSelected.value == 0) {
-          showD.style.display = "none";
-          showS.style.display = "none";
-          showM.style.display = "none";
-        }
-        if (repeSelected.value == 1) {
-          showD.style.display = "block";
-          showS.style.display = "none";
-          showM.style.display = "none";
-        }
-        if (repeSelected.value == 2) {
-          showD.style.display = "none";
-          showS.style.display = "block";
-          showM.style.display = "none";
-        }
-        if (repeSelected.value == 3) {
-          showD.style.display = "none";
-          showS.style.display = "none";
-          showM.style.display = "block";
-        }
-      });
-      */
     var fchS = document.getElementById("fchS");
     fchS.style.display = "none";
     var usrS = document.getElementById("usrS");
@@ -200,7 +144,7 @@
     var idBorrado = 0;
     select.addEventListener("change", function() {
       selectedOption = this.options[select.selectedIndex];
-      console.log(selectedOption.value);
+      // console.log(selectedOption.value);
       if (selectedOption.value == "full") {
         fchS.style.display = "none";
         usrS.style.display = "none";
@@ -254,7 +198,7 @@
             $.post("/deletFull", {
               canvas_data: JSON.stringify(valor)
             }).done(function(reply) {
-              console.log(reply);
+              // console.log(reply);
               document.getElementById("masivoCerrar").click();
               calendar.refetchEvents();
             });
@@ -268,7 +212,7 @@
             $.post("/deletDay", {
               canvas_data: JSON.stringify(date)
             }).done(function(reply) {
-              console.log(reply);
+              // console.log(reply);
               document.getElementById("masivoCerrar").click();
               calendar.refetchEvents();
             });
@@ -282,7 +226,7 @@
             $.post("/deletUser", {
               canvas_data: JSON.stringify(obj)
             }).done(function(reply) {
-              console.log(reply);
+              // console.log(reply);
               document.getElementById("masivoCerrar").click();
               calendar.refetchEvents();
             });
@@ -297,7 +241,7 @@
               canvas_data: JSON.stringify(obj),
               canvas_data_date: JSON.stringify(date)
             }).done(function(reply) {
-              console.log(reply);
+              // console.log(reply);
               document.getElementById("masivoCerrar").click();
               calendar.refetchEvents();
             });
