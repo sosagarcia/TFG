@@ -144,7 +144,6 @@ def takePicture():
         time.sleep(1)
         servo.ChangeDutyCycle(0)
         # max resolution = (2592, 1944)
-
         # ruta2 = camara + fecha + ".jpg"
         time.sleep(0.5)
         # camera.capture(ruta2)
@@ -167,7 +166,7 @@ def takePicture():
         # camera.capture(ruta2)
         ruta = images + fecha + "C"+".jpg"
         camera.capture(ruta)
-        # servo.stop()
+        servo.stop()
 
 
 def alarma(channel):
