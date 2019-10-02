@@ -1,7 +1,8 @@
 body {
   margin: 0;
   padding: 0;
-  background: url(../img/Fondo.jpeg) no-repeat center top fixed;
+  background: url("https://images.pexels.com/photos/1901028/pexels-photo-1901028.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260")
+    no-repeat fixed;
   background-size: cover;
   font-family: sans-serif;
   height: 100vh;
