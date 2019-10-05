@@ -121,7 +121,9 @@
       muestras: muestras.value
     }).done(function(reply) {
       if (reply.labels == 0 || reply.data == 0) {
-        alert("Fecha incorrecta. No hay datos registrados para dicha fecha");
+        alert(
+          "Fecha incorrecta. No hay datos registrados para dicha fecha o no ha seleccionado ningún dato"
+        );
       } else {
         actualiza(reply);
       }

@@ -429,7 +429,7 @@ def updateStatistics():
         labels, datos, color, title, unit = giveDatasets(giveTypes(tipo), fecha, muestra)
         return jsonify(fechas=labels, data=datos, unidad=unit, colour=color, titulo=title)
     else:
-        return jsonify(fechas=0, data=0, unidad=0, colour=0, titulo=0)
+        return jsonify(fechas=1, data=1, unidad=0, colour=1, titulo=1)
 
 
 @app.route('/logout')
