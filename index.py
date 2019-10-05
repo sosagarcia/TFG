@@ -425,7 +425,7 @@ def updateStatistics():
     tipo = request.form.getlist('tipo[]')
     fecha = request.form.get('fecha')
     muestra = request.form.get('muestras')
-    if 3 <= muestra <= 1000:
+    if 3 <= int(muestra) <= 1000:
         labels, datos, color, title, unit = giveDatasets(giveTypes(tipo), fecha, muestra)
         return jsonify(fechas=labels, data=datos, unidad=unit, colour=color, titulo=title)
 
