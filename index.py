@@ -428,6 +428,8 @@ def updateStatistics():
     if 3 <= int(muestra) <= 1000:
         labels, datos, color, title, unit = giveDatasets(giveTypes(tipo), fecha, muestra)
         return jsonify(fechas=labels, data=datos, unidad=unit, colour=color, titulo=title)
+    else: 
+        jsonify(fechas=0, data=0, unidad=0, colour=0, titulo=0)
 
 
 @app.route('/logout')
