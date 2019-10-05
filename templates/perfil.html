@@ -4,8 +4,8 @@
 <div class="container">
     {% include "flash.html" %}
 	<div class="row">
-		<div class="col-md-3 fadeIn">
-		     <div class="nav nav-tabs ">
+		<div class="col-md-3 fadeIn ">
+		     <div class="nav nav-tabs shadow-lg">
               <a data-toggle="tab" href="#home" class="list-group-item list-group-item-action {% if ajustes %}active  {% endif %}" data-toggle="tab" href="#home">Información Personal</a>
               {% if session["root"] %}
               <a data-toggle="tab" href="#settings" class=" {% if dispositivo %}active  {% endif %} list-group-item list-group-item-action ">Hardware</a>
@@ -19,7 +19,7 @@
           </div> 
 		</div>
 		<div class="col-md-9 fadeInDown">
-		    <div class="card">
+		    <div class="card shadow-lg">
 		        <div class="card-body">
                 <div class="tab-content">
                     <div class="tab-pane {% if ajustes%}active  {% endif %}" " id="home">

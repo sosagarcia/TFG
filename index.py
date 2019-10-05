@@ -172,7 +172,7 @@ def login():
                 session['message'] = user[5]
                 session['root'] = user[8]
                 session['manual'] = "0"
-                ajustes()
+                # ajustes()
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
@@ -222,7 +222,7 @@ def data():
     return Response(json.dumps(callist),  mimetype='application/json')
 
 
-@app.route('/add_event', methods=['POST'])
+@app.route('/_event', methods=['POST'])
 def add_event():
     if request.method == 'POST':
         manualmode = request.form['manualmodeid']
@@ -425,8 +425,9 @@ def updateStatistics():
     tipo = request.form.getlist('tipo[]')
     fecha = request.form.get('fecha')
     muestra = request.form.get('muestras')
-    labels, datos, color, title, unit = giveDatasets(giveTypes(tipo), fecha, muestra)
-    return jsonify(fechas=labels, data=datos, unidad=unit, colour=color, titulo=title)
+    if 3 <= muestra <= 1000:
+        labels, datos, color, title, unit = giveDatasets(giveTypes(tipo), fecha, muestra)
+        return jsonify(fechas=labels, data=datos, unidad=unit, colour=color, titulo=title)
 
 
 @app.route('/logout')
