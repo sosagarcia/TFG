@@ -28,14 +28,16 @@ while True:
     try:
         mydb = mysql.connector.connect(
             host="localhost",
-            user="renato",
-            passwd="renato12",
+            user="usuario",
+            passwd="contraseña",
             database="flaskcontacts"
         )
+        text = "Se inicia el Sistema"
+        write_log(text, outPath, outName)
         break
     except:
         hoy = dt.datetime.now()
-        print("Aun no ha sido posible conectar con la base de datos" +
+        print("Aún no ha sido posible conectar con la base de datos" +
               hoy.strftime("%d-%m-%Y_%H:%M:%S"))
         time.sleep(1)
         continue
@@ -72,7 +74,7 @@ def start(id):
     user = switcher.get(id)
     led_is_on = GPIO.input(user)
     if not led_is_on:
-        text = "ID: " + str(id)
+        text = "Se abre vávluvla con ID = " + str(user)
         GPIO.output(user, GPIO.HIGH)  # Turn on
         write_log(text, outPath, outName)
 
@@ -121,9 +123,7 @@ if __name__ == '__main__':
                         start(i)
                     else:
                         stop(i)
-
             time.sleep(1)
             mydb.commit()
     finally:
-
         GPIO.cleanup()
