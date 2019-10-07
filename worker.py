@@ -28,8 +28,8 @@ while True:
     try:
         mydb = mysql.connector.connect(
             host="localhost",
-            user="usuario",
-            passwd="contraseña",
+            user="renato",
+            passwd="renato12",
             database="flaskcontacts"
         )
         text = "Se inicia el Sistema"
