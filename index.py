@@ -170,7 +170,7 @@ def login():
                 session['message'] = user[5]
                 session['root'] = user[8]
                 session['manual'] = "0"
-                ajustes()
+                #ajustes()
                 alarmas = logs(aPath)
                 movimientos = logs(irPath)
                 salidas = logs(outPath)
@@ -220,7 +220,7 @@ def data():
     return Response(json.dumps(callist),  mimetype='application/json')
 
 
-@app.route('/_event', methods=['POST'])
+@app.route('/add_event', methods=['POST'])
 def add_event():
     if request.method == 'POST':
         manualmode = request.form['manualmodeid']
