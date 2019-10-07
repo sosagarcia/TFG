@@ -11,7 +11,7 @@ from static.py.rutas import *
 # Valores de aviso
 
 tempMax = 26
-humMax = 30
+humMax = 60
 disB = 30
 disA = 85
 alt = 100
@@ -321,6 +321,7 @@ if __name__ == '__main__':
         updateData()
     except:
         pass
+    # Servo setup
     servo.start(7.5)
     time.sleep(0.5)
     servo.ChangeDutyCycle(0)

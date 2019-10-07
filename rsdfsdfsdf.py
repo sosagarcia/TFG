@@ -148,7 +148,7 @@ def main():
         return redirect(url_for("login"))
 
 
-@app.route('/login', methods=["GET","POST"])
+@app.route('/login', methods=["POST"])
 def login():
     if request.method == 'POST':
         session.clear()
@@ -366,7 +366,7 @@ def state():
     return jsonify(humedad=humedad, temperatura=temperatura, distancia=distancia, movimiento=movimiento, alarma=alarma, temperaturaCPU=temperaturaCPU, usoCPU=usoCPU)
 
 
-@app.route('/test')
+@app.route('/testa')
 def chart():
         imagenes = list()
         return render_template('galery.html', rutas=imagenes)
@@ -444,6 +444,10 @@ def pictures():
     return render_template('galery.html', rutas=imagenes)
 
 
+@app.route('/registro')
+def registro():
+    return render_template('registro.html', mensaje=reg)
+
 
 @app.route('/forgot')
 def forgot():
@@ -511,18 +515,14 @@ def update_pass(id):
 
 @app.route('/delete/<string:id>')
 def delete_contact(id):
-    if session.get("root", None) == 1:
-        cur = mysql.get_db().cursor()
-        cur.execute('DELETE FROM contacts WHERE id = {0}'.format(id))
-        mysql.get_db().commit()
-        tap = conn('SELECT * FROM tap')
-        data = conn('SELECT * FROM contacts')
-        datos = tabla(data, tap)
-        flash('Se ha borrado el contacto correctamente', 'success')
-        return render_template('perfil.html', mensaje=reg, lista=1, contactos=data, taps=datos)
-    else:
-        flash("Sesión caducada", 'dark')
-        return redirect(url_for("login"))
+    cur = mysql.get_db().cursor()
+    cur.execute('DELETE FROM contacts WHERE id = {0}'.format(id))
+    mysql.get_db().commit()
+    tap = conn('SELECT * FROM tap')
+    data = conn('SELECT * FROM contacts')
+    datos = tabla(data, tap)
+    flash('Se ha borrado el contacto correctamente', 'success')
+    return render_template('perfil.html', mensaje=reg, lista=1, contactos=data, taps=datos)
 
 
 @app.route('/rol/<id>')
@@ -644,6 +644,13 @@ def estadisticas():
     else:
         flash("Sesión caducada", 'dark')
         return redirect(url_for("login"))
+
+
+@app.route('/lista')
+def lista():
+
+    data = conn('SELECT * FROM contacts')
+    return render_template('lista.html', contactos=data, title='Lista')
 
 
 @app.route('/add_contact', methods=['POST'])

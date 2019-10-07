@@ -133,14 +133,14 @@
                                 <div class="form-group row">
                                   <label for="disB" class="col-4 col-form-label">Nivel mínimo del agua</label> 
                                   <div class="col-8">
-                                    <input id="disB" name="disB" value="{{ session["disB"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca la distancia en %" min="1" max ="98"
+                                    <input id="disB" name="disB" value="{{ session["disB"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca la umbral minimo en %" min="1" max ="98"
                                     >
                                   </div>
                                 </div>
                               <div class="form-group row">
                                 <label for="disA" class="col-4 col-form-label">Nivel máximo del agua</label> 
                                 <div class="col-8">
-                                  <input id="disA" name="disA" value="{{ session["disA"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca la distancia en %" min="2" max ="99"
+                                  <input id="disA" name="disA" value="{{ session["disA"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca la umbral máximo en %" min="2" max ="99"
                                   >
                               </div>
                             </div>
@@ -154,7 +154,7 @@
                               <div class="form-group row">
                                   <label for="hum" class="col-4 col-form-label">Aviso de humedad</label> 
                                   <div class="col-8">
-                                    <input id="hum" name="hum" value="{{ session["hum"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca temperatura de aviso en %" min="1" max="99"
+                                    <input id="hum" name="hum" value="{{ session["hum"] }}" class="form-control here" required="required" type="number" placeholder="Introduzca humedad de aviso en %" min="1" max="99"
                                     >
                                 </div>
                               </div>

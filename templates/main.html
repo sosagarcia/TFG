@@ -1,9 +1,5 @@
-{% extends "layout.html" %} {% block head %}
-<link
-  rel="stylesheet"
-  href="{{url_for('static', filename='css/modal-images.css')}}"
-/>
-{% endblock %} {% block title %}Página Principal{% endblock %} {% block body %}
+{% extends "layout.html" %} {% block title %}Página Principal{% endblock %} {%
+block body %}
 <div class="container">
   {% if primer %}
   <div class="card text-white bg-success mb-2 fadeInDown fadeIn first ">

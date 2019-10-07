@@ -115,7 +115,7 @@ cambioS = [
 reg = [
     {
         'author': 'Nuevo Registro',
-        'titulo': 'INICIO DE SESIÓN',
+        'titulo': 'REGISTRAR NUEVO USUARIO',
         'mensaje': 'Por favor, rellene los siguientes campos',
         'tipo': 'primary'
     }

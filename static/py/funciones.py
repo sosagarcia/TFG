@@ -315,25 +315,11 @@ def giveColor(tipo):
     return color
 
 
-def separa(fechas):
-    result = list()
-    subresult = list()
-    for fecha in fechas:
-        subresult = [fecha[0:1], fecha[3:4], fecha[6:9]]
-        result.append(subresult)
-    return result
-
-
 def reiniciar():
     command = "/usr/bin/sudo /sbin/shutdown -r now"
     process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
     output = process.communicate()[0]
     return output
-
-
-def actualizacion():
-    # subprocess.call(["bash", "/home/pi/Scripts/Git.sh"])
-    return "algo"
 
 
 def ls(ruta='.'):

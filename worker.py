@@ -122,7 +122,7 @@ if __name__ == '__main__':
                     else:
                         stop(i)
 
-            time.sleep(3)
+            time.sleep(1)
             mydb.commit()
     finally:
 
