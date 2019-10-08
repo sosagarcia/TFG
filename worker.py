@@ -83,7 +83,9 @@ def stop(id):
     user = switcher.get(id)
     led_is_on = GPIO.input(user)
     if led_is_on:
+        text = "Se cierra vávluvla con ID = " + str(user)
         GPIO.output(user, GPIO.LOW)  # Turn off
+        write_log(text, outPath, outName)
 
 
 def titulos():

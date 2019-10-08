@@ -132,7 +132,6 @@ if __name__ == '__main__':
 
     try:
         hoy = dt.datetime.now()
-
         print("Empieza tarea de mantenimiento, a fecha de : " +
               hoy.strftime("%d-%m-%Y %H:%M:%S"))
         empieza(disPath, dName)
@@ -145,6 +144,6 @@ if __name__ == '__main__':
         print("Error Fatal")
         raise
     finally:
-        hoy = dt.datetime.now()
+        ahora = dt.datetime.now()
         print("Termina la tarea de mantenimiento, a fecha de : " +
-              hoy.strftime("%d-%m-%Y %H:%M:%S") + '\n')
+              ahora.strftime("%d-%m-%Y %H:%M:%S") + '\n')
