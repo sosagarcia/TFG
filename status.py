@@ -140,28 +140,28 @@ def takePicture():
     with picamera.PiCamera() as camera:
         camera.rotation = 180
         camera.resolution = (1280, 720)
-        servo.ChangeDutyCycle(3)
-        time.sleep(1)
+        servo.ChangeDutyCycle(4)
+        time.sleep(0.5)
         servo.ChangeDutyCycle(0)
         # max resolution = (2592, 1944)
         # ruta2 = camara + fecha + ".jpg"
-        time.sleep(0.5)
+        # time.sleep(0.5)
         # camera.capture(ruta2)
         ruta = images + fecha + "A"+".jpg"
         # SEGUNDA FOTO
         camera.capture(ruta)
         servo.ChangeDutyCycle(7.5)
-        time.sleep(1)
-        servo.ChangeDutyCycle(0)
         time.sleep(0.5)
+        servo.ChangeDutyCycle(0)
+        # time.sleep(0.5)
         # camera.capture(ruta2)
         ruta = images + fecha + "B"+".jpg"
         camera.capture(ruta)
         # TERCERA FOTO
-        servo.ChangeDutyCycle(11)
-        time.sleep(1)
-        servo.ChangeDutyCycle(0)
+        servo.ChangeDutyCycle(10)
         time.sleep(0.5)
+        servo.ChangeDutyCycle(0)
+        # time.sleep(0.5)
         # camera.capture(ruta2)
         ruta = images + fecha + "C"+".jpg"
         camera.capture(ruta)
