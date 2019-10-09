@@ -10,20 +10,7 @@
  Configurar Apache para que ejecute flask en py3: 
 
  index.conf                   
-<VirtualHost *:80>
-ServerName 192.168.137.146
-WSGIScriptAlias /ini /var/www/html/TFG/iniciar.wsgi
-DocumentRoot /var/www/html/TFG
-<Directory /var/www/html/TFG>
-   AllowOverride None
-   Require all granted
-
-#  WSGIProcessGroup app
-   # WSGIApplicationGroup %{GLOBAL}
-   # Order deny,allow
-   # Allow from all
-</Directory>
-</VirtualHost>
+pip
 
 
 
