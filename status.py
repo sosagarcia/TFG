@@ -166,9 +166,9 @@ def takePicture():
         ruta = images + fecha + "C"+".jpg"
         camera.capture(ruta)
         # servo.stop()
-        servo.ChangeDutyCycle(7.5)
-        time.sleep(0.5)
-        servo.ChangeDutyCycle(0)
+    servo.ChangeDutyCycle(7.5)
+    time.sleep(0.5)
+    servo.ChangeDutyCycle(0)
 
 
 def alarma(channel):
