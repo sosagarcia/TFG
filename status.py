@@ -139,10 +139,10 @@ def takePicture():
     fecha = datetime.datetime.now().strftime("%Y_%m_%d_at_%H_%M_%S")
     with picamera.PiCamera() as camera:
         camera.rotation = 180
-        #camera.resolution = (1280, 720)
-        #servo.ChangeDutyCycle(4)
-        #time.sleep(0.5)
-        #servo.ChangeDutyCycle(0)
+        camera.resolution = (1280, 720)
+        servo.ChangeDutyCycle(4)
+        time.sleep(0.5)
+        servo.ChangeDutyCycle(0)
         # max resolution = (2592, 1944)
         # ruta2 = camara + fecha + ".jpg"
         # time.sleep(0.5)
@@ -166,7 +166,7 @@ def takePicture():
         ruta = images + fecha + "C"+".jpg"
         camera.capture(ruta)
         # servo.stop()
-        servo.ChangeDutyCycle(4)
+        servo.ChangeDutyCycle(7.5)
         time.sleep(0.5)
         servo.ChangeDutyCycle(0)
 
@@ -325,7 +325,7 @@ if __name__ == '__main__':
     except:
         pass
     # Servo setup
-    servo.start(4)
+    servo.start(7.5)
     time.sleep(0.5)
     servo.ChangeDutyCycle(0)
     t1.start()
