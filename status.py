@@ -158,7 +158,7 @@ def takePicture():
         ruta = images + fecha + "B"+".jpg"
         camera.capture(ruta)
         # TERCERA FOTO
-        servo.ChangeDutyCycle(10)
+        servo.ChangeDutyCycle(11)
         time.sleep(0.5)
         servo.ChangeDutyCycle(0)
         # time.sleep(0.5)
