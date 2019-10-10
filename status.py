@@ -139,7 +139,7 @@ def takePicture():
     fecha = datetime.datetime.now().strftime("%Y_%m_%d_at_%H_%M_%S")
     with picamera.PiCamera() as camera:
         camera.rotation = 180
-        camera.resolution = (1280, 720)
+        camera.resolution = (2592, 1944)
         servo.ChangeDutyCycle(4)
         time.sleep(0.5)
         servo.ChangeDutyCycle(0)
