@@ -584,7 +584,7 @@ def update_device():
         data = conn('SELECT * FROM contacts')
         tap = conn('SELECT * FROM tap')
         datos = tabla(data, tap)
-        flash('Configuración actualizada correctamente. Recuerde que algunos ajustes como los de Intervalo de muetsreo o "Altura de estanque" no serán actualizados hasta que se reinicie el sistemanivel', 'success')
+        flash('Configuración actualizada correctamente. Recuerde que algunos ajustes como los de Intervalo de muetsreo o "Altura de estanque" no serán actualizados hasta que se reinicie el sistema', 'success')
         return render_template('perfil.html', dispositivo=1, contactos=data, mensaje=reg, taps=datos)
 
 
