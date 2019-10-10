@@ -9,7 +9,7 @@ cd /var/www/html/
 echo "Borrando"
 sudo rm -R TFG/
 echo "Empieza el Clonado"
-sudo git clone https://sosagarcia:nuevacontraseña12@github.com/sosagarcia/TFG.git
+sudo git clone https://sosagarcia@github.com/sosagarcia/TFG.git
 echo "Permisos"
 cd
 sudo chmod -R 777 /var/www

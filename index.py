@@ -687,26 +687,3 @@ if __name__ == '__main__':
 
     app.run(debug=True)
     # app.run()
-
-# https://bootswatch.com/
-# https://uigradients.com
-# https://www.youtube.com/watch?v=tZTpKF2pkQo
-# https://www.youtube.com/watch?v=QnDWIZuWYW0&list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH&index=2
-# alertas : https://www.youtube.com/watch?v=raqN7Il3Tr0
-# login : https://www.youtube.com/watch?v=fOj16SIa02U
-# Camera : https://projects.raspberrypi.org/en/projects/getting-started-with-picamera/5
-# Configuracion apache2 para el py : /etc/apache2/sites-available/TFT.conf (cambiar ip correspondiente)
-# mysql en rapi https://www.youtube.com/watch?v=axceWuN0en0 / https://stackoverflow.com/questions/45628814/how-do-you-install-mysql-for-flask
-
-# https://stackoverflow.com/questions/45628814/how-do-you-install-mysql-for-flask
-
-# https://fullcalendar.io/docs/event-source
-# Full calendar edit events https://www.youtube.com/watch?v=8OOddEiM55A&list=PLSuKjujFoGJ3xqSJHnZUR-INEO71t1znq&index=11
-
-# https://vsn4ik.github.io/bootstrap-checkbox/
-
-# Flas Session :https://pythonise.com/feed/flask/flask-session-object
-
-# python hilos https://python-para-impacientes.blogspot.com/2016/12/threading-programacion-con-hilos-i.html
-# mantenimiento : http://akirasan.net/lanzar-aplicacion-python-tras-iniciar-raspberrypi/
-#  https://docs.oracle.com/cd/E24842_01/html/E23086/sysrescron-1.html
